@@ -51,17 +51,17 @@ main {
 
 /* ARCADE PANELS */
 .panel {
-  width: min(920px, 95%); background: #fffbe8; border: 6px solid #142800;
+  width: min(940px, 95%); background: #fffbe8; border: 6px solid #142800;
   border-radius: 20px; box-shadow: 10px 10px 0 #000;
   padding: clamp(14px, 3vw, 24px); text-align: center; margin: auto;
-  position: relative; max-height: 90vh; overflow-y: auto;
+  position: relative; max-height: 92vh; overflow-y: auto;
 }
 .panel::before {
   content: ""; position: absolute; inset: 4px; border: 3px dashed #e0c878;
   border-radius: 14px; pointer-events: none;
 }
 h1 {
-  margin: 0 0 6px; font-size: clamp(28px, 4.5vw, 46px); color: #e63900;
+  margin: 0 0 6px; font-size: clamp(26px, 4.2vw, 44px); color: #e63900;
   text-shadow: 3px 3px 0 #ffd54f, 5px 5px 0 #000; letter-spacing: 1px;
 }
 .sub {
@@ -69,7 +69,7 @@ h1 {
   margin-bottom: 16px; letter-spacing: 0.5px;
 }
 
-.btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 580px; margin: auto; }
+.btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 620px; margin: auto; }
 button {
   background: #ffcc00; color: #000; border: 4px solid #000;
   border-radius: 12px; padding: 10px 16px; font-size: 16px; font-family: "Impact", sans-serif;
@@ -81,7 +81,7 @@ button:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #000; }
 button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: 2px 2px 0 #000; }
 .primary { background: #ff3b00; color: #fff; text-shadow: 2px 2px 0 #000; }
 .vice-btn { background: #ff007f; color: #00ffff; text-shadow: 2px 2px 0 #7b00ff; border-color: #000; }
-.big { min-height: 54px; font-size: 17px; }
+.big { min-height: 52px; font-size: 17px; }
 
 /* SOCIAL PRE-LOBBY & CUSTOMIZATION */
 .lobby-grid {
@@ -115,7 +115,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow
   background: #fff9c4; border-color: #f57f17; width: 180px;
 }
 
-/* VICE CARD VOTING & RESHUFFLE ANIMATION */
+/* VICE CARD VOTING & ANIMATION */
 .vice-cards-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0;
 }
@@ -144,7 +144,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow
 .card-desc { font-size: 12px; font-family: sans-serif; font-weight: bold; color: #e0e7ff; line-height: 1.2; }
 .vote-count { font-size: 13px; color: #00ffff; font-family: monospace; font-weight: 900; margin-top: 6px; }
 
-/* IN-GAME VIEW & PREVENT BOTTOM SCOREBOARD CUTOFF */
+/* IN-GAME VIEW */
 #game-section {
   width: 100%; height: 100%; display: flex; flex-direction: column;
   align-items: center; justify-content: center; position: relative;
@@ -153,7 +153,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow
 .canvas-holder {
   position: relative; width: 100%; height: 100%;
   display: flex; align-items: center; justify-content: center;
-  max-height: 78vh; /* Prevents border cut-off */
+  max-height: 78vh;
 }
 canvas {
   max-width: 100%; max-height: 100%; aspect-ratio: 1600 / 850;
@@ -209,11 +209,15 @@ canvas {
     <!-- MAIN MENU -->
     <section id="menuPanel" class="panel">
       <h1>CRAB VOLLEYBALL</h1>
-      <p class="sub">First to 5 Points · Best of 3 Sets · Center Tip-Off · Weighted Landings</p>
+      <p class="sub">First to 5 Points · Best of 3 Sets · Center Tip-Off · Level Up & Unlockables</p>
 
       <div class="btn-grid">
         <button class="big primary" onclick="showSubmodeSelect('solo')">PLAY SOLO / BOTS</button>
         <button class="big" onclick="openOnlineLobby()">4-PLAYER ONLINE MATCH</button>
+      </div>
+
+      <div style="margin-top:14px;">
+        <button onclick="openLockerRoom()" style="background:#81c784;font-size:15px;padding:8px 16px;">🏆 CAREER LOCKER & QUIPS</button>
       </div>
 
       <div id="onlineBox" class="online-box hidden" style="margin-top:16px;">
@@ -227,10 +231,39 @@ canvas {
       </div>
     </section>
 
+    <!-- LOCKER ROOM / UNLOCKABLES -->
+    <section id="lockerModal" class="panel hidden">
+      <h1>🏆 CAREER & UNLOCKABLES 🏆</h1>
+      <p class="sub">Level: <span id="careerLevel">1</span> | Points: <span id="careerPoints">0</span> | Matches Won: <span id="careerWins">0</span></p>
+
+      <div class="customizer-box">
+        <div class="custom-row">
+          <b>VICTORY QUIP PACK:</b>
+          <select id="quipPackSelect" class="custom-input" onchange="saveCareerSettings()">
+            <option value="classic">Classic Crab ("Crab Pride!", "Pinch this!")</option>
+            <option value="trash">Trash Talker ("Sit down!", "Free points!")</option>
+            <option value="sailor">Salty Sailor ("Shiver me claws!", "Overboard!")</option>
+            <option value="zen">Zen Beachcomber ("Flow like water...", "Breathe...")</option>
+          </select>
+        </div>
+        <div class="custom-row">
+          <b>POINT EXPLOSION EFFECT:</b>
+          <select id="explosionSelect" class="custom-input" onchange="saveCareerSettings()">
+            <option value="confetti">Confetti Sparkles</option>
+            <option value="firework">Arcade Fireworks</option>
+            <option value="shockwave">Tidal Shockwave (Knocks players down!)</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:14px;">
+        <button onclick="closeLockerRoom()" style="padding:8px 16px;">BACK TO MENU</button>
+      </div>
+    </section>
+
     <!-- SOCIAL PRE-LOBBY ROOM -->
     <section id="socialLobbyModal" class="panel hidden">
       <h1>🦀 BEACH PRE-LOBBY 🦀</h1>
-      <p class="sub">Pick your team (max 2 per side), customize your style, or enter your secret code!</p>
+      <p class="sub">Pick your team (max 2 per side), customize your style, or enter a secret code!</p>
 
       <div style="margin:6px 0;">
         <span style="font-family:sans-serif;font-size:14px;font-weight:bold;">Room Code: </span>
@@ -238,7 +271,7 @@ canvas {
         <button id="copyBtn" onclick="copyRoomCode()" style="padding:4px 10px;font-size:12px;margin-left:6px;">COPY</button>
       </div>
 
-      <!-- TEAMS VIEW (MAX 2 PER TEAM) -->
+      <!-- TEAMS VIEW -->
       <div class="lobby-grid">
         <div class="team-box">
           <div class="team-title-1">TEAM 1 (BLUE SIDE) - <span id="team1Count">0</span>/2</div>
@@ -252,7 +285,7 @@ canvas {
         </div>
       </div>
 
-      <!-- BOT FILL OPTION & CUSTOMIZATION -->
+      <!-- CUSTOMIZATION -->
       <div class="customizer-box">
         <div class="custom-row" id="botOptionRow">
           <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:900;color:#1b5e20;">
@@ -288,7 +321,7 @@ canvas {
       </div>
     </section>
 
-    <!-- SUB-MODE SELECTION (SYNCED LIVE ACROSS ALL PLAYERS) -->
+    <!-- SUB-MODE SELECTION -->
     <section id="submodeModal" class="panel hidden">
       <h1 id="submodeTitle">CHOOSE MATCH STYLE</h1>
       <p class="sub" id="submodeSubtitle">Select your game environment and ruleset</p>
@@ -302,7 +335,7 @@ canvas {
       </div>
     </section>
 
-    <!-- VICE CARD VOTING (LIVE SYNC & RESHUFFLE) -->
+    <!-- VICE CARD VOTING -->
     <section id="viceVoteModal" class="panel hidden" style="background:#160228;border-color:#ff007f;">
       <h1 style="color:#00ffff;text-shadow:3px 3px 0 #ff007f, 5px 5px 0 #000;">🌴 VOTE VICE CARD 🌴</h1>
       <p class="sub" style="color:#ff77c6;">Popular vote decides the modification! Shuffled live for everyone.</p>
@@ -359,21 +392,24 @@ let BASE_BALL_GRAV = 550;
 let BALL_GRAV = 550;
 const NET = { x: CW / 2 - 4, y: 550, w: 8, h: FLOOR_Y - 550 };
 
-// SOUNDTRACKS (Plays & loops on demand)
+// SOUNDTRACK AUDIO ROUTING
 const standardBgm = new Audio("./fizzion.mp3");
 standardBgm.loop = true;
-const viceBgm = new Audio("./humblephonics.wav");
-viceBgm.loop = true;
+const viceRaveBgm = new Audio("./humblephonics.wav");
+viceRaveBgm.loop = true;
 let isAudioMuted = false;
 
 function playModeMusic() {
   if (isAudioMuted) return;
   standardBgm.pause();
-  viceBgm.pause();
-  if (activeGameMode === "vice") {
-    viceBgm.currentTime = 0;
-    viceBgm.play().catch(() => {});
+  viceRaveBgm.pause();
+
+  // "humblephonics.wav" ONLY for Crab Rave card in Vice Mode!
+  if (activeGameMode === "vice" && chosenViceCard && chosenViceCard.effect === "crab_rave") {
+    viceRaveBgm.currentTime = 0;
+    viceRaveBgm.play().catch(() => {});
   } else {
+    // All other modes play fizzion.mp3
     standardBgm.currentTime = 0;
     standardBgm.play().catch(() => {});
   }
@@ -381,7 +417,7 @@ function playModeMusic() {
 
 function stopAllMusic() {
   standardBgm.pause();
-  viceBgm.pause();
+  viceRaveBgm.pause();
 }
 
 function toggleMuteAudio() {
@@ -410,71 +446,78 @@ function sanitizePlayerName(rawName, fallback = "CRAB") {
   return clean || fallback;
 }
 
-// DOBY SPRITE
+// 1. CHARACTER SPRITES: CRAB, SECRET DOBY, SECRET METEOROLOGIST
 const dobyImg = new Image();
 dobyImg.src = "./doby.png";
 
-// 10 VICE CARDS
-const ALL_VICE_CARDS = [
-  { id: 1, icon: "🦀", title: "MEGA CLAWS", desc: "Claws grow huge for massive spike reach.", effect: "big_claws" },
-  { id: 2, icon: "🌙", title: "MOON GRAVITY", desc: "Playable low gravity on ball and crabs.", effect: "low_grav" },
-  { id: 3, icon: "❄️", title: "CRYOFREEZE", desc: "Ball freezes solid in mid-air, then drops!", effect: "ice_freeze" },
-  { id: 4, icon: "🔬", title: "MINI CRABS", desc: "Tiny pint-sized crabs moving extra fast.", effect: "mini_crabs" },
-  { id: 5, icon: "🪩", title: "CRAB RAVE", desc: "Synthwave strobe dance party in sky & sand.", effect: "crab_rave" },
-  { id: 6, icon: "⚡", title: "TURBO ROLLER", desc: "Crabs run and rotate with lightning speed.", effect: "turbo_speed" },
-  { id: 7, icon: "🪨", title: "BEACH BOULDER", desc: "Heavy ball falls faster with heavy rebounds.", effect: "heavy_ball" },
-  { id: 8, icon: "🚀", title: "SPRING SHOES", desc: "Super jumps propel crabs to the stratosphere.", effect: "spring_jump" },
-  { id: 9, icon: "📉", title: "SHORT NET", desc: "Net pole shortened to a low hurdle for spikes.", effect: "low_net" },
-  { id: 10, icon: "🎯", title: "PINBALL CHAOS", desc: "Ball rebounds with energetic, pinball speed.", effect: "pinball_wobble" }
-];
+// Secret "MET" Meteorologist Business Crab with Suit, Mic, and Umbrella
+function makeMeteorologistSVG() {
+  return `data:image/svg+xml;utf8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
+    <!-- Body in Business Suit -->
+    <ellipse cx="98" cy="54" rx="58" ry="19" fill="#1e293b" stroke="#000" stroke-width="4"/>
+    <!-- White Collar & Tie -->
+    <polygon points="98,40 90,52 98,64 106,52" fill="#ef4444"/>
+    <polygon points="92,40 104,40 98,48" fill="#ffffff"/>
+    
+    <!-- Face / Eyes -->
+    <line x1="66" y1="38" x2="62" y2="18" stroke="#000" stroke-width="4.5"/>
+    <circle cx="62" cy="16" r="8" fill="#111" stroke="#000" stroke-width="2"/>
+    <circle cx="64" cy="14" r="2.8" fill="#fff"/>
+    <line x1="130" y1="38" x2="134" y2="18" stroke="#000" stroke-width="4.5"/>
+    <circle cx="134" cy="16" r="8" fill="#111" stroke="#000" stroke-width="2"/>
+    <circle cx="136" cy="14" r="2.8" fill="#fff"/>
 
-let activeGameMode = "standard";
-let chosenViceCard = null;
-let currentDrawnCards = [];
-let pendingModeContext = "solo";
-let cardVotes = [0, 0, 0];
-let fillEmptyWithBots = true;
-let raveTimer = 0;
-let freezeCooldown = 8.0;
-let isFrozen = false;
-let freezeWarningTimer = 0;
+    <!-- Left Hand: Weather Umbrella -->
+    <path d="M 22 26 C 2 34 0 54 22 52 Z" fill="#38bdf8" stroke="#000" stroke-width="3"/>
+    <line x1="22" y1="38" x2="48" y2="48" stroke="#000" stroke-width="4"/>
 
-// Coastal Highway Cars
-const VICE_CARS = [
-  { x: 100, spd: 140, color: "#ff007f" },
-  { x: 700, spd: 110, color: "#00ffff" },
-  { x: 1300, spd: 160, color: "#ffe600" }
-];
+    <!-- Right Hand: News Microphone -->
+    <rect x="144" y="32" width="8" height="22" rx="3" fill="#64748b" stroke="#000" stroke-width="2"/>
+    <circle cx="148" cy="28" r="7" fill="#ef4444" stroke="#000" stroke-width="2"/>
+    <rect x="142" y="24" width="12" height="4" fill="#fbbf24"/>
+  </svg>`)}`;
+}
+const metImg = new Image();
+metImg.src = makeMeteorologistSVG();
 
-// CRAB SPRITES
+// 2. POINTY, SERRATED ARCADE CARTOON CLAWS (Eliminates the AI-filler look)
 function makeArcadeCrabSVG(bodyColor = "#8bc34a", outline = "#223b05", belly = "#c5e1a5", clawScale = 1.0) {
   return `data:image/svg+xml;utf8,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
-    <line x1="66" y1="38" x2="62" y2="18" stroke="${outline}" stroke-width="4.5" stroke-linecap="round"/>
-    <circle cx="62" cy="16" r="8" fill="#111" stroke="${outline}" stroke-width="2"/>
-    <circle cx="64" cy="14" r="2.8" fill="#fff"/>
+    <!-- Stalks & Bulging Cartoon Eyes -->
+    <line x1="66" y1="38" x2="62" y2="18" stroke="${outline}" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="62" cy="16" r="8.5" fill="#111" stroke="${outline}" stroke-width="2.5"/>
+    <circle cx="64" cy="13.5" r="3" fill="#fff"/>
 
-    <line x1="130" y1="38" x2="134" y2="18" stroke="${outline}" stroke-width="4.5" stroke-linecap="round"/>
-    <circle cx="134" cy="16" r="8" fill="#111" stroke="${outline}" stroke-width="2"/>
-    <circle cx="136" cy="14" r="2.8" fill="#fff"/>
+    <line x1="130" y1="38" x2="134" y2="18" stroke="${outline}" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="134" cy="16" r="8.5" fill="#111" stroke="${outline}" stroke-width="2.5"/>
+    <circle cx="136" cy="13.5" r="3" fill="#fff"/>
 
-    <path d="M 52 60 Q 30 68 22 80" stroke="${outline}" stroke-width="6" stroke-linecap="round" fill="none"/>
-    <path d="M 58 66 Q 40 78 44 84" stroke="${outline}" stroke-width="6" stroke-linecap="round" fill="none"/>
-    <path d="M 144 60 Q 166 68 174 80" stroke="${outline}" stroke-width="6" stroke-linecap="round" fill="none"/>
-    <path d="M 138 66 Q 156 78 152 84" stroke="${outline}" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <!-- Tucked Legs -->
+    <path d="M 52 60 Q 28 68 20 80" stroke="${outline}" stroke-width="6.5" stroke-linecap="round" fill="none"/>
+    <path d="M 58 66 Q 38 78 42 84" stroke="${outline}" stroke-width="6.5" stroke-linecap="round" fill="none"/>
+    <path d="M 144 60 Q 168 68 176 80" stroke="${outline}" stroke-width="6.5" stroke-linecap="round" fill="none"/>
+    <path d="M 138 66 Q 158 78 154 84" stroke="${outline}" stroke-width="6.5" stroke-linecap="round" fill="none"/>
 
+    <!-- POINTY, SERRATED CARTOON CLAWS -->
     <g transform="scale(${clawScale}) transform-origin(52 48)">
-      <path d="M 52 48 L 22 26 L 10 35 L 18 42 L 4 50 L 14 56 L 0 68 C 24 68 40 60 56 56 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="3.5"/>
-      <path d="M 54 40 L 28 18 L 14 26 L 2 45 C 22 47 38 48 56 48 Z" fill="${belly}" stroke="${outline}" stroke-width="3.5"/>
+      <!-- Left Upper Sharp Pincer -->
+      <path d="M 52 42 C 34 26 18 10 2 24 C 14 36 28 42 50 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
+      <!-- Left Lower Serrated Pincer -->
+      <path d="M 50 48 C 30 52 14 62 4 48 L 14 42 L 20 48 L 26 40 L 32 46 Z" fill="${belly}" stroke="${outline}" stroke-width="3.5"/>
     </g>
 
     <g transform="scale(${clawScale}) transform-origin(144 48)">
-      <path d="M 144 48 L 174 26 L 186 35 L 178 42 L 192 50 L 182 56 L 196 68 C 172 68 156 60 140 56 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="3.5"/>
-      <path d="M 142 40 L 168 18 L 182 26 L 194 45 C 174 47 158 48 140 48 Z" fill="${belly}" stroke="${outline}" stroke-width="3.5"/>
+      <!-- Right Upper Sharp Pincer -->
+      <path d="M 144 42 C 162 26 178 10 194 24 C 182 36 168 42 146 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
+      <!-- Right Lower Serrated Pincer -->
+      <path d="M 146 48 C 166 52 182 62 192 48 L 182 42 L 176 48 L 170 40 L 164 46 Z" fill="${belly}" stroke="${outline}" stroke-width="3.5"/>
     </g>
 
-    <ellipse cx="98" cy="54" rx="58" ry="19" fill="${bodyColor}" stroke="${outline}" stroke-width="4.2"/>
-    <path d="M 66 48 Q 98 42 130 48 Q 98 68 66 48 Z" fill="${belly}" opacity="0.65"/>
+    <!-- Broad Carapace Shell -->
+    <ellipse cx="98" cy="54" rx="58" ry="19" fill="${bodyColor}" stroke="${outline}" stroke-width="4.5"/>
+    <path d="M 64 48 Q 98 40 132 48 Q 98 70 64 48 Z" fill="${belly}" opacity="0.65"/>
   </svg>`)}`;
 }
 
@@ -531,7 +574,7 @@ function drawFlushHat(ctx, type, animTime = 0) {
   ctx.restore();
 }
 
-// SOUND FX
+// 3. SOUND FX
 class ArcadeAudio {
   constructor() { this.ctx = null; }
   init() {
@@ -560,6 +603,10 @@ class ArcadeAudio {
   crushDown() { this.beep(160, "sawtooth", 0.12, 60, 0.3); }
   clawSpike() { this.beep(540, "sawtooth", 0.2, 110, 0.48); }
   freezeAlert() { this.beep(750, "sine", 0.15, 300, 0.3); }
+  alarm() {
+    this.beep(880, "sawtooth", 0.25, 440, 0.35);
+    setTimeout(() => this.beep(880, "sawtooth", 0.25, 440, 0.35), 280);
+  }
   whistle() {
     this.beep(850, "square", 0.08, 920, 0.2);
     setTimeout(() => this.beep(1050, "square", 0.18, 800, 0.2), 90);
@@ -572,7 +619,88 @@ class ArcadeAudio {
 }
 const sfx = new ArcadeAudio();
 
-// INPUT MANAGEMENT
+// 4. PERSISTENT PLAYER CAREER & QUIP PACKS
+const QUIP_PACKS = {
+  classic: ["Crab Pride!", "Pinch this!", "Gotcha!", "Too slow!"],
+  trash: ["Sit down!", "Free points!", "Need help?", "Is this too fast?"],
+  sailor: ["Shiver me claws!", "Overboard!", "Aye aye, point!", "Barnacle brains!"],
+  zen: ["Flow like water...", "Breathe...", "Balance is key.", "Serenity now."]
+};
+
+let userProfile = {
+  name: "CRAB-1",
+  level: 1,
+  points: 0,
+  wins: 0,
+  quipPack: "classic",
+  explosion: "confetti"
+};
+
+function loadCareer() {
+  try {
+    const saved = localStorage.getItem("crab_volleyball_profile");
+    if (saved) userProfile = Object.assign(userProfile, JSON.parse(saved));
+    document.getElementById("careerLevel").innerText = userProfile.level;
+    document.getElementById("careerPoints").innerText = userProfile.points;
+    document.getElementById("careerWins").innerText = userProfile.wins;
+    document.getElementById("quipPackSelect").value = userProfile.quipPack;
+    document.getElementById("explosionSelect").value = userProfile.explosion;
+  } catch(e) {}
+}
+
+function saveCareerSettings() {
+  userProfile.quipPack = document.getElementById("quipPackSelect").value;
+  userProfile.explosion = document.getElementById("explosionSelect").value;
+  localStorage.setItem("crab_volleyball_profile", JSON.stringify(userProfile));
+}
+
+function openLockerRoom() {
+  sfx.init();
+  loadCareer();
+  document.getElementById("menuPanel").classList.add("hidden");
+  document.getElementById("lockerModal").classList.remove("hidden");
+}
+
+function closeLockerRoom() {
+  document.getElementById("lockerModal").classList.add("hidden");
+  document.getElementById("menuPanel").classList.remove("hidden");
+}
+
+let activeSpeechBubble = null;
+let speechBubbleTimer = 0;
+let explosionParticles = [];
+
+function triggerPointCelebration(scorer) {
+  // Speech Quip
+  const quips = QUIP_PACKS[userProfile.quipPack] || QUIP_PACKS.classic;
+  const quote = quips[Math.floor(Math.random() * quips.length)];
+  activeSpeechBubble = { x: scorer.x, y: scorer.y - 70, text: quote };
+  speechBubbleTimer = 1.8;
+
+  // Particle Explosions
+  const count = 35;
+  for (let i = 0; i < count; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const spd = 120 + Math.random() * 260;
+    explosionParticles.push({
+      x: ball.x, y: ball.y,
+      vx: Math.cos(angle) * spd,
+      vy: Math.sin(angle) * spd,
+      color: userProfile.explosion === "firework" ? (Math.random() > 0.5 ? "#ffeb3b" : "#ff007f") : "#00ffff",
+      life: 0.8
+    });
+  }
+
+  // Tidal shockwave knocks players slightly
+  if (userProfile.explosion === "shockwave") {
+    players.forEach(p => {
+      p.vy = -340;
+      p.angVel = (Math.random() - 0.5) * 12;
+    });
+  }
+}
+
+// 5. INPUT MANAGEMENT
 const keys = {};
 window.addEventListener("keydown", (e) => {
   sfx.init();
@@ -603,15 +731,15 @@ if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
   if (mc) mc.style.display = "flex";
 }
 
-// CRAB PLAYERS (Clean active slot tracking)
+// 6. CRAB PLAYERS (EXACT SPECIFICATIONS: 146px x 58px)
 function createCrab(id, team, x, name = "", isBot = false) {
   return {
     id: id, team: team, x: x, y: FLOOR_Y - 26,
     vx: 0, vy: 0, angle: 0, angVel: 0, hat: "pineapple",
-    name: name, spriteType: "crab", isBot: isBot,
+    name: name, spriteType: "crab", isBot: isBot, activeInGame: false,
     radius: 54, width: 146, height: 58,
     halfW: 73, halfH: 26, isGrounded: true,
-    speed: isBot ? 340 : 510, // Chill bot speed
+    speed: isBot ? 340 : 510,
     canJump: true, jumpHoldTimer: 0
   };
 }
@@ -643,7 +771,7 @@ function showToast(text, dur = 1.2) {
   match.toastTimer = dur;
 }
 
-// PROCEDURAL CLOUDS
+// 7. FLIPPED CLOUDS GENERATOR (Puff arches on bottom, flat top)
 let proceduralClouds = [];
 function generateNewProceduralClouds() {
   proceduralClouds = [];
@@ -660,7 +788,105 @@ function generateNewProceduralClouds() {
 }
 generateNewProceduralClouds();
 
-// PHYSICS UPDATE
+// 8. THE TSUNAMI WARNING VICE CARD & PROCEDURAL PLATFORMER
+let isTsunamiTriggered = false;
+let tsunamiCutsceneTimer = 0;
+let isPlatformerActive = false;
+let tsunamiWaterY = CH + 100;
+let platformerEscapeTimer = 300.0; // 5 minute max timer
+let proceduralPlatforms = [];
+let rescueHelicopter = { x: 800, y: 70 };
+
+function checkTsunamiCutscene(dt) {
+  if (tsunamiCutsceneTimer > 0) {
+    tsunamiCutsceneTimer -= dt;
+    if (tsunamiCutsceneTimer <= 0) {
+      startTsunamiPlatformerEscape();
+    }
+  }
+}
+
+function triggerTsunamiWarning() {
+  isTsunamiTriggered = true;
+  ball.active = false;
+  match.paused = true;
+  sfx.alarm();
+  showToast("🚨 TSUNAMI WARNING! 🚨", 3.0);
+  tsunamiCutsceneTimer = 4.0;
+}
+
+function generateProceduralPlatformer() {
+  proceduralPlatforms = [];
+  // Base starting floor
+  proceduralPlatforms.push({ x: 0, y: FLOOR_Y, w: CW, h: 40 });
+
+  // 16 procedurally generated ascending platforms
+  let lastY = FLOOR_Y - 80;
+  for (let i = 0; i < 18; i++) {
+    const pw = 140 + Math.random() * 120;
+    const px = 100 + Math.random() * (CW - 300);
+    lastY -= (42 + Math.random() * 32);
+    proceduralPlatforms.push({ x: px, y: lastY, w: pw, h: 22 });
+  }
+
+  // Helicopter at summit
+  rescueHelicopter.x = proceduralPlatforms[proceduralPlatforms.length - 1].x + 40;
+  rescueHelicopter.y = lastY - 60;
+}
+
+function startTsunamiPlatformerEscape() {
+  isPlatformerActive = true;
+  match.paused = false;
+  tsunamiWaterY = FLOOR_Y + 120;
+  platformerEscapeTimer = 300.0;
+
+  // Remove CPU bots from match
+  players.forEach(p => {
+    if (p.isBot) p.activeInGame = false;
+  });
+
+  generateProceduralPlatformer();
+  showToast("SURVIVE & CLIMB TO HELICOPTER!", 3.0);
+}
+
+function updatePlatformerMode(dt) {
+  platformerEscapeTimer -= dt;
+  // Slowly rising tsunami water
+  tsunamiWaterY -= 14 * dt;
+
+  // Check player collisions with platforms
+  players.forEach((p, idx) => {
+    if (!p.activeInGame) return;
+
+    proceduralPlatforms.forEach(plat => {
+      if (p.x + p.halfW > plat.x && p.x - p.halfW < plat.x + plat.w) {
+        if (p.y + p.halfH >= plat.y && p.y + p.halfH <= plat.y + 20 && p.vy >= 0) {
+          p.y = plat.y - p.halfH;
+          p.vy = 0;
+          p.isGrounded = true;
+          p.canJump = true;
+        }
+      }
+    });
+
+    // Reached Helicopter Summit
+    const distToHeli = Math.hypot(p.x - rescueHelicopter.x, p.y - rescueHelicopter.y);
+    if (distToHeli < 70) {
+      sfx.cheer();
+      showToast(`${p.name} ESCAPED THE TSUNAMI & WINS! 🚁`, 4.0);
+      match.over = true;
+      setTimeout(() => quitToMenu(), 4000);
+    }
+
+    // Caught by Tsunami Water
+    if (p.y > tsunamiWaterY) {
+      p.y = tsunamiWaterY;
+      p.vy = -200; // Floating
+    }
+  });
+}
+
+// 9. NORMAL MOVEMENT & JUMP PHYSICS
 function updatePlayer(p, input, dt) {
   let speedMultiplier = 1.0;
   if (chosenViceCard && chosenViceCard.effect === "turbo_speed") speedMultiplier = 1.35;
@@ -673,8 +899,9 @@ function updatePlayer(p, input, dt) {
   p.vx += (targetVx - p.vx) * 16 * dt;
   p.x += p.vx * dt;
 
-  const minX = (p.team === 1) ? 80 : NET.x + NET.w + p.radius;
-  const maxX = (p.team === 1) ? NET.x - p.radius : CW - 80;
+  // Restrict to team side during volleyball, or full screen during tsunami platformer
+  const minX = isPlatformerActive ? 40 : ((p.team === 1) ? 80 : NET.x + NET.w + p.radius);
+  const maxX = isPlatformerActive ? CW - 40 : ((p.team === 1) ? NET.x - p.radius : CW - 80);
   if (p.x < minX) { p.x = minX; p.vx = 0; }
   if (p.x > maxX) { p.x = maxX; p.vx = 0; }
 
@@ -765,7 +992,6 @@ function resolveCrabCollisions() {
   }
 }
 
-// CHILL DEFENSIVE BOT AI (NO AGGRESSIVE SPIKES, DOES NOT STEAL SHOTS)
 function getAIInput(p, targetBall) {
   const input = { left: false, right: false, rotLeft: false, rotRight: false, jump: false };
   const homeX = p.team === 1 ? (p.id === 1 ? 280 : 540) : (p.id === 2 ? 1320 : 1060);
@@ -778,13 +1004,11 @@ function getAIInput(p, targetBall) {
     else input.right = true;
   }
 
-  // Chill bot stays upright:
   if (Math.abs(p.angle) > 0.35) {
     if (p.angle > 0) input.rotLeft = true;
     else input.rotRight = true;
   }
 
-  // Soft defensive pop jump only when ball is dropping right above
   if (ballInMyCourt && targetBall.y < 500 && Math.abs(dx) < 60 && p.isGrounded) {
     input.jump = true;
   }
@@ -792,6 +1016,8 @@ function getAIInput(p, targetBall) {
 }
 
 function updateBall(dt) {
+  if (isPlatformerActive) return; // Ball removed in platformer
+
   if (!ball.active) {
     ball.x = CW / 2; ball.y = NET.y - ball.r;
     ball.tipOffTimer -= dt;
@@ -896,6 +1122,12 @@ function updateBall(dt) {
       ball.x += nx * (ball.r - d + 2);
       ball.y += ny * (ball.r - d + 2);
 
+      // Tsunami Warning Trigger Chance upon clean spike hit!
+      if (chosenViceCard && chosenViceCard.effect === "tsunami" && !isTsunamiTriggered) {
+        triggerTsunamiWarning();
+        return;
+      }
+
       const pinballMult = (chosenViceCard && chosenViceCard.effect === "pinball_wobble") ? 1.35 : 1.0;
 
       if (p.y < ball.y - 4 && p.vy > -50) {
@@ -904,7 +1136,6 @@ function updateBall(dt) {
         sfx.crushDown(); return;
       }
 
-      // Humans can spike with active claw swing; bots do passive bumps only
       const isHammerSwing = Math.abs(p.angVel) > 3.0 && !p.isBot;
       const isClawArea = Math.abs(relX) > (boundW * 0.45);
       if (isHammerSwing && isClawArea) {
@@ -917,7 +1148,6 @@ function updateBall(dt) {
         sfx.clawSpike(); showToast("SPIKE! 🔥", 0.4); return;
       }
 
-      // Gentle defensive pop
       ball.vy = -480 * pinballMult;
       ball.vx = (ball.vx * 0.1) + (p.vx * 0.15) + (nx * 60);
 
@@ -928,6 +1158,13 @@ function updateBall(dt) {
 
 function scorePoint(winnerTeam) {
   match.scores[winnerTeam - 1]++;
+  userProfile.points++;
+  if (userProfile.points % 10 === 0) userProfile.level++;
+  saveCareerSettings();
+
+  // Trigger celebration on a random winning team player
+  const scorer = players.find(p => p.activeInGame && p.team === winnerTeam);
+  if (scorer) triggerPointCelebration(scorer);
 
   if (match.scores[winnerTeam - 1] >= 5) {
     match.sets[winnerTeam - 1]++;
@@ -935,7 +1172,9 @@ function scorePoint(winnerTeam) {
 
     if (match.sets[winnerTeam - 1] >= 2) {
       match.over = true;
-      const winnerName = (winnerTeam === 1) ? "TEAM 1" : "TEAM 2";
+      userProfile.wins++;
+      saveCareerSettings();
+      const winnerName = (winnerTeam === 1) ? "TEAM 1 (BLUE)" : "TEAM 2 (RED)";
       showToast(`${winnerName} WINS THE MATCH! 🏆`, 3.5);
       setTimeout(() => {
         document.getElementById("game-section").classList.add("hidden");
@@ -963,13 +1202,15 @@ function resetTipOff() {
   isFrozen = false; freezeCooldown = 8.0;
 }
 
-// RENDERING
+// 10. RENDERING
 let animTimer = 0;
 function render() {
   animTimer += 0.02; raveTimer += 0.05;
 
   if (activeGameMode === "vice") renderViceStyle();
   else renderStandardStyle();
+
+  if (isPlatformerActive) renderPlatformerScene();
 }
 
 function renderStandardStyle() {
@@ -978,7 +1219,7 @@ function renderStandardStyle() {
   proceduralClouds.forEach(c => {
     c.x += c.driftSpd * 0.016;
     if (c.x - c.r * 2 > CW) c.x = -c.r * 2;
-    drawCottonCloud(ctx, c.x, c.y, c.r, "#ffffff");
+    drawFlippedCottonCloud(ctx, c.x, c.y, c.r, "#ffffff");
   });
 
   drawCleanSun(ctx, 420, 100, 36, "#ffd600");
@@ -999,6 +1240,7 @@ function renderStandardStyle() {
   drawNet(ctx, NET.y, "#ffffff", "#ff1744");
   drawPlayersAndBall(ctx);
   drawRetroFlipScoreboard(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], match.sets[0], match.sets[1], "#0288d1", "#d50000");
+  drawParticlesAndQuips();
 }
 
 function renderViceStyle() {
@@ -1015,7 +1257,7 @@ function renderViceStyle() {
   proceduralClouds.forEach(c => {
     c.x += c.driftSpd * 0.016;
     if (c.x - c.r * 2 > CW) c.x = -c.r * 2;
-    drawCottonCloud(ctx, c.x, c.y, c.r, "#f8bbd0");
+    drawFlippedCottonCloud(ctx, c.x, c.y, c.r, "#f8bbd0");
   });
 
   drawViceSun(ctx, 420, 100, 42);
@@ -1039,6 +1281,29 @@ function renderViceStyle() {
 
   drawPlayersAndBall(ctx);
   drawRetroFlipScoreboard(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], match.sets[0], match.sets[1], "#00ffff", "#ff007f");
+  drawParticlesAndQuips();
+}
+
+// 11. FLIPPED COTTON-BALL CLOUDS (Puffs on bottom, flat top)
+function drawFlippedCottonCloud(ctx, x, y, r, fillColor) {
+  ctx.save();
+  ctx.fillStyle = fillColor; ctx.strokeStyle = "#000000"; ctx.lineWidth = 3.0;
+  // Invert Y puffs so they hang downward as requested
+  const puffs = [
+    { dx: -r * 0.9, dy: -r * 0.1, rad: r * 0.65 },
+    { dx: -r * 0.45, dy: r * 0.4, rad: r * 0.85 },
+    { dx: r * 0.2, dy: r * 0.5, rad: r * 0.95 },
+    { dx: r * 0.8, dy: r * 0.2, rad: r * 0.75 },
+    { dx: r * 1.2, dy: -r * 0.15, rad: r * 0.55 },
+    { dx: 0, dy: -r * 0.2, rad: r * 0.7 } // Flat top line
+  ];
+  puffs.forEach(p => {
+    ctx.beginPath(); ctx.arc(x + p.dx, y + p.dy, p.rad, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+  });
+  puffs.forEach(p => {
+    ctx.beginPath(); ctx.arc(x + p.dx, y + p.dy, p.rad - 1.5, 0, Math.PI * 2); ctx.fill();
+  });
+  ctx.restore();
 }
 
 function drawViceHighwayAndCars(ctx, y) {
@@ -1055,25 +1320,13 @@ function drawViceHighwayAndCars(ctx, y) {
   VICE_CARS.forEach(car => {
     car.x += car.spd * 0.016;
     if (car.x > CW + 80) car.x = -80;
-
     ctx.save();
     ctx.translate(car.x, y + 4);
     ctx.fillStyle = car.color;
     ctx.beginPath();
-    ctx.moveTo(0, 14); ctx.lineTo(10, 8); ctx.lineTo(24, 6); ctx.lineTo(38, 14); ctx.closePath();
-    ctx.fill();
-
-    ctx.fillStyle = "#050014";
-    ctx.beginPath();
-    ctx.moveTo(12, 8); ctx.lineTo(22, 7); ctx.lineTo(24, 11); ctx.lineTo(11, 11); ctx.closePath();
-    ctx.fill();
-
-    ctx.fillStyle = "#000000";
-    ctx.beginPath(); ctx.arc(8, 14, 3.5, 0, Math.PI * 2); ctx.fill();
+    ctx.moveTo(0, 14); ctx.lineTo(10, 8); ctx.lineTo(24, 6); ctx.lineTo(38, 14); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = "#000"; ctx.beginPath(); ctx.arc(8, 14, 3.5, 0, Math.PI * 2); ctx.fill();
     ctx.beginPath(); ctx.arc(30, 14, 3.5, 0, Math.PI * 2); ctx.fill();
-
-    ctx.fillStyle = "#ff1744"; ctx.fillRect(-1, 8, 3, 3);
-    ctx.fillStyle = "#00ffff"; ctx.fillRect(38, 10, 3, 3);
     ctx.restore();
   });
 }
@@ -1081,47 +1334,19 @@ function drawViceHighwayAndCars(ctx, y) {
 function drawFluffyTreeIsland(ctx, x, y, foliageColor, sandColor) {
   ctx.save();
   ctx.translate(x, y);
-
   ctx.fillStyle = sandColor; ctx.strokeStyle = "#000000"; ctx.lineWidth = 3.0;
   ctx.beginPath(); ctx.ellipse(0, 0, 135, 46, 0, 0, Math.PI); ctx.fill(); ctx.stroke();
-
   ctx.strokeStyle = "#5d4037"; ctx.lineWidth = 15; ctx.lineCap = "round";
   ctx.beginPath(); ctx.moveTo(25, -2); ctx.quadraticCurveTo(55, -60, 38, -120); ctx.stroke();
-
   ctx.translate(38, -120);
   const leafPuffs = [
     { dx: -30, dy: -6, rad: 28 }, { dx: -10, dy: -28, rad: 34 },
     { dx: 22, dy: -22, rad: 32 }, { dx: 36, dy: 6, rad: 26 },
     { dx: 8, dy: 10, rad: 28 }, { dx: -16, dy: 8, rad: 26 }
   ];
-
   ctx.fillStyle = foliageColor; ctx.strokeStyle = "#000000"; ctx.lineWidth = 3.0;
-  leafPuffs.forEach(p => {
-    ctx.beginPath(); ctx.arc(p.dx, p.dy, p.rad, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-  });
-  leafPuffs.forEach(p => {
-    ctx.beginPath(); ctx.arc(p.dx, p.dy, p.rad - 1.5, 0, Math.PI * 2); ctx.fill();
-  });
-  ctx.restore();
-}
-
-function drawCottonCloud(ctx, x, y, r, fillColor) {
-  ctx.save();
-  ctx.fillStyle = fillColor; ctx.strokeStyle = "#000000"; ctx.lineWidth = 3.0;
-  const puffs = [
-    { dx: -r * 0.9, dy: r * 0.1, rad: r * 0.65 },
-    { dx: -r * 0.45, dy: -r * 0.4, rad: r * 0.85 },
-    { dx: r * 0.2, dy: -r * 0.5, rad: r * 0.95 },
-    { dx: r * 0.8, dy: -r * 0.2, rad: r * 0.75 },
-    { dx: r * 1.2, dy: r * 0.15, rad: r * 0.55 },
-    { dx: 0, dy: r * 0.2, rad: r * 0.7 }
-  ];
-  puffs.forEach(p => {
-    ctx.beginPath(); ctx.arc(x + p.dx, y + p.dy, p.rad, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-  });
-  puffs.forEach(p => {
-    ctx.beginPath(); ctx.arc(x + p.dx, y + p.dy, p.rad - 1.5, 0, Math.PI * 2); ctx.fill();
-  });
+  leafPuffs.forEach(p => { ctx.beginPath(); ctx.arc(p.dx, p.dy, p.rad, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); });
+  leafPuffs.forEach(p => { ctx.beginPath(); ctx.arc(p.dx, p.dy, p.rad - 1.5, 0, Math.PI * 2); ctx.fill(); });
   ctx.restore();
 }
 
@@ -1158,18 +1383,19 @@ function drawNet(ctx, netY, poleColor, capColor) {
 function drawPlayersAndBall(ctx) {
   players.forEach((p, idx) => {
     if (!p.activeInGame) return;
-
     ctx.save();
     ctx.translate(p.x, p.y);
-
     ctx.fillStyle = "rgba(0, 0, 0, 0.24)";
     ctx.beginPath(); ctx.ellipse(0, FLOOR_Y - p.y - 2, p.radius * 1.15, 8, 0, 0, Math.PI * 2); ctx.fill();
-
     ctx.rotate(p.angle);
+
     if (chosenViceCard && chosenViceCard.effect === "mini_crabs") ctx.scale(0.68, 0.68);
 
+    // DRAW UNLOCKED CHARACTERS (DOBY, METEOROLOGIST, OR CRABS)
     if (p.spriteType === "doby") {
       ctx.drawImage(dobyImg, -p.width / 2, -p.height / 2, p.width, p.height);
+    } else if (p.spriteType === "met") {
+      ctx.drawImage(metImg, -p.width / 2, -p.height / 2, p.width, p.height);
     } else {
       const img = (p.team === 1) ? crabImgTeam1 : crabImgTeam2;
       ctx.drawImage(img, -p.width / 2, -p.height / 2, p.width, p.height);
@@ -1202,14 +1428,12 @@ function drawPlayersAndBall(ctx) {
 
   ctx.save();
   ctx.translate(ball.x, ball.y);
-
   if (isFrozen) {
     ctx.fillStyle = "rgba(128, 222, 234, 0.75)";
     ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 3;
     ctx.strokeRect(-ball.r - 8, -ball.r - 8, (ball.r + 8) * 2, (ball.r + 8) * 2);
     ctx.fillRect(-ball.r - 8, -ball.r - 8, (ball.r + 8) * 2, (ball.r + 8) * 2);
   }
-
   ctx.rotate(ball.rot);
   ctx.fillStyle = "#ffffff";
   ctx.beginPath(); ctx.arc(0, 0, ball.r, 0, Math.PI * 2); ctx.fill();
@@ -1225,10 +1449,41 @@ function drawPlayersAndBall(ctx) {
     ctx.fillStyle = "#ffcc00";
     ctx.beginPath(); ctx.arc(0, 0, ball.r, 1.45, 2.75); ctx.lineTo(0, 0); ctx.fill();
   }
-
   ctx.strokeStyle = "#111"; ctx.lineWidth = 2.2;
   ctx.beginPath(); ctx.arc(0, 0, ball.r, 0, Math.PI * 2); ctx.stroke();
   ctx.restore();
+}
+
+function drawParticlesAndQuips() {
+  // Speech Bubble
+  if (activeSpeechBubble && speechBubbleTimer > 0) {
+    ctx.save();
+    ctx.font = "bold 15px sans-serif";
+    ctx.fillStyle = "#ffffff";
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = 3.5;
+    const txtW = ctx.measureText(activeSpeechBubble.text).width;
+    ctx.fillRect(activeSpeechBubble.x - txtW / 2 - 8, activeSpeechBubble.y - 14, txtW + 16, 26);
+    ctx.strokeRect(activeSpeechBubble.x - txtW / 2 - 8, activeSpeechBubble.y - 14, txtW + 16, 26);
+    ctx.fillStyle = "#000000";
+    ctx.textAlign = "center";
+    ctx.fillText(activeSpeechBubble.text, activeSpeechBubble.x, activeSpeechBubble.y + 4);
+    ctx.restore();
+  }
+
+  // Explosions
+  for (let i = explosionParticles.length - 1; i >= 0; i--) {
+    const ep = explosionParticles[i];
+    ep.x += ep.vx * 0.016;
+    ep.y += ep.vy * 0.016;
+    ep.life -= 0.016;
+    if (ep.life <= 0) {
+      explosionParticles.splice(i, 1);
+      continue;
+    }
+    ctx.fillStyle = ep.color;
+    ctx.beginPath(); ctx.arc(ep.x, ep.y, 4, 0, Math.PI * 2); ctx.fill();
+  }
 }
 
 function drawRetroFlipScoreboard(ctx, x, y, s1, s2, sets1, sets2, c1, c2) {
@@ -1262,11 +1517,47 @@ function drawSingleFlipCard(ctx, x, y, w, h, score, sets, scoreColor) {
   ctx.fillText(score, x + w / 2, y + h / 2 + 5);
 }
 
-// MAIN LOOP
+// 12. RENDER PROCEDURAL TSUNAMI PLATFORMER
+function renderPlatformerScene() {
+  // Rising Tsunami Water Wave
+  ctx.fillStyle = "rgba(0, 180, 216, 0.75)";
+  ctx.fillRect(0, tsunamiWaterY, CW, CH - tsunamiWaterY);
+  ctx.fillStyle = "#ffffff";
+  for (let x = 0; x < CW; x += 36) {
+    ctx.beginPath(); ctx.arc(x + 18, tsunamiWaterY, 12, 0, Math.PI); ctx.fill();
+  }
+
+  // Procedural Platforms
+  ctx.fillStyle = "#d4a76a";
+  ctx.strokeStyle = "#000";
+  ctx.lineWidth = 3;
+  proceduralPlatforms.forEach(p => {
+    ctx.fillRect(p.x, p.y, p.w, p.h);
+    ctx.strokeRect(p.x, p.y, p.w, p.h);
+  });
+
+  // Rescue Helicopter
+  ctx.save();
+  ctx.translate(rescueHelicopter.x, rescueHelicopter.y);
+  ctx.fillStyle = "#ef4444";
+  ctx.fillRect(-35, -16, 70, 32);
+  ctx.fillStyle = "#000";
+  // Spinning rotor
+  const rW = Math.sin(animTimer * 20) * 60;
+  ctx.fillRect(-rW / 2, -24, rW, 4);
+  ctx.font = "bold 11px sans-serif";
+  ctx.fillStyle = "#fff";
+  ctx.fillText("RESCUE", -24, 4);
+  ctx.restore();
+}
+
+// 13. MAIN LOOP
 let lastT = performance.now();
 function gameLoop(now) {
   const dt = Math.min((now - lastT) / 1000, 0.05);
   lastT = now;
+
+  if (speechBubbleTimer > 0) speechBubbleTimer -= dt;
 
   if (!match.paused && !match.over && !document.getElementById("game-section").classList.contains("hidden")) {
     const myInput = {
@@ -1291,9 +1582,13 @@ function gameLoop(now) {
 
     resolveCrabCollisions();
 
-    if (!match.isOnline || isHost) {
-      updateBall(dt);
-      if (match.isOnline && isHost) broadcastGameState();
+    if (isPlatformerActive) {
+      updatePlatformerMode(dt);
+    } else {
+      if (!match.isOnline || isHost) {
+        updateBall(dt);
+        if (match.isOnline && isHost) broadcastGameState();
+      }
     }
 
     if (match.toastTimer > 0) {
@@ -1302,12 +1597,13 @@ function gameLoop(now) {
     }
   }
 
+  checkTsunamiCutscene(dt);
   render();
   requestAnimationFrame(gameLoop);
 }
 requestAnimationFrame(gameLoop);
 
-// SOCIAL PRE-LOBBY UI WITH NO PHANTOM BOTS
+// 14. SOCIAL PRE-LOBBY UI WITH ACCURATE LIVE SYNC
 function refreshLobbyUI() {
   const t1 = document.getElementById("team1Players");
   const t2 = document.getElementById("team2Players");
@@ -1318,11 +1614,14 @@ function refreshLobbyUI() {
   let count2 = 0;
 
   players.forEach((p, idx) => {
-    // Only real connected human players show in lobby
+    // Show only active connected humans (No phantom bots)
     if (idx === match.myPlayerIndex || (match.isOnline && peersConnected[idx] && !p.isBot)) {
       const card = document.createElement("div");
       card.className = "player-card" + (idx === match.myPlayerIndex ? " is-me" : "");
-      const charTag = p.spriteType === "doby" ? "🐶 DOBY" : "🦀 CRAB";
+      let charTag = "🦀 CRAB";
+      if (p.spriteType === "doby") charTag = "🐶 DOBY";
+      if (p.spriteType === "met") charTag = "🎙️ MET";
+
       card.innerHTML = `<span>${p.name} (${charTag})</span><span>🎩 ${p.hat.toUpperCase()}</span>`;
 
       if (p.team === 1) {
@@ -1338,7 +1637,6 @@ function refreshLobbyUI() {
   document.getElementById("team1Count").innerText = count1;
   document.getElementById("team2Count").innerText = count2;
 
-  // Enforce Max 2 per team
   document.getElementById("joinTeam1Btn").disabled = (count1 >= 2 && players[match.myPlayerIndex].team !== 1);
   document.getElementById("joinTeam2Btn").disabled = (count2 >= 2 && players[match.myPlayerIndex].team !== 2);
 
@@ -1361,7 +1659,9 @@ function updateMyCustoms() {
   const hatSelect = document.getElementById("hatSelect");
   const safe = sanitizePlayerName(nameInput.value, `P${match.myPlayerIndex + 1}`);
   players[match.myPlayerIndex].name = safe;
+  userProfile.name = safe;
   players[match.myPlayerIndex].hat = hatSelect.value;
+  saveCareerSettings();
   refreshLobbyUI();
   if (match.isOnline) broadcastPlayerCustoms();
 }
@@ -1372,7 +1672,13 @@ function applySecretCode() {
   const statusEl = document.getElementById("secretStatus");
   if (code === "doby") {
     players[match.myPlayerIndex].spriteType = "doby";
-    statusEl.innerText = "UNLOCKED! 🐶";
+    statusEl.innerText = "UNLOCKED DOBY! 🐶";
+    sfx.cheer();
+    refreshLobbyUI();
+    if (match.isOnline) broadcastPlayerCustoms();
+  } else if (code === "met") {
+    players[match.myPlayerIndex].spriteType = "met";
+    statusEl.innerText = "UNLOCKED METEOROLOGIST! 🎙️";
     sfx.cheer();
     refreshLobbyUI();
     if (match.isOnline) broadcastPlayerCustoms();
@@ -1402,12 +1708,9 @@ function showSubmodeSelect(context) {
 function voteOrSelectSubmode(mode) {
   sfx.init();
   if (match.isOnline) {
-    // Both host and guests can vote on the mode!
     if (!isHost) {
       peerConnections[0].send({ type: "VOTE_SUBMODE", mode: mode });
-      document.getElementById("submodeSubtitle").innerText = `Voted for ${mode.toUpperCase()}! Waiting for room...`;
-      document.getElementById("standardModeBtn").disabled = true;
-      document.getElementById("viceModeBtn").disabled = true;
+      document.getElementById("submodeSubtitle").innerText = `Voted for ${mode.toUpperCase()}! Waiting...`;
       return;
     }
   }
@@ -1514,9 +1817,7 @@ function launchGame() {
   match.scores = [0, 0]; match.sets = [0, 0];
   match.currentSet = 1; match.over = false;
 
-  // Configure active crabs (humans + optional filler bots)
   configureActiveCourtPlayers();
-
   updateCrabSprites();
   generateNewProceduralClouds();
 
@@ -1535,23 +1836,19 @@ function launchGame() {
   }
 }
 
-// SETUP ACTIVE PLAYERS & FILL EMPTY WITH CHILL BOTS
 function configureActiveCourtPlayers() {
-  // Reset all to inactive
   players.forEach(p => p.activeInGame = false);
 
   if (!match.isOnline) {
-    // Solo: P1 + 1 teammate bot, 2 opponent bots
     players[0].activeInGame = true;
     players[0].team = 1;
-    players[1].activeInGame = true; // Opponent bot
+    players[1].activeInGame = true;
     players[1].isBot = true; players[1].name = "BOT-1"; players[1].team = 2;
-    players[2].activeInGame = true; // Teammate bot
+    players[2].activeInGame = true;
     players[2].isBot = true; players[2].name = "BOT-TEAM"; players[2].team = 1;
-    players[3].activeInGame = true; // Opponent bot 2
+    players[3].activeInGame = true;
     players[3].isBot = true; players[3].name = "BOT-2"; players[3].team = 2;
   } else {
-    // Online: Activate real connected humans
     players.forEach((p, idx) => {
       if (idx === match.myPlayerIndex || peersConnected[idx]) {
         p.activeInGame = true;
@@ -1559,11 +1856,7 @@ function configureActiveCourtPlayers() {
       }
     });
 
-    // Check if host wants to fill empty spots with chill bots
     if (fillEmptyWithBots) {
-      const team1Count = players.filter(p => p.activeInGame && p.team === 1).length;
-      const team2Count = players.filter(p => p.activeInGame && p.team === 2).length;
-
       let nextSlot = 0;
       while (nextSlot < 4) {
         if (!players[nextSlot].activeInGame) {
@@ -1586,7 +1879,6 @@ function configureActiveCourtPlayers() {
     }
   }
 
-  // Set positions according to assigned teams
   let t1Idx = 0; let t2Idx = 0;
   players.forEach(p => {
     if (p.activeInGame) {
@@ -1615,6 +1907,7 @@ function quitToMenu() {
   document.getElementById("game-section").classList.add("hidden");
   document.getElementById("socialLobbyModal").classList.add("hidden");
   document.getElementById("menuPanel").classList.remove("hidden");
+  isPlatformerActive = false;
   stopAllMusic();
 }
 
@@ -1631,7 +1924,7 @@ function startHostGameSetup() {
   }
 }
 
-// MULTIPLAYER WEBRTC
+// 15. MULTIPLAYER WEBRTC (TWO-WAY TWO-SCREEN LOBBY SYNC)
 let peer = null;
 let isHost = false;
 const peerConnections = [];
@@ -1647,7 +1940,7 @@ function hostRoom() {
     peer.on("open", (id) => {
       isHost = true;
       match.myPlayerIndex = 0;
-      players[0].name = "HOST";
+      players[0].name = userProfile.name || "HOST";
       players[0].team = 1;
       players[0].isBot = false;
       document.getElementById("myCodeText").innerText = id;
@@ -1679,6 +1972,7 @@ function hostRoom() {
           fillBots: fillEmptyWithBots
         });
         refreshLobbyUI();
+        broadcastPlayerCustoms();
       });
 
       conn.on("data", (data) => {
@@ -1691,7 +1985,6 @@ function hostRoom() {
           broadcastPlayerCustoms();
         }
         if (data.type === "VOTE_SUBMODE") {
-          // If guest votes for vice or standard, host accepts and moves everyone along!
           executeSubmodeSelect(data.mode);
         }
         if (data.type === "CAST_VOTE") {
@@ -1727,7 +2020,7 @@ function joinRoom() {
         peerConnections[0] = conn;
         document.getElementById("menuPanel").classList.add("hidden");
         document.getElementById("socialLobbyModal").classList.remove("hidden");
-        document.getElementById("botOptionRow").classList.add("hidden"); // Host only controls bots
+        document.getElementById("botOptionRow").classList.add("hidden");
       });
 
       conn.on("data", (data) => {
@@ -1871,6 +2164,9 @@ function broadcastGameState() {
     if (c && c.open) c.send(data);
   });
 }
+
+// Load career on start
+loadCareer();
 </script>
 </body>
 </html>
