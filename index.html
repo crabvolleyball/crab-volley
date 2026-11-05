@@ -32,10 +32,15 @@ header {
   text-shadow: 3px 3px 0 #d83a00, 4px 4px 0 #000; letter-spacing: 1px;
 }
 .brand span { color: #fff; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
 .room-badge {
   background: #fff; color: #111; font-size: 13px; font-weight: bold;
   padding: 4px 12px; border-radius: 8px; border: 3px solid #000;
   box-shadow: 2px 2px 0 #000; font-family: sans-serif;
+}
+.audio-btn {
+  background: #ffcc00; border: 3px solid #000; border-radius: 8px;
+  font-size: 15px; padding: 3px 10px; cursor: pointer; box-shadow: 2px 2px 0 #000;
 }
 
 main {
@@ -139,17 +144,19 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow
 .card-desc { font-size: 12px; font-family: sans-serif; font-weight: bold; color: #e0e7ff; line-height: 1.2; }
 .vote-count { font-size: 13px; color: #00ffff; font-family: monospace; font-weight: 900; margin-top: 6px; }
 
-/* IN-GAME VIEW */
+/* IN-GAME VIEW & PREVENT BOTTOM SCOREBOARD CUTOFF */
 #game-section {
   width: 100%; height: 100%; display: flex; flex-direction: column;
   align-items: center; justify-content: center; position: relative;
+  padding-bottom: 4px;
 }
 .canvas-holder {
   position: relative; width: 100%; height: 100%;
   display: flex; align-items: center; justify-content: center;
+  max-height: 78vh; /* Prevents border cut-off */
 }
 canvas {
-  max-width: 100%; max-height: 80vh; aspect-ratio: 1600 / 850;
+  max-width: 100%; max-height: 100%; aspect-ratio: 1600 / 850;
   object-fit: contain; border: 5px solid #0a1c02; border-radius: 14px;
   background: #00aced; box-shadow: 0 10px 28px rgba(0,0,0,0.6);
   touch-action: none;
@@ -192,7 +199,10 @@ canvas {
 <div id="app">
   <header>
     <div class="brand">🦀 CRAB <span>VOLLEYBALL</span></div>
-    <div id="roomBadge" class="room-badge">Cabinet Arcade 2v2</div>
+    <div class="header-actions">
+      <button id="muteAudioBtn" class="audio-btn" onclick="toggleMuteAudio()">🔊</button>
+      <div id="roomBadge" class="room-badge">Cabinet Arcade 2v2</div>
+    </div>
   </header>
 
   <main>
@@ -242,8 +252,15 @@ canvas {
         </div>
       </div>
 
-      <!-- PERSONAL CUSTOMIZATION -->
+      <!-- BOT FILL OPTION & CUSTOMIZATION -->
       <div class="customizer-box">
+        <div class="custom-row" id="botOptionRow">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:900;color:#1b5e20;">
+            <input type="checkbox" id="fillBotsCheck" checked onchange="toggleBotFill()">
+            🤖 FILL EMPTY SLOTS WITH CHILL BOTS
+          </label>
+        </div>
+
         <div class="custom-row">
           <b>YOUR NAME:</b>
           <input id="playerNameInput" class="custom-input" maxlength="12" placeholder="NAME" onchange="updateMyCustoms()">
@@ -277,8 +294,8 @@ canvas {
       <p class="sub" id="submodeSubtitle">Select your game environment and ruleset</p>
 
       <div class="btn-grid">
-        <button class="big primary" id="standardModeBtn" onclick="selectGameSubmode('standard')">☀️ STANDARD BEACH</button>
-        <button class="big vice-btn" id="viceModeBtn" onclick="selectGameSubmode('vice')">🌴 VICE MODE</button>
+        <button class="big primary" id="standardModeBtn" onclick="voteOrSelectSubmode('standard')">☀️ STANDARD BEACH</button>
+        <button class="big vice-btn" id="viceModeBtn" onclick="voteOrSelectSubmode('vice')">🌴 VICE MODE</button>
       </div>
       <div style="margin-top:16px;">
         <button onclick="backToLobbyOrMenu()" style="padding:6px 14px;font-size:13px;">BACK</button>
@@ -342,6 +359,39 @@ let BASE_BALL_GRAV = 550;
 let BALL_GRAV = 550;
 const NET = { x: CW / 2 - 4, y: 550, w: 8, h: FLOOR_Y - 550 };
 
+// SOUNDTRACKS (Plays & loops on demand)
+const standardBgm = new Audio("./fizzion.mp3");
+standardBgm.loop = true;
+const viceBgm = new Audio("./humblephonics.wav");
+viceBgm.loop = true;
+let isAudioMuted = false;
+
+function playModeMusic() {
+  if (isAudioMuted) return;
+  standardBgm.pause();
+  viceBgm.pause();
+  if (activeGameMode === "vice") {
+    viceBgm.currentTime = 0;
+    viceBgm.play().catch(() => {});
+  } else {
+    standardBgm.currentTime = 0;
+    standardBgm.play().catch(() => {});
+  }
+}
+
+function stopAllMusic() {
+  standardBgm.pause();
+  viceBgm.pause();
+}
+
+function toggleMuteAudio() {
+  isAudioMuted = !isAudioMuted;
+  const btn = document.getElementById("muteAudioBtn");
+  btn.innerText = isAudioMuted ? "🔇" : "🔊";
+  if (isAudioMuted) stopAllMusic();
+  else playModeMusic();
+}
+
 // PROFANITY FILTER
 const BANNED_WORDS = [
   "fuck", "shit", "bitch", "asshole", "cunt", "nigger", "nigga",
@@ -360,27 +410,9 @@ function sanitizePlayerName(rawName, fallback = "CRAB") {
   return clean || fallback;
 }
 
-// 1. EXACT "DOBY" IMAGE SPRITE (Referenced directly from your GitHub directory)
+// DOBY SPRITE
 const dobyImg = new Image();
-dobyImg.src = "./doby.png"; // Loads your exact image file uploaded to GitHub
-
-// Fallback high-res data URI if offline/local
-const dobyFallbackSVG = `data:image/svg+xml;utf8,${encodeURIComponent(`
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
-  <ellipse cx="98" cy="55" rx="56" ry="24" fill="#e0b88f" stroke="#221105" stroke-width="4"/>
-  <path d="M 40 70 Q 24 82 20 84" stroke="#221105" stroke-width="8" stroke-linecap="round"/>
-  <path d="M 140 70 Q 156 82 160 84" stroke="#221105" stroke-width="8" stroke-linecap="round"/>
-  <circle cx="98" cy="38" r="32" fill="#ffd5be" stroke="#221105" stroke-width="4"/>
-  <polygon points="76,20 62,0 84,14" fill="#ffd5be" stroke="#221105" stroke-width="3"/>
-  <polygon points="120,20 134,0 112,14" fill="#ffd5be" stroke="#221105" stroke-width="3"/>
-  <circle cx="86" cy="36" r="7" fill="#111"/>
-  <circle cx="110" cy="36" r="7" fill="#111"/>
-  <ellipse cx="98" cy="44" rx="4" ry="3" fill="#331105"/>
-</svg>`)}`;
-
-dobyImg.onerror = () => {
-  if (dobyImg.src !== dobyFallbackSVG) dobyImg.src = dobyFallbackSVG;
-};
+dobyImg.src = "./doby.png";
 
 // 10 VICE CARDS
 const ALL_VICE_CARDS = [
@@ -401,6 +433,7 @@ let chosenViceCard = null;
 let currentDrawnCards = [];
 let pendingModeContext = "solo";
 let cardVotes = [0, 0, 0];
+let fillEmptyWithBots = true;
 let raveTimer = 0;
 let freezeCooldown = 8.0;
 let isFrozen = false;
@@ -570,23 +603,24 @@ if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
   if (mc) mc.style.display = "flex";
 }
 
-// CRAB PLAYERS (EXACT SPECIFICATIONS: 146px width x 58px height)
-function createCrab(id, team, x, name = "") {
+// CRAB PLAYERS (Clean active slot tracking)
+function createCrab(id, team, x, name = "", isBot = false) {
   return {
     id: id, team: team, x: x, y: FLOOR_Y - 26,
     vx: 0, vy: 0, angle: 0, angVel: 0, hat: "pineapple",
-    name: name || `P${id}`, spriteType: "crab",
+    name: name, spriteType: "crab", isBot: isBot,
     radius: 54, width: 146, height: 58,
     halfW: 73, halfH: 26, isGrounded: true,
-    speed: 510, canJump: true, jumpHoldTimer: 0
+    speed: isBot ? 340 : 510, // Chill bot speed
+    canJump: true, jumpHoldTimer: 0
   };
 }
 
 let players = [
-  createCrab(1, 1, 260, "HOST"),
-  createCrab(2, 1, 560, "CRAB-2"),
-  createCrab(3, 2, 1040, "CRAB-3"),
-  createCrab(4, 2, 1340, "CRAB-4")
+  createCrab(1, 1, 260, "HOST", false),
+  createCrab(2, 2, 1340, "BOT", true),
+  createCrab(3, 1, 560, "BOT", true),
+  createCrab(4, 2, 1040, "BOT", true)
 ];
 
 const ball = {
@@ -699,6 +733,8 @@ function resolveCrabCollisions() {
   for (let i = 0; i < players.length; i++) {
     for (let j = i + 1; j < players.length; j++) {
       const p1 = players[i]; const p2 = players[j];
+      if (!p1.activeInGame || !p2.activeInGame) continue;
+
       const dx = p2.x - p1.x; const dy = p2.y - p1.y;
       const dist = Math.hypot(dx, dy);
       const minDistance = (chosenViceCard && chosenViceCard.effect === "mini_crabs") ? 55 : 78;
@@ -729,30 +765,27 @@ function resolveCrabCollisions() {
   }
 }
 
+// CHILL DEFENSIVE BOT AI (NO AGGRESSIVE SPIKES, DOES NOT STEAL SHOTS)
 function getAIInput(p, targetBall) {
   const input = { left: false, right: false, rotLeft: false, rotRight: false, jump: false };
-  const homeX = p.team === 1 ? (p.id === 1 ? 280 : 580) : (p.id === 3 ? 1020 : 1320);
+  const homeX = p.team === 1 ? (p.id === 1 ? 280 : 540) : (p.id === 2 ? 1320 : 1060);
   const ballInMyCourt = (p.team === 1 && targetBall.x < CW / 2) || (p.team === 2 && targetBall.x >= CW / 2);
   const targetX = ballInMyCourt ? targetBall.x : homeX;
 
   const dx = targetX - p.x;
-  if (Math.abs(dx) > 22) {
+  if (Math.abs(dx) > 30) {
     if (dx < 0) input.left = true;
     else input.right = true;
   }
 
+  // Chill bot stays upright:
   if (Math.abs(p.angle) > 0.35) {
     if (p.angle > 0) input.rotLeft = true;
     else input.rotRight = true;
   }
 
-  const distToBall = Math.hypot(targetBall.x - p.x, targetBall.y - p.y);
-  if (ballInMyCourt && distToBall < 115 && targetBall.y < p.y) {
-    if (p.team === 1) input.rotRight = true;
-    else input.rotLeft = true;
-  }
-
-  if (ballInMyCourt && targetBall.y < 580 && Math.abs(dx) < 75 && p.isGrounded) {
+  // Soft defensive pop jump only when ball is dropping right above
+  if (ballInMyCourt && targetBall.y < 500 && Math.abs(dx) < 60 && p.isGrounded) {
     input.jump = true;
   }
   return input;
@@ -836,6 +869,8 @@ function updateBall(dt) {
 
   for (let i = 0; i < players.length; i++) {
     const p = players[i];
+    if (!p.activeInGame) continue;
+
     const cosA = Math.cos(-p.angle); const sinA = Math.sin(-p.angle);
     const relX = cosA * (ball.x - p.x) - sinA * (ball.y - p.y);
     const relY = sinA * (ball.x - p.x) + cosA * (ball.y - p.y);
@@ -869,7 +904,8 @@ function updateBall(dt) {
         sfx.crushDown(); return;
       }
 
-      const isHammerSwing = Math.abs(p.angVel) > 3.0;
+      // Humans can spike with active claw swing; bots do passive bumps only
+      const isHammerSwing = Math.abs(p.angVel) > 3.0 && !p.isBot;
       const isClawArea = Math.abs(relX) > (boundW * 0.45);
       if (isHammerSwing && isClawArea) {
         const swingSpeed = Math.abs(p.angVel) * 56;
@@ -881,13 +917,9 @@ function updateBall(dt) {
         sfx.clawSpike(); showToast("SPIKE! 🔥", 0.4); return;
       }
 
-      if (Math.abs(relX) > (boundW * 0.65)) {
-        ball.vx = (Math.sign(relX) * 360 + p.vx * 0.4) * pinballMult;
-        ball.vy = -380 * pinballMult;
-      } else {
-        ball.vy = -480 * pinballMult;
-        ball.vx = (ball.vx * 0.1) + (p.vx * 0.15) + (nx * 60);
-      }
+      // Gentle defensive pop
+      ball.vy = -480 * pinballMult;
+      ball.vx = (ball.vx * 0.1) + (p.vx * 0.15) + (nx * 60);
 
       sfx.bodyBump(); return;
     }
@@ -908,6 +940,7 @@ function scorePoint(winnerTeam) {
       setTimeout(() => {
         document.getElementById("game-section").classList.add("hidden");
         document.getElementById("menuPanel").classList.remove("hidden");
+        stopAllMusic();
       }, 3500);
       return;
     }
@@ -1122,9 +1155,10 @@ function drawNet(ctx, netY, poleColor, capColor) {
   ctx.beginPath(); ctx.arc(NET.x + NET.w / 2, netY - 2, 7, 0, Math.PI * 2); ctx.fill();
 }
 
-// DRAW CHARACTERS (CRABS OR SECRET DOBY IMAGE RESIZED TO 146x58)
 function drawPlayersAndBall(ctx) {
   players.forEach((p, idx) => {
+    if (!p.activeInGame) return;
+
     ctx.save();
     ctx.translate(p.x, p.y);
 
@@ -1134,7 +1168,6 @@ function drawPlayersAndBall(ctx) {
     ctx.rotate(p.angle);
     if (chosenViceCard && chosenViceCard.effect === "mini_crabs") ctx.scale(0.68, 0.68);
 
-    // DRAW UNLOCKED DOBY PHOTO OR CRAB
     if (p.spriteType === "doby") {
       ctx.drawImage(dobyImg, -p.width / 2, -p.height / 2, p.width, p.height);
     } else {
@@ -1144,7 +1177,7 @@ function drawPlayersAndBall(ctx) {
 
     drawFlushHat(ctx, p.hat, animTimer);
 
-    // Name over head
+    // Player name
     ctx.font = "900 13px sans-serif";
     ctx.fillStyle = "#ffffff"; ctx.strokeStyle = "#000000"; ctx.lineWidth = 3;
     ctx.textAlign = "center";
@@ -1154,7 +1187,6 @@ function drawPlayersAndBall(ctx) {
     ctx.restore();
   });
 
-  // Trail
   for (let i = 0; i < ball.trail.length; i++) {
     const tr = ball.trail[i];
     const progress = (i + 1) / ball.trail.length;
@@ -1164,7 +1196,6 @@ function drawPlayersAndBall(ctx) {
     ctx.beginPath(); ctx.arc(tr.x, tr.y, radius, 0, Math.PI * 2); ctx.fill();
   }
 
-  // Shadow
   const shadowScale = Math.max(0.3, 1 - (FLOOR_Y - ball.y) / 550);
   ctx.fillStyle = "rgba(0, 0, 0, 0.22)";
   ctx.beginPath(); ctx.ellipse(ball.x, FLOOR_Y + 2, ball.r * shadowScale, 5 * shadowScale, 0, 0, Math.PI * 2); ctx.fill();
@@ -1249,9 +1280,9 @@ function gameLoop(now) {
     updatePlayer(players[match.myPlayerIndex], myInput, dt);
 
     for (let i = 0; i < players.length; i++) {
-      if (i === match.myPlayerIndex) continue;
+      if (i === match.myPlayerIndex || !players[i].activeInGame) continue;
       if (!match.isOnline || isHost) {
-        if (!peersConnected[i]) {
+        if (players[i].isBot || !peersConnected[i]) {
           const aiIn = getAIInput(players[i], ball);
           updatePlayer(players[i], aiIn, dt);
         }
@@ -1276,7 +1307,7 @@ function gameLoop(now) {
 }
 requestAnimationFrame(gameLoop);
 
-// PRE-LOBBY UI WITH STRICT 2v2 LIMITS
+// SOCIAL PRE-LOBBY UI WITH NO PHANTOM BOTS
 function refreshLobbyUI() {
   const t1 = document.getElementById("team1Players");
   const t2 = document.getElementById("team2Players");
@@ -1287,8 +1318,8 @@ function refreshLobbyUI() {
   let count2 = 0;
 
   players.forEach((p, idx) => {
-    // Only display connected or local players
-    if (!match.isOnline || peersConnected[idx] || idx === match.myPlayerIndex) {
+    // Only real connected human players show in lobby
+    if (idx === match.myPlayerIndex || (match.isOnline && peersConnected[idx] && !p.isBot)) {
       const card = document.createElement("div");
       card.className = "player-card" + (idx === match.myPlayerIndex ? " is-me" : "");
       const charTag = p.spriteType === "doby" ? "🐶 DOBY" : "🦀 CRAB";
@@ -1316,9 +1347,8 @@ function refreshLobbyUI() {
 }
 
 function switchTeam(teamNum) {
-  // Count current team members
-  let count = players.filter((p, i) => (!match.isOnline || peersConnected[i] || i === match.myPlayerIndex) && p.team === teamNum).length;
-  if (count >= 2) return; // Strict team cap
+  let count = players.filter((p, i) => (i === match.myPlayerIndex || (match.isOnline && peersConnected[i] && !p.isBot)) && p.team === teamNum).length;
+  if (count >= 2) return;
 
   sfx.bodyBump();
   players[match.myPlayerIndex].team = teamNum;
@@ -1342,7 +1372,7 @@ function applySecretCode() {
   const statusEl = document.getElementById("secretStatus");
   if (code === "doby") {
     players[match.myPlayerIndex].spriteType = "doby";
-    statusEl.innerText = "UNLOCKED DOBY! 🐶";
+    statusEl.innerText = "UNLOCKED! 🐶";
     sfx.cheer();
     refreshLobbyUI();
     if (match.isOnline) broadcastPlayerCustoms();
@@ -1352,40 +1382,48 @@ function applySecretCode() {
   }
 }
 
-// MATCH FLOW & SUB-MODE SELECTION
+function toggleBotFill() {
+  fillEmptyWithBots = document.getElementById("fillBotsCheck").checked;
+  if (match.isOnline && isHost) {
+    const msg = { type: "SYNC_BOT_SETTING", fillBots: fillEmptyWithBots };
+    peerConnections.forEach(c => { if (c && c.open) c.send(msg); });
+  }
+}
+
+// SYNCHRONIZED MULTIPLAYER VOTING
 function showSubmodeSelect(context) {
   sfx.init();
   pendingModeContext = context;
   document.getElementById("menuPanel").classList.add("hidden");
   document.getElementById("socialLobbyModal").classList.add("hidden");
   document.getElementById("submodeModal").classList.remove("hidden");
-
-  // Non-hosts can only watch host's selection
-  if (context === "online" && !isHost) {
-    document.getElementById("standardModeBtn").disabled = true;
-    document.getElementById("viceModeBtn").disabled = true;
-    document.getElementById("submodeSubtitle").innerText = "Waiting for Host to choose match style...";
-  } else {
-    document.getElementById("standardModeBtn").disabled = false;
-    document.getElementById("viceModeBtn").disabled = false;
-    document.getElementById("submodeSubtitle").innerText = "Select your match style";
-  }
 }
 
-function selectGameSubmode(mode) {
+function voteOrSelectSubmode(mode) {
   sfx.init();
+  if (match.isOnline) {
+    // Both host and guests can vote on the mode!
+    if (!isHost) {
+      peerConnections[0].send({ type: "VOTE_SUBMODE", mode: mode });
+      document.getElementById("submodeSubtitle").innerText = `Voted for ${mode.toUpperCase()}! Waiting for room...`;
+      document.getElementById("standardModeBtn").disabled = true;
+      document.getElementById("viceModeBtn").disabled = true;
+      return;
+    }
+  }
+  executeSubmodeSelect(mode);
+}
+
+function executeSubmodeSelect(mode) {
   activeGameMode = mode;
   document.getElementById("submodeModal").classList.add("hidden");
 
   if (mode === "vice") {
-    // Draw 3 random vice cards
     const shuffled = [...ALL_VICE_CARDS].sort(() => 0.5 - Math.random());
     currentDrawnCards = shuffled.slice(0, 3);
     cardVotes = [0, 0, 0];
 
-    if (match.isOnline && isHost) {
-      broadcastViceCardShuffle();
-    }
+    if (match.isOnline && isHost) broadcastViceCardShuffle();
     openViceCardVoteUI();
   } else {
     chosenViceCard = null;
@@ -1419,8 +1457,6 @@ function openViceCardVoteUI() {
   myCardVoteIndex = 0;
   document.getElementById("confirmCardBtn").disabled = false;
   document.getElementById("confirmCardBtn").innerText = "SUBMIT MY VOTE!";
-
-  // Only host can reshuffle cards
   document.getElementById("reshuffleBtn").style.display = (!match.isOnline || isHost) ? "inline-block" : "none";
 }
 
@@ -1436,7 +1472,7 @@ function confirmMyCardVote() {
       peerConnections[0].send({ type: "CAST_VOTE", cardIdx: myCardVoteIndex });
     } else {
       updateCardVoteCounts();
-      setTimeout(tallyAndLaunchVice, 1500);
+      setTimeout(tallyAndLaunchVice, 1800);
     }
   } else {
     chosenViceCard = currentDrawnCards[myCardVoteIndex];
@@ -1445,7 +1481,6 @@ function confirmMyCardVote() {
   }
 }
 
-// ANIMATED RESHUFFLE FUNCTION
 function requestCardReshuffle() {
   sfx.jump();
   const items = document.querySelectorAll(".card-item");
@@ -1479,12 +1514,17 @@ function launchGame() {
   match.scores = [0, 0]; match.sets = [0, 0];
   match.currentSet = 1; match.over = false;
 
+  // Configure active crabs (humans + optional filler bots)
+  configureActiveCourtPlayers();
+
   updateCrabSprites();
   generateNewProceduralClouds();
 
   document.getElementById("roomBadge").innerText = (activeGameMode === "vice") ? "Vice 2v2" : "Cabinet Arcade 2v2";
   document.getElementById("game-section").classList.remove("hidden");
   resetTipOff();
+
+  playModeMusic();
 
   if (match.isOnline && isHost) {
     broadcastStartGame();
@@ -1493,6 +1533,72 @@ function launchGame() {
   if (chosenViceCard) {
     showToast(`VICE: ${chosenViceCard.title}! 🌴`, 2.5);
   }
+}
+
+// SETUP ACTIVE PLAYERS & FILL EMPTY WITH CHILL BOTS
+function configureActiveCourtPlayers() {
+  // Reset all to inactive
+  players.forEach(p => p.activeInGame = false);
+
+  if (!match.isOnline) {
+    // Solo: P1 + 1 teammate bot, 2 opponent bots
+    players[0].activeInGame = true;
+    players[0].team = 1;
+    players[1].activeInGame = true; // Opponent bot
+    players[1].isBot = true; players[1].name = "BOT-1"; players[1].team = 2;
+    players[2].activeInGame = true; // Teammate bot
+    players[2].isBot = true; players[2].name = "BOT-TEAM"; players[2].team = 1;
+    players[3].activeInGame = true; // Opponent bot 2
+    players[3].isBot = true; players[3].name = "BOT-2"; players[3].team = 2;
+  } else {
+    // Online: Activate real connected humans
+    players.forEach((p, idx) => {
+      if (idx === match.myPlayerIndex || peersConnected[idx]) {
+        p.activeInGame = true;
+        p.isBot = false;
+      }
+    });
+
+    // Check if host wants to fill empty spots with chill bots
+    if (fillEmptyWithBots) {
+      const team1Count = players.filter(p => p.activeInGame && p.team === 1).length;
+      const team2Count = players.filter(p => p.activeInGame && p.team === 2).length;
+
+      let nextSlot = 0;
+      while (nextSlot < 4) {
+        if (!players[nextSlot].activeInGame) {
+          const t1Now = players.filter(p => p.activeInGame && p.team === 1).length;
+          const t2Now = players.filter(p => p.activeInGame && p.team === 2).length;
+          if (t1Now < 2) {
+            players[nextSlot].activeInGame = true;
+            players[nextSlot].isBot = true;
+            players[nextSlot].team = 1;
+            players[nextSlot].name = "BOT-BLUE";
+          } else if (t2Now < 2) {
+            players[nextSlot].activeInGame = true;
+            players[nextSlot].isBot = true;
+            players[nextSlot].team = 2;
+            players[nextSlot].name = "BOT-RED";
+          }
+        }
+        nextSlot++;
+      }
+    }
+  }
+
+  // Set positions according to assigned teams
+  let t1Idx = 0; let t2Idx = 0;
+  players.forEach(p => {
+    if (p.activeInGame) {
+      if (p.team === 1) {
+        p.x = (t1Idx === 0) ? 260 : 540;
+        t1Idx++;
+      } else {
+        p.x = (t2Idx === 0) ? 1340 : 1060;
+        t2Idx++;
+      }
+    }
+  });
 }
 
 function backToLobbyOrMenu() {
@@ -1509,6 +1615,7 @@ function quitToMenu() {
   document.getElementById("game-section").classList.add("hidden");
   document.getElementById("socialLobbyModal").classList.add("hidden");
   document.getElementById("menuPanel").classList.remove("hidden");
+  stopAllMusic();
 }
 
 function openOnlineLobby() {
@@ -1518,7 +1625,6 @@ function openOnlineLobby() {
 
 function startHostGameSetup() {
   showSubmodeSelect('online');
-  // Broadcast screen change to connected phones
   if (isHost) {
     const msg = { type: "SCREEN_CHANGE", screen: "submode" };
     peerConnections.forEach(c => { if (c && c.open) c.send(msg); });
@@ -1543,10 +1649,12 @@ function hostRoom() {
       match.myPlayerIndex = 0;
       players[0].name = "HOST";
       players[0].team = 1;
+      players[0].isBot = false;
       document.getElementById("myCodeText").innerText = id;
       document.getElementById("menuPanel").classList.add("hidden");
       document.getElementById("socialLobbyModal").classList.remove("hidden");
       document.getElementById("hostStartMatchBtn").classList.remove("hidden");
+      document.getElementById("botOptionRow").classList.remove("hidden");
       refreshLobbyUI();
     });
 
@@ -1560,14 +1668,17 @@ function hostRoom() {
       peersConnected[slot] = true;
       peerConnections[slot] = conn;
 
-      // Assign alternate team by default
       players[slot].team = (slot % 2 === 0) ? 1 : 2;
+      players[slot].isBot = false;
+      players[slot].name = `PLAYER-${slot + 1}`;
 
       conn.on("open", () => {
         conn.send({
           type: "WELCOME", assignedSlot: slot,
-          playersData: players.map(p => ({ name: p.name, hat: p.hat, team: p.team, spriteType: p.spriteType }))
+          playersData: players.map(p => ({ name: p.name, hat: p.hat, team: p.team, spriteType: p.spriteType, isBot: p.isBot })),
+          fillBots: fillEmptyWithBots
         });
+        refreshLobbyUI();
       });
 
       conn.on("data", (data) => {
@@ -1578,6 +1689,10 @@ function hostRoom() {
           players[slot].spriteType = data.spriteType;
           refreshLobbyUI();
           broadcastPlayerCustoms();
+        }
+        if (data.type === "VOTE_SUBMODE") {
+          // If guest votes for vice or standard, host accepts and moves everyone along!
+          executeSubmodeSelect(data.mode);
         }
         if (data.type === "CAST_VOTE") {
           cardVotes[data.cardIdx]++;
@@ -1590,7 +1705,6 @@ function hostRoom() {
 
       conn.on("close", () => {
         peersConnected[slot] = false;
-        players[slot].name = `Waiting...`;
         refreshLobbyUI();
         broadcastPlayerCustoms();
       });
@@ -1613,15 +1727,18 @@ function joinRoom() {
         peerConnections[0] = conn;
         document.getElementById("menuPanel").classList.add("hidden");
         document.getElementById("socialLobbyModal").classList.remove("hidden");
+        document.getElementById("botOptionRow").classList.add("hidden"); // Host only controls bots
       });
 
       conn.on("data", (data) => {
         if (data.type === "WELCOME") {
           match.myPlayerIndex = data.assignedSlot;
           document.getElementById("myCodeText").innerText = code;
+          fillEmptyWithBots = data.fillBots;
           data.playersData.forEach((pd, i) => {
             players[i].name = pd.name; players[i].hat = pd.hat;
             players[i].team = pd.team; players[i].spriteType = pd.spriteType;
+            players[i].isBot = pd.isBot;
           });
           refreshLobbyUI();
         }
@@ -1629,8 +1746,12 @@ function joinRoom() {
           data.playersData.forEach((pd, i) => {
             players[i].name = pd.name; players[i].hat = pd.hat;
             players[i].team = pd.team; players[i].spriteType = pd.spriteType;
+            players[i].isBot = pd.isBot;
           });
           refreshLobbyUI();
+        }
+        if (data.type === "SYNC_BOT_SETTING") {
+          fillEmptyWithBots = data.fillBots;
         }
         if (data.type === "SCREEN_CHANGE") {
           if (data.screen === "submode") showSubmodeSelect('online');
@@ -1652,12 +1773,15 @@ function joinRoom() {
         if (data.type === "START_GAME") {
           activeGameMode = data.mode;
           chosenViceCard = data.card;
+          fillEmptyWithBots = data.fillBots;
+          configureActiveCourtPlayers();
           updateCrabSprites();
           document.getElementById("socialLobbyModal").classList.add("hidden");
           document.getElementById("submodeModal").classList.add("hidden");
           document.getElementById("viceVoteModal").classList.add("hidden");
           document.getElementById("game-section").classList.remove("hidden");
           resetTipOff();
+          playModeMusic();
         }
         if (data.type === "SYNC") {
           for (let i = 0; i < 4; i++) {
@@ -1704,7 +1828,7 @@ function broadcastPlayerCustoms() {
   } else {
     const msg = {
       type: "SYNC_CUSTOMS",
-      playersData: players.map(p => ({ name: p.name, hat: p.hat, team: p.team, spriteType: p.spriteType }))
+      playersData: players.map(p => ({ name: p.name, hat: p.hat, team: p.team, spriteType: p.spriteType, isBot: p.isBot }))
     };
     peerConnections.forEach(c => { if (c && c.open) c.send(msg); });
   }
@@ -1725,7 +1849,7 @@ function updateCardVoteCounts() {
 }
 
 function broadcastStartGame() {
-  const msg = { type: "START_GAME", mode: activeGameMode, card: chosenViceCard };
+  const msg = { type: "START_GAME", mode: activeGameMode, card: chosenViceCard, fillBots: fillEmptyWithBots };
   peerConnections.forEach(c => { if (c && c.open) c.send(msg); });
 }
 
