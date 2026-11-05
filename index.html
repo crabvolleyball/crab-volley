@@ -1,0 +1,1520 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Crab Volleyball Arcade</title>
+<style>
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+  margin: 0; padding: 0; width: 100%; height: 100%;
+  background: #0077aa; color: #1a2e05;
+  font-family: "Impact", "Arial Black", sans-serif;
+  user-select: none; -webkit-user-select: none; touch-action: manipulation;
+  overflow: hidden;
+}
+body {
+  background: radial-gradient(circle at 50% 30%, #0099cc 0%, #006699 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+}
+#app {
+  width: 100%; height: 100%; max-width: 1600px;
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+  padding: 4px;
+}
+header {
+  width: 100%; display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 16px; color: #fff; text-shadow: 2px 2px 0 #000; flex-shrink: 0;
+}
+.brand {
+  font-size: clamp(20px, 2.8vw, 34px); color: #ffe600;
+  text-shadow: 3px 3px 0 #d83a00, 4px 4px 0 #000; letter-spacing: 1px;
+}
+.brand span { color: #fff; }
+.room-badge {
+  background: #fff; color: #111; font-size: 13px; font-weight: bold;
+  padding: 4px 14px; border-radius: 8px; border: 3px solid #000;
+  box-shadow: 2px 2px 0 #000; font-family: sans-serif;
+}
+
+main {
+  width: 100%; flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; position: relative;
+  overflow: hidden;
+}
+
+/* ARCADE PANELS */
+.panel {
+  width: min(860px, 94%); background: #fffbe8; border: 6px solid #142800;
+  border-radius: 20px; box-shadow: 10px 10px 0 #000;
+  padding: clamp(16px, 3.5vw, 30px); text-align: center; margin: auto;
+  position: relative;
+}
+.panel::before {
+  content: ""; position: absolute; inset: 4px; border: 3px dashed #e0c878;
+  border-radius: 14px; pointer-events: none;
+}
+h1 {
+  margin: 0 0 6px; font-size: clamp(30px, 5vw, 52px); color: #e63900;
+  text-shadow: 3px 3px 0 #ffd54f, 5px 5px 0 #000; letter-spacing: 1px;
+}
+.sub {
+  font-size: 15px; color: #2e530b; font-family: sans-serif; font-weight: 900;
+  margin-bottom: 20px; letter-spacing: 0.5px;
+}
+
+.btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 580px; margin: auto; }
+button {
+  background: #ffcc00; color: #000; border: 4px solid #000;
+  border-radius: 14px; padding: 12px 18px; font-size: 17px; font-family: "Impact", sans-serif;
+  letter-spacing: 1px; box-shadow: 4px 4px 0 #000; cursor: pointer;
+  transition: transform 0.05s ease, box-shadow 0.05s ease; touch-action: manipulation;
+}
+button:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 #000; }
+button:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #000; }
+.primary { background: #ff3b00; color: #fff; text-shadow: 2px 2px 0 #000; }
+.vice-btn { background: #ff007f; color: #00ffff; text-shadow: 2px 2px 0 #7b00ff; border-color: #000; }
+.big { min-height: 58px; font-size: 18px; }
+
+/* MULTIPLAYER LOBBY */
+.online-box {
+  margin-top: 18px; border-top: 3px dashed #998855; padding-top: 14px;
+  display: flex; flex-direction: column; gap: 10px; align-items: center;
+}
+.online-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; width: 100%; }
+.online-row input {
+  padding: 10px 14px; font-size: 16px; font-weight: bold; border: 3px solid #000;
+  border-radius: 10px; min-width: 200px; text-transform: uppercase; font-family: monospace;
+}
+.player-slots { display: flex; gap: 8px; justify-content: center; margin: 8px 0; flex-wrap: wrap; }
+.slot {
+  background: #fff; border: 3px solid #000; border-radius: 8px; padding: 5px 12px;
+  font-size: 13px; font-family: sans-serif; font-weight: 900; color: #444;
+}
+.slot.connected { background: #66bb6a; color: #fff; text-shadow: 1px 1px 0 #000; }
+code {
+  background: #111; color: #00ffcc; padding: 6px 14px; border-radius: 8px;
+  font-size: 22px; font-family: monospace; letter-spacing: 2px;
+}
+
+/* VICE CARD VOTING MODAL */
+.vice-cards-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0;
+}
+.card-item {
+  background: #2b084b; border: 4px solid #ff007f; border-radius: 14px;
+  color: #fff; padding: 16px 12px; cursor: pointer;
+  box-shadow: 0 0 14px rgba(255, 0, 127, 0.4), 4px 4px 0 #000;
+  display: flex; flex-direction: column; justify-content: space-between;
+  transition: transform 0.1s ease, border-color 0.1s ease;
+}
+.card-item:hover, .card-item.selected {
+  transform: translateY(-4px) scale(1.02); border-color: #00ffff;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 4px 4px 0 #000;
+}
+.card-icon { font-size: 38px; margin-bottom: 6px; }
+.card-title { font-size: 20px; color: #ff007f; text-shadow: 1px 1px 0 #000; margin-bottom: 6px; }
+.card-desc { font-size: 12px; font-family: sans-serif; font-weight: bold; color: #e0e7ff; line-height: 1.3; }
+.vote-count { font-size: 13px; color: #00ffff; font-family: monospace; font-weight: 900; margin-top: 8px; }
+
+/* RESPONSIVE AUTO-FIT GAME VIEW */
+#game-section {
+  width: 100%; height: 100%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; position: relative;
+}
+.canvas-holder {
+  position: relative; width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+canvas {
+  max-width: 100%; max-height: 82vh;
+  aspect-ratio: 1600 / 850;
+  object-fit: contain;
+  border: 5px solid #0a1c02; border-radius: 14px;
+  background: #00aced; box-shadow: 0 10px 28px rgba(0,0,0,0.6);
+  touch-action: none;
+}
+.toast {
+  position: absolute; top: 26%; left: 50%; transform: translate(-50%, -50%);
+  font-size: clamp(28px, 4.8vw, 60px); font-family: "Impact", sans-serif;
+  color: #ffeb3b; text-shadow: 4px 4px 0 #d50000, -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000;
+  text-align: center; pointer-events: none; z-index: 20;
+}
+
+/* ON-SCREEN ARCADE CONTROLS FOR IPHONE / SAFARI */
+.touchpad-bar {
+  width: 100%; max-width: 1600px; display: none; justify-content: space-between;
+  align-items: center; padding: 6px 4px; touch-action: none; flex-shrink: 0;
+}
+.touch-group { display: flex; gap: 6px; }
+.touchpad-bar button {
+  width: 72px; height: 54px; padding: 0; font-size: 13px; font-family: "Impact", sans-serif;
+  border: 3px solid #000; border-radius: 10px; background: #ffe082;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  touch-action: none;
+}
+.touchpad-bar button.jump { width: 100px; background: #e53935; color: #fff; font-size: 15px; text-shadow: 1px 1px 0 #000; }
+.touchpad-bar button.rotate { background: #ffb74d; }
+.touchpad-bar button:active, .touchpad-bar button.pressed {
+  background: #b71c1c !important; color: #fff !important; transform: scale(0.95);
+}
+
+.bottom-bar {
+  width: 100%; max-width: 1600px; display: flex; justify-content: space-between;
+  align-items: center; padding: 4px 8px; font-size: 12px; color: #fff;
+  font-family: sans-serif; font-weight: bold; text-shadow: 1px 1px 0 #000; flex-shrink: 0;
+}
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <header>
+    <div class="brand">🦀 CRAB <span>VOLLEYBALL</span></div>
+    <div id="roomBadge" class="room-badge">Cabinet Arcade 2v2</div>
+  </header>
+
+  <main>
+    <!-- MAIN SELECTION MENU -->
+    <section id="menuPanel" class="panel">
+      <h1>CRAB VOLLEYBALL</h1>
+      <p class="sub">First to 5 Points · Best of 3 Sets · Center Tip-Off · Weighted Landings</p>
+
+      <div class="btn-grid">
+        <button class="big primary" onclick="showSubmodeSelect('solo')">PLAY SOLO / BOTS</button>
+        <button class="big" onclick="openOnlineLobby()">4-PLAYER ONLINE MATCH</button>
+      </div>
+
+      <!-- ONLINE LOBBY -->
+      <div id="onlineBox" class="online-box hidden">
+        <h3 style="margin:0;font-size:20px;">4-Player Online Court</h3>
+        <p style="font-size:13px;font-family:sans-serif;font-weight:bold;margin:4px 0 8px;">Host on any phone or PC. Share the code with family to join!</p>
+        
+        <div class="online-row">
+          <button id="hostBtn" onclick="hostRoom()">HOST ROOM</button>
+          <input id="joinCodeInput" placeholder="ENTER 4-DIGIT CODE">
+          <button id="joinBtn" onclick="joinRoom()">JOIN ROOM</button>
+        </div>
+
+        <div id="hostInfo" class="hidden" style="margin:8px 0;">
+          <span style="font-family:sans-serif;font-size:14px;font-weight:bold;">Share Room Code: </span>
+          <code id="myCodeText">----</code>
+          <button id="copyBtn" onclick="copyRoomCode()" style="padding:4px 10px;font-size:12px;margin-left:6px;">COPY</button>
+        </div>
+
+        <div class="player-slots">
+          <div class="slot connected" id="slot1">P1 (Host Crab)</div>
+          <div class="slot" id="slot2">P2 (Team Left)</div>
+          <div class="slot" id="slot3">P3 (Team Right)</div>
+          <div class="slot" id="slot4">P4 (Team Right)</div>
+        </div>
+
+        <p id="netStatus" style="font-size:13px;font-family:sans-serif;font-weight:bold;color:#2e7d32;margin:4px 0;">Ready to create or join.</p>
+        <button id="startNetGameBtn" class="primary hidden" onclick="startOnlineVoting()" style="width:240px;margin-top:6px;">VOTE & START MATCH!</button>
+      </div>
+    </section>
+
+    <!-- SUB-MODE SELECTION (STANDARD VS VICE) -->
+    <section id="submodeModal" class="panel hidden">
+      <h1 id="submodeTitle">CHOOSE MATCH STYLE</h1>
+      <p class="sub" id="submodeSubtitle">Select your game environment and ruleset</p>
+
+      <div class="btn-grid">
+        <button class="big primary" onclick="selectGameSubmode('standard')">☀️ STANDARD BEACH</button>
+        <button class="big vice-btn" onclick="selectGameSubmode('vice')">🌴 VICE MODE</button>
+      </div>
+      <div style="margin-top:16px;">
+        <button onclick="backToMainMenu()" style="padding:6px 14px;font-size:13px;">BACK</button>
+      </div>
+    </section>
+
+    <!-- VICE CARD VOTING SCREEN (SHUFFLES 3 RANDOM CARDS FROM 10) -->
+    <section id="viceVoteModal" class="panel hidden" style="background:#160228;border-color:#ff007f;">
+      <h1 style="color:#00ffff;text-shadow:3px 3px 0 #ff007f, 5px 5px 0 #000;">🌴 VOTE VICE CARD 🌴</h1>
+      <p class="sub" style="color:#ff77c6;">Vice rules: 3 random modifications are drawn. Vote for the match modifier!</p>
+
+      <div id="viceCardsContainer" class="vice-cards-grid"></div>
+
+      <div style="margin-top:10px;">
+        <button id="confirmCardBtn" class="vice-btn big" onclick="confirmCardAndPlay()" style="width:260px;">LOCK IN MODIFIER!</button>
+      </div>
+    </section>
+
+    <!-- IN-GAME VIEW -->
+    <section id="game-section" class="hidden">
+      <div class="canvas-holder">
+        <canvas id="beachCourt" width="1600" height="850"></canvas>
+        <div id="toast" class="toast hidden"></div>
+      </div>
+
+      <!-- TOUCHPAD FOR IPHONE / MOBILE -->
+      <div class="touchpad-bar" id="mobileControls">
+        <div class="touch-group">
+          <button id="btnLeft">◀<span>RUN</span></button>
+          <button id="btnRight">▶<span>RUN</span></button>
+        </div>
+        <div class="touch-group">
+          <button id="btnRotLeft" class="rotate">↺<span>SWING L</span></button>
+          <button id="btnRotRight" class="rotate">↻<span>SWING R</span></button>
+          <button id="btnJump" class="jump">🔴<span>JUMP</span></button>
+        </div>
+      </div>
+
+      <div class="bottom-bar">
+        <div>⌨️ <b>A / D</b> = Run &nbsp;|&nbsp; <b>← / →</b> = Hammer Claw Swing &nbsp;|&nbsp; <b>Space</b> = Hop (Jump off Teammates!)</div>
+        <button id="quitMatchBtn" onclick="quitToMenu()" style="padding:3px 10px;font-size:11px;">QUIT MENU</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- WebRTC Mesh Networking -->
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+
+<script>
+/* ========================================================
+   CRAB VOLLEYBALL ARCADE ENGINE
+   ======================================================== */
+
+const canvas = document.getElementById("beachCourt");
+const ctx = canvas.getContext("2d");
+const CW = 1600;
+const CH = 850;
+const FLOOR_Y = 745;
+let BASE_BALL_GRAV = 550;
+let BALL_GRAV = 550;
+const NET = { x: CW / 2 - 4, y: 550, w: 8, h: FLOOR_Y - 550 };
+
+// 1. THE 10 "CRAB VOLLEYBALL VICE" CARDS
+const ALL_VICE_CARDS = [
+  { id: 1, icon: "🦀", title: "MEGA CLAWS", desc: "Claws grow huge for massive spike reach.", effect: "big_claws" },
+  { id: 2, icon: "🌙", title: "MOON GRAVITY", desc: "Playable low gravity on ball and crabs.", effect: "low_grav" },
+  { id: 3, icon: "❄️", title: "CRYOFREEZE", desc: "Ball freezes solid in mid-air, then drops!", effect: "ice_freeze" },
+  { id: 4, icon: "🔬", title: "MINI CRABS", desc: "Tiny pint-sized crabs moving extra fast.", effect: "mini_crabs" },
+  { id: 5, icon: "🪩", title: "CRAB RAVE", desc: "Synthwave strobe dance party in sky & sand.", effect: "crab_rave" },
+  { id: 6, icon: "⚡", title: "TURBO ROLLER", desc: "Crabs run and rotate with lightning speed.", effect: "turbo_speed" },
+  { id: 7, icon: "🪨", title: "BEACH BOULDER", desc: "Heavy ball falls faster with heavy rebounds.", effect: "heavy_ball" },
+  { id: 8, icon: "🚀", title: "SPRING SHOES", desc: "Super jumps propel crabs to the stratosphere.", effect: "spring_jump" },
+  { id: 9, icon: "📉", title: "SHORT NET", desc: "Net pole shortened to a low hurdle for spikes.", effect: "low_net" },
+  { id: 10, icon: "🎯", title: "PINBALL CHAOS", desc: "Ball rebounds with energetic, pinball speed.", effect: "pinball_wobble" }
+];
+
+let activeGameMode = "standard"; // "standard" or "vice"
+let chosenViceCard = null;
+let currentDrawnCards = [];
+let pendingModeContext = "solo";
+let raveTimer = 0;
+let freezeCooldown = 8.0;
+let isFrozen = false;
+let freezeWarningTimer = 0;
+
+// 2. VICE COASTAL HIGHWAY CARS (Cruising in the background)
+const VICE_CARS = [
+  { x: 100, spd: 140, color: "#ff007f", model: "wedge" },
+  { x: 700, spd: 110, color: "#00ffff", model: "sport" },
+  { x: 1300, spd: 160, color: "#ffe600", model: "wedge" }
+];
+
+// 3. CRAB SPRITES
+function makeArcadeCrabSVG(bodyColor = "#8bc34a", outline = "#223b05", belly = "#c5e1a5", clawScale = 1.0) {
+  return `data:image/svg+xml;utf8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
+    <line x1="66" y1="38" x2="62" y2="18" stroke="${outline}" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="62" cy="16" r="8" fill="#111" stroke="${outline}" stroke-width="2"/>
+    <circle cx="64" cy="14" r="2.8" fill="#fff"/>
+
+    <line x1="130" y1="38" x2="134" y2="18" stroke="${outline}" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="134" cy="16" r="8" fill="#111" stroke="${outline}" stroke-width="2"/>
+    <circle cx="136" cy="14" r="2.8" fill="#fff"/>
+
+    <path d="M 52 60 Q 30 68 22 80" stroke="${outline}" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <path d="M 58 66 Q 40 78 44 84" stroke="${outline}" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <path d="M 144 60 Q 166 68 174 80" stroke="${outline}" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <path d="M 138 66 Q 156 78 152 84" stroke="${outline}" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+    <g transform="scale(${clawScale}) transform-origin(52 48)">
+      <path d="M 52 48 L 22 26 L 10 35 L 18 42 L 4 50 L 14 56 L 0 68 C 24 68 40 60 56 56 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="3.5"/>
+      <path d="M 54 40 L 28 18 L 14 26 L 2 45 C 22 47 38 48 56 48 Z" fill="${belly}" stroke="${outline}" stroke-width="3.5"/>
+    </g>
+
+    <g transform="scale(${clawScale}) transform-origin(144 48)">
+      <path d="M 144 48 L 174 26 L 186 35 L 178 42 L 192 50 L 182 56 L 196 68 C 172 68 156 60 140 56 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="3.5"/>
+      <path d="M 142 40 L 168 18 L 182 26 L 194 45 C 174 47 158 48 140 48 Z" fill="${belly}" stroke="${outline}" stroke-width="3.5"/>
+    </g>
+
+    <ellipse cx="98" cy="54" rx="58" ry="19" fill="${bodyColor}" stroke="${outline}" stroke-width="4.2"/>
+    <path d="M 66 48 Q 98 42 130 48 Q 98 68 66 48 Z" fill="${belly}" opacity="0.65"/>
+  </svg>`)}`;
+}
+
+let crabImgTeam1 = new Image();
+let crabImgTeam2 = new Image();
+
+function updateCrabSprites() {
+  if (activeGameMode === "vice") {
+    const cScale = (chosenViceCard && chosenViceCard.effect === "big_claws") ? 1.25 : 1.0;
+    crabImgTeam1.src = makeArcadeCrabSVG("#00ffff", "#005577", "#b3ffff", cScale);
+    crabImgTeam2.src = makeArcadeCrabSVG("#ff007f", "#77003b", "#ff99cc", cScale);
+  } else {
+    crabImgTeam1.src = makeArcadeCrabSVG("#8bc34a", "#223b05", "#c5e1a5", 1.0);
+    crabImgTeam2.src = makeArcadeCrabSVG("#9ccc65", "#1c3204", "#dcedc8", 1.0);
+  }
+}
+updateCrabSprites();
+
+// 4. RANDOM HATS
+const HAT_TYPES = ["pineapple", "propeller", "tophat", "captain", "fez"];
+
+function drawFlushHat(ctx, type, animTime = 0) {
+  ctx.save();
+  ctx.translate(0, -10);
+
+  if (type === "pineapple") {
+    ctx.fillStyle = "#2e7d32"; ctx.strokeStyle = "#1b5e20"; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(0, -16); ctx.lineTo(-6, -26); ctx.lineTo(0, -21); ctx.lineTo(6, -26); ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#f59e0b"; ctx.strokeStyle = "#78350f"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.ellipse(0, -8, 9, 12, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+  } else if (type === "propeller") {
+    ctx.fillStyle = "#2563eb"; ctx.strokeStyle = "#1e3a8a"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(0, 0, 13, Math.PI, 0); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#0f172a"; ctx.fillRect(-2, -15, 4, 6);
+    const spinWidth = Math.sin(animTime * 24) * 16;
+    ctx.fillStyle = "#ef4444";
+    ctx.beginPath(); ctx.ellipse(0, -15, Math.max(3, Math.abs(spinWidth)), 3, 0, 0, Math.PI * 2); ctx.fill();
+  } else if (type === "tophat") {
+    ctx.fillStyle = "#18181b";
+    ctx.beginPath(); ctx.ellipse(0, 0, 16, 3.5, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillRect(-9, -20, 18, 20); ctx.fillStyle = "#dc2626"; ctx.fillRect(-9, -6, 18, 4);
+  } else if (type === "captain") {
+    ctx.fillStyle = "#ffffff"; ctx.strokeStyle = "#0f172a"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(0, -3, 14, Math.PI, 0); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#0f172a"; ctx.beginPath(); ctx.ellipse(0, 2, 16, 3.5, 0, 0, Math.PI * 2); ctx.fill();
+  } else if (type === "fez") {
+    ctx.fillStyle = "#b91c1c"; ctx.strokeStyle = "#7f1d1d"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(-10, 0); ctx.lineTo(-7, -18); ctx.lineTo(7, -18); ctx.lineTo(10, 0); ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = "#0f172a"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(0, -18); ctx.lineTo(11, -8); ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// 5. SOUND FX
+class ArcadeAudio {
+  constructor() { this.ctx = null; }
+  init() {
+    if (!this.ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) this.ctx = new AC();
+    }
+    if (this.ctx && this.ctx.state === "suspended") this.ctx.resume();
+  }
+  beep(f, type, dur, endF = null, vol = 0.25) {
+    if (!this.ctx) return;
+    try {
+      const osc = this.ctx.createOscillator();
+      const g = this.ctx.createGain();
+      osc.type = type; osc.frequency.setValueAtTime(f, this.ctx.currentTime);
+      if (endF) osc.frequency.exponentialRampToValueAtTime(Math.max(10, endF), this.ctx.currentTime + dur);
+      g.gain.setValueAtTime(vol, this.ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
+      osc.connect(g); g.connect(this.ctx.destination);
+      osc.start(); osc.stop(this.ctx.currentTime + dur);
+    } catch(e) {}
+  }
+  jump() { this.beep(260, "sine", 0.16, 620, 0.25); }
+  superJump() { this.beep(320, "triangle", 0.28, 880, 0.32); }
+  bodyBump() { this.beep(280, "sine", 0.1, 160, 0.26); }
+  crushDown() { this.beep(160, "sawtooth", 0.12, 60, 0.3); }
+  clawSpike() { this.beep(540, "sawtooth", 0.2, 110, 0.48); }
+  freezeAlert() { this.beep(750, "sine", 0.15, 300, 0.3); }
+  whistle() {
+    this.beep(850, "square", 0.08, 920, 0.2);
+    setTimeout(() => this.beep(1050, "square", 0.18, 800, 0.2), 90);
+  }
+  cheer() {
+    [320, 440, 560, 680].forEach((f, i) => {
+      setTimeout(() => this.beep(f, "triangle", 0.25, f * 1.2, 0.2), i * 70);
+    });
+  }
+}
+const sfx = new ArcadeAudio();
+
+// 6. INPUT MANAGEMENT
+const keys = {};
+window.addEventListener("keydown", (e) => {
+  sfx.init();
+  keys[e.code] = true;
+  if (e.code === "Space" || e.code.includes("Arrow")) e.preventDefault();
+});
+window.addEventListener("keyup", (e) => { keys[e.code] = false; });
+
+function bindTouch(btnId, code) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+  const p = (e) => { e.preventDefault(); sfx.init(); keys[code] = true; btn.classList.add("pressed"); };
+  const r = (e) => { e.preventDefault(); keys[code] = false; btn.classList.remove("pressed"); };
+  btn.addEventListener("touchstart", p, { passive: false });
+  btn.addEventListener("touchend", r, { passive: false });
+  btn.addEventListener("mousedown", p);
+  btn.addEventListener("mouseup", r);
+  btn.addEventListener("mouseleave", r);
+}
+bindTouch("btnLeft", "KeyA");
+bindTouch("btnRight", "KeyD");
+bindTouch("btnRotLeft", "ArrowLeft");
+bindTouch("btnRotRight", "ArrowRight");
+bindTouch("btnJump", "Space");
+
+if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
+  const mc = document.getElementById("mobileControls");
+  if (mc) mc.style.display = "flex";
+}
+
+// 7. CRAB PLAYERS
+function createCrab(id, team, x) {
+  const hat = HAT_TYPES[Math.floor(Math.random() * HAT_TYPES.length)];
+  return {
+    id: id, team: team, x: x, y: FLOOR_Y - 26,
+    vx: 0, vy: 0, angle: 0, angVel: 0, hat: hat,
+    radius: 54, width: 146, height: 58,
+    halfW: 73, halfH: 26, isGrounded: true,
+    speed: 510, canJump: true, jumpHoldTimer: 0
+  };
+}
+
+let players = [
+  createCrab(1, 1, 260),
+  createCrab(2, 1, 560),
+  createCrab(3, 2, 1040),
+  createCrab(4, 2, 1340)
+];
+
+// 8. VOLLEYBALL
+const ball = {
+  x: CW / 2, y: NET.y - 22,
+  vx: 0, vy: 0, r: 22, rot: 0,
+  active: false, tipOffTimer: 1.0, trail: []
+};
+
+// 9. MATCH RULES
+const match = {
+  scores: [0, 0], sets: [0, 0], currentSet: 1,
+  paused: false, over: false, isOnline: false,
+  myPlayerIndex: 0, toastTimer: 0
+};
+
+function showToast(text, dur = 1.2) {
+  const t = document.getElementById("toast");
+  if (!t) return;
+  t.innerText = text;
+  t.classList.remove("hidden");
+  match.toastTimer = dur;
+}
+
+// 10. PROCEDURAL CLOUD GENERATOR
+let proceduralClouds = [];
+function generateNewProceduralClouds() {
+  proceduralClouds = [];
+  const cloudCount = 4 + Math.floor(Math.random() * 2);
+  const step = CW / cloudCount;
+  for (let i = 0; i < cloudCount; i++) {
+    proceduralClouds.push({
+      x: i * step + 60 + Math.random() * (step - 120),
+      y: 110 + Math.random() * 80,
+      r: 34 + Math.random() * 14,
+      driftSpd: 4 + Math.random() * 6
+    });
+  }
+}
+generateNewProceduralClouds();
+
+// 11. MOVEMENT & ARCADE RED-BUTTON JUMP
+function updatePlayer(p, input, dt) {
+  let speedMultiplier = 1.0;
+  if (chosenViceCard && chosenViceCard.effect === "turbo_speed") speedMultiplier = 1.35;
+  if (chosenViceCard && chosenViceCard.effect === "mini_crabs") speedMultiplier = 1.2;
+
+  let moveDir = 0;
+  if (input.left) moveDir -= 1;
+  if (input.right) moveDir += 1;
+  const targetVx = moveDir * (p.speed * speedMultiplier);
+  p.vx += (targetVx - p.vx) * 16 * dt;
+  p.x += p.vx * dt;
+
+  const minX = (p.team === 1) ? 80 : NET.x + NET.w + p.radius;
+  const maxX = (p.team === 1) ? NET.x - p.radius : CW - 80;
+  if (p.x < minX) { p.x = minX; p.vx = 0; }
+  if (p.x > maxX) { p.x = maxX; p.vx = 0; }
+
+  let rotSpeed = 10.5;
+  if (chosenViceCard && chosenViceCard.effect === "turbo_speed") rotSpeed = 16.0;
+
+  if (input.rotLeft) {
+    p.angVel = -rotSpeed;
+  } else if (input.rotRight) {
+    p.angVel = rotSpeed;
+  } else {
+    p.angVel *= 0.56;
+    if (p.isGrounded && Math.abs(p.angle) < 0.6) {
+      p.angle += (-p.angle) * 10 * dt;
+    }
+  }
+
+  p.angle += p.angVel * dt;
+  p.angle = Math.atan2(Math.sin(p.angle), Math.cos(p.angle));
+
+  // Jump
+  let jumpImpulse = -580;
+  let superBurn = 1950;
+  if (chosenViceCard && chosenViceCard.effect === "spring_jump") {
+    jumpImpulse = -780;
+    superBurn = 2500;
+  }
+
+  if (input.jump) {
+    if (p.isGrounded && p.canJump) {
+      p.vy = jumpImpulse;
+      p.isGrounded = false;
+      p.canJump = false;
+      p.jumpHoldTimer = 0.35;
+      sfx.jump();
+    } else if (p.jumpHoldTimer > 0) {
+      p.vy -= superBurn * dt;
+      p.jumpHoldTimer -= dt;
+      if (p.jumpHoldTimer <= 0.05 && p.jumpHoldTimer > 0) sfx.superJump();
+    }
+  } else {
+    p.jumpHoldTimer = 0;
+    if (p.isGrounded) p.canJump = true;
+  }
+
+  // Tuned Moon Gravity (Playable 1050 instead of crazy float)
+  let grav = (chosenViceCard && chosenViceCard.effect === "low_grav") ? 1050 : 1500;
+  p.vy += grav * dt;
+  p.y += p.vy * dt;
+
+  const absCos = Math.abs(Math.cos(p.angle));
+  const absSin = Math.abs(Math.sin(p.angle));
+  const dynamicHalfH = p.halfW * absSin + p.halfH * absCos;
+
+  if (p.y + dynamicHalfH >= FLOOR_Y) {
+    p.y = FLOOR_Y - dynamicHalfH;
+    p.vy = 0;
+    p.isGrounded = true;
+    p.canJump = true;
+  }
+}
+
+// 12. SOLID CRAB-ON-CRAB RIGID COLLISIONS
+function resolveCrabCollisions() {
+  for (let i = 0; i < players.length; i++) {
+    for (let j = i + 1; j < players.length; j++) {
+      const p1 = players[i];
+      const p2 = players[j];
+
+      const dx = p2.x - p1.x;
+      const dy = p2.y - p1.y;
+      const dist = Math.hypot(dx, dy);
+      const minDistance = (chosenViceCard && chosenViceCard.effect === "mini_crabs") ? 55 : 78;
+
+      if (dist < minDistance && dist > 0.001) {
+        const nx = dx / dist;
+        const ny = dy / dist;
+        const overlap = minDistance - dist;
+
+        p1.x -= nx * overlap * 0.5;
+        p1.y -= ny * overlap * 0.5;
+        p2.x += nx * overlap * 0.5;
+        p2.y += ny * overlap * 0.5;
+
+        if (Math.abs(ny) > 0.35) {
+          if (p1.y < p2.y) {
+            p1.y = p2.y - 48; p1.vy = 0; p1.isGrounded = true; p1.canJump = true;
+            p2.vx += p1.vx * 0.5;
+          } else {
+            p2.y = p1.y - 48; p2.vy = 0; p2.isGrounded = true; p2.canJump = true;
+            p1.vx += p2.vx * 0.5;
+          }
+        } else {
+          const avgVx = (p1.vx + p2.vx) * 0.5;
+          p1.vx = avgVx; p2.vx = avgVx;
+        }
+
+        p1.angVel -= nx * 1.5;
+        p2.angVel += nx * 1.5;
+      }
+    }
+  }
+}
+
+// 13. BOT AI
+function getAIInput(p, targetBall) {
+  const input = { left: false, right: false, rotLeft: false, rotRight: false, jump: false };
+  const homeX = p.team === 1 ? (p.id === 1 ? 280 : 580) : (p.id === 3 ? 1020 : 1320);
+  const ballInMyCourt = (p.team === 1 && targetBall.x < CW / 2) || (p.team === 2 && targetBall.x >= CW / 2);
+  const targetX = ballInMyCourt ? targetBall.x : homeX;
+
+  const dx = targetX - p.x;
+  if (Math.abs(dx) > 22) {
+    if (dx < 0) input.left = true;
+    else input.right = true;
+  }
+
+  if (Math.abs(p.angle) > 0.35) {
+    if (p.angle > 0) input.rotLeft = true;
+    else input.rotRight = true;
+  }
+
+  const distToBall = Math.hypot(targetBall.x - p.x, targetBall.y - p.y);
+  if (ballInMyCourt && distToBall < 115 && targetBall.y < p.y) {
+    if (p.team === 1) input.rotRight = true;
+    else input.rotLeft = true;
+  }
+
+  if (ballInMyCourt && targetBall.y < 580 && Math.abs(dx) < 75 && p.isGrounded) {
+    input.jump = true;
+  }
+  return input;
+}
+
+// 14. BALL PHYSICS
+function updateBall(dt) {
+  if (!ball.active) {
+    ball.x = CW / 2;
+    ball.y = NET.y - ball.r;
+    ball.tipOffTimer -= dt;
+    if (ball.tipOffTimer <= 0) {
+      ball.active = true;
+      ball.vx = 0;
+      ball.vy = (chosenViceCard && chosenViceCard.effect === "low_grav") ? -620 : -750;
+      sfx.bodyBump();
+    }
+    return;
+  }
+
+  // CRYOFREEZE CHECK
+  if (chosenViceCard && chosenViceCard.effect === "ice_freeze") {
+    freezeCooldown -= dt;
+    if (freezeCooldown <= 3.0 && freezeCooldown > 0 && freezeWarningTimer <= 0) {
+      showToast(`❄️ FREEZE IN ${Math.ceil(freezeCooldown)}...`, 0.8);
+      sfx.freezeAlert();
+      freezeWarningTimer = 1.0;
+    }
+    if (freezeWarningTimer > 0) freezeWarningTimer -= dt;
+
+    if (freezeCooldown <= 0 && !isFrozen) {
+      isFrozen = true;
+      ball.vx = 0; ball.vy = 0;
+      showToast("❄️ FROZEN! ❄️", 1.2);
+      setTimeout(() => {
+        isFrozen = false;
+        ball.vy = 280;
+        freezeCooldown = 11.0;
+      }, 1200);
+    }
+  }
+
+  if (isFrozen) return;
+
+  // Ball gravity modifiers (Tuned Moon Gravity = 420)
+  BALL_GRAV = BASE_BALL_GRAV;
+  if (chosenViceCard && chosenViceCard.effect === "low_grav") BALL_GRAV = 420;
+  if (chosenViceCard && chosenViceCard.effect === "heavy_ball") BALL_GRAV = 780;
+
+  ball.vx *= (1 - 0.03 * dt);
+  ball.vy += BALL_GRAV * dt;
+
+  ball.x += ball.vx * dt;
+  ball.y += ball.vy * dt;
+
+  ball.rot += (ball.vx / ball.r) * dt;
+
+  ball.trail.push({ x: ball.x, y: ball.y });
+  if (ball.trail.length > 12) ball.trail.shift();
+
+  if (ball.x - ball.r < 0) { ball.x = ball.r; ball.vx = -ball.vx * 0.85; }
+  if (ball.x + ball.r > CW) { ball.x = CW - ball.r; ball.vx = -ball.vx * 0.85; }
+  if (ball.y - ball.r < 0) { ball.y = ball.r; ball.vy = Math.abs(ball.vy) * 0.85; }
+
+  const effectiveNetY = (chosenViceCard && chosenViceCard.effect === "low_net") ? 620 : NET.y;
+
+  if (ball.y + ball.r > effectiveNetY) {
+    if (ball.x + ball.r > NET.x && ball.x - ball.r < NET.x + NET.w) {
+      if (ball.y < effectiveNetY + 14) {
+        ball.y = effectiveNetY - ball.r;
+        ball.vy = -Math.max(680, Math.abs(ball.vy) * 0.95);
+        if (Math.abs(ball.vx) < 15) ball.vx = 0;
+      } else {
+        if (ball.x < CW / 2) {
+          ball.x = NET.x - ball.r; ball.vx = -Math.abs(ball.vx) * 0.85;
+        } else {
+          ball.x = NET.x + NET.w + ball.r; ball.vx = Math.abs(ball.vx) * 0.85;
+        }
+      }
+      sfx.bodyBump();
+    }
+  }
+
+  if (ball.y + ball.r >= FLOOR_Y) {
+    ball.y = FLOOR_Y - ball.r;
+    ball.active = false;
+    sfx.whistle();
+    if (ball.x < CW / 2) scorePoint(2);
+    else scorePoint(1);
+    return;
+  }
+
+  for (let i = 0; i < players.length; i++) {
+    const p = players[i];
+    const cosA = Math.cos(-p.angle);
+    const sinA = Math.sin(-p.angle);
+    const relX = cosA * (ball.x - p.x) - sinA * (ball.y - p.y);
+    const relY = sinA * (ball.x - p.x) + cosA * (ball.y - p.y);
+
+    let boundW = 74; let boundH = 24;
+    if (chosenViceCard && chosenViceCard.effect === "mini_crabs") { boundW = 50; boundH = 18; }
+    if (chosenViceCard && chosenViceCard.effect === "big_claws") { boundW = 92; }
+
+    const clampedX = Math.max(-boundW, Math.min(boundW, relX));
+    const clampedY = Math.max(-boundH, Math.min(boundH, relY));
+
+    const distX = relX - clampedX;
+    const distY = relY - clampedY;
+    const distSq = distX * distX + distY * distY;
+
+    if (distSq < ball.r * ball.r) {
+      const d = Math.sqrt(distSq) || 1;
+      let localNx = distX / d; let localNy = distY / d;
+
+      const worldCos = Math.cos(p.angle);
+      const worldSin = Math.sin(p.angle);
+      const nx = worldCos * localNx - worldSin * localNy;
+      const ny = worldSin * localNx + worldCos * localNy;
+
+      ball.x += nx * (ball.r - d + 2);
+      ball.y += ny * (ball.r - d + 2);
+
+      const pinballMult = (chosenViceCard && chosenViceCard.effect === "pinball_wobble") ? 1.35 : 1.0;
+
+      if (p.y < ball.y - 4 && p.vy > -50) {
+        ball.vy = Math.max(420, (p.vy * 1.4 + 320) * pinballMult);
+        ball.vx = p.vx * 0.5 + nx * 80;
+        sfx.crushDown();
+        return;
+      }
+
+      const isHammerSwing = Math.abs(p.angVel) > 3.0;
+      const isClawArea = Math.abs(relX) > (boundW * 0.45);
+      if (isHammerSwing && isClawArea) {
+        const swingSpeed = Math.abs(p.angVel) * 56;
+        const hitSpeed = (580 + Math.abs(p.vx * 0.35) + swingSpeed) * pinballMult;
+
+        ball.vx = nx * (hitSpeed * 0.95) + p.vx * 0.4;
+        ball.vy = Math.min(-280, ny * hitSpeed - 180);
+
+        sfx.clawSpike();
+        showToast("SPIKE! 🔥", 0.4);
+        return;
+      }
+
+      if (Math.abs(relX) > (boundW * 0.65)) {
+        ball.vx = (Math.sign(relX) * 360 + p.vx * 0.4) * pinballMult;
+        ball.vy = -380 * pinballMult;
+      } else {
+        ball.vy = -480 * pinballMult;
+        ball.vx = (ball.vx * 0.1) + (p.vx * 0.15) + (nx * 60);
+      }
+
+      sfx.bodyBump();
+      return;
+    }
+  }
+}
+
+function scorePoint(winnerTeam) {
+  match.scores[winnerTeam - 1]++;
+
+  if (match.scores[winnerTeam - 1] >= 5) {
+    match.sets[winnerTeam - 1]++;
+    sfx.cheer();
+
+    if (match.sets[winnerTeam - 1] >= 2) {
+      match.over = true;
+      const winnerName = (winnerTeam === 1) ? "TEAM 1" : "TEAM 2";
+      showToast(`${winnerName} WINS THE MATCH! 🏆`, 3.5);
+      setTimeout(() => {
+        document.getElementById("game-section").classList.add("hidden");
+        document.getElementById("menuPanel").classList.remove("hidden");
+      }, 3500);
+      return;
+    }
+
+    match.currentSet++;
+    match.scores = [0, 0];
+    showToast(`SET ${match.currentSet - 1} WON BY TEAM ${winnerTeam}!`, 1.8);
+    setTimeout(() => resetTipOff(), 1800);
+    return;
+  }
+
+  showToast(winnerTeam === 1 ? "POINT LEFT! 🦀" : "POINT RIGHT! 🦀", 1.2);
+  setTimeout(() => resetTipOff(), 1200);
+}
+
+function resetTipOff() {
+  ball.active = false;
+  ball.tipOffTimer = 0.9;
+  ball.vx = 0; ball.vy = 0;
+  ball.trail = []; ball.x = CW / 2;
+  const effectiveNetY = (chosenViceCard && chosenViceCard.effect === "low_net") ? 620 : NET.y;
+  ball.y = effectiveNetY - ball.r;
+  isFrozen = false; freezeCooldown = 8.0;
+}
+
+// 15. RENDERING (STANDARD VS VICE HIGHWAY SCENE)
+let animTimer = 0;
+function render() {
+  animTimer += 0.02;
+  raveTimer += 0.05;
+
+  if (activeGameMode === "vice") {
+    renderViceStyle();
+  } else {
+    renderStandardStyle();
+  }
+}
+
+// 15A. STANDARD RETRO ARCADE RENDER
+function renderStandardStyle() {
+  ctx.fillStyle = "#00aced";
+  ctx.fillRect(0, 0, CW, CH);
+
+  proceduralClouds.forEach(c => {
+    c.x += c.driftSpd * 0.016;
+    if (c.x - c.r * 2 > CW) c.x = -c.r * 2;
+    drawCottonCloud(ctx, c.x, c.y, c.r, "#ffffff");
+  });
+
+  drawCleanSun(ctx, 420, 100, 36, "#ffd600");
+  ctx.fillStyle = "#0072b2";
+  ctx.fillRect(0, FLOOR_Y - 180, CW, 180);
+
+  drawFluffyTreeIsland(ctx, 1260, FLOOR_Y - 110, "#00c853", "#d4a76a");
+
+  ctx.fillStyle = "#ffffff";
+  for (let x = 0; x < CW; x += 44) {
+    ctx.beginPath(); ctx.arc(x + 22, FLOOR_Y - 60, 16, 0, Math.PI); ctx.fill();
+  }
+
+  ctx.fillStyle = "#f5d799";
+  ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
+  ctx.fillStyle = "#e2be73";
+  ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
+
+  drawNet(ctx, NET.y, "#ffffff", "#ff1744");
+  drawPlayersAndBall(ctx);
+  drawRetroFlipScoreboard(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], match.sets[0], match.sets[1], "#0288d1", "#d50000");
+}
+
+// 15B. VICE COASTAL HIGHWAY & RETRO CARS RENDER
+function renderViceStyle() {
+  // Sunset Gradient Sky Stripes
+  const grad = ctx.createLinearGradient(0, 0, 0, FLOOR_Y - 180);
+  grad.addColorStop(0, "#00e5ff");
+  grad.addColorStop(0.55, "#e040fb");
+  grad.addColorStop(0.85, "#ff4081");
+  grad.addColorStop(1, "#ffe57f");
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, CW, CH);
+
+  if (chosenViceCard && chosenViceCard.effect === "crab_rave") {
+    const strobe = (Math.sin(raveTimer * 8) + 1) * 0.12;
+    ctx.fillStyle = `rgba(0, 255, 255, ${strobe})`;
+    ctx.fillRect(0, 0, CW, CH);
+  }
+
+  proceduralClouds.forEach(c => {
+    c.x += c.driftSpd * 0.016;
+    if (c.x - c.r * 2 > CW) c.x = -c.r * 2;
+    drawCottonCloud(ctx, c.x, c.y, c.r, "#f8bbd0");
+  });
+
+  drawViceSun(ctx, 420, 100, 42);
+
+  // Deep Violet Ocean
+  ctx.fillStyle = "#2a0845";
+  ctx.fillRect(0, FLOOR_Y - 180, CW, 180);
+
+  // VICE OCEAN HIGHWAY WITH CRUISING RETRO CARS!
+  drawViceHighwayAndCars(ctx, FLOOR_Y - 215);
+
+  drawFluffyTreeIsland(ctx, 1260, FLOOR_Y - 110, "#00e676", "#7b1fa2");
+
+  // Cyan Shoreline Surf
+  ctx.fillStyle = "#00ffff";
+  for (let x = 0; x < CW; x += 44) {
+    ctx.beginPath(); ctx.arc(x + 22, FLOOR_Y - 60, 16, 0, Math.PI); ctx.fill();
+  }
+
+  // Dark Synthwave Beach Sand
+  ctx.fillStyle = "#311b92";
+  ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
+  ctx.fillStyle = "#1a0033";
+  ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
+
+  const effNetY = (chosenViceCard && chosenViceCard.effect === "low_net") ? 620 : NET.y;
+  drawNet(ctx, effNetY, "#00ffff", "#ff007f");
+
+  drawPlayersAndBall(ctx);
+  drawRetroFlipScoreboard(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], match.sets[0], match.sets[1], "#00ffff", "#ff007f");
+}
+
+// VICE COASTAL HIGHWAY & CRUSING CARS
+function drawViceHighwayAndCars(ctx, y) {
+  // Road Asphalt
+  ctx.fillStyle = "#1e1035";
+  ctx.fillRect(0, y, CW, 26);
+  ctx.strokeStyle = "#ff007f";
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(CW, y); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, y + 26); ctx.lineTo(CW, y + 26); ctx.stroke();
+
+  // Dashed Center Divider
+  ctx.strokeStyle = "#ffe57f";
+  ctx.lineWidth = 2;
+  ctx.setLineDash([14, 14]);
+  ctx.beginPath(); ctx.moveTo(0, y + 13); ctx.lineTo(CW, y + 13); ctx.stroke();
+  ctx.setLineDash([]); // Reset
+
+  // Move & Draw Retro Sports Cars
+  VICE_CARS.forEach(car => {
+    car.x += car.spd * 0.016;
+    if (car.x > CW + 80) car.x = -80;
+
+    ctx.save();
+    ctx.translate(car.x, y + 4);
+
+    // Car Body (Wedge Testarossa style)
+    ctx.fillStyle = car.color;
+    ctx.beginPath();
+    ctx.moveTo(0, 14);
+    ctx.lineTo(10, 8);
+    ctx.lineTo(24, 6);
+    ctx.lineTo(38, 14);
+    ctx.closePath();
+    ctx.fill();
+
+    // Dark windshield
+    ctx.fillStyle = "#050014";
+    ctx.beginPath();
+    ctx.moveTo(12, 8);
+    ctx.lineTo(22, 7);
+    ctx.lineTo(24, 11);
+    ctx.lineTo(11, 11);
+    ctx.closePath();
+    ctx.fill();
+
+    // Wheels
+    ctx.fillStyle = "#000000";
+    ctx.beginPath(); ctx.arc(8, 14, 3.5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(30, 14, 3.5, 0, Math.PI * 2); ctx.fill();
+
+    // Glowing Taillight
+    ctx.fillStyle = "#ff1744";
+    ctx.fillRect(-1, 8, 3, 3);
+
+    // Glowing Headlight
+    ctx.fillStyle = "#00ffff";
+    ctx.fillRect(38, 10, 3, 3);
+
+    ctx.restore();
+  });
+}
+
+// 16. DRAWING HELPERS
+function drawFluffyTreeIsland(ctx, x, y, foliageColor, sandColor) {
+  ctx.save();
+  ctx.translate(x, y);
+
+  ctx.fillStyle = sandColor; ctx.strokeStyle = "#000000"; ctx.lineWidth = 3.0;
+  ctx.beginPath(); ctx.ellipse(0, 0, 135, 46, 0, 0, Math.PI); ctx.fill(); ctx.stroke();
+
+  ctx.strokeStyle = "#5d4037"; ctx.lineWidth = 15; ctx.lineCap = "round";
+  ctx.beginPath(); ctx.moveTo(25, -2); ctx.quadraticCurveTo(55, -60, 38, -120); ctx.stroke();
+
+  ctx.translate(38, -120);
+  const leafPuffs = [
+    { dx: -30, dy: -6, rad: 28 }, { dx: -10, dy: -28, rad: 34 },
+    { dx: 22, dy: -22, rad: 32 }, { dx: 36, dy: 6, rad: 26 },
+    { dx: 8, dy: 10, rad: 28 }, { dx: -16, dy: 8, rad: 26 }
+  ];
+
+  ctx.fillStyle = foliageColor; ctx.strokeStyle = "#000000"; ctx.lineWidth = 3.0;
+  leafPuffs.forEach(p => {
+    ctx.beginPath(); ctx.arc(p.dx, p.dy, p.rad, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+  });
+  leafPuffs.forEach(p => {
+    ctx.beginPath(); ctx.arc(p.dx, p.dy, p.rad - 1.5, 0, Math.PI * 2); ctx.fill();
+  });
+  ctx.restore();
+}
+
+function drawCottonCloud(ctx, x, y, r, fillColor) {
+  ctx.save();
+  ctx.fillStyle = fillColor; ctx.strokeStyle = "#000000"; ctx.lineWidth = 3.0;
+  const puffs = [
+    { dx: -r * 0.9, dy: r * 0.1, rad: r * 0.65 },
+    { dx: -r * 0.45, dy: -r * 0.4, rad: r * 0.85 },
+    { dx: r * 0.2, dy: -r * 0.5, rad: r * 0.95 },
+    { dx: r * 0.8, dy: -r * 0.2, rad: r * 0.75 },
+    { dx: r * 1.2, dy: r * 0.15, rad: r * 0.55 },
+    { dx: 0, dy: r * 0.2, rad: r * 0.7 }
+  ];
+  puffs.forEach(p => {
+    ctx.beginPath(); ctx.arc(x + p.dx, y + p.dy, p.rad, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+  });
+  puffs.forEach(p => {
+    ctx.beginPath(); ctx.arc(x + p.dx, y + p.dy, p.rad - 1.5, 0, Math.PI * 2); ctx.fill();
+  });
+  ctx.restore();
+}
+
+function drawCleanSun(ctx, x, y, r, color) {
+  ctx.save();
+  ctx.fillStyle = color; ctx.strokeStyle = "#000000"; ctx.lineWidth = 2.5;
+  ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+  for (let i = 0; i < 8; i++) {
+    const a = i * (Math.PI / 4);
+    ctx.beginPath(); ctx.moveTo(x + Math.cos(a) * (r + 4), y + Math.sin(a) * (r + 4));
+    ctx.lineTo(x + Math.cos(a) * (r + 14), y + Math.sin(a) * (r + 14)); ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawViceSun(ctx, x, y, r) {
+  ctx.save();
+  const sunGrad = ctx.createLinearGradient(x, y - r, x, y + r);
+  sunGrad.addColorStop(0, "#ffe57f");
+  sunGrad.addColorStop(1, "#ff007f");
+  ctx.fillStyle = sunGrad;
+  ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+}
+
+function drawNet(ctx, netY, poleColor, capColor) {
+  ctx.fillStyle = poleColor;
+  ctx.fillRect(NET.x, netY, NET.w, FLOOR_Y - netY);
+  ctx.strokeStyle = "#000"; ctx.lineWidth = 2;
+  ctx.strokeRect(NET.x, netY, NET.w, FLOOR_Y - netY);
+  ctx.fillStyle = capColor;
+  ctx.beginPath(); ctx.arc(NET.x + NET.w / 2, netY - 2, 7, 0, Math.PI * 2); ctx.fill();
+}
+
+function drawPlayersAndBall(ctx) {
+  players.forEach((p, idx) => {
+    ctx.save();
+    ctx.translate(p.x, p.y);
+
+    ctx.fillStyle = "rgba(0, 0, 0, 0.24)";
+    ctx.beginPath(); ctx.ellipse(0, FLOOR_Y - p.y - 2, p.radius * 1.15, 8, 0, 0, Math.PI * 2); ctx.fill();
+
+    ctx.rotate(p.angle);
+    if (chosenViceCard && chosenViceCard.effect === "mini_crabs") ctx.scale(0.68, 0.68);
+
+    const img = (p.team === 1) ? crabImgTeam1 : crabImgTeam2;
+    ctx.drawImage(img, -p.width / 2, -p.height / 2, p.width, p.height);
+
+    drawFlushHat(ctx, p.hat, animTimer);
+
+    if (idx === match.myPlayerIndex) {
+      ctx.fillStyle = "#ffd600";
+      ctx.beginPath(); ctx.moveTo(-7, -p.height / 2 - 20); ctx.lineTo(7, -p.height / 2 - 20); ctx.lineTo(0, -p.height / 2 - 12); ctx.fill();
+    }
+    ctx.restore();
+  });
+
+  for (let i = 0; i < ball.trail.length; i++) {
+    const tr = ball.trail[i];
+    const progress = (i + 1) / ball.trail.length;
+    const alpha = progress * 0.65;
+    const radius = ball.r * (0.35 + progress * 0.65);
+    ctx.fillStyle = (activeGameMode === "vice") ? `rgba(0, 255, 255, ${alpha})` : `rgba(255, 255, 255, ${alpha})`;
+    ctx.beginPath(); ctx.arc(tr.x, tr.y, radius, 0, Math.PI * 2); ctx.fill();
+  }
+
+  const shadowScale = Math.max(0.3, 1 - (FLOOR_Y - ball.y) / 550);
+  ctx.fillStyle = "rgba(0, 0, 0, 0.22)";
+  ctx.beginPath(); ctx.ellipse(ball.x, FLOOR_Y + 2, ball.r * shadowScale, 5 * shadowScale, 0, 0, Math.PI * 2); ctx.fill();
+
+  ctx.save();
+  ctx.translate(ball.x, ball.y);
+
+  if (isFrozen) {
+    ctx.fillStyle = "rgba(128, 222, 234, 0.75)";
+    ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 3;
+    ctx.strokeRect(-ball.r - 8, -ball.r - 8, (ball.r + 8) * 2, (ball.r + 8) * 2);
+    ctx.fillRect(-ball.r - 8, -ball.r - 8, (ball.r + 8) * 2, (ball.r + 8) * 2);
+  }
+
+  ctx.rotate(ball.rot);
+  ctx.fillStyle = "#ffffff";
+  ctx.beginPath(); ctx.arc(0, 0, ball.r, 0, Math.PI * 2); ctx.fill();
+
+  if (activeGameMode === "vice") {
+    ctx.fillStyle = "#00e5ff";
+    ctx.beginPath(); ctx.arc(0, 0, ball.r, -0.65, 0.65); ctx.lineTo(0, 0); ctx.fill();
+    ctx.fillStyle = "#ff007f";
+    ctx.beginPath(); ctx.arc(0, 0, ball.r, 1.45, 2.75); ctx.lineTo(0, 0); ctx.fill();
+  } else {
+    ctx.fillStyle = "#0088cc";
+    ctx.beginPath(); ctx.arc(0, 0, ball.r, -0.65, 0.65); ctx.lineTo(0, 0); ctx.fill();
+    ctx.fillStyle = "#ffcc00";
+    ctx.beginPath(); ctx.arc(0, 0, ball.r, 1.45, 2.75); ctx.lineTo(0, 0); ctx.fill();
+  }
+
+  ctx.strokeStyle = "#111"; ctx.lineWidth = 2.2;
+  ctx.beginPath(); ctx.arc(0, 0, ball.r, 0, Math.PI * 2); ctx.stroke();
+  ctx.restore();
+}
+
+function drawRetroFlipScoreboard(ctx, x, y, s1, s2, sets1, sets2, c1, c2) {
+  ctx.save();
+  ctx.translate(x, y);
+  const cardW = 100; const cardH = 58;
+  drawSingleFlipCard(ctx, -cardW - 4, -cardH / 2, cardW, cardH, s1, sets1, c1);
+  drawSingleFlipCard(ctx, 4, -cardH / 2, cardW, cardH, s2, sets2, c2);
+  ctx.restore();
+}
+
+function drawSingleFlipCard(ctx, x, y, w, h, score, sets, scoreColor) {
+  ctx.fillStyle = (activeGameMode === "vice") ? "#160228" : "#ffffff";
+  ctx.strokeStyle = (activeGameMode === "vice") ? "#ff007f" : "#000000";
+  ctx.lineWidth = 3.5;
+  ctx.fillRect(x, y, w, h);
+  ctx.strokeRect(x, y, w, h);
+
+  ctx.strokeStyle = (activeGameMode === "vice") ? "#380a61" : "#e0e0e0";
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(x, y + h / 2); ctx.lineTo(x + w, y + h / 2); ctx.stroke();
+
+  ctx.font = "900 11px sans-serif";
+  ctx.fillStyle = (activeGameMode === "vice") ? "#00ffff" : "#555555";
+  ctx.textAlign = "center"; ctx.textBaseline = "top";
+  ctx.fillText(`SETS: ${sets}`, x + w / 2, y + 4);
+
+  ctx.font = "900 36px Impact, sans-serif";
+  ctx.fillStyle = scoreColor;
+  ctx.textBaseline = "middle";
+  ctx.fillText(score, x + w / 2, y + h / 2 + 5);
+}
+
+// 17. MAIN LOOP
+let lastT = performance.now();
+function gameLoop(now) {
+  const dt = Math.min((now - lastT) / 1000, 0.05);
+  lastT = now;
+
+  if (!match.paused && !match.over && !document.getElementById("game-section").classList.contains("hidden")) {
+    const myInput = {
+      left: keys["KeyA"] || false,
+      right: keys["KeyD"] || false,
+      rotLeft: keys["ArrowLeft"] || false,
+      rotRight: keys["ArrowRight"] || false,
+      jump: keys["Space"] || false
+    };
+
+    updatePlayer(players[match.myPlayerIndex], myInput, dt);
+
+    for (let i = 0; i < players.length; i++) {
+      if (i === match.myPlayerIndex) continue;
+      if (!match.isOnline || isHost) {
+        if (!peersConnected[i]) {
+          const aiIn = getAIInput(players[i], ball);
+          updatePlayer(players[i], aiIn, dt);
+        }
+      }
+    }
+
+    resolveCrabCollisions();
+
+    if (!match.isOnline || isHost) {
+      updateBall(dt);
+      if (match.isOnline && isHost) broadcastGameState();
+    }
+
+    if (match.toastTimer > 0) {
+      match.toastTimer -= dt;
+      if (match.toastTimer <= 0) document.getElementById("toast").classList.add("hidden");
+    }
+  }
+
+  render();
+  requestAnimationFrame(gameLoop);
+}
+requestAnimationFrame(gameLoop);
+
+// 18. UI NAVIGATION & VICE CARD SELECTION
+function showSubmodeSelect(context) {
+  sfx.init();
+  pendingModeContext = context;
+  document.getElementById("menuPanel").classList.add("hidden");
+  document.getElementById("submodeModal").classList.remove("hidden");
+  if (context === "online") {
+    document.getElementById("submodeSubtitle").innerText = "Host choice: Pick match style for the room";
+  } else {
+    document.getElementById("submodeSubtitle").innerText = "Solo practice: Pick your style";
+  }
+}
+
+function selectGameSubmode(mode) {
+  sfx.init();
+  activeGameMode = mode;
+  document.getElementById("submodeModal").classList.add("hidden");
+
+  if (mode === "vice") {
+    openViceCardVote();
+  } else {
+    chosenViceCard = null;
+    launchGame();
+  }
+}
+
+function openViceCardVote() {
+  document.getElementById("viceVoteModal").classList.remove("hidden");
+  const shuffled = [...ALL_VICE_CARDS].sort(() => 0.5 - Math.random());
+  currentDrawnCards = shuffled.slice(0, 3);
+
+  const container = document.getElementById("viceCardsContainer");
+  container.innerHTML = "";
+
+  currentDrawnCards.forEach((card, idx) => {
+    const el = document.createElement("div");
+    el.className = "card-item" + (idx === 0 ? " selected" : "");
+    el.innerHTML = `
+      <div class="card-icon">${card.icon}</div>
+      <div class="card-title">${card.title}</div>
+      <div class="card-desc">${card.desc}</div>
+      <div class="vote-count">SELECT</div>
+    `;
+    el.onclick = () => {
+      sfx.bodyBump();
+      document.querySelectorAll(".card-item").forEach(c => c.classList.remove("selected"));
+      el.classList.add("selected");
+      chosenViceCard = card;
+    };
+    container.appendChild(el);
+  });
+  chosenViceCard = currentDrawnCards[0];
+}
+
+function confirmCardAndPlay() {
+  sfx.init();
+  document.getElementById("viceVoteModal").classList.add("hidden");
+  updateCrabSprites();
+  launchGame();
+}
+
+function launchGame() {
+  match.isOnline = (pendingModeContext === "online");
+  match.myPlayerIndex = 0;
+  match.scores = [0, 0];
+  match.sets = [0, 0];
+  match.currentSet = 1;
+  match.over = false;
+
+  updateCrabSprites();
+  generateNewProceduralClouds();
+
+  document.getElementById("roomBadge").innerText = (activeGameMode === "vice") ? "Vice 2v2" : "Cabinet Arcade 2v2";
+  document.getElementById("game-section").classList.remove("hidden");
+  resetTipOff();
+
+  if (match.isOnline && isHost) {
+    broadcastStartGame();
+  }
+
+  if (chosenViceCard) {
+    showToast(`VICE: ${chosenViceCard.title}! 🌴`, 2.5);
+  }
+}
+
+function backToMainMenu() {
+  document.getElementById("submodeModal").classList.add("hidden");
+  document.getElementById("viceVoteModal").classList.add("hidden");
+  document.getElementById("menuPanel").classList.remove("hidden");
+}
+
+function quitToMenu() {
+  document.getElementById("game-section").classList.add("hidden");
+  document.getElementById("menuPanel").classList.remove("hidden");
+}
+
+function openOnlineLobby() {
+  sfx.init();
+  document.getElementById("onlineBox").classList.remove("hidden");
+}
+
+// 19. 4-PLAYER WEBRTC (FULLY FUNCTIONAL MULTIPLAYER FOR FAMILY/IPHONES)
+let peer = null;
+let isHost = false;
+const peerConnections = [];
+const peersConnected = [true, false, false, false];
+
+function hostRoom() {
+  sfx.init();
+  document.getElementById("netStatus").innerText = "Creating Room...";
+  // Easy 4-digit code (e.g. CRAB-4821)
+  const roomNum = Math.floor(1000 + Math.random() * 9000);
+  const roomId = "CRAB-" + roomNum;
+
+  try {
+    peer = new Peer(roomId);
+    peer.on("open", (id) => {
+      isHost = true;
+      document.getElementById("hostInfo").classList.remove("hidden");
+      document.getElementById("myCodeText").innerText = id;
+      document.getElementById("startNetGameBtn").classList.remove("hidden");
+      document.getElementById("netStatus").innerText = "Room created! Share code with your family.";
+    });
+
+    peer.on("connection", (conn) => {
+      let slot = -1;
+      for (let i = 1; i < 4; i++) {
+        if (!peersConnected[i]) { slot = i; break; }
+      }
+      if (slot === -1) { conn.close(); return; }
+
+      peersConnected[slot] = true;
+      peerConnections[slot] = conn;
+      document.getElementById(`slot${slot + 1}`).classList.add("connected");
+      document.getElementById("netStatus").innerText = `Player ${slot + 1} connected!`;
+
+      conn.on("open", () => {
+        conn.send({ type: "WELCOME", assignedSlot: slot, hats: players.map(p => p.hat) });
+      });
+      conn.on("data", (data) => {
+        if (data.type === "INPUT") {
+          updatePlayer(players[slot], data.input, 0.03);
+        }
+      });
+      conn.on("close", () => {
+        peersConnected[slot] = false;
+        document.getElementById(`slot${slot + 1}`).classList.remove("connected");
+      });
+    });
+
+    peer.on("error", (err) => {
+      document.getElementById("netStatus").innerText = "Connection note: Refresh & try host again.";
+    });
+  } catch(e) {
+    document.getElementById("netStatus").innerText = "Network error. Try again.";
+  }
+}
+
+function joinRoom() {
+  sfx.init();
+  const code = document.getElementById("joinCodeInput").value.trim().toUpperCase();
+  if (!code) { alert("Please enter the 4-digit code (e.g. CRAB-1234)!"); return; }
+
+  document.getElementById("netStatus").innerText = "Connecting to " + code + "...";
+  try {
+    peer = new Peer();
+    peer.on("open", () => {
+      const conn = peer.connect(code);
+      conn.on("open", () => {
+        match.isOnline = true;
+        document.getElementById("netStatus").innerText = "Connected to Host! Waiting for start...";
+      });
+
+      conn.on("data", (data) => {
+        if (data.type === "WELCOME") {
+          match.myPlayerIndex = data.assignedSlot;
+          for (let i = 0; i < 4; i++) { if (data.hats) players[i].hat = data.hats[i]; }
+          document.getElementById("roomBadge").innerText = `Player ${match.myPlayerIndex + 1}`;
+          document.querySelectorAll(".slot").forEach((s, idx) => {
+            if (idx <= match.myPlayerIndex) s.classList.add("connected");
+          });
+        }
+        if (data.type === "START_GAME") {
+          activeGameMode = data.mode;
+          chosenViceCard = data.card;
+          updateCrabSprites();
+          document.getElementById("menuPanel").classList.add("hidden");
+          document.getElementById("submodeModal").classList.add("hidden");
+          document.getElementById("viceVoteModal").classList.add("hidden");
+          document.getElementById("game-section").classList.remove("hidden");
+          resetTipOff();
+        }
+        if (data.type === "SYNC") {
+          for (let i = 0; i < 4; i++) {
+            if (i !== match.myPlayerIndex) {
+              players[i].x = data.players[i].x;
+              players[i].y = data.players[i].y;
+              players[i].angle = data.players[i].angle;
+            }
+          }
+          ball.x = data.ball.x;
+          ball.y = data.ball.y;
+          ball.rot = data.ball.rot;
+          match.scores = data.scores;
+          match.sets = data.sets;
+        }
+      });
+
+      setInterval(() => {
+        if (conn && conn.open) {
+          conn.send({
+            type: "INPUT",
+            input: {
+              left: keys["KeyA"] || false,
+              right: keys["KeyD"] || false,
+              rotLeft: keys["ArrowLeft"] || false,
+              rotRight: keys["ArrowRight"] || false,
+              jump: keys["Space"] || false
+            }
+          });
+        }
+      }, 33);
+    });
+  } catch(e) {}
+}
+
+function startOnlineVoting() {
+  showSubmodeSelect('online');
+}
+
+function broadcastStartGame() {
+  const msg = {
+    type: "START_GAME",
+    mode: activeGameMode,
+    card: chosenViceCard
+  };
+  peerConnections.forEach(c => {
+    if (c && c.open) c.send(msg);
+  });
+}
+
+function copyRoomCode() {
+  navigator.clipboard.writeText(document.getElementById("myCodeText").innerText);
+  document.getElementById("copyBtn").innerText = "COPIED!";
+  setTimeout(() => document.getElementById("copyBtn").innerText = "COPY", 1500);
+}
+
+function broadcastGameState() {
+  const data = {
+    type: "SYNC",
+    players: players.map(p => ({ x: p.x, y: p.y, angle: p.angle })),
+    ball: { x: ball.x, y: ball.y, rot: ball.rot },
+    scores: match.scores,
+    sets: match.sets
+  };
+  peerConnections.forEach(c => {
+    if (c && c.open) c.send(data);
+  });
+}
+</script>
+</body>
+</html>
