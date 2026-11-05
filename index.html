@@ -73,6 +73,7 @@ button {
 }
 button:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 #000; }
 button:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #000; }
+button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: 2px 2px 0 #000; }
 .primary { background: #ff3b00; color: #fff; text-shadow: 2px 2px 0 #000; }
 .vice-btn { background: #ff007f; color: #00ffff; text-shadow: 2px 2px 0 #7b00ff; border-color: #000; }
 .big { min-height: 54px; font-size: 17px; }
@@ -106,10 +107,10 @@ button:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #000; }
   border-radius: 8px; font-family: monospace; text-transform: uppercase;
 }
 .secret-input {
-  background: #fff9c4; border-color: #f57f17; width: 140px;
+  background: #fff9c4; border-color: #f57f17; width: 180px;
 }
 
-/* VICE CARD VOTING */
+/* VICE CARD VOTING & RESHUFFLE ANIMATION */
 .vice-cards-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0;
 }
@@ -118,11 +119,21 @@ button:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #000; }
   color: #fff; padding: 14px 10px; cursor: pointer;
   box-shadow: 0 0 14px rgba(255, 0, 127, 0.4), 4px 4px 0 #000;
   display: flex; flex-direction: column; justify-content: space-between;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .card-item.selected {
   border-color: #00ffff; box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 4px 4px 0 #000;
-  transform: translateY(-4px);
+  transform: translateY(-6px) scale(1.03);
 }
+.card-item.shuffle-spin {
+  animation: cardSlotSpin 0.4s ease-in-out;
+}
+@keyframes cardSlotSpin {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(0.6) rotate(180deg); opacity: 0.2; }
+  100% { transform: scale(1) rotate(360deg); opacity: 1; }
+}
+
 .card-icon { font-size: 34px; margin-bottom: 4px; }
 .card-title { font-size: 18px; color: #ff007f; margin-bottom: 4px; }
 .card-desc { font-size: 12px; font-family: sans-serif; font-weight: bold; color: #e0e7ff; line-height: 1.2; }
@@ -195,7 +206,6 @@ canvas {
         <button class="big" onclick="openOnlineLobby()">4-PLAYER ONLINE MATCH</button>
       </div>
 
-      <!-- INITIAL CODE/CREATE BOX -->
       <div id="onlineBox" class="online-box hidden" style="margin-top:16px;">
         <h3 style="margin:0;font-size:20px;">Multiplayer Connection</h3>
         <div class="custom-row" style="margin:6px 0;">
@@ -210,7 +220,7 @@ canvas {
     <!-- SOCIAL PRE-LOBBY ROOM -->
     <section id="socialLobbyModal" class="panel hidden">
       <h1>🦀 BEACH PRE-LOBBY 🦀</h1>
-      <p class="sub">Pick your team, customize your character, or enter a secret code!</p>
+      <p class="sub">Pick your team (max 2 per side), customize your style, or enter your secret code!</p>
 
       <div style="margin:6px 0;">
         <span style="font-family:sans-serif;font-size:14px;font-weight:bold;">Room Code: </span>
@@ -218,17 +228,17 @@ canvas {
         <button id="copyBtn" onclick="copyRoomCode()" style="padding:4px 10px;font-size:12px;margin-left:6px;">COPY</button>
       </div>
 
-      <!-- TEAMS VIEW -->
+      <!-- TEAMS VIEW (MAX 2 PER TEAM) -->
       <div class="lobby-grid">
         <div class="team-box">
-          <div class="team-title-1">TEAM 1 (BLUE SIDE)</div>
+          <div class="team-title-1">TEAM 1 (BLUE SIDE) - <span id="team1Count">0</span>/2</div>
           <div id="team1Players"></div>
-          <button onclick="switchTeam(1)" style="font-size:12px;padding:6px 10px;margin-top:6px;">JOIN TEAM 1</button>
+          <button id="joinTeam1Btn" onclick="switchTeam(1)" style="font-size:12px;padding:6px 10px;margin-top:6px;">JOIN TEAM 1</button>
         </div>
         <div class="team-box">
-          <div class="team-title-2">TEAM 2 (RED SIDE)</div>
+          <div class="team-title-2">TEAM 2 (RED SIDE) - <span id="team2Count">0</span>/2</div>
           <div id="team2Players"></div>
-          <button onclick="switchTeam(2)" style="font-size:12px;padding:6px 10px;margin-top:6px;">JOIN TEAM 2</button>
+          <button id="joinTeam2Btn" onclick="switchTeam(2)" style="font-size:12px;padding:6px 10px;margin-top:6px;">JOIN TEAM 2</button>
         </div>
       </div>
 
@@ -249,7 +259,7 @@ canvas {
 
         <div class="custom-row">
           <b>SECRET CODE:</b>
-          <input id="secretCodeInput" class="custom-input secret-input" placeholder="CODE (e.g. doby)">
+          <input id="secretCodeInput" class="custom-input secret-input" placeholder="ENTER SECRET CODE">
           <button onclick="applySecretCode()" style="font-size:12px;padding:6px 12px;background:#ffd54f;">UNLOCK</button>
           <span id="secretStatus" style="font-size:12px;font-weight:bold;color:#d84315;"></span>
         </div>
@@ -257,33 +267,34 @@ canvas {
 
       <div style="margin-top:14px;display:flex;justify-content:center;gap:12px;">
         <button onclick="quitToMenu()" style="font-size:13px;padding:8px 16px;">LEAVE LOBBY</button>
-        <button id="hostStartMatchBtn" class="primary big hidden" onclick="showSubmodeSelect('online')" style="width:240px;">START MATCH!</button>
+        <button id="hostStartMatchBtn" class="primary big hidden" onclick="startHostGameSetup()" style="width:240px;">NEXT: MATCH MODE ➔</button>
       </div>
     </section>
 
-    <!-- SUB-MODE SELECTION -->
+    <!-- SUB-MODE SELECTION (SYNCED LIVE ACROSS ALL PLAYERS) -->
     <section id="submodeModal" class="panel hidden">
       <h1 id="submodeTitle">CHOOSE MATCH STYLE</h1>
       <p class="sub" id="submodeSubtitle">Select your game environment and ruleset</p>
 
       <div class="btn-grid">
-        <button class="big primary" onclick="selectGameSubmode('standard')">☀️ STANDARD BEACH</button>
-        <button class="big vice-btn" onclick="selectGameSubmode('vice')">🌴 VICE MODE</button>
+        <button class="big primary" id="standardModeBtn" onclick="selectGameSubmode('standard')">☀️ STANDARD BEACH</button>
+        <button class="big vice-btn" id="viceModeBtn" onclick="selectGameSubmode('vice')">🌴 VICE MODE</button>
       </div>
       <div style="margin-top:16px;">
         <button onclick="backToLobbyOrMenu()" style="padding:6px 14px;font-size:13px;">BACK</button>
       </div>
     </section>
 
-    <!-- VICE CARD VOTING -->
+    <!-- VICE CARD VOTING (LIVE SYNC & RESHUFFLE) -->
     <section id="viceVoteModal" class="panel hidden" style="background:#160228;border-color:#ff007f;">
       <h1 style="color:#00ffff;text-shadow:3px 3px 0 #ff007f, 5px 5px 0 #000;">🌴 VOTE VICE CARD 🌴</h1>
-      <p class="sub" style="color:#ff77c6;">Cast your vote! The modification with the most votes wins.</p>
+      <p class="sub" style="color:#ff77c6;">Popular vote decides the modification! Shuffled live for everyone.</p>
 
       <div id="viceCardsContainer" class="vice-cards-grid"></div>
 
-      <div style="margin-top:10px;">
-        <button id="confirmCardBtn" class="vice-btn big" onclick="confirmMyCardVote()" style="width:260px;">SUBMIT VOTE!</button>
+      <div style="margin-top:10px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+        <button id="reshuffleBtn" onclick="requestCardReshuffle()" style="background:#00ffff;font-size:14px;padding:8px 14px;">🔀 RESHUFFLE CARDS</button>
+        <button id="confirmCardBtn" class="vice-btn big" onclick="confirmMyCardVote()" style="width:240px;">SUBMIT MY VOTE!</button>
       </div>
     </section>
 
@@ -349,36 +360,29 @@ function sanitizePlayerName(rawName, fallback = "CRAB") {
   return clean || fallback;
 }
 
-// 1. SECRET "DOBY" SPRITE BUILDER & UNLOCK
-// Rendered to exact crab proportions (146px width x 58px stance)
+// 1. EXACT "DOBY" IMAGE SPRITE (Referenced directly from your GitHub directory)
 const dobyImg = new Image();
-dobyImg.src = "https://i.ibb.co/3sN6zP2/doby.png"; // Fallback URL
-// Preload image object
-const userUploadedDoby = new Image();
-userUploadedDoby.crossOrigin = "anonymous";
-// SVG Doby clone fallback if external fails
-const dobySVG = `data:image/svg+xml;utf8,${encodeURIComponent(`
+dobyImg.src = "./doby.png"; // Loads your exact image file uploaded to GitHub
+
+// Fallback high-res data URI if offline/local
+const dobyFallbackSVG = `data:image/svg+xml;utf8,${encodeURIComponent(`
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
-  <!-- Doby Dog Legs & Underbelly -->
   <ellipse cx="98" cy="55" rx="56" ry="24" fill="#e0b88f" stroke="#221105" stroke-width="4"/>
   <path d="M 40 70 Q 24 82 20 84" stroke="#221105" stroke-width="8" stroke-linecap="round"/>
-  <path d="M 60 74 Q 50 84 48 85" stroke="#221105" stroke-width="8" stroke-linecap="round"/>
   <path d="M 140 70 Q 156 82 160 84" stroke="#221105" stroke-width="8" stroke-linecap="round"/>
-  <path d="M 160 60 Q 185 50 188 40" stroke="#221105" stroke-width="8" stroke-linecap="round" fill="none"/>
-  <!-- Doby Baby Head -->
   <circle cx="98" cy="38" r="32" fill="#ffd5be" stroke="#221105" stroke-width="4"/>
-  <!-- Big Dog Ears -->
   <polygon points="76,20 62,0 84,14" fill="#ffd5be" stroke="#221105" stroke-width="3"/>
   <polygon points="120,20 134,0 112,14" fill="#ffd5be" stroke="#221105" stroke-width="3"/>
-  <!-- Baby Eyes & Nose -->
   <circle cx="86" cy="36" r="7" fill="#111"/>
   <circle cx="110" cy="36" r="7" fill="#111"/>
   <ellipse cx="98" cy="44" rx="4" ry="3" fill="#331105"/>
-  <path d="M 92 50 Q 98 54 104 50" stroke="#331105" stroke-width="2.5" fill="none"/>
 </svg>`)}`;
-dobyImg.src = dobySVG;
 
-// VICE CARDS & MODIFIERS
+dobyImg.onerror = () => {
+  if (dobyImg.src !== dobyFallbackSVG) dobyImg.src = dobyFallbackSVG;
+};
+
+// 10 VICE CARDS
 const ALL_VICE_CARDS = [
   { id: 1, icon: "🦀", title: "MEGA CLAWS", desc: "Claws grow huge for massive spike reach.", effect: "big_claws" },
   { id: 2, icon: "🌙", title: "MOON GRAVITY", desc: "Playable low gravity on ball and crabs.", effect: "low_grav" },
@@ -566,7 +570,7 @@ if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
   if (mc) mc.style.display = "flex";
 }
 
-// CRAB PLAYERS MODEL (With spriteType: "crab" or "doby")
+// CRAB PLAYERS (EXACT SPECIFICATIONS: 146px width x 58px height)
 function createCrab(id, team, x, name = "") {
   return {
     id: id, team: team, x: x, y: FLOOR_Y - 26,
@@ -954,8 +958,10 @@ function renderStandardStyle() {
     ctx.beginPath(); ctx.arc(x + 22, FLOOR_Y - 60, 16, 0, Math.PI); ctx.fill();
   }
 
-  ctx.fillStyle = "#f5d799"; ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
-  ctx.fillStyle = "#e2be73"; ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
+  ctx.fillStyle = "#f5d799";
+  ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
+  ctx.fillStyle = "#e2be73";
+  ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
 
   drawNet(ctx, NET.y, "#ffffff", "#ff1744");
   drawPlayersAndBall(ctx);
@@ -990,8 +996,10 @@ function renderViceStyle() {
     ctx.beginPath(); ctx.arc(x + 22, FLOOR_Y - 60, 16, 0, Math.PI); ctx.fill();
   }
 
-  ctx.fillStyle = "#311b92"; ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
-  ctx.fillStyle = "#1a0033"; ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
+  ctx.fillStyle = "#311b92";
+  ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
+  ctx.fillStyle = "#1a0033";
+  ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
 
   const effNetY = (chosenViceCard && chosenViceCard.effect === "low_net") ? 620 : NET.y;
   drawNet(ctx, effNetY, "#00ffff", "#ff007f");
@@ -1114,7 +1122,7 @@ function drawNet(ctx, netY, poleColor, capColor) {
   ctx.beginPath(); ctx.arc(NET.x + NET.w / 2, netY - 2, 7, 0, Math.PI * 2); ctx.fill();
 }
 
-// DRAW CHARACTERS (CRAB OR SECRET DOBY)
+// DRAW CHARACTERS (CRABS OR SECRET DOBY IMAGE RESIZED TO 146x58)
 function drawPlayersAndBall(ctx) {
   players.forEach((p, idx) => {
     ctx.save();
@@ -1126,7 +1134,7 @@ function drawPlayersAndBall(ctx) {
     ctx.rotate(p.angle);
     if (chosenViceCard && chosenViceCard.effect === "mini_crabs") ctx.scale(0.68, 0.68);
 
-    // DRAW UNLOCKED DOBY OR CRAB
+    // DRAW UNLOCKED DOBY PHOTO OR CRAB
     if (p.spriteType === "doby") {
       ctx.drawImage(dobyImg, -p.width / 2, -p.height / 2, p.width, p.height);
     } else {
@@ -1268,30 +1276,54 @@ function gameLoop(now) {
 }
 requestAnimationFrame(gameLoop);
 
-// SOCIAL PRE-LOBBY LOGIC & SECRET DOBY UNLOCK
+// PRE-LOBBY UI WITH STRICT 2v2 LIMITS
 function refreshLobbyUI() {
   const t1 = document.getElementById("team1Players");
   const t2 = document.getElementById("team2Players");
   if (!t1 || !t2) return;
   t1.innerHTML = ""; t2.innerHTML = "";
 
+  let count1 = 0;
+  let count2 = 0;
+
   players.forEach((p, idx) => {
-    const card = document.createElement("div");
-    card.className = "player-card" + (idx === match.myPlayerIndex ? " is-me" : "");
-    const charTag = p.spriteType === "doby" ? "🐶 DOBY" : "🦀 CRAB";
-    card.innerHTML = `<span>${p.name} (${charTag})</span><span>🎩 ${p.hat.toUpperCase()}</span>`;
-    if (p.team === 1) t1.appendChild(card);
-    else t2.appendChild(card);
+    // Only display connected or local players
+    if (!match.isOnline || peersConnected[idx] || idx === match.myPlayerIndex) {
+      const card = document.createElement("div");
+      card.className = "player-card" + (idx === match.myPlayerIndex ? " is-me" : "");
+      const charTag = p.spriteType === "doby" ? "🐶 DOBY" : "🦀 CRAB";
+      card.innerHTML = `<span>${p.name} (${charTag})</span><span>🎩 ${p.hat.toUpperCase()}</span>`;
+
+      if (p.team === 1) {
+        t1.appendChild(card);
+        count1++;
+      } else {
+        t2.appendChild(card);
+        count2++;
+      }
+    }
   });
+
+  document.getElementById("team1Count").innerText = count1;
+  document.getElementById("team2Count").innerText = count2;
+
+  // Enforce Max 2 per team
+  document.getElementById("joinTeam1Btn").disabled = (count1 >= 2 && players[match.myPlayerIndex].team !== 1);
+  document.getElementById("joinTeam2Btn").disabled = (count2 >= 2 && players[match.myPlayerIndex].team !== 2);
+
+  document.getElementById("joinTeam1Btn").innerText = (count1 >= 2 && players[match.myPlayerIndex].team !== 1) ? "TEAM FULL" : "JOIN TEAM 1";
+  document.getElementById("joinTeam2Btn").innerText = (count2 >= 2 && players[match.myPlayerIndex].team !== 2) ? "TEAM FULL" : "JOIN TEAM 2";
 }
 
 function switchTeam(teamNum) {
+  // Count current team members
+  let count = players.filter((p, i) => (!match.isOnline || peersConnected[i] || i === match.myPlayerIndex) && p.team === teamNum).length;
+  if (count >= 2) return; // Strict team cap
+
   sfx.bodyBump();
   players[match.myPlayerIndex].team = teamNum;
   refreshLobbyUI();
-  if (match.isOnline) {
-    broadcastPlayerCustoms();
-  }
+  if (match.isOnline) broadcastPlayerCustoms();
 }
 
 function updateMyCustoms() {
@@ -1301,9 +1333,7 @@ function updateMyCustoms() {
   players[match.myPlayerIndex].name = safe;
   players[match.myPlayerIndex].hat = hatSelect.value;
   refreshLobbyUI();
-  if (match.isOnline) {
-    broadcastPlayerCustoms();
-  }
+  if (match.isOnline) broadcastPlayerCustoms();
 }
 
 function applySecretCode() {
@@ -1322,13 +1352,24 @@ function applySecretCode() {
   }
 }
 
-// VICE CARD VOTING
+// MATCH FLOW & SUB-MODE SELECTION
 function showSubmodeSelect(context) {
   sfx.init();
   pendingModeContext = context;
   document.getElementById("menuPanel").classList.add("hidden");
   document.getElementById("socialLobbyModal").classList.add("hidden");
   document.getElementById("submodeModal").classList.remove("hidden");
+
+  // Non-hosts can only watch host's selection
+  if (context === "online" && !isHost) {
+    document.getElementById("standardModeBtn").disabled = true;
+    document.getElementById("viceModeBtn").disabled = true;
+    document.getElementById("submodeSubtitle").innerText = "Waiting for Host to choose match style...";
+  } else {
+    document.getElementById("standardModeBtn").disabled = false;
+    document.getElementById("viceModeBtn").disabled = false;
+    document.getElementById("submodeSubtitle").innerText = "Select your match style";
+  }
 }
 
 function selectGameSubmode(mode) {
@@ -1337,7 +1378,7 @@ function selectGameSubmode(mode) {
   document.getElementById("submodeModal").classList.add("hidden");
 
   if (mode === "vice") {
-    // Shuffle 3 random cards
+    // Draw 3 random vice cards
     const shuffled = [...ALL_VICE_CARDS].sort(() => 0.5 - Math.random());
     currentDrawnCards = shuffled.slice(0, 3);
     cardVotes = [0, 0, 0];
@@ -1374,7 +1415,13 @@ function openViceCardVoteUI() {
     };
     container.appendChild(el);
   });
+
   myCardVoteIndex = 0;
+  document.getElementById("confirmCardBtn").disabled = false;
+  document.getElementById("confirmCardBtn").innerText = "SUBMIT MY VOTE!";
+
+  // Only host can reshuffle cards
+  document.getElementById("reshuffleBtn").style.display = (!match.isOnline || isHost) ? "inline-block" : "none";
 }
 
 let myCardVoteIndex = 0;
@@ -1386,18 +1433,31 @@ function confirmMyCardVote() {
 
   if (match.isOnline) {
     if (!isHost) {
-      // Send vote to host
       peerConnections[0].send({ type: "CAST_VOTE", cardIdx: myCardVoteIndex });
     } else {
       updateCardVoteCounts();
       setTimeout(tallyAndLaunchVice, 1500);
     }
   } else {
-    // Solo: immediately lock in
     chosenViceCard = currentDrawnCards[myCardVoteIndex];
     document.getElementById("viceVoteModal").classList.add("hidden");
     launchGame();
   }
+}
+
+// ANIMATED RESHUFFLE FUNCTION
+function requestCardReshuffle() {
+  sfx.jump();
+  const items = document.querySelectorAll(".card-item");
+  items.forEach(it => it.classList.add("shuffle-spin"));
+
+  setTimeout(() => {
+    const shuffled = [...ALL_VICE_CARDS].sort(() => 0.5 - Math.random());
+    currentDrawnCards = shuffled.slice(0, 3);
+    cardVotes = [0, 0, 0];
+    if (match.isOnline && isHost) broadcastViceCardShuffle();
+    openViceCardVoteUI();
+  }, 400);
 }
 
 function tallyAndLaunchVice() {
@@ -1456,6 +1516,15 @@ function openOnlineLobby() {
   document.getElementById("onlineBox").classList.remove("hidden");
 }
 
+function startHostGameSetup() {
+  showSubmodeSelect('online');
+  // Broadcast screen change to connected phones
+  if (isHost) {
+    const msg = { type: "SCREEN_CHANGE", screen: "submode" };
+    peerConnections.forEach(c => { if (c && c.open) c.send(msg); });
+  }
+}
+
 // MULTIPLAYER WEBRTC
 let peer = null;
 let isHost = false;
@@ -1473,6 +1542,7 @@ function hostRoom() {
       isHost = true;
       match.myPlayerIndex = 0;
       players[0].name = "HOST";
+      players[0].team = 1;
       document.getElementById("myCodeText").innerText = id;
       document.getElementById("menuPanel").classList.add("hidden");
       document.getElementById("socialLobbyModal").classList.remove("hidden");
@@ -1489,6 +1559,9 @@ function hostRoom() {
 
       peersConnected[slot] = true;
       peerConnections[slot] = conn;
+
+      // Assign alternate team by default
+      players[slot].team = (slot % 2 === 0) ? 1 : 2;
 
       conn.on("open", () => {
         conn.send({
@@ -1559,9 +1632,13 @@ function joinRoom() {
           });
           refreshLobbyUI();
         }
+        if (data.type === "SCREEN_CHANGE") {
+          if (data.screen === "submode") showSubmodeSelect('online');
+        }
         if (data.type === "SHUFFLE_VICE_CARDS") {
           currentDrawnCards = data.cards;
           cardVotes = [0, 0, 0];
+          document.getElementById("submodeModal").classList.add("hidden");
           document.getElementById("socialLobbyModal").classList.add("hidden");
           openViceCardVoteUI();
         }
