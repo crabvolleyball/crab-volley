@@ -28,19 +28,14 @@ header {
   padding: 4px 14px; color: #fff; text-shadow: 2px 2px 0 #000; flex-shrink: 0;
 }
 .brand {
-  font-size: clamp(18px, 2.8vw, 32px); color: #ffe600;
-  text-shadow: 3px 3px 0 #d83a00, 4px 4px 0 #000; letter-spacing: 1px;
+  font-size: clamp(20px, 3.2vw, 36px); color: #ffe600;
+  text-shadow: 3px 3px 0 #d83a00, 4px 4px 0 #000; letter-spacing: 1.5px;
 }
 .brand span { color: #fff; }
 .header-actions { display: flex; gap: 8px; align-items: center; }
-.room-badge {
-  background: #fff; color: #111; font-size: 13px; font-weight: bold;
-  padding: 4px 12px; border-radius: 8px; border: 3px solid #000;
-  box-shadow: 2px 2px 0 #000; font-family: sans-serif;
-}
 .audio-btn {
   background: #ffcc00; border: 3px solid #000; border-radius: 8px;
-  font-size: 15px; padding: 3px 10px; cursor: pointer; box-shadow: 2px 2px 0 #000;
+  font-size: 16px; padding: 4px 12px; cursor: pointer; box-shadow: 2px 2px 0 #000;
 }
 
 main {
@@ -49,11 +44,11 @@ main {
   overflow: hidden;
 }
 
-/* ARCADE PANELS */
+/* ARCADE RETRO PANELS */
 .panel {
-  width: min(940px, 95%); background: #fffbe8; border: 6px solid #142800;
+  width: min(920px, 95%); background: #fffbe8; border: 6px solid #142800;
   border-radius: 20px; box-shadow: 10px 10px 0 #000;
-  padding: clamp(14px, 3vw, 24px); text-align: center; margin: auto;
+  padding: clamp(16px, 3.5vw, 28px); text-align: center; margin: auto;
   position: relative; max-height: 92vh; overflow-y: auto;
 }
 .panel::before {
@@ -61,18 +56,18 @@ main {
   border-radius: 14px; pointer-events: none;
 }
 h1 {
-  margin: 0 0 6px; font-size: clamp(26px, 4.2vw, 44px); color: #e63900;
-  text-shadow: 3px 3px 0 #ffd54f, 5px 5px 0 #000; letter-spacing: 1px;
+  margin: 0 0 6px; font-size: clamp(32px, 5vw, 54px); color: #e63900;
+  text-shadow: 3px 3px 0 #ffd54f, 5px 5px 0 #000; letter-spacing: 1.5px;
 }
 .sub {
-  font-size: 14px; color: #2e530b; font-family: sans-serif; font-weight: 900;
-  margin-bottom: 16px; letter-spacing: 0.5px;
+  font-size: 15px; color: #2e530b; font-family: sans-serif; font-weight: 900;
+  margin-bottom: 20px; letter-spacing: 0.5px;
 }
 
-.btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 620px; margin: auto; }
+.btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 620px; margin: auto; }
 button {
   background: #ffcc00; color: #000; border: 4px solid #000;
-  border-radius: 12px; padding: 10px 16px; font-size: 16px; font-family: "Impact", sans-serif;
+  border-radius: 14px; padding: 12px 18px; font-size: 17px; font-family: "Impact", sans-serif;
   letter-spacing: 1px; box-shadow: 4px 4px 0 #000; cursor: pointer;
   transition: transform 0.05s ease, box-shadow 0.05s ease; touch-action: manipulation;
 }
@@ -81,7 +76,8 @@ button:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #000; }
 button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: 2px 2px 0 #000; }
 .primary { background: #ff3b00; color: #fff; text-shadow: 2px 2px 0 #000; }
 .vice-btn { background: #ff007f; color: #00ffff; text-shadow: 2px 2px 0 #7b00ff; border-color: #000; }
-.big { min-height: 52px; font-size: 17px; }
+.bag-btn { background: #26a69a; color: #fff; text-shadow: 2px 2px 0 #004d40; }
+.big { min-height: 56px; font-size: 18px; }
 
 /* SOCIAL PRE-LOBBY & CUSTOMIZATION */
 .lobby-grid {
@@ -144,7 +140,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow
 .card-desc { font-size: 12px; font-family: sans-serif; font-weight: bold; color: #e0e7ff; line-height: 1.2; }
 .vote-count { font-size: 13px; color: #00ffff; font-family: monospace; font-weight: 900; margin-top: 6px; }
 
-/* IN-GAME VIEW */
+/* IN-GAME VIEW & PREVENT BOTTOM SCOREBOARD CUTOFF */
 #game-section {
   width: 100%; height: 100%; display: flex; flex-direction: column;
   align-items: center; justify-content: center; position: relative;
@@ -191,6 +187,10 @@ canvas {
   align-items: center; padding: 4px 8px; font-size: 12px; color: #fff;
   font-family: sans-serif; font-weight: bold; text-shadow: 1px 1px 0 #000; flex-shrink: 0;
 }
+.version-tag {
+  color: #ffe600; font-family: monospace; font-size: 13px; font-weight: 900;
+  background: rgba(0,0,0,0.5); padding: 2px 8px; border-radius: 6px; border: 1px solid #ffe600;
+}
 .hidden { display: none !important; }
 </style>
 </head>
@@ -200,8 +200,7 @@ canvas {
   <header>
     <div class="brand">🦀 CRAB <span>VOLLEYBALL</span></div>
     <div class="header-actions">
-      <button id="muteAudioBtn" class="audio-btn" onclick="toggleMuteAudio()">🔊</button>
-      <div id="roomBadge" class="room-badge">Cabinet Arcade 2v2</div>
+      <button id="muteAudioBtn" class="audio-btn">🔊</button>
     </div>
   </header>
 
@@ -209,37 +208,37 @@ canvas {
     <!-- MAIN MENU -->
     <section id="menuPanel" class="panel">
       <h1>CRAB VOLLEYBALL</h1>
-      <p class="sub">First to 5 Points · Best of 3 Sets · Center Tip-Off · Level Up & Unlockables</p>
+      <p class="sub">First to 5 Points · Pinch Responsibly · 100% Guaranteed Fresh Sand</p>
 
       <div class="btn-grid">
-        <button class="big primary" onclick="showSubmodeSelect('solo')">PLAY SOLO / BOTS</button>
-        <button class="big" onclick="openOnlineLobby()">4-PLAYER ONLINE MATCH</button>
+        <button class="big primary" id="playSoloBtn">PLAY SOLO / BOTS</button>
+        <button class="big" id="onlineLobbyBtn">4-PLAYER ONLINE MATCH</button>
       </div>
 
       <div style="margin-top:14px;">
-        <button onclick="openLockerRoom()" style="background:#81c784;font-size:15px;padding:8px 16px;">🏆 CAREER LOCKER & QUIPS</button>
+        <button id="openBagBtn" class="bag-btn" style="font-size:16px;padding:10px 22px;">🎒 BEACH BAG (ARSENAL)</button>
       </div>
 
       <div id="onlineBox" class="online-box hidden" style="margin-top:16px;">
-        <h3 style="margin:0;font-size:20px;">Multiplayer Connection</h3>
+        <h3 style="margin:0;font-size:20px;">Beach Connection</h3>
         <div class="custom-row" style="margin:6px 0;">
-          <button id="hostBtn" onclick="hostRoom()">CREATE ROOM (HOST)</button>
-          <input id="joinCodeInput" class="custom-input" style="min-width:180px;" placeholder="ENTER CODE">
-          <button id="joinBtn" onclick="joinRoom()">JOIN ROOM</button>
+          <button id="hostBtn">CREATE ROOM (HOST)</button>
+          <input id="joinCodeInput" class="custom-input" style="min-width:180px;" placeholder="ENTER ROOM CODE">
+          <button id="joinBtn">JOIN ROOM</button>
         </div>
-        <p id="netStatus" style="font-size:13px;font-family:sans-serif;font-weight:bold;color:#2e7d32;margin:4px 0;">Ready.</p>
+        <p id="netStatus" style="font-size:13px;font-family:sans-serif;font-weight:bold;color:#2e7d32;margin:4px 0;">Ready to pinch.</p>
       </div>
     </section>
 
-    <!-- LOCKER ROOM / UNLOCKABLES -->
+    <!-- BEACH BAG / ARSENAL (CAREER & CUSTOMIZATION) -->
     <section id="lockerModal" class="panel hidden">
-      <h1>🏆 CAREER & UNLOCKABLES 🏆</h1>
-      <p class="sub">Level: <span id="careerLevel">1</span> | Points: <span id="careerPoints">0</span> | Matches Won: <span id="careerWins">0</span></p>
+      <h1>🎒 YOUR BEACH BAG 🎒</h1>
+      <p class="sub">Rank: <span id="careerLevel" style="color:#d84315;">1</span> · Claws Pinched: <span id="careerPoints">0</span> · Sets Won: <span id="careerWins">0</span></p>
 
       <div class="customizer-box">
         <div class="custom-row">
-          <b>VICTORY QUIP PACK:</b>
-          <select id="quipPackSelect" class="custom-input" onchange="saveCareerSettings()">
+          <b>TRASH-TALK QUIP PACK:</b>
+          <select id="quipPackSelect" class="custom-input">
             <option value="classic">Classic Crab ("Crab Pride!", "Pinch this!")</option>
             <option value="trash">Trash Talker ("Sit down!", "Free points!")</option>
             <option value="sailor">Salty Sailor ("Shiver me claws!", "Overboard!")</option>
@@ -248,7 +247,7 @@ canvas {
         </div>
         <div class="custom-row">
           <b>POINT EXPLOSION EFFECT:</b>
-          <select id="explosionSelect" class="custom-input" onchange="saveCareerSettings()">
+          <select id="explosionSelect" class="custom-input">
             <option value="confetti">Confetti Sparkles</option>
             <option value="firework">Arcade Fireworks</option>
             <option value="shockwave">Tidal Shockwave (Knocks players down!)</option>
@@ -256,7 +255,7 @@ canvas {
         </div>
       </div>
       <div style="margin-top:14px;">
-        <button onclick="closeLockerRoom()" style="padding:8px 16px;">BACK TO MENU</button>
+        <button id="closeBagBtn" style="padding:8px 18px;">BACK TO BEACH</button>
       </div>
     </section>
 
@@ -268,7 +267,7 @@ canvas {
       <div style="margin:6px 0;">
         <span style="font-family:sans-serif;font-size:14px;font-weight:bold;">Room Code: </span>
         <code id="myCodeText">----</code>
-        <button id="copyBtn" onclick="copyRoomCode()" style="padding:4px 10px;font-size:12px;margin-left:6px;">COPY</button>
+        <button id="copyBtn" style="padding:4px 10px;font-size:12px;margin-left:6px;">COPY</button>
       </div>
 
       <!-- TEAMS VIEW -->
@@ -276,12 +275,12 @@ canvas {
         <div class="team-box">
           <div class="team-title-1">TEAM 1 (BLUE SIDE) - <span id="team1Count">0</span>/2</div>
           <div id="team1Players"></div>
-          <button id="joinTeam1Btn" onclick="switchTeam(1)" style="font-size:12px;padding:6px 10px;margin-top:6px;">JOIN TEAM 1</button>
+          <button id="joinTeam1Btn" style="font-size:12px;padding:6px 10px;margin-top:6px;">JOIN TEAM 1</button>
         </div>
         <div class="team-box">
           <div class="team-title-2">TEAM 2 (RED SIDE) - <span id="team2Count">0</span>/2</div>
           <div id="team2Players"></div>
-          <button id="joinTeam2Btn" onclick="switchTeam(2)" style="font-size:12px;padding:6px 10px;margin-top:6px;">JOIN TEAM 2</button>
+          <button id="joinTeam2Btn" style="font-size:12px;padding:6px 10px;margin-top:6px;">JOIN TEAM 2</button>
         </div>
       </div>
 
@@ -289,16 +288,16 @@ canvas {
       <div class="customizer-box">
         <div class="custom-row" id="botOptionRow">
           <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:900;color:#1b5e20;">
-            <input type="checkbox" id="fillBotsCheck" checked onchange="toggleBotFill()">
+            <input type="checkbox" id="fillBotsCheck" checked>
             🤖 FILL EMPTY SLOTS WITH CHILL BOTS
           </label>
         </div>
 
         <div class="custom-row">
           <b>YOUR NAME:</b>
-          <input id="playerNameInput" class="custom-input" maxlength="12" placeholder="NAME" onchange="updateMyCustoms()">
+          <input id="playerNameInput" class="custom-input" maxlength="12" placeholder="NAME">
           <b>HAT:</b>
-          <select id="hatSelect" class="custom-input" onchange="updateMyCustoms()">
+          <select id="hatSelect" class="custom-input">
             <option value="pineapple">Pineapple</option>
             <option value="propeller">Propeller</option>
             <option value="tophat">Top Hat</option>
@@ -310,14 +309,14 @@ canvas {
         <div class="custom-row">
           <b>SECRET CODE:</b>
           <input id="secretCodeInput" class="custom-input secret-input" placeholder="ENTER SECRET CODE">
-          <button onclick="applySecretCode()" style="font-size:12px;padding:6px 12px;background:#ffd54f;">UNLOCK</button>
+          <button id="unlockSecretBtn" style="font-size:12px;padding:6px 12px;background:#ffd54f;">UNLOCK</button>
           <span id="secretStatus" style="font-size:12px;font-weight:bold;color:#d84315;"></span>
         </div>
       </div>
 
       <div style="margin-top:14px;display:flex;justify-content:center;gap:12px;">
-        <button onclick="quitToMenu()" style="font-size:13px;padding:8px 16px;">LEAVE LOBBY</button>
-        <button id="hostStartMatchBtn" class="primary big hidden" onclick="startHostGameSetup()" style="width:240px;">NEXT: MATCH MODE ➔</button>
+        <button id="leaveLobbyBtn" style="font-size:13px;padding:8px 16px;">LEAVE LOBBY</button>
+        <button id="hostStartMatchBtn" class="primary big hidden" style="width:240px;">NEXT: MATCH MODE ➔</button>
       </div>
     </section>
 
@@ -327,11 +326,11 @@ canvas {
       <p class="sub" id="submodeSubtitle">Select your game environment and ruleset</p>
 
       <div class="btn-grid">
-        <button class="big primary" id="standardModeBtn" onclick="voteOrSelectSubmode('standard')">☀️ STANDARD BEACH</button>
-        <button class="big vice-btn" id="viceModeBtn" onclick="voteOrSelectSubmode('vice')">🌴 VICE MODE</button>
+        <button class="big primary" id="standardModeBtn">☀️ STANDARD BEACH</button>
+        <button class="big vice-btn" id="viceModeBtn">🌴 VICE MODE</button>
       </div>
       <div style="margin-top:16px;">
-        <button onclick="backToLobbyOrMenu()" style="padding:6px 14px;font-size:13px;">BACK</button>
+        <button id="backFromSubmodeBtn" style="padding:6px 14px;font-size:13px;">BACK</button>
       </div>
     </section>
 
@@ -343,8 +342,8 @@ canvas {
       <div id="viceCardsContainer" class="vice-cards-grid"></div>
 
       <div style="margin-top:10px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
-        <button id="reshuffleBtn" onclick="requestCardReshuffle()" style="background:#00ffff;font-size:14px;padding:8px 14px;">🔀 RESHUFFLE CARDS</button>
-        <button id="confirmCardBtn" class="vice-btn big" onclick="confirmMyCardVote()" style="width:240px;">SUBMIT MY VOTE!</button>
+        <button id="reshuffleBtn" style="background:#00ffff;font-size:14px;padding:8px 14px;">🔀 RESHUFFLE CARDS</button>
+        <button id="confirmCardBtn" class="vice-btn big" style="width:240px;">SUBMIT MY VOTE!</button>
       </div>
     </section>
 
@@ -369,7 +368,10 @@ canvas {
 
       <div class="bottom-bar">
         <div>⌨️ <b>A / D</b> = Run &nbsp;|&nbsp; <b>← / →</b> = Claw Swing &nbsp;|&nbsp; <b>Space</b> = Hop (Jump off Teammates!)</div>
-        <button id="quitMatchBtn" onclick="quitToMenu()" style="padding:3px 10px;font-size:11px;">QUIT MENU</button>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <button id="quitMatchBtn" style="padding:3px 10px;font-size:11px;">QUIT MENU</button>
+          <span class="version-tag">v0.012</span>
+        </div>
       </div>
     </section>
   </main>
@@ -380,7 +382,7 @@ canvas {
 
 <script>
 /* ========================================================
-   CRAB VOLLEYBALL ARCADE ENGINE
+   CRAB VOLLEYBALL ARCADE ENGINE v0.012
    ======================================================== */
 
 const canvas = document.getElementById("beachCourt");
@@ -392,7 +394,7 @@ let BASE_BALL_GRAV = 550;
 let BALL_GRAV = 550;
 const NET = { x: CW / 2 - 4, y: 550, w: 8, h: FLOOR_Y - 550 };
 
-// SOUNDTRACK AUDIO ROUTING
+// AUDIO
 const standardBgm = new Audio("./fizzion.mp3");
 standardBgm.loop = true;
 const viceRaveBgm = new Audio("./humblephonics.wav");
@@ -403,13 +405,10 @@ function playModeMusic() {
   if (isAudioMuted) return;
   standardBgm.pause();
   viceRaveBgm.pause();
-
-  // "humblephonics.wav" ONLY for Crab Rave card in Vice Mode!
   if (activeGameMode === "vice" && chosenViceCard && chosenViceCard.effect === "crab_rave") {
     viceRaveBgm.currentTime = 0;
     viceRaveBgm.play().catch(() => {});
   } else {
-    // All other modes play fizzion.mp3
     standardBgm.currentTime = 0;
     standardBgm.play().catch(() => {});
   }
@@ -446,33 +445,24 @@ function sanitizePlayerName(rawName, fallback = "CRAB") {
   return clean || fallback;
 }
 
-// 1. CHARACTER SPRITES: CRAB, SECRET DOBY, SECRET METEOROLOGIST
+// CHARACTERS
 const dobyImg = new Image();
 dobyImg.src = "./doby.png";
 
-// Secret "MET" Meteorologist Business Crab with Suit, Mic, and Umbrella
 function makeMeteorologistSVG() {
   return `data:image/svg+xml;utf8,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
-    <!-- Body in Business Suit -->
     <ellipse cx="98" cy="54" rx="58" ry="19" fill="#1e293b" stroke="#000" stroke-width="4"/>
-    <!-- White Collar & Tie -->
     <polygon points="98,40 90,52 98,64 106,52" fill="#ef4444"/>
     <polygon points="92,40 104,40 98,48" fill="#ffffff"/>
-    
-    <!-- Face / Eyes -->
     <line x1="66" y1="38" x2="62" y2="18" stroke="#000" stroke-width="4.5"/>
     <circle cx="62" cy="16" r="8" fill="#111" stroke="#000" stroke-width="2"/>
     <circle cx="64" cy="14" r="2.8" fill="#fff"/>
     <line x1="130" y1="38" x2="134" y2="18" stroke="#000" stroke-width="4.5"/>
     <circle cx="134" cy="16" r="8" fill="#111" stroke="#000" stroke-width="2"/>
     <circle cx="136" cy="14" r="2.8" fill="#fff"/>
-
-    <!-- Left Hand: Weather Umbrella -->
     <path d="M 22 26 C 2 34 0 54 22 52 Z" fill="#38bdf8" stroke="#000" stroke-width="3"/>
     <line x1="22" y1="38" x2="48" y2="48" stroke="#000" stroke-width="4"/>
-
-    <!-- Right Hand: News Microphone -->
     <rect x="144" y="32" width="8" height="22" rx="3" fill="#64748b" stroke="#000" stroke-width="2"/>
     <circle cx="148" cy="28" r="7" fill="#ef4444" stroke="#000" stroke-width="2"/>
     <rect x="142" y="24" width="12" height="4" fill="#fbbf24"/>
@@ -481,41 +471,27 @@ function makeMeteorologistSVG() {
 const metImg = new Image();
 metImg.src = makeMeteorologistSVG();
 
-// 2. POINTY, SERRATED ARCADE CARTOON CLAWS (Eliminates the AI-filler look)
 function makeArcadeCrabSVG(bodyColor = "#8bc34a", outline = "#223b05", belly = "#c5e1a5", clawScale = 1.0) {
   return `data:image/svg+xml;utf8,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
-    <!-- Stalks & Bulging Cartoon Eyes -->
     <line x1="66" y1="38" x2="62" y2="18" stroke="${outline}" stroke-width="5" stroke-linecap="round"/>
     <circle cx="62" cy="16" r="8.5" fill="#111" stroke="${outline}" stroke-width="2.5"/>
     <circle cx="64" cy="13.5" r="3" fill="#fff"/>
-
     <line x1="130" y1="38" x2="134" y2="18" stroke="${outline}" stroke-width="5" stroke-linecap="round"/>
     <circle cx="134" cy="16" r="8.5" fill="#111" stroke="${outline}" stroke-width="2.5"/>
     <circle cx="136" cy="13.5" r="3" fill="#fff"/>
-
-    <!-- Tucked Legs -->
     <path d="M 52 60 Q 28 68 20 80" stroke="${outline}" stroke-width="6.5" stroke-linecap="round" fill="none"/>
     <path d="M 58 66 Q 38 78 42 84" stroke="${outline}" stroke-width="6.5" stroke-linecap="round" fill="none"/>
     <path d="M 144 60 Q 168 68 176 80" stroke="${outline}" stroke-width="6.5" stroke-linecap="round" fill="none"/>
     <path d="M 138 66 Q 158 78 154 84" stroke="${outline}" stroke-width="6.5" stroke-linecap="round" fill="none"/>
-
-    <!-- POINTY, SERRATED CARTOON CLAWS -->
     <g transform="scale(${clawScale}) transform-origin(52 48)">
-      <!-- Left Upper Sharp Pincer -->
       <path d="M 52 42 C 34 26 18 10 2 24 C 14 36 28 42 50 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
-      <!-- Left Lower Serrated Pincer -->
       <path d="M 50 48 C 30 52 14 62 4 48 L 14 42 L 20 48 L 26 40 L 32 46 Z" fill="${belly}" stroke="${outline}" stroke-width="3.5"/>
     </g>
-
     <g transform="scale(${clawScale}) transform-origin(144 48)">
-      <!-- Right Upper Sharp Pincer -->
       <path d="M 144 42 C 162 26 178 10 194 24 C 182 36 168 42 146 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
-      <!-- Right Lower Serrated Pincer -->
       <path d="M 146 48 C 166 52 182 62 192 48 L 182 42 L 176 48 L 170 40 L 164 46 Z" fill="${belly}" stroke="${outline}" stroke-width="3.5"/>
     </g>
-
-    <!-- Broad Carapace Shell -->
     <ellipse cx="98" cy="54" rx="58" ry="19" fill="${bodyColor}" stroke="${outline}" stroke-width="4.5"/>
     <path d="M 64 48 Q 98 40 132 48 Q 98 70 64 48 Z" fill="${belly}" opacity="0.65"/>
   </svg>`)}`;
@@ -574,7 +550,7 @@ function drawFlushHat(ctx, type, animTime = 0) {
   ctx.restore();
 }
 
-// 3. SOUND FX
+// SOUND FX
 class ArcadeAudio {
   constructor() { this.ctx = null; }
   init() {
@@ -619,7 +595,7 @@ class ArcadeAudio {
 }
 const sfx = new ArcadeAudio();
 
-// 4. PERSISTENT PLAYER CAREER & QUIP PACKS
+// CAREER UNLOCKS & USER PROFILE
 const QUIP_PACKS = {
   classic: ["Crab Pride!", "Pinch this!", "Gotcha!", "Too slow!"],
   trash: ["Sit down!", "Free points!", "Need help?", "Is this too fast?"],
@@ -628,23 +604,24 @@ const QUIP_PACKS = {
 };
 
 let userProfile = {
-  name: "CRAB-1",
-  level: 1,
-  points: 0,
-  wins: 0,
-  quipPack: "classic",
-  explosion: "confetti"
+  name: "CRAB-1", level: 1, points: 0, wins: 0,
+  quipPack: "classic", explosion: "confetti"
 };
 
 function loadCareer() {
   try {
     const saved = localStorage.getItem("crab_volleyball_profile");
     if (saved) userProfile = Object.assign(userProfile, JSON.parse(saved));
-    document.getElementById("careerLevel").innerText = userProfile.level;
-    document.getElementById("careerPoints").innerText = userProfile.points;
-    document.getElementById("careerWins").innerText = userProfile.wins;
-    document.getElementById("quipPackSelect").value = userProfile.quipPack;
-    document.getElementById("explosionSelect").value = userProfile.explosion;
+    const cl = document.getElementById("careerLevel");
+    const cp = document.getElementById("careerPoints");
+    const cw = document.getElementById("careerWins");
+    if (cl) cl.innerText = userProfile.level;
+    if (cp) cp.innerText = userProfile.points;
+    if (cw) cw.innerText = userProfile.wins;
+    const qp = document.getElementById("quipPackSelect");
+    const ep = document.getElementById("explosionSelect");
+    if (qp) qp.value = userProfile.quipPack;
+    if (ep) ep.value = userProfile.explosion;
   } catch(e) {}
 }
 
@@ -654,30 +631,16 @@ function saveCareerSettings() {
   localStorage.setItem("crab_volleyball_profile", JSON.stringify(userProfile));
 }
 
-function openLockerRoom() {
-  sfx.init();
-  loadCareer();
-  document.getElementById("menuPanel").classList.add("hidden");
-  document.getElementById("lockerModal").classList.remove("hidden");
-}
-
-function closeLockerRoom() {
-  document.getElementById("lockerModal").classList.add("hidden");
-  document.getElementById("menuPanel").classList.remove("hidden");
-}
-
 let activeSpeechBubble = null;
 let speechBubbleTimer = 0;
 let explosionParticles = [];
 
 function triggerPointCelebration(scorer) {
-  // Speech Quip
   const quips = QUIP_PACKS[userProfile.quipPack] || QUIP_PACKS.classic;
   const quote = quips[Math.floor(Math.random() * quips.length)];
   activeSpeechBubble = { x: scorer.x, y: scorer.y - 70, text: quote };
   speechBubbleTimer = 1.8;
 
-  // Particle Explosions
   const count = 35;
   for (let i = 0; i < count; i++) {
     const angle = Math.random() * Math.PI * 2;
@@ -691,16 +654,14 @@ function triggerPointCelebration(scorer) {
     });
   }
 
-  // Tidal shockwave knocks players slightly
   if (userProfile.explosion === "shockwave") {
     players.forEach(p => {
-      p.vy = -340;
-      p.angVel = (Math.random() - 0.5) * 12;
+      p.vy = -340; p.angVel = (Math.random() - 0.5) * 12;
     });
   }
 }
 
-// 5. INPUT MANAGEMENT
+// INPUT MANAGEMENT
 const keys = {};
 window.addEventListener("keydown", (e) => {
   sfx.init();
@@ -731,7 +692,7 @@ if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
   if (mc) mc.style.display = "flex";
 }
 
-// 6. CRAB PLAYERS (EXACT SPECIFICATIONS: 146px x 58px)
+// CRAB PLAYERS
 function createCrab(id, team, x, name = "", isBot = false) {
   return {
     id: id, team: team, x: x, y: FLOOR_Y - 26,
@@ -771,7 +732,7 @@ function showToast(text, dur = 1.2) {
   match.toastTimer = dur;
 }
 
-// 7. FLIPPED CLOUDS GENERATOR (Puff arches on bottom, flat top)
+// PROCEDURAL CLOUDS
 let proceduralClouds = [];
 function generateNewProceduralClouds() {
   proceduralClouds = [];
@@ -788,12 +749,12 @@ function generateNewProceduralClouds() {
 }
 generateNewProceduralClouds();
 
-// 8. THE TSUNAMI WARNING VICE CARD & PROCEDURAL PLATFORMER
+// TSUNAMI WARNING PLATFORMER MINI-GAME
 let isTsunamiTriggered = false;
 let tsunamiCutsceneTimer = 0;
 let isPlatformerActive = false;
 let tsunamiWaterY = CH + 100;
-let platformerEscapeTimer = 300.0; // 5 minute max timer
+let platformerEscapeTimer = 300.0;
 let proceduralPlatforms = [];
 let rescueHelicopter = { x: 800, y: 70 };
 
@@ -817,10 +778,7 @@ function triggerTsunamiWarning() {
 
 function generateProceduralPlatformer() {
   proceduralPlatforms = [];
-  // Base starting floor
   proceduralPlatforms.push({ x: 0, y: FLOOR_Y, w: CW, h: 40 });
-
-  // 16 procedurally generated ascending platforms
   let lastY = FLOOR_Y - 80;
   for (let i = 0; i < 18; i++) {
     const pw = 140 + Math.random() * 120;
@@ -828,8 +786,6 @@ function generateProceduralPlatformer() {
     lastY -= (42 + Math.random() * 32);
     proceduralPlatforms.push({ x: px, y: lastY, w: pw, h: 22 });
   }
-
-  // Helicopter at summit
   rescueHelicopter.x = proceduralPlatforms[proceduralPlatforms.length - 1].x + 40;
   rescueHelicopter.y = lastY - 60;
 }
@@ -839,54 +795,40 @@ function startTsunamiPlatformerEscape() {
   match.paused = false;
   tsunamiWaterY = FLOOR_Y + 120;
   platformerEscapeTimer = 300.0;
-
-  // Remove CPU bots from match
-  players.forEach(p => {
-    if (p.isBot) p.activeInGame = false;
-  });
-
+  players.forEach(p => { if (p.isBot) p.activeInGame = false; });
   generateProceduralPlatformer();
   showToast("SURVIVE & CLIMB TO HELICOPTER!", 3.0);
 }
 
 function updatePlatformerMode(dt) {
   platformerEscapeTimer -= dt;
-  // Slowly rising tsunami water
   tsunamiWaterY -= 14 * dt;
 
-  // Check player collisions with platforms
-  players.forEach((p, idx) => {
+  players.forEach((p) => {
     if (!p.activeInGame) return;
-
     proceduralPlatforms.forEach(plat => {
       if (p.x + p.halfW > plat.x && p.x - p.halfW < plat.x + plat.w) {
         if (p.y + p.halfH >= plat.y && p.y + p.halfH <= plat.y + 20 && p.vy >= 0) {
-          p.y = plat.y - p.halfH;
-          p.vy = 0;
-          p.isGrounded = true;
-          p.canJump = true;
+          p.y = plat.y - p.halfH; p.vy = 0; p.isGrounded = true; p.canJump = true;
         }
       }
     });
 
-    // Reached Helicopter Summit
     const distToHeli = Math.hypot(p.x - rescueHelicopter.x, p.y - rescueHelicopter.y);
     if (distToHeli < 70) {
       sfx.cheer();
-      showToast(`${p.name} ESCAPED THE TSUNAMI & WINS! 🚁`, 4.0);
+      showToast(`${p.name} ESCAPED & WINS! 🚁`, 4.0);
       match.over = true;
       setTimeout(() => quitToMenu(), 4000);
     }
 
-    // Caught by Tsunami Water
     if (p.y > tsunamiWaterY) {
-      p.y = tsunamiWaterY;
-      p.vy = -200; // Floating
+      p.y = tsunamiWaterY; p.vy = -200;
     }
   });
 }
 
-// 9. NORMAL MOVEMENT & JUMP PHYSICS
+// PHYSICS
 function updatePlayer(p, input, dt) {
   let speedMultiplier = 1.0;
   if (chosenViceCard && chosenViceCard.effect === "turbo_speed") speedMultiplier = 1.35;
@@ -899,7 +841,6 @@ function updatePlayer(p, input, dt) {
   p.vx += (targetVx - p.vx) * 16 * dt;
   p.x += p.vx * dt;
 
-  // Restrict to team side during volleyball, or full screen during tsunami platformer
   const minX = isPlatformerActive ? 40 : ((p.team === 1) ? 80 : NET.x + NET.w + p.radius);
   const maxX = isPlatformerActive ? CW - 40 : ((p.team === 1) ? NET.x - p.radius : CW - 80);
   if (p.x < minX) { p.x = minX; p.vx = 0; }
@@ -922,7 +863,6 @@ function updatePlayer(p, input, dt) {
   p.angle += p.angVel * dt;
   p.angle = Math.atan2(Math.sin(p.angle), Math.cos(p.angle));
 
-  // Jump
   let jumpImpulse = -580;
   let superBurn = 1950;
   if (chosenViceCard && chosenViceCard.effect === "spring_jump") {
@@ -1016,7 +956,7 @@ function getAIInput(p, targetBall) {
 }
 
 function updateBall(dt) {
-  if (isPlatformerActive) return; // Ball removed in platformer
+  if (isPlatformerActive) return;
 
   if (!ball.active) {
     ball.x = CW / 2; ball.y = NET.y - ball.r;
@@ -1122,7 +1062,6 @@ function updateBall(dt) {
       ball.x += nx * (ball.r - d + 2);
       ball.y += ny * (ball.r - d + 2);
 
-      // Tsunami Warning Trigger Chance upon clean spike hit!
       if (chosenViceCard && chosenViceCard.effect === "tsunami" && !isTsunamiTriggered) {
         triggerTsunamiWarning();
         return;
@@ -1162,7 +1101,6 @@ function scorePoint(winnerTeam) {
   if (userProfile.points % 10 === 0) userProfile.level++;
   saveCareerSettings();
 
-  // Trigger celebration on a random winning team player
   const scorer = players.find(p => p.activeInGame && p.team === winnerTeam);
   if (scorer) triggerPointCelebration(scorer);
 
@@ -1202,7 +1140,7 @@ function resetTipOff() {
   isFrozen = false; freezeCooldown = 8.0;
 }
 
-// 10. RENDERING
+// RENDERING
 let animTimer = 0;
 function render() {
   animTimer += 0.02; raveTimer += 0.05;
@@ -1284,18 +1222,16 @@ function renderViceStyle() {
   drawParticlesAndQuips();
 }
 
-// 11. FLIPPED COTTON-BALL CLOUDS (Puffs on bottom, flat top)
 function drawFlippedCottonCloud(ctx, x, y, r, fillColor) {
   ctx.save();
   ctx.fillStyle = fillColor; ctx.strokeStyle = "#000000"; ctx.lineWidth = 3.0;
-  // Invert Y puffs so they hang downward as requested
   const puffs = [
     { dx: -r * 0.9, dy: -r * 0.1, rad: r * 0.65 },
     { dx: -r * 0.45, dy: r * 0.4, rad: r * 0.85 },
     { dx: r * 0.2, dy: r * 0.5, rad: r * 0.95 },
     { dx: r * 0.8, dy: r * 0.2, rad: r * 0.75 },
     { dx: r * 1.2, dy: -r * 0.15, rad: r * 0.55 },
-    { dx: 0, dy: -r * 0.2, rad: r * 0.7 } // Flat top line
+    { dx: 0, dy: -r * 0.2, rad: r * 0.7 }
   ];
   puffs.forEach(p => {
     ctx.beginPath(); ctx.arc(x + p.dx, y + p.dy, p.rad, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
@@ -1381,7 +1317,7 @@ function drawNet(ctx, netY, poleColor, capColor) {
 }
 
 function drawPlayersAndBall(ctx) {
-  players.forEach((p, idx) => {
+  players.forEach((p) => {
     if (!p.activeInGame) return;
     ctx.save();
     ctx.translate(p.x, p.y);
@@ -1391,7 +1327,6 @@ function drawPlayersAndBall(ctx) {
 
     if (chosenViceCard && chosenViceCard.effect === "mini_crabs") ctx.scale(0.68, 0.68);
 
-    // DRAW UNLOCKED CHARACTERS (DOBY, METEOROLOGIST, OR CRABS)
     if (p.spriteType === "doby") {
       ctx.drawImage(dobyImg, -p.width / 2, -p.height / 2, p.width, p.height);
     } else if (p.spriteType === "met") {
@@ -1403,7 +1338,6 @@ function drawPlayersAndBall(ctx) {
 
     drawFlushHat(ctx, p.hat, animTimer);
 
-    // Player name
     ctx.font = "900 13px sans-serif";
     ctx.fillStyle = "#ffffff"; ctx.strokeStyle = "#000000"; ctx.lineWidth = 3;
     ctx.textAlign = "center";
@@ -1455,13 +1389,10 @@ function drawPlayersAndBall(ctx) {
 }
 
 function drawParticlesAndQuips() {
-  // Speech Bubble
   if (activeSpeechBubble && speechBubbleTimer > 0) {
     ctx.save();
     ctx.font = "bold 15px sans-serif";
-    ctx.fillStyle = "#ffffff";
-    ctx.strokeStyle = "#000000";
-    ctx.lineWidth = 3.5;
+    ctx.fillStyle = "#ffffff"; ctx.strokeStyle = "#000000"; ctx.lineWidth = 3.5;
     const txtW = ctx.measureText(activeSpeechBubble.text).width;
     ctx.fillRect(activeSpeechBubble.x - txtW / 2 - 8, activeSpeechBubble.y - 14, txtW + 16, 26);
     ctx.strokeRect(activeSpeechBubble.x - txtW / 2 - 8, activeSpeechBubble.y - 14, txtW + 16, 26);
@@ -1471,12 +1402,9 @@ function drawParticlesAndQuips() {
     ctx.restore();
   }
 
-  // Explosions
   for (let i = explosionParticles.length - 1; i >= 0; i--) {
     const ep = explosionParticles[i];
-    ep.x += ep.vx * 0.016;
-    ep.y += ep.vy * 0.016;
-    ep.life -= 0.016;
+    ep.x += ep.vx * 0.016; ep.y += ep.vy * 0.016; ep.life -= 0.016;
     if (ep.life <= 0) {
       explosionParticles.splice(i, 1);
       continue;
@@ -1517,9 +1445,7 @@ function drawSingleFlipCard(ctx, x, y, w, h, score, sets, scoreColor) {
   ctx.fillText(score, x + w / 2, y + h / 2 + 5);
 }
 
-// 12. RENDER PROCEDURAL TSUNAMI PLATFORMER
 function renderPlatformerScene() {
-  // Rising Tsunami Water Wave
   ctx.fillStyle = "rgba(0, 180, 216, 0.75)";
   ctx.fillRect(0, tsunamiWaterY, CW, CH - tsunamiWaterY);
   ctx.fillStyle = "#ffffff";
@@ -1527,22 +1453,17 @@ function renderPlatformerScene() {
     ctx.beginPath(); ctx.arc(x + 18, tsunamiWaterY, 12, 0, Math.PI); ctx.fill();
   }
 
-  // Procedural Platforms
-  ctx.fillStyle = "#d4a76a";
-  ctx.strokeStyle = "#000";
-  ctx.lineWidth = 3;
+  ctx.fillStyle = "#d4a76a"; ctx.strokeStyle = "#000"; ctx.lineWidth = 3;
   proceduralPlatforms.forEach(p => {
     ctx.fillRect(p.x, p.y, p.w, p.h);
     ctx.strokeRect(p.x, p.y, p.w, p.h);
   });
 
-  // Rescue Helicopter
   ctx.save();
   ctx.translate(rescueHelicopter.x, rescueHelicopter.y);
   ctx.fillStyle = "#ef4444";
   ctx.fillRect(-35, -16, 70, 32);
   ctx.fillStyle = "#000";
-  // Spinning rotor
   const rW = Math.sin(animTimer * 20) * 60;
   ctx.fillRect(-rW / 2, -24, rW, 4);
   ctx.font = "bold 11px sans-serif";
@@ -1551,7 +1472,7 @@ function renderPlatformerScene() {
   ctx.restore();
 }
 
-// 13. MAIN LOOP
+// MAIN LOOP
 let lastT = performance.now();
 function gameLoop(now) {
   const dt = Math.min((now - lastT) / 1000, 0.05);
@@ -1603,7 +1524,7 @@ function gameLoop(now) {
 }
 requestAnimationFrame(gameLoop);
 
-// 14. SOCIAL PRE-LOBBY UI WITH ACCURATE LIVE SYNC
+// PRE-LOBBY UI
 function refreshLobbyUI() {
   const t1 = document.getElementById("team1Players");
   const t2 = document.getElementById("team2Players");
@@ -1614,7 +1535,6 @@ function refreshLobbyUI() {
   let count2 = 0;
 
   players.forEach((p, idx) => {
-    // Show only active connected humans (No phantom bots)
     if (idx === match.myPlayerIndex || (match.isOnline && peersConnected[idx] && !p.isBot)) {
       const card = document.createElement("div");
       card.className = "player-card" + (idx === match.myPlayerIndex ? " is-me" : "");
@@ -1672,13 +1592,13 @@ function applySecretCode() {
   const statusEl = document.getElementById("secretStatus");
   if (code === "doby") {
     players[match.myPlayerIndex].spriteType = "doby";
-    statusEl.innerText = "UNLOCKED DOBY! 🐶";
+    statusEl.innerText = "UNLOCKED! 🐶";
     sfx.cheer();
     refreshLobbyUI();
     if (match.isOnline) broadcastPlayerCustoms();
   } else if (code === "met") {
     players[match.myPlayerIndex].spriteType = "met";
-    statusEl.innerText = "UNLOCKED METEOROLOGIST! 🎙️";
+    statusEl.innerText = "UNLOCKED MET! 🎙️";
     sfx.cheer();
     refreshLobbyUI();
     if (match.isOnline) broadcastPlayerCustoms();
@@ -1696,7 +1616,7 @@ function toggleBotFill() {
   }
 }
 
-// SYNCHRONIZED MULTIPLAYER VOTING
+// MULTIPLAYER VOTING
 function showSubmodeSelect(context) {
   sfx.init();
   pendingModeContext = context;
@@ -1821,10 +1741,8 @@ function launchGame() {
   updateCrabSprites();
   generateNewProceduralClouds();
 
-  document.getElementById("roomBadge").innerText = (activeGameMode === "vice") ? "Vice 2v2" : "Cabinet Arcade 2v2";
   document.getElementById("game-section").classList.remove("hidden");
   resetTipOff();
-
   playModeMusic();
 
   if (match.isOnline && isHost) {
@@ -1924,7 +1842,7 @@ function startHostGameSetup() {
   }
 }
 
-// 15. MULTIPLAYER WEBRTC (TWO-WAY TWO-SCREEN LOBBY SYNC)
+// MULTIPLAYER WEBRTC
 let peer = null;
 let isHost = false;
 const peerConnections = [];
@@ -2165,8 +2083,36 @@ function broadcastGameState() {
   });
 }
 
-// Load career on start
-loadCareer();
+// SAFE INITIALIZATION ON WINDOW LOAD (PREVENTS SCRIPT EXECUTION FREEZE)
+window.onload = () => {
+  loadCareer();
+
+  // Bind All Menu Actions Directly
+  document.getElementById("muteAudioBtn").onclick = toggleMuteAudio;
+  document.getElementById("playSoloBtn").onclick = () => showSubmodeSelect('solo');
+  document.getElementById("onlineLobbyBtn").onclick = openOnlineLobby;
+  document.getElementById("openBagBtn").onclick = openLockerRoom;
+  document.getElementById("closeBagBtn").onclick = closeLockerRoom;
+  document.getElementById("hostBtn").onclick = hostRoom;
+  document.getElementById("joinBtn").onclick = joinRoom;
+  document.getElementById("copyBtn").onclick = copyRoomCode;
+  document.getElementById("joinTeam1Btn").onclick = () => switchTeam(1);
+  document.getElementById("joinTeam2Btn").onclick = () => switchTeam(2);
+  document.getElementById("fillBotsCheck").onchange = toggleBotFill;
+  document.getElementById("playerNameInput").onchange = updateMyCustoms;
+  document.getElementById("hatSelect").onchange = updateMyCustoms;
+  document.getElementById("unlockSecretBtn").onclick = applySecretCode;
+  document.getElementById("leaveLobbyBtn").onclick = quitToMenu;
+  document.getElementById("hostStartMatchBtn").onclick = startHostGameSetup;
+  document.getElementById("standardModeBtn").onclick = () => voteOrSelectSubmode('standard');
+  document.getElementById("viceModeBtn").onclick = () => voteOrSelectSubmode('vice');
+  document.getElementById("backFromSubmodeBtn").onclick = backToLobbyOrMenu;
+  document.getElementById("reshuffleBtn").onclick = requestCardReshuffle;
+  document.getElementById("confirmCardBtn").onclick = confirmMyCardVote;
+  document.getElementById("quitMatchBtn").onclick = quitToMenu;
+  document.getElementById("quipPackSelect").onchange = saveCareerSettings;
+  document.getElementById("explosionSelect").onchange = saveCareerSettings;
+};
 </script>
 </body>
 </html>
