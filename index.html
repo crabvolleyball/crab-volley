@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Crab Volleyball Arcade</title>
 <style>
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -25,16 +26,16 @@ body {
 }
 header {
   width: 100%; display: flex; justify-content: space-between; align-items: center;
-  padding: 6px 16px; color: #fff; text-shadow: 2px 2px 0 #000; flex-shrink: 0;
+  padding: 4px 14px; color: #fff; text-shadow: 2px 2px 0 #000; flex-shrink: 0;
 }
 .brand {
-  font-size: clamp(20px, 2.8vw, 34px); color: #ffe600;
+  font-size: clamp(18px, 2.8vw, 32px); color: #ffe600;
   text-shadow: 3px 3px 0 #d83a00, 4px 4px 0 #000; letter-spacing: 1px;
 }
 .brand span { color: #fff; }
 .room-badge {
   background: #fff; color: #111; font-size: 13px; font-weight: bold;
-  padding: 4px 14px; border-radius: 8px; border: 3px solid #000;
+  padding: 4px 12px; border-radius: 8px; border: 3px solid #000;
   box-shadow: 2px 2px 0 #000; font-family: sans-serif;
 }
 
@@ -77,25 +78,30 @@ button:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #000; }
 .vice-btn { background: #ff007f; color: #00ffff; text-shadow: 2px 2px 0 #7b00ff; border-color: #000; }
 .big { min-height: 58px; font-size: 18px; }
 
-/* MULTIPLAYER LOBBY */
+/* ONLINE LOBBY & CUSTOM NAME STYLES */
 .online-box {
-  margin-top: 18px; border-top: 3px dashed #998855; padding-top: 14px;
+  margin-top: 16px; border-top: 3px dashed #998855; padding-top: 14px;
   display: flex; flex-direction: column; gap: 10px; align-items: center;
 }
-.online-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; width: 100%; }
-.online-row input {
-  padding: 10px 14px; font-size: 16px; font-weight: bold; border: 3px solid #000;
-  border-radius: 10px; min-width: 200px; text-transform: uppercase; font-family: monospace;
+.name-field-wrap {
+  display: flex; align-items: center; gap: 8px; justify-content: center;
+  margin-bottom: 4px; flex-wrap: wrap;
 }
+.name-field-wrap label { font-family: sans-serif; font-weight: 900; font-size: 14px; color: #2e530b; }
+.custom-input {
+  padding: 8px 12px; font-size: 16px; font-weight: bold; border: 3px solid #000;
+  border-radius: 10px; font-family: monospace; text-transform: uppercase;
+}
+.online-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; width: 100%; }
 .player-slots { display: flex; gap: 8px; justify-content: center; margin: 8px 0; flex-wrap: wrap; }
 .slot {
-  background: #fff; border: 3px solid #000; border-radius: 8px; padding: 5px 12px;
-  font-size: 13px; font-family: sans-serif; font-weight: 900; color: #444;
+  background: #fff; border: 3px solid #000; border-radius: 8px; padding: 6px 12px;
+  font-size: 13px; font-family: sans-serif; font-weight: 900; color: #444; min-width: 120px;
 }
 .slot.connected { background: #66bb6a; color: #fff; text-shadow: 1px 1px 0 #000; }
 code {
   background: #111; color: #00ffcc; padding: 6px 14px; border-radius: 8px;
-  font-size: 22px; font-family: monospace; letter-spacing: 2px;
+  font-size: 20px; font-family: monospace; letter-spacing: 2px;
 }
 
 /* VICE CARD VOTING MODAL */
@@ -118,7 +124,7 @@ code {
 .card-desc { font-size: 12px; font-family: sans-serif; font-weight: bold; color: #e0e7ff; line-height: 1.3; }
 .vote-count { font-size: 13px; color: #00ffff; font-family: monospace; font-weight: 900; margin-top: 8px; }
 
-/* RESPONSIVE AUTO-FIT GAME VIEW */
+/* RESPONSIVE AUTO-FIT GAME VIEW (PORTRAIT & LANDSCAPE SAFE) */
 #game-section {
   width: 100%; height: 100%; display: flex; flex-direction: column;
   align-items: center; justify-content: center; position: relative;
@@ -128,7 +134,7 @@ code {
   display: flex; align-items: center; justify-content: center;
 }
 canvas {
-  max-width: 100%; max-height: 82vh;
+  max-width: 100%; max-height: 80vh;
   aspect-ratio: 1600 / 850;
   object-fit: contain;
   border: 5px solid #0a1c02; border-radius: 14px;
@@ -137,27 +143,48 @@ canvas {
 }
 .toast {
   position: absolute; top: 26%; left: 50%; transform: translate(-50%, -50%);
-  font-size: clamp(28px, 4.8vw, 60px); font-family: "Impact", sans-serif;
+  font-size: clamp(26px, 4.8vw, 56px); font-family: "Impact", sans-serif;
   color: #ffeb3b; text-shadow: 4px 4px 0 #d50000, -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000;
   text-align: center; pointer-events: none; z-index: 20;
 }
 
-/* ON-SCREEN ARCADE CONTROLS FOR IPHONE / SAFARI */
+/* MOBILE TOUCHPAD (BUTTONS & DRAG JOYSTICK ZONE) */
 .touchpad-bar {
   width: 100%; max-width: 1600px; display: none; justify-content: space-between;
-  align-items: center; padding: 6px 4px; touch-action: none; flex-shrink: 0;
+  align-items: center; padding: 6px 6px; touch-action: none; flex-shrink: 0;
 }
-.touch-group { display: flex; gap: 6px; }
+.touch-cluster { display: flex; gap: 8px; align-items: center; }
+
+/* Virtual Joystick / Drag Zone */
+.drag-zone {
+  width: 140px; height: 58px; background: rgba(255, 255, 255, 0.25);
+  border: 3px dashed #000; border-radius: 12px; display: flex;
+  align-items: center; justify-content: center; font-size: 12px;
+  font-family: sans-serif; font-weight: 900; color: #fff; text-shadow: 1px 1px 0 #000;
+  touch-action: none; position: relative;
+}
+.drag-knob {
+  width: 38px; height: 38px; background: #ffcc00; border: 3px solid #000;
+  border-radius: 50%; position: absolute; pointer-events: none;
+  box-shadow: 2px 2px 0 #000;
+}
+
 .touchpad-bar button {
-  width: 72px; height: 54px; padding: 0; font-size: 13px; font-family: "Impact", sans-serif;
+  width: 68px; height: 56px; padding: 0; font-size: 13px; font-family: "Impact", sans-serif;
   border: 3px solid #000; border-radius: 10px; background: #ffe082;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   touch-action: none;
 }
-.touchpad-bar button.jump { width: 100px; background: #e53935; color: #fff; font-size: 15px; text-shadow: 1px 1px 0 #000; }
+.touchpad-bar button.jump { width: 94px; background: #e53935; color: #fff; font-size: 15px; text-shadow: 1px 1px 0 #000; }
 .touchpad-bar button.rotate { background: #ffb74d; }
 .touchpad-bar button:active, .touchpad-bar button.pressed {
   background: #b71c1c !important; color: #fff !important; transform: scale(0.95);
+}
+
+.control-toggle-btn {
+  background: #fff; border: 2px solid #000; border-radius: 6px;
+  font-size: 11px; font-family: sans-serif; font-weight: 900; padding: 4px 8px;
+  cursor: pointer;
 }
 
 .bottom-bar {
@@ -180,21 +207,25 @@ canvas {
     <!-- MAIN SELECTION MENU -->
     <section id="menuPanel" class="panel">
       <h1>CRAB VOLLEYBALL</h1>
-      <p class="sub">First to 5 Points · Best of 3 Sets · Center Tip-Off · Weighted Landings</p>
+      <p class="sub">First to 5 Points · Best of 3 Sets · Center Tip-Off · Clean Mobile Physics</p>
 
       <div class="btn-grid">
         <button class="big primary" onclick="showSubmodeSelect('solo')">PLAY SOLO / BOTS</button>
         <button class="big" onclick="openOnlineLobby()">4-PLAYER ONLINE MATCH</button>
       </div>
 
-      <!-- ONLINE LOBBY -->
+      <!-- ONLINE LOBBY WITH CUSTOM NICKNAMES -->
       <div id="onlineBox" class="online-box hidden">
         <h3 style="margin:0;font-size:20px;">4-Player Online Court</h3>
-        <p style="font-size:13px;font-family:sans-serif;font-weight:bold;margin:4px 0 8px;">Host on any phone or PC. Share the code with family to join!</p>
         
+        <div class="name-field-wrap">
+          <label>YOUR NAME:</label>
+          <input id="playerNameInput" class="custom-input" maxlength="12" placeholder="CRAB KING">
+        </div>
+
         <div class="online-row">
           <button id="hostBtn" onclick="hostRoom()">HOST ROOM</button>
-          <input id="joinCodeInput" placeholder="ENTER 4-DIGIT CODE">
+          <input id="joinCodeInput" class="custom-input" style="min-width:180px;" placeholder="ROOM CODE">
           <button id="joinBtn" onclick="joinRoom()">JOIN ROOM</button>
         </div>
 
@@ -205,10 +236,10 @@ canvas {
         </div>
 
         <div class="player-slots">
-          <div class="slot connected" id="slot1">P1 (Host Crab)</div>
-          <div class="slot" id="slot2">P2 (Team Left)</div>
-          <div class="slot" id="slot3">P3 (Team Right)</div>
-          <div class="slot" id="slot4">P4 (Team Right)</div>
+          <div class="slot connected" id="slot1">P1: Host</div>
+          <div class="slot" id="slot2">P2: Waiting...</div>
+          <div class="slot" id="slot3">P3: Waiting...</div>
+          <div class="slot" id="slot4">P4: Waiting...</div>
         </div>
 
         <p id="netStatus" style="font-size:13px;font-family:sans-serif;font-weight:bold;color:#2e7d32;margin:4px 0;">Ready to create or join.</p>
@@ -249,13 +280,22 @@ canvas {
         <div id="toast" class="toast hidden"></div>
       </div>
 
-      <!-- TOUCHPAD FOR IPHONE / MOBILE -->
+      <!-- TOUCHPAD WITH DRAG OR BUTTONS OPTION -->
       <div class="touchpad-bar" id="mobileControls">
-        <div class="touch-group">
+        <div class="touch-cluster" id="moveCluster">
+          <!-- Button controls by default -->
           <button id="btnLeft">◀<span>RUN</span></button>
           <button id="btnRight">▶<span>RUN</span></button>
+          <!-- Or drag joystick zone -->
+          <div id="dragZone" class="drag-zone hidden">
+            <span>DRAG TO RUN</span>
+            <div id="dragKnob" class="drag-knob"></div>
+          </div>
         </div>
-        <div class="touch-group">
+
+        <button class="control-toggle-btn" onclick="toggleMobileControlStyle()">SWITCH: DRAG / BUTTONS</button>
+
+        <div class="touch-cluster">
           <button id="btnRotLeft" class="rotate">↺<span>SWING L</span></button>
           <button id="btnRotRight" class="rotate">↻<span>SWING R</span></button>
           <button id="btnJump" class="jump">🔴<span>JUMP</span></button>
@@ -263,7 +303,7 @@ canvas {
       </div>
 
       <div class="bottom-bar">
-        <div>⌨️ <b>A / D</b> = Run &nbsp;|&nbsp; <b>← / →</b> = Hammer Claw Swing &nbsp;|&nbsp; <b>Space</b> = Hop (Jump off Teammates!)</div>
+        <div>⌨️ <b>A / D</b> = Run &nbsp;|&nbsp; <b>← / →</b> = Claw Swing &nbsp;|&nbsp; <b>Space</b> = Hop (Jump off Teammates!)</div>
         <button id="quitMatchBtn" onclick="quitToMenu()" style="padding:3px 10px;font-size:11px;">QUIT MENU</button>
       </div>
     </section>
@@ -287,7 +327,25 @@ let BASE_BALL_GRAV = 550;
 let BALL_GRAV = 550;
 const NET = { x: CW / 2 - 4, y: 550, w: 8, h: FLOOR_Y - 550 };
 
-// 1. THE 10 "CRAB VOLLEYBALL VICE" CARDS
+// 1. PROFANITY FILTER (CLEAN FAMILY PLAY)
+const BANNED_WORDS = [
+  "fuck", "shit", "bitch", "asshole", "cunt", "nigger", "nigga",
+  "dick", "pussy", "faggot", "cock", "bastard", "slut", "whore"
+];
+
+function sanitizePlayerName(rawName, fallback = "CRAB") {
+  if (!rawName) return fallback;
+  let clean = rawName.trim().replace(/[^a-zA-Z0-9_\- ]/g, "").substring(0, 12).toUpperCase();
+  const lower = clean.toLowerCase();
+  for (let w of BANNED_WORDS) {
+    if (lower.includes(w)) {
+      return "CRAB-" + Math.floor(100 + Math.random() * 900);
+    }
+  }
+  return clean || fallback;
+}
+
+// 2. VICE CARDS
 const ALL_VICE_CARDS = [
   { id: 1, icon: "🦀", title: "MEGA CLAWS", desc: "Claws grow huge for massive spike reach.", effect: "big_claws" },
   { id: 2, icon: "🌙", title: "MOON GRAVITY", desc: "Playable low gravity on ball and crabs.", effect: "low_grav" },
@@ -301,7 +359,7 @@ const ALL_VICE_CARDS = [
   { id: 10, icon: "🎯", title: "PINBALL CHAOS", desc: "Ball rebounds with energetic, pinball speed.", effect: "pinball_wobble" }
 ];
 
-let activeGameMode = "standard"; // "standard" or "vice"
+let activeGameMode = "standard";
 let chosenViceCard = null;
 let currentDrawnCards = [];
 let pendingModeContext = "solo";
@@ -310,11 +368,11 @@ let freezeCooldown = 8.0;
 let isFrozen = false;
 let freezeWarningTimer = 0;
 
-// 2. VICE COASTAL HIGHWAY CARS (Cruising in the background)
+// Coastal Highway Cars
 const VICE_CARS = [
-  { x: 100, spd: 140, color: "#ff007f", model: "wedge" },
-  { x: 700, spd: 110, color: "#00ffff", model: "sport" },
-  { x: 1300, spd: 160, color: "#ffe600", model: "wedge" }
+  { x: 100, spd: 140, color: "#ff007f" },
+  { x: 700, spd: 110, color: "#00ffff" },
+  { x: 1300, spd: 160, color: "#ffe600" }
 ];
 
 // 3. CRAB SPRITES
@@ -364,7 +422,7 @@ function updateCrabSprites() {
 }
 updateCrabSprites();
 
-// 4. RANDOM HATS
+// 4. HATS
 const HAT_TYPES = ["pineapple", "propeller", "tophat", "captain", "fez"];
 
 function drawFlushHat(ctx, type, animTime = 0) {
@@ -443,7 +501,7 @@ class ArcadeAudio {
 }
 const sfx = new ArcadeAudio();
 
-// 6. INPUT MANAGEMENT
+// 6. INPUT MANAGEMENT (KEYBOARD + TOUCH)
 const keys = {};
 window.addEventListener("keydown", (e) => {
   sfx.init();
@@ -469,17 +527,76 @@ bindTouch("btnRotLeft", "ArrowLeft");
 bindTouch("btnRotRight", "ArrowRight");
 bindTouch("btnJump", "Space");
 
+// Mobile Drag Joystick Implementation
+let mobileControlStyle = "buttons";
+const dragZone = document.getElementById("dragZone");
+const dragKnob = document.getElementById("dragKnob");
+
+function toggleMobileControlStyle() {
+  const btnL = document.getElementById("btnLeft");
+  const btnR = document.getElementById("btnRight");
+  if (mobileControlStyle === "buttons") {
+    mobileControlStyle = "drag";
+    btnL.classList.add("hidden");
+    btnR.classList.add("hidden");
+    dragZone.classList.remove("hidden");
+  } else {
+    mobileControlStyle = "buttons";
+    btnL.classList.remove("hidden");
+    btnR.classList.remove("hidden");
+    dragZone.classList.add("hidden");
+  }
+}
+
+let isDragging = false;
+dragZone.addEventListener("touchstart", (e) => {
+  isDragging = true;
+  handleDrag(e.touches[0]);
+}, { passive: false });
+
+window.addEventListener("touchmove", (e) => {
+  if (isDragging) handleDrag(e.touches[0]);
+}, { passive: false });
+
+window.addEventListener("touchend", () => {
+  if (isDragging) {
+    isDragging = false;
+    dragKnob.style.transform = `translate(0px, 0px)`;
+    keys["KeyA"] = false;
+    keys["KeyD"] = false;
+  }
+});
+
+function handleDrag(touch) {
+  const rect = dragZone.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const deltaX = Math.max(-45, Math.min(45, touch.clientX - centerX));
+  dragKnob.style.transform = `translate(${deltaX}px, 0px)`;
+
+  if (deltaX < -12) {
+    keys["KeyA"] = true;
+    keys["KeyD"] = false;
+  } else if (deltaX > 12) {
+    keys["KeyD"] = true;
+    keys["KeyA"] = false;
+  } else {
+    keys["KeyA"] = false;
+    keys["KeyD"] = false;
+  }
+}
+
 if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
   const mc = document.getElementById("mobileControls");
   if (mc) mc.style.display = "flex";
 }
 
 // 7. CRAB PLAYERS
-function createCrab(id, team, x) {
+function createCrab(id, team, x, name = "") {
   const hat = HAT_TYPES[Math.floor(Math.random() * HAT_TYPES.length)];
   return {
     id: id, team: team, x: x, y: FLOOR_Y - 26,
     vx: 0, vy: 0, angle: 0, angVel: 0, hat: hat,
+    name: name || `P${id}`,
     radius: 54, width: 146, height: 58,
     halfW: 73, halfH: 26, isGrounded: true,
     speed: 510, canJump: true, jumpHoldTimer: 0
@@ -487,10 +604,10 @@ function createCrab(id, team, x) {
 }
 
 let players = [
-  createCrab(1, 1, 260),
-  createCrab(2, 1, 560),
-  createCrab(3, 2, 1040),
-  createCrab(4, 2, 1340)
+  createCrab(1, 1, 260, "CRAB-1"),
+  createCrab(2, 1, 560, "CRAB-2"),
+  createCrab(3, 2, 1040, "CRAB-3"),
+  createCrab(4, 2, 1340, "CRAB-4")
 ];
 
 // 8. VOLLEYBALL
@@ -515,7 +632,7 @@ function showToast(text, dur = 1.2) {
   match.toastTimer = dur;
 }
 
-// 10. PROCEDURAL CLOUD GENERATOR
+// 10. PROCEDURAL CLOUDS
 let proceduralClouds = [];
 function generateNewProceduralClouds() {
   proceduralClouds = [];
@@ -532,7 +649,7 @@ function generateNewProceduralClouds() {
 }
 generateNewProceduralClouds();
 
-// 11. MOVEMENT & ARCADE RED-BUTTON JUMP
+// 11. MOVEMENT & JUMP PHYSICS
 function updatePlayer(p, input, dt) {
   let speedMultiplier = 1.0;
   if (chosenViceCard && chosenViceCard.effect === "turbo_speed") speedMultiplier = 1.35;
@@ -592,7 +709,6 @@ function updatePlayer(p, input, dt) {
     if (p.isGrounded) p.canJump = true;
   }
 
-  // Tuned Moon Gravity (Playable 1050 instead of crazy float)
   let grav = (chosenViceCard && chosenViceCard.effect === "low_grav") ? 1050 : 1500;
   p.vy += grav * dt;
   p.y += p.vy * dt;
@@ -609,7 +725,7 @@ function updatePlayer(p, input, dt) {
   }
 }
 
-// 12. SOLID CRAB-ON-CRAB RIGID COLLISIONS
+// 12. RIGID CRAB COLLISIONS
 function resolveCrabCollisions() {
   for (let i = 0; i < players.length; i++) {
     for (let j = i + 1; j < players.length; j++) {
@@ -696,7 +812,7 @@ function updateBall(dt) {
     return;
   }
 
-  // CRYOFREEZE CHECK
+  // Cryofreeze
   if (chosenViceCard && chosenViceCard.effect === "ice_freeze") {
     freezeCooldown -= dt;
     if (freezeCooldown <= 3.0 && freezeCooldown > 0 && freezeWarningTimer <= 0) {
@@ -720,7 +836,6 @@ function updateBall(dt) {
 
   if (isFrozen) return;
 
-  // Ball gravity modifiers (Tuned Moon Gravity = 420)
   BALL_GRAV = BASE_BALL_GRAV;
   if (chosenViceCard && chosenViceCard.effect === "low_grav") BALL_GRAV = 420;
   if (chosenViceCard && chosenViceCard.effect === "heavy_ball") BALL_GRAV = 780;
@@ -770,6 +885,7 @@ function updateBall(dt) {
 
   for (let i = 0; i < players.length; i++) {
     const p = players[i];
+
     const cosA = Math.cos(-p.angle);
     const sinA = Math.sin(-p.angle);
     const relX = cosA * (ball.x - p.x) - sinA * (ball.y - p.y);
@@ -874,7 +990,7 @@ function resetTipOff() {
   isFrozen = false; freezeCooldown = 8.0;
 }
 
-// 15. RENDERING (STANDARD VS VICE HIGHWAY SCENE)
+// 15. RENDERING (STANDARD VS VICE SCENE)
 let animTimer = 0;
 function render() {
   animTimer += 0.02;
@@ -887,7 +1003,6 @@ function render() {
   }
 }
 
-// 15A. STANDARD RETRO ARCADE RENDER
 function renderStandardStyle() {
   ctx.fillStyle = "#00aced";
   ctx.fillRect(0, 0, CW, CH);
@@ -919,9 +1034,7 @@ function renderStandardStyle() {
   drawRetroFlipScoreboard(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], match.sets[0], match.sets[1], "#0288d1", "#d50000");
 }
 
-// 15B. VICE COASTAL HIGHWAY & RETRO CARS RENDER
 function renderViceStyle() {
-  // Sunset Gradient Sky Stripes
   const grad = ctx.createLinearGradient(0, 0, 0, FLOOR_Y - 180);
   grad.addColorStop(0, "#00e5ff");
   grad.addColorStop(0.55, "#e040fb");
@@ -944,22 +1057,17 @@ function renderViceStyle() {
 
   drawViceSun(ctx, 420, 100, 42);
 
-  // Deep Violet Ocean
   ctx.fillStyle = "#2a0845";
   ctx.fillRect(0, FLOOR_Y - 180, CW, 180);
 
-  // VICE OCEAN HIGHWAY WITH CRUISING RETRO CARS!
   drawViceHighwayAndCars(ctx, FLOOR_Y - 215);
-
   drawFluffyTreeIsland(ctx, 1260, FLOOR_Y - 110, "#00e676", "#7b1fa2");
 
-  // Cyan Shoreline Surf
   ctx.fillStyle = "#00ffff";
   for (let x = 0; x < CW; x += 44) {
     ctx.beginPath(); ctx.arc(x + 22, FLOOR_Y - 60, 16, 0, Math.PI); ctx.fill();
   }
 
-  // Dark Synthwave Beach Sand
   ctx.fillStyle = "#311b92";
   ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
   ctx.fillStyle = "#1a0033";
@@ -972,69 +1080,44 @@ function renderViceStyle() {
   drawRetroFlipScoreboard(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], match.sets[0], match.sets[1], "#00ffff", "#ff007f");
 }
 
-// VICE COASTAL HIGHWAY & CRUSING CARS
 function drawViceHighwayAndCars(ctx, y) {
-  // Road Asphalt
   ctx.fillStyle = "#1e1035";
   ctx.fillRect(0, y, CW, 26);
-  ctx.strokeStyle = "#ff007f";
-  ctx.lineWidth = 2;
+  ctx.strokeStyle = "#ff007f"; ctx.lineWidth = 2;
   ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(CW, y); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(0, y + 26); ctx.lineTo(CW, y + 26); ctx.stroke();
 
-  // Dashed Center Divider
-  ctx.strokeStyle = "#ffe57f";
-  ctx.lineWidth = 2;
+  ctx.strokeStyle = "#ffe57f"; ctx.lineWidth = 2;
   ctx.setLineDash([14, 14]);
   ctx.beginPath(); ctx.moveTo(0, y + 13); ctx.lineTo(CW, y + 13); ctx.stroke();
-  ctx.setLineDash([]); // Reset
+  ctx.setLineDash([]);
 
-  // Move & Draw Retro Sports Cars
   VICE_CARS.forEach(car => {
     car.x += car.spd * 0.016;
     if (car.x > CW + 80) car.x = -80;
 
     ctx.save();
     ctx.translate(car.x, y + 4);
-
-    // Car Body (Wedge Testarossa style)
     ctx.fillStyle = car.color;
     ctx.beginPath();
-    ctx.moveTo(0, 14);
-    ctx.lineTo(10, 8);
-    ctx.lineTo(24, 6);
-    ctx.lineTo(38, 14);
-    ctx.closePath();
-    ctx.fill();
+    ctx.moveTo(0, 14); ctx.lineTo(10, 8); ctx.lineTo(24, 6); ctx.lineTo(38, 14);
+    ctx.closePath(); ctx.fill();
 
-    // Dark windshield
     ctx.fillStyle = "#050014";
     ctx.beginPath();
-    ctx.moveTo(12, 8);
-    ctx.lineTo(22, 7);
-    ctx.lineTo(24, 11);
-    ctx.lineTo(11, 11);
-    ctx.closePath();
-    ctx.fill();
+    ctx.moveTo(12, 8); ctx.lineTo(22, 7); ctx.lineTo(24, 11); ctx.lineTo(11, 11);
+    ctx.closePath(); ctx.fill();
 
-    // Wheels
     ctx.fillStyle = "#000000";
     ctx.beginPath(); ctx.arc(8, 14, 3.5, 0, Math.PI * 2); ctx.fill();
     ctx.beginPath(); ctx.arc(30, 14, 3.5, 0, Math.PI * 2); ctx.fill();
 
-    // Glowing Taillight
-    ctx.fillStyle = "#ff1744";
-    ctx.fillRect(-1, 8, 3, 3);
-
-    // Glowing Headlight
-    ctx.fillStyle = "#00ffff";
-    ctx.fillRect(38, 10, 3, 3);
-
+    ctx.fillStyle = "#ff1744"; ctx.fillRect(-1, 8, 3, 3);
+    ctx.fillStyle = "#00ffff"; ctx.fillRect(38, 10, 3, 3);
     ctx.restore();
   });
 }
 
-// 16. DRAWING HELPERS
 function drawFluffyTreeIsland(ctx, x, y, foliageColor, sandColor) {
   ctx.save();
   ctx.translate(x, y);
@@ -1129,10 +1212,15 @@ function drawPlayersAndBall(ctx) {
 
     drawFlushHat(ctx, p.hat, animTimer);
 
-    if (idx === match.myPlayerIndex) {
-      ctx.fillStyle = "#ffd600";
-      ctx.beginPath(); ctx.moveTo(-7, -p.height / 2 - 20); ctx.lineTo(7, -p.height / 2 - 20); ctx.lineTo(0, -p.height / 2 - 12); ctx.fill();
-    }
+    // Player name overhead
+    ctx.font = "900 13px sans-serif";
+    ctx.fillStyle = "#ffffff";
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = 3;
+    ctx.textAlign = "center";
+    ctx.strokeText(p.name, 0, -p.height / 2 - 20);
+    ctx.fillText(p.name, 0, -p.height / 2 - 20);
+
     ctx.restore();
   });
 
@@ -1211,7 +1299,7 @@ function drawSingleFlipCard(ctx, x, y, w, h, score, sets, scoreColor) {
   ctx.fillText(score, x + w / 2, y + h / 2 + 5);
 }
 
-// 17. MAIN LOOP
+// 16. MAIN LOOP
 let lastT = performance.now();
 function gameLoop(now) {
   const dt = Math.min((now - lastT) / 1000, 0.05);
@@ -1256,7 +1344,7 @@ function gameLoop(now) {
 }
 requestAnimationFrame(gameLoop);
 
-// 18. UI NAVIGATION & VICE CARD SELECTION
+// 17. SUB-MODE SELECTION & 3-CARD SHUFFLE SYSTEM
 function showSubmodeSelect(context) {
   sfx.init();
   pendingModeContext = context;
@@ -1319,7 +1407,6 @@ function confirmCardAndPlay() {
 
 function launchGame() {
   match.isOnline = (pendingModeContext === "online");
-  match.myPlayerIndex = 0;
   match.scores = [0, 0];
   match.sets = [0, 0];
   match.currentSet = 1;
@@ -1357,7 +1444,7 @@ function openOnlineLobby() {
   document.getElementById("onlineBox").classList.remove("hidden");
 }
 
-// 19. 4-PLAYER WEBRTC (FULLY FUNCTIONAL MULTIPLAYER FOR FAMILY/IPHONES)
+// 18. MULTIPLAYER WEBRTC (LOBBY WITH PROFANITY-FILTERED CUSTOM NAMES)
 let peer = null;
 let isHost = false;
 const peerConnections = [];
@@ -1365,8 +1452,12 @@ const peersConnected = [true, false, false, false];
 
 function hostRoom() {
   sfx.init();
+  const inputEl = document.getElementById("playerNameInput");
+  const myName = sanitizePlayerName(inputEl.value, "HOST");
+  players[0].name = myName;
+  document.getElementById("slot1").innerText = `P1: ${myName}`;
+
   document.getElementById("netStatus").innerText = "Creating Room...";
-  // Easy 4-digit code (e.g. CRAB-4821)
   const roomNum = Math.floor(1000 + Math.random() * 9000);
   const roomId = "CRAB-" + roomNum;
 
@@ -1389,24 +1480,37 @@ function hostRoom() {
 
       peersConnected[slot] = true;
       peerConnections[slot] = conn;
-      document.getElementById(`slot${slot + 1}`).classList.add("connected");
-      document.getElementById("netStatus").innerText = `Player ${slot + 1} connected!`;
 
       conn.on("open", () => {
-        conn.send({ type: "WELCOME", assignedSlot: slot, hats: players.map(p => p.hat) });
+        conn.send({
+          type: "WELCOME",
+          assignedSlot: slot,
+          hats: players.map(p => p.hat),
+          names: players.map(p => p.name)
+        });
       });
+
       conn.on("data", (data) => {
+        if (data.type === "SET_NAME") {
+          const safeName = sanitizePlayerName(data.name, `P${slot + 1}`);
+          players[slot].name = safeName;
+          document.getElementById(`slot${slot + 1}`).innerText = `P${slot + 1}: ${safeName}`;
+          document.getElementById(`slot${slot + 1}`).classList.add("connected");
+          broadcastPlayerNames();
+        }
         if (data.type === "INPUT") {
           updatePlayer(players[slot], data.input, 0.03);
         }
       });
+
       conn.on("close", () => {
         peersConnected[slot] = false;
+        document.getElementById(`slot${slot + 1}`).innerText = `P${slot + 1}: Waiting...`;
         document.getElementById(`slot${slot + 1}`).classList.remove("connected");
       });
     });
 
-    peer.on("error", (err) => {
+    peer.on("error", () => {
       document.getElementById("netStatus").innerText = "Connection note: Refresh & try host again.";
     });
   } catch(e) {
@@ -1416,6 +1520,9 @@ function hostRoom() {
 
 function joinRoom() {
   sfx.init();
+  const inputEl = document.getElementById("playerNameInput");
+  const myName = sanitizePlayerName(inputEl.value, "PLAYER");
+
   const code = document.getElementById("joinCodeInput").value.trim().toUpperCase();
   if (!code) { alert("Please enter the 4-digit code (e.g. CRAB-1234)!"); return; }
 
@@ -1426,16 +1533,26 @@ function joinRoom() {
       const conn = peer.connect(code);
       conn.on("open", () => {
         match.isOnline = true;
+        conn.send({ type: "SET_NAME", name: myName });
         document.getElementById("netStatus").innerText = "Connected to Host! Waiting for start...";
       });
 
       conn.on("data", (data) => {
         if (data.type === "WELCOME") {
           match.myPlayerIndex = data.assignedSlot;
-          for (let i = 0; i < 4; i++) { if (data.hats) players[i].hat = data.hats[i]; }
-          document.getElementById("roomBadge").innerText = `Player ${match.myPlayerIndex + 1}`;
-          document.querySelectorAll(".slot").forEach((s, idx) => {
-            if (idx <= match.myPlayerIndex) s.classList.add("connected");
+          players[data.assignedSlot].name = myName;
+          document.getElementById("roomBadge").innerText = `${myName} (P${match.myPlayerIndex + 1})`;
+        }
+        if (data.type === "UPDATE_NAMES") {
+          data.names.forEach((n, idx) => {
+            if (n) {
+              players[idx].name = n;
+              const slotEl = document.getElementById(`slot${idx + 1}`);
+              if (slotEl) {
+                slotEl.innerText = `P${idx + 1}: ${n}`;
+                slotEl.classList.add("connected");
+              }
+            }
           });
         }
         if (data.type === "START_GAME") {
@@ -1480,6 +1597,16 @@ function joinRoom() {
       }, 33);
     });
   } catch(e) {}
+}
+
+function broadcastPlayerNames() {
+  const msg = {
+    type: "UPDATE_NAMES",
+    names: players.map(p => p.name)
+  };
+  peerConnections.forEach(c => {
+    if (c && c.open) c.send(msg);
+  });
 }
 
 function startOnlineVoting() {
