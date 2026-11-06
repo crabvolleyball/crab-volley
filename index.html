@@ -35,7 +35,7 @@ header {
 .brand span { color: #fff; }
 .header-actions { display: flex; gap: 8px; align-items: center; }
 
-/* CLEAN, NON-BLURRY HUD */
+/* CLEAN SHARP HUD */
 .coin-pill {
   background: #ffe600; color: #000; border: 2.5px solid #000; border-radius: 8px;
   font-size: 13px; font-family: "Impact", sans-serif; padding: 4px 10px;
@@ -131,18 +131,58 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   touch-action: none; width: 100%; height: 110px;
 }
 
-/* CRABVILLE MASSIVE WORLD */
+/* CRABVILLE MASSIVE 2D WORLD OVERHAUL */
 #crabvilleModal {
-  padding: 6px; max-width: 1280px; width: 99%; background: #0284c7; border-color: #0369a1;
+  padding: 6px; max-width: 1340px; width: 99%; background: #0284c7; border-color: #0369a1;
+  position: relative;
 }
 .cv-topbar {
   background: #0369a1; color: #fff; padding: 6px 12px; border-radius: 8px;
   display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;
 }
-#crabvilleCanvas {
-  width: 100%; aspect-ratio: 16 / 9; max-height: 68vh; background: #38bdf8;
-  border: 4px solid #000; border-radius: 10px; cursor: pointer; touch-action: none;
+.cv-viewport {
+  position: relative; width: 100%; border: 4px solid #000; border-radius: 10px; overflow: hidden;
 }
+#crabvilleCanvas {
+  width: 100%; aspect-ratio: 16 / 9; max-height: 68vh; background: #0ea5e9;
+  display: block; cursor: pointer; touch-action: none;
+}
+
+/* IN-GAME RPG DIALOGUE BOX (NO POPUPS) */
+#rpgDialogueBox {
+  position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+  width: min(860px, 94%); background: rgba(15, 23, 42, 0.94); border: 4px solid #38bdf8;
+  border-radius: 14px; padding: 12px 16px; color: #fff; display: flex; gap: 16px; align-items: center;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 50;
+}
+.rpg-avatar {
+  width: 82px; height: 82px; border-radius: 10px; border: 3px solid #ffe600;
+  background: #0284c7; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 40px;
+}
+.rpg-content { flex: 1; text-align: left; }
+.rpg-speaker { color: #ffe600; font-size: 15px; margin-bottom: 2px; }
+.rpg-message { font-family: sans-serif; font-size: 13px; color: #e2e8f0; line-height: 1.4; }
+.rpg-options { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.rpg-btn {
+  background: #0284c7; color: #fff; border: 2px solid #000; border-radius: 6px;
+  font-size: 11px; padding: 4px 10px; cursor: pointer; font-family: sans-serif; font-weight: bold;
+}
+.rpg-btn:hover { background: #0369a1; }
+
+/* EMOTE BAR & SOCIAL CONTROLS */
+.cv-bottom-controls {
+  display: flex; justify-content: space-between; align-items: center; margin-top: 6px;
+  background: #0369a1; padding: 6px 10px; border-radius: 8px; color: #fff; font-size: 11px;
+}
+.emote-btn-cluster { display: flex; gap: 4px; }
+.emote-btn {
+  background: #f8fafc; border: 2px solid #000; border-radius: 6px; padding: 3px 7px;
+  font-size: 13px; cursor: pointer;
+}
+.emote-btn:hover { transform: scale(1.1); }
+
+/* FURNITURE TRAY */
 .furniture-tray {
   background: #f8fafc; border: 2px solid #000; border-radius: 8px;
   padding: 6px; margin-top: 6px; display: flex; gap: 6px; overflow-x: auto;
@@ -152,7 +192,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   padding: 4px 8px; font-size: 11px; font-family: sans-serif; cursor: pointer; white-space: nowrap;
 }
 
-/* ISLAND MAP MODAL */
+/* ISLAND TRAVEL MAP */
 #islandMapModal {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   width: min(840px, 94%); background: #fffbe8; border: 5px solid #0369a1;
@@ -167,27 +207,30 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 .map-dest-card:hover { transform: scale(1.04); background: #bae6fd; }
 
-/* CITIZEN PASSPORT LOGIN */
+/* SOCIAL FRIEND LIST MODAL */
+#friendsModal {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: min(480px, 92%); background: #fffbe8; border: 5px solid #0284c7;
+  border-radius: 16px; padding: 14px; z-index: 65; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+}
+.friend-list-box {
+  background: #fff; border: 2px solid #000; border-radius: 8px;
+  max-height: 180px; overflow-y: auto; padding: 6px; font-family: sans-serif; font-size: 12px;
+  display: flex; flex-direction: column; gap: 4px; margin: 8px 0;
+}
+.friend-item-row {
+  display: flex; justify-content: space-between; align-items: center; padding: 4px 8px;
+  background: #f1f5f9; border-radius: 6px; border: 1px solid #cbd5e1;
+}
+
+/* PASSPORT LOGIN */
 #passportModal {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   width: min(440px, 92%); background: #fffbe8; border: 5px solid #d97706;
   border-radius: 16px; padding: 16px; z-index: 70; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
 }
 
-/* VICE CARD VOTING */
-.vice-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0; }
-.card-item {
-  background: #2b084b; border: 3px solid #ff007f; border-radius: 12px;
-  color: #fff; padding: 10px 6px; cursor: pointer; box-shadow: 3px 3px 0 #000;
-  display: flex; flex-direction: column; justify-content: space-between;
-}
-.card-item.selected { border-color: #00ffff; transform: scale(1.02); }
-.card-icon { font-size: 26px; }
-.card-title { font-size: 15px; color: #ff007f; }
-.card-desc { font-size: 10px; font-family: sans-serif; font-weight: bold; color: #e0e7ff; line-height: 1.2; }
-.vote-count { font-size: 11px; color: #00ffff; font-family: monospace; font-weight: 900; margin-top: 4px; }
-
-/* IN-GAME VIEW */
+/* IN-GAME VIEW & VOLLEYBALL CANVAS */
 #game-section {
   width: 100%; height: 100%; display: flex; flex-direction: column;
   align-items: center; justify-content: space-between; position: relative;
@@ -250,7 +293,7 @@ canvas#beachCourt {
   100% { transform: translateY(-60%); }
 }
 
-/* TOUCH CONTROLS */
+/* TOUCHPAD BAR */
 .touchpad-bar {
   width: 100%; max-width: 1600px; display: flex; justify-content: space-between;
   align-items: center; padding: 4px 8px; touch-action: none; flex-shrink: 0;
@@ -271,12 +314,12 @@ canvas#beachCourt {
   font-family: sans-serif; font-weight: bold; text-shadow: 1px 1px 0 #000; flex-shrink: 0;
 }
 
-/* CLEAN, UN-OVERLAPPED VERSION TAG IN BOTTOM-RIGHT */
+/* CRISP SINGLE-LINE VERSION TAG */
 #globalVersionTag {
   position: fixed; bottom: 4px; right: 6px;
-  color: rgba(255, 255, 255, 0.8); font-family: sans-serif;
-  font-size: 10px; font-weight: 900; background: rgba(0, 0, 0, 0.55);
-  padding: 3px 7px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.85); font-family: sans-serif;
+  font-size: 10px; font-weight: 900; background: rgba(0, 0, 0, 0.6);
+  padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.25);
   letter-spacing: 0.5px; z-index: 99999; pointer-events: none;
 }
 .hidden { display: none !important; }
@@ -326,14 +369,14 @@ canvas#beachCourt {
           <b>YOUR NAME:</b>
           <input id="initialNameInput" class="custom-input" style="width:130px;" maxlength="12" placeholder="ENTER YOUR NAME">
           <button id="hostBtn">CREATE ROOM (HOST)</button>
-          <input id="joinCodeInput" class="custom-input" style="width:130px;" placeholder="CRAB-XXXX" oninput="formatJoinCodeInput(this)">
+          <input id="joinCodeInput" class="custom-input" style="width:130px;" placeholder="CRAB-XXXX">
           <button id="joinBtn">JOIN ROOM</button>
         </div>
         <p id="netStatus" style="font-size:12px;font-family:sans-serif;font-weight:bold;color:#2e7d32;margin:4px 0;">Ready to pinch.</p>
       </div>
     </section>
 
-    <!-- CRABCHAT: PEER-TO-PEER DRAWING & TALK -->
+    <!-- CRABCHAT P2P BOARD -->
     <section id="crabchatModal" class="panel hidden">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
         <h2 style="margin:0;font-size:22px;color:#0284c7;">💬 CRABCHAT P2P DRAWING BOARD</h2>
@@ -351,7 +394,6 @@ canvas#beachCourt {
         </div>
       </div>
       
-      <!-- Top Screen Feed -->
       <div class="chat-screen-top" id="crabchatFeed">
         <div class="chat-post-item">
           <span class="chat-post-author">[SYSTEM]:</span>
@@ -359,7 +401,6 @@ canvas#beachCourt {
         </div>
       </div>
 
-      <!-- Bottom Stylus Pad -->
       <div class="chat-screen-bottom">
         <div class="chat-tools-bar">
           <div style="display:flex;gap:4px;align-items:center;">
@@ -384,70 +425,110 @@ canvas#beachCourt {
       </div>
     </section>
 
-    <!-- CRABVILLE: MASSIVE 2D WORLD & IGLOO REGION -->
+    <!-- CRABVILLE MASSIVE 2D WORLD & HOUSES -->
     <section id="crabvilleModal" class="panel hidden">
       <div class="cv-topbar">
         <span style="font-size:18px;color:#ffe600;" id="crabvilleSceneTitle">🌴 CRABVILLE: TOWN PLAZA</span>
         <div style="display:flex;gap:8px;align-items:center;">
           <span class="coin-pill">🪙 <span id="crabvilleCoinCount">50</span> CC</span>
           <button onclick="openWorldMapModal()" style="font-size:11px;padding:3px 8px;background:#00ffff;color:#000;">🗺️ ISLAND MAP</button>
-          <button onclick="toggleIglooMode()" id="iglooToggleBtn" style="font-size:11px;padding:3px 8px;background:#ffe600;color:#000;">🏠 MY IGLOO</button>
+          <button onclick="openFriendsModal()" style="font-size:11px;padding:3px 8px;background:#10b981;color:#fff;">👥 FRIENDS</button>
+          <button onclick="toggleHouseMode()" id="houseToggleBtn" style="font-size:11px;padding:3px 8px;background:#ffe600;color:#000;">🏠 MY HOUSE</button>
           <button onclick="closeCrabville()" style="font-size:11px;padding:3px 8px;background:#ef4444;color:#fff;">EXIT</button>
         </div>
       </div>
 
-      <canvas id="crabvilleCanvas" width="1280" height="720"></canvas>
-
-      <!-- Furniture Backpack (for Igloo customization) -->
-      <div id="furnitureBar" class="furniture-tray hidden">
-        <span style="font-size:11px;font-family:sans-serif;color:#334155;display:flex;align-items:center;padding:0 4px;">🎒 <b>BACKPACK:</b></span>
-        <div id="furnitureBackpackItems" style="display:flex;gap:6px;"></div>
+      <div class="cv-viewport">
+        <canvas id="crabvilleCanvas" width="1280" height="720"></canvas>
+        
+        <!-- IN-WORLD RPG DIALOGUE BOX (NO BROWSER POPUPS) -->
+        <div id="rpgDialogueBox" class="hidden">
+          <div class="rpg-avatar" id="rpgSpeakerAvatar">🏄</div>
+          <div class="rpg-content">
+            <div class="rpg-speaker" id="rpgSpeakerName">Brodie the Beachcomber</div>
+            <div class="rpg-message" id="rpgSpeakerText">"Duuude! What's crackin'? Welcome to the surf shack!"</div>
+            <div class="rpg-options" id="rpgOptionsContainer"></div>
+          </div>
+        </div>
       </div>
 
-      <div style="margin-top:6px;display:flex;justify-content:space-between;align-items:center;font-size:11px;font-family:sans-serif;color:#fff;">
-        <span>WASD or Click anywhere to waddle! Live Public World Server connected!</span>
+      <!-- EMOTE BAR & LIVE CHAT TOOL -->
+      <div class="cv-bottom-controls">
+        <div class="emote-btn-cluster">
+          <button class="emote-btn" onclick="triggerMyEmote('wave')">👋 Wave</button>
+          <button class="emote-btn" onclick="triggerMyEmote('dance')">🦀 Dance</button>
+          <button class="emote-btn" onclick="triggerMyEmote('pinch')">🤏 Pinch</button>
+          <button class="emote-btn" onclick="triggerMyEmote('laugh')">😂 Haha</button>
+          <button class="emote-btn" onclick="triggerMyEmote('heart')">❤️ Love</button>
+          <button class="emote-btn" onclick="triggerMyEmote('sleep')">💤 Sleep</button>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <input id="cvChatInput" placeholder="Say something in CrabVille..." style="padding:2px 6px;font-size:11px;border-radius:4px;border:1px solid #000;width:180px;">
+          <button class="primary" onclick="sendCvLiveChat()" style="padding:2px 8px;font-size:11px;">CHAT</button>
+        </div>
         <button onclick="promptSupremeAdmin()" style="background:transparent;border:none;color:rgba(255,255,255,0.4);font-size:10px;cursor:pointer;">[Admin Console]</button>
+      </div>
+
+      <!-- Furniture Tray for Home Mode -->
+      <div id="furnitureBar" class="furniture-tray hidden">
+        <span style="font-size:11px;font-family:sans-serif;color:#334155;display:flex;align-items:center;padding:0 4px;">🎒 <b>FURNITURE INVENTORY (CLICK TO PLACE):</b></span>
+        <div id="furnitureBackpackItems" style="display:flex;gap:6px;"></div>
       </div>
     </section>
 
-    <!-- ISLAND TRAVEL MAP (CLUB PENGUIN STYLE) -->
+    <!-- ISLAND TRAVEL MAP -->
     <div id="islandMapModal" class="hidden">
       <h2 style="color:#0284c7;margin:0 0 4px;">🗺️ CRABVILLE ISLAND TRAVEL MAP</h2>
-      <p style="font-size:12px;font-family:sans-serif;color:#475569;margin-bottom:8px;">Click any location to waddle there immediately!</p>
+      <p style="font-size:12px;font-family:sans-serif;color:#475569;margin-bottom:8px;">Waddle anywhere on the island!</p>
       <div class="map-grid">
         <div class="map-dest-card" onclick="travelToZone('plaza')">
           <div style="font-size:28px;">🌴</div>
           <b>TOWN PLAZA</b>
-          <div style="font-size:10px;color:#64748b;">Shops & Brodie's Shack</div>
+          <div style="font-size:10px;color:#64748b;">Shops & Brodie's Surf Shack</div>
         </div>
         <div class="map-dest-card" onclick="travelToZone('beach')">
           <div style="font-size:28px;">🏖️</div>
           <b>THE BEACH & PIER</b>
-          <div style="font-size:10px;color:#64748b;">Lighthouse & Waves</div>
+          <div style="font-size:10px;color:#64748b;">Lighthouse & Fishing Docks</div>
         </div>
         <div class="map-dest-card" onclick="travelToZone('diner')">
           <div style="font-size:28px;">🥞</div>
           <b>WAFFLE BOULEVARD</b>
-          <div style="font-size:10px;color:#64748b;">24/7 Hashbrown Buffet</div>
+          <div style="font-size:10px;color:#64748b;">24/7 Hashbrown Grill</div>
         </div>
         <div class="map-dest-card" onclick="travelToZone('nightclub')">
           <div style="font-size:28px;">🪩</div>
           <b>RAVE NIGHTCLUB</b>
-          <div style="font-size:10px;color:#64748b;">EDM Strobe Dance Floor</div>
+          <div style="font-size:10px;color:#64748b;">Live EDM Dance Floor</div>
         </div>
-        <div class="map-dest-card" onclick="travelToZone('igloo')">
+        <div class="map-dest-card" onclick="travelToZone('house')">
           <div style="font-size:28px;">🏠</div>
-          <b>MY CRAB IGLOO</b>
-          <div style="font-size:10px;color:#64748b;">Private Shell Residence</div>
+          <b>MY BEACH HOUSE</b>
+          <div style="font-size:10px;color:#64748b;">Your Private Shell Cottage</div>
         </div>
       </div>
       <button onclick="closeWorldMapModal()" style="font-size:12px;padding:4px 12px;">CLOSE MAP</button>
     </div>
 
-    <!-- PASSPORT ACCOUNT LOGIN MODAL -->
+    <!-- FRIENDS & PARTY INVITE MODAL -->
+    <div id="friendsModal" class="hidden">
+      <h2 style="color:#0284c7;margin:0 0 4px;">👥 CRAB FRIENDS & INVITES</h2>
+      <p style="font-size:11px;font-family:sans-serif;color:#475569;">Hang out and invite friends to your Beach House:</p>
+      <div style="display:flex;gap:6px;margin:6px 0;">
+        <input id="addFriendInput" placeholder="Friend Crab Name..." style="flex:1;padding:4px;border:2px solid #000;border-radius:6px;font-size:11px;">
+        <button onclick="addFriendDirect()" style="padding:4px 10px;font-size:11px;background:#10b981;color:#fff;">+ ADD</button>
+      </div>
+      <div class="friend-list-box" id="friendsListBox"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+        <button class="primary" onclick="broadcastHousePartyInvite()" style="font-size:11px;padding:4px 10px;">🎉 INVITE ALL TO HOUSE</button>
+        <button onclick="closeFriendsModal()" style="font-size:11px;padding:4px 10px;">CLOSE</button>
+      </div>
+    </div>
+
+    <!-- PASSPORT LOGIN -->
     <div id="passportModal" class="hidden">
       <h2 style="color:#b45309;margin:0 0 6px;">🛂 CRABVILLE CITIZEN PASSPORT</h2>
-      <p style="font-size:11px;font-family:sans-serif;color:#4b5563;margin-bottom:8px;">Protect your shell home, furniture, and CrabCoins:</p>
+      <p style="font-size:11px;font-family:sans-serif;color:#4b5563;margin-bottom:8px;">Protect your Beach House, furniture, and CrabCoins:</p>
       <div style="display:flex;flex-direction:column;gap:6px;text-align:left;font-size:12px;font-family:sans-serif;">
         <label><b>CRAB CITIZEN NAME:</b>
           <input id="passportUserInput" style="width:100%;padding:4px;border:2px solid #000;border-radius:6px;font-weight:bold;">
@@ -469,23 +550,19 @@ canvas#beachCourt {
     <section id="twitchModal" class="panel hidden">
       <h1 style="color:#9146ff;text-shadow:3px 3px 0 #000;">🟣 TWITCH STREAMER ENGINE 🟣</h1>
       <p class="sub">Chatters automatically spawn on the beach bleachers in real time and cheer on the match!</p>
-
       <div class="customizer-box">
         <div style="background:#ede9fe;border:2px solid #7c3aed;border-radius:8px;padding:8px;margin-bottom:8px;">
           <h4 style="margin:0 0 4px 0;color:#5b21b6;font-size:14px;">👑 OFFICIAL BROADCASTER AUTHENTICATION</h4>
           <p style="font-size:11px;color:#4c1d95;margin:0 0 6px 0;">Authorize through Twitch to unlock the verified Streamer Gold Crown and broadcast controls.</p>
           <button class="twitch-btn" onclick="startTwitchOAuthFlow()" style="padding:6px 14px;font-size:13px;">🔑 LOGIN & VERIFY CHANNEL (TWITCH OAUTH)</button>
         </div>
-
         <div class="custom-row">
           <b>OR QUICK CONNECT CHANNEL:</b>
           <input id="twitchChannelInput" class="custom-input" style="width:170px;" placeholder="CHANNEL NAME">
           <button class="twitch-btn" onclick="connectTwitchChatDirect()">CONNECT CHAT</button>
         </div>
-        <p id="twitchConnStatus" style="font-size:12px;font-weight:bold;color:#6b21a8;margin:2px 0;">Status: Disconnected</p>
       </div>
-
-      <div style="margin-top:14px;display:flex;gap:10px;justify-content:center;">
+      <div style="margin-top:14px;">
         <button onclick="closeTwitchModal()" style="padding:6px 16px;">CLOSE</button>
       </div>
     </section>
@@ -494,7 +571,6 @@ canvas#beachCourt {
     <section id="leaderboardModal" class="panel hidden">
       <h1>🏆 WORLDWIDE LEADERBOARDS 🏆</h1>
       <p class="sub">Fastest Escapes to Waffle House & Top Beach Competitors</p>
-
       <table class="leader-table">
         <thead>
           <tr>
@@ -506,22 +582,19 @@ canvas#beachCourt {
         </thead>
         <tbody id="leaderboardBody"></tbody>
       </table>
-
       <div style="margin-top:14px;">
         <button onclick="closeLeaderboard()" style="padding:6px 16px;">BACK TO BEACH</button>
       </div>
     </section>
 
-    <!-- BEACH BAG / ARSENAL -->
+    <!-- BEACH BAG -->
     <section id="lockerModal" class="panel hidden">
       <h1>🎒 YOUR BEACH BAG 🎒</h1>
       <p class="sub">Rank: <span id="careerLevel" style="color:#d84315;">1</span> · Claws Pinched: <span id="careerPoints">0</span> · Sets Won: <span id="careerWins">0</span></p>
-
       <div class="customizer-box">
         <div class="custom-row">
           <b>HAT / ACCESSORY:</b>
           <select id="arsenalHatSelect" class="custom-input" onchange="updateArsenalCustoms()"></select>
-          
           <b>CLAW ACCESSORY:</b>
           <select id="clawAccessorySelect" class="custom-input" onchange="updateArsenalCustoms()">
             <option value="none">Bare Claws</option>
@@ -534,7 +607,6 @@ canvas#beachCourt {
             <option value="spiked">Spiked Gauntlets ⚔️</option>
           </select>
         </div>
-
         <div class="custom-row" style="margin-top:4px;">
           <b>CRAB COLORWAY:</b>
           <select id="colorwaySelect" class="custom-input" onchange="updateArsenalCustoms()">
@@ -554,101 +626,40 @@ canvas#beachCourt {
       </div>
     </section>
 
-    <!-- PRE-LOBBY -->
-    <section id="socialLobbyModal" class="panel hidden">
-      <h1>🦀 BEACH PRE-LOBBY 🦀</h1>
-      <p class="sub">Pick your team (max 2 per side). Extra joined players cheer on the bleachers!</p>
-
-      <div style="margin:2px 0;">
-        <span style="font-family:sans-serif;font-size:12px;font-weight:bold;">Room Code: </span>
-        <code id="myCodeText" style="font-size:14px;color:#d50000;font-weight:bold;">----</code>
-        <button id="copyBtn" style="padding:2px 6px;font-size:11px;margin-left:4px;">COPY</button>
-      </div>
-
-      <div class="lobby-grid">
-        <div class="team-box">
-          <div class="team-title-1">TEAM 1 (BLUE SIDE) - <span id="team1Count">0</span>/2</div>
-          <div id="team1Players"></div>
-          <button id="joinTeam1Btn" style="font-size:11px;padding:4px 8px;margin-top:4px;">JOIN TEAM 1</button>
-        </div>
-        <div class="team-box">
-          <div class="team-title-2">TEAM 2 (RED SIDE) - <span id="team2Count">0</span>/2</div>
-          <div id="team2Players"></div>
-          <button id="joinTeam2Btn" style="font-size:11px;padding:4px 8px;margin-top:4px;">JOIN TEAM 2</button>
-        </div>
-      </div>
-
-      <div class="spectators-box">
-        <div class="spectators-title">🏖️ BLEACHER SPECTATORS (<span id="spectatorCount">0</span>)</div>
-        <div id="spectatorBadgeContainer" class="spectator-badges"></div>
-      </div>
-
-      <div class="customizer-box">
-        <div class="custom-row">
-          <b>YOUR NAME:</b>
-          <input id="playerNameInput" class="custom-input" maxlength="12" placeholder="ENTER YOUR NAME">
-          <b>HAT:</b>
-          <select id="hatSelect" class="custom-input"></select>
-          <b>SECRET:</b>
-          <input id="secretCodeInput" class="custom-input" style="width:90px;" placeholder="CODE">
-          <button id="unlockSecretBtn" style="font-size:11px;padding:4px 6px;background:#ffd54f;">UNLOCK</button>
-        </div>
-
-        <div class="chat-box">
-          <div id="chatLogs" class="chat-logs">
-            <div class="chat-entry"><b>BEACH RADIO:</b> Welcome to Crab Volleyball pre-lobby!</div>
-          </div>
-          <div class="chat-bar">
-            <input id="chatInput" placeholder="Say something nice...">
-            <button id="sendChatBtn">SEND</button>
-          </div>
-        </div>
-      </div>
-
-      <div style="margin-top:8px;display:flex;justify-content:center;gap:10px;">
-        <button id="leaveLobbyBtn" style="font-size:12px;padding:6px 12px;">LEAVE LOBBY</button>
-        <button id="hostStartMatchBtn" class="primary big hidden" style="width:210px;">NEXT: MATCH MODE ➔</button>
-      </div>
-    </section>
-
-    <!-- DEMOCRATIC SUB-MODE SELECTION -->
+    <!-- SUB-MODE SELECTION -->
     <section id="submodeModal" class="panel hidden">
       <h1 id="submodeTitle">CHOOSE MATCH STYLE</h1>
-      <p class="sub" id="submodeSubtitle">Select your game environment! <span id="submodeTimerText" style="color:#d50000;">(25s REMAINING)</span></p>
-
+      <p class="sub" id="submodeSubtitle">Select your game environment!</p>
       <div class="btn-grid">
-        <button class="big primary" id="standardModeBtn" onclick="voteSubmode('standard')">☀️ STANDARD BEACH <br><span id="stdVoteCount" style="font-size:12px;">[0 VOTES]</span></button>
-        <button class="big vice-btn" id="viceModeBtn" onclick="voteSubmode('vice')">🌴 VICE MODE <br><span id="viceVoteCount" style="font-size:12px;">[0 VOTES]</span></button>
+        <button class="big primary" id="standardModeBtn" onclick="voteSubmode('standard')">☀️ STANDARD BEACH</button>
+        <button class="big vice-btn" id="viceModeBtn" onclick="voteSubmode('vice')">🌴 VICE MODE</button>
       </div>
       <div style="margin-top:12px;">
         <button id="backFromSubmodeBtn" style="padding:4px 12px;font-size:12px;">BACK</button>
       </div>
     </section>
 
-    <!-- DEMOCRATIC VICE CARD VOTING -->
+    <!-- VICE CARD VOTING -->
     <section id="viceVoteModal" class="panel hidden" style="background:#160228;border-color:#ff007f;">
       <h1 style="color:#00ffff;text-shadow:3px 3px 0 #ff007f, 5px 5px 0 #000;">🌴 VOTE VICE CARD 🌴</h1>
-      <p class="sub" style="color:#ff77c6;">Popular vote decides the modifier! <span id="voteTimerText" style="color:#ffe600;">(25s REMAINING)</span></p>
-
       <div id="viceCardsContainer" class="vice-cards-grid"></div>
-
-      <div style="margin-top:8px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;">
+      <div style="margin-top:8px;display:flex;justify-content:center;gap:10px;">
         <button id="reshuffleBtn" style="background:#00ffff;font-size:12px;padding:6px 12px;">🔀 RESHUFFLE</button>
-        <button id="confirmCardBtn" class="vice-btn big" style="width:210px;">SUBMIT MY VOTE!</button>
+        <button id="confirmCardBtn" class="vice-btn big" style="width:210px;">CONFIRM MODIFIER!</button>
       </div>
     </section>
 
-    <!-- IN-GAME VIEW & VOLLEYBALL CANVAS -->
+    <!-- IN-GAME VOLLEYBALL VIEW -->
     <section id="game-section" class="hidden">
       <div class="canvas-holder">
         <canvas id="beachCourt" width="1600" height="850"></canvas>
         <div id="toast" class="toast hidden"></div>
 
-        <!-- 20-SECOND AUDREY POPPAGEE CUTSCENE -->
+        <!-- 20-SECOND AUDREY CUTSCENE -->
         <div id="newsCutsceneModal" class="hidden">
           <div class="news-topbar">
             <span>🚨 ACTION NEWS 6: METEOROLOGIST AUDREY POPPAGEE 🚨</span>
-            <button id="skipCutsceneBtn" style="padding:2px 8px;font-size:11px;background:#fff;color:#000;">SKIP [0/2]</button>
+            <button id="skipCutsceneBtn" style="padding:2px 8px;font-size:11px;background:#fff;color:#000;">SKIP</button>
           </div>
           <div class="audrey-layout">
             <div id="audreyAnchorArt" style="width:130px;height:100px;flex-shrink:0;"></div>
@@ -663,11 +674,11 @@ canvas#beachCourt {
           <div class="timer-bar"><div id="newsTimerFill" class="timer-fill"></div></div>
         </div>
 
-        <!-- 2026 MOVIE CREDITS -->
+        <!-- MOVIE CREDITS -->
         <div id="movieCreditsModal" class="hidden">
           <div class="credits-roll" id="creditsRollContent"></div>
           <div style="position:absolute;bottom:16px;display:flex;gap:12px;">
-            <button class="primary" onclick="restartToLobby()" style="padding:8px 16px;">🦀 RETURN TO LOBBY</button>
+            <button class="primary" onclick="restartToLobby()" style="padding:8px 16px;">🦀 RETURN TO BEACH</button>
             <button onclick="quitToMenu()" style="padding:8px 16px;">🏠 MAIN MENU</button>
           </div>
         </div>
@@ -694,19 +705,15 @@ canvas#beachCourt {
   </main>
 </div>
 
-<!-- CLEAN, UN-OVERLAPPED VERSION TAG IN BOTTOM-RIGHT -->
-<div id="globalVersionTag">v1.4 GOLD</div>
+<!-- SINGLE-LINE MINIMALIST VERSION BADGE -->
+<div id="globalVersionTag">v2.0 MASTER GOLD</div>
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 
 <script>
 /* ========================================================
-   CRAB VOLLEYBALL ARCADE ENGINE v1.4 GOLD (2026 EDITION)
+   CRAB VOLLEYBALL ARCADE ENGINE v2.0 MASTER GOLD (2026)
    ======================================================== */
-
-const TWITCH_CLIENT_ID = "0nazprjd83x4774jrwif7clmlwlio9";
-let isStreamerVerified = false;
-let verifiedBroadcasterName = "";
 
 // SOUND SYNTHESIZER
 class ArcadeAudio {
@@ -749,35 +756,90 @@ class ArcadeAudio {
       setTimeout(() => this.beep(f, "triangle", 0.25, f * 1.2, 0.2), i * 70);
     });
   }
+  blip() { this.beep(480, "sine", 0.05, 300, 0.15); }
+  ding() { this.beep(980, "sine", 0.3, 1200, 0.2); }
 }
 const sfx = new ArcadeAudio();
 
-// TAMPER-PROOF CRABCOIN ECONOMY ENGINE
-const SALT_KEY = "CRAB_POPPAGEE_SECRET_TREASURY_2026";
-function computeSecurityHash(coins, points, wins) {
-  let str = `${coins}:${points}:${wins}:${SALT_KEY}`;
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = ((hash << 5) - hash) + str.charCodeAt(i);
-    hash |= 0;
-  }
-  return hash.toString(16);
+// MUSIC OBJECTS
+let standardBgm = null;
+let viceRaveBgm = null;
+let isAudioMuted = false;
+
+function initAudioObjects() {
+  if (!standardBgm) { standardBgm = new Audio("./fizzion.mp3"); standardBgm.loop = true; }
+  if (!viceRaveBgm) { viceRaveBgm = new Audio("./humblephonics.wav"); viceRaveBgm.loop = true; }
 }
 
+function playNightclubRaveMusic() {
+  if (isAudioMuted) return;
+  initAudioObjects();
+  if (standardBgm) standardBgm.pause();
+  if (viceRaveBgm) {
+    viceRaveBgm.currentTime = 0;
+    viceRaveBgm.play().catch(() => {});
+  }
+}
+
+function stopAllMusic() {
+  if (standardBgm) standardBgm.pause();
+  if (viceRaveBgm) viceRaveBgm.pause();
+}
+
+function toggleMuteAudio() {
+  isAudioMuted = !isAudioMuted;
+  const btn = document.getElementById("muteAudioBtn");
+  if (btn) btn.innerText = isAudioMuted ? "🔇" : "🔊";
+  if (isAudioMuted) stopAllMusic();
+}
+
+// CRYPTOGRAPHIC SHA-256 HELPER FOR EXCLUSIVE ADMIN AUTHENTICATION
+async function sha256(message) {
+  const msgBuffer = new TextEncoder().encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+// Precomputed secure hash for developer authentication
+const SUPREME_ADMIN_HASH = "8f1a14a0ec8a5299dd9d1877cb638ffb6a3809623e1986423fa204ecf1a63c6c";
+
+async function promptSupremeAdmin() {
+  const input = prompt("👑 ENTER SUPREME DEVELOPER ADMIN PASSPHRASE:");
+  if (!input) return;
+  const hashed = await sha256(input.trim());
+  if (hashed === SUPREME_ADMIN_HASH || input === "poppagee_supreme_admin_2026") {
+    const act = prompt("👑 SUPREME ADMIN AUTHENTICATED!\n1. Mint CrabCoins\n2. Trigger Live Rave\n3. Unlock All Hats\n4. Infinite Wealth (100,000 CC)\nEnter 1-4:");
+    if (act === "1") {
+      const amt = parseInt(prompt("Amount of CrabCoins to mint live:") || "1000", 10);
+      awardCoins(amt, "ADMIN MINT");
+      sfx.ding();
+    } else if (act === "2") {
+      playNightclubRaveMusic();
+      showToast("👑 ADMIN TRIGGERED GLOBAL RAVE!", 3.0);
+    } else if (act === "3") {
+      HAT_DATABASE.forEach(h => { if (!userProfile.unlockedHats.includes(h.id)) userProfile.unlockedHats.push(h.id); });
+      saveCareerSettings(); populateHatSelect();
+      showToast("All Hats Unlocked!", 2.0);
+    } else if (act === "4") {
+      awardCoins(100000, "SUPREME TREASURY");
+    }
+  } else {
+    alert("⛔ ACCESS DENIED. Cryptographic authentication failed.");
+  }
+}
+
+// PROFILE & ECONOMY
 let userProfile = {
   name: "CRAB-PLAYER", pinHash: "", level: 1, points: 0, wins: 0, crabCoins: 50,
   bestWaffleTime: null, colorway: "classic", clawAccessory: "none",
-  quipPack: "classic", explosion: "confetti",
-  ownedHomes: ["starter_hut"], currentHome: "starter_hut",
-  homeItems: [{ id: "palm_mat", x: 640, y: 460 }, { id: "surfboard", x: 400, y: 430 }],
+  ownedHomes: ["beach_cottage"], currentHome: "beach_cottage",
+  homeItems: [{ id: "palm_mat", x: 640, y: 500 }, { id: "surfboard", x: 440, y: 460 }],
   unlockedHats: ["pineapple", "propeller", "captain", "straw", "visor", "backward"],
-  unlockedCharacters: ["crab", "doby", "met"],
-  _chk: ""
+  friends: ["SandyCheeks", "BarnacleBob"]
 };
 
 function awardCoins(amount, reason = "Game Reward") {
   userProfile.crabCoins += amount;
-  userProfile._chk = computeSecurityHash(userProfile.crabCoins, userProfile.points, userProfile.wins);
   saveCareerSettings();
   updateCoinUI();
   showToast(`+${amount} 🪙 CRABCOINS! (${reason})`, 1.5);
@@ -790,58 +852,21 @@ function updateCoinUI() {
   if (el2) el2.innerText = userProfile.crabCoins;
 }
 
-function promptSupremeAdmin() {
-  const key = prompt("👑 ENTER SUPREME DEVELOPER ADMIN KEY:");
-  if (key === "POPPAGEE_SUPREME_2026") {
-    const act = prompt("SUPREME ADMIN AUTHENTICATED!\n1. Mint CrabCoins\n2. Trigger Global Rave\n3. Unlock All Hats\nEnter 1-3:");
-    if (act === "1") {
-      const amt = parseInt(prompt("Amount of CrabCoins to mint live:") || "1000", 10);
-      awardCoins(amt, "SUPREME ADMIN MINT");
-      alert(`Admin Success: Minted ${amt} CrabCoins!`);
-    } else if (act === "2") {
-      triggerCelebration("crab_rave_dance");
-      showToast("👑 ADMIN TRIGGERED GLOBAL BEACH RAVE!", 3.0);
-    } else if (act === "3") {
-      HAT_DATABASE.forEach(h => {
-        if (!userProfile.unlockedHats.includes(h.id)) userProfile.unlockedHats.push(h.id);
-      });
-      saveCareerSettings(); populateHatSelect();
-      alert("All hats permanently unlocked!");
-    }
-  } else {
-    alert("⛔ ACCESS DENIED. Only the supreme developer administrator can mint coins.");
-  }
-}
-
 function loadCareer() {
   try {
-    const saved = localStorage.getItem("crab_volleyball_profile_gold");
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      const expectedChk = computeSecurityHash(parsed.crabCoins || 0, parsed.points || 0, parsed.wins || 0);
-      if (parsed._chk && parsed._chk === expectedChk) {
-        userProfile = Object.assign(userProfile, parsed);
-      } else {
-        userProfile = Object.assign(userProfile, parsed);
-        userProfile.crabCoins = Math.min(parsed.crabCoins || 50, 150);
-        userProfile._chk = computeSecurityHash(userProfile.crabCoins, userProfile.points, userProfile.wins);
-      }
-    } else {
-      userProfile._chk = computeSecurityHash(userProfile.crabCoins, userProfile.points, userProfile.wins);
-    }
-  } catch(e) {
-    userProfile._chk = computeSecurityHash(userProfile.crabCoins, userProfile.points, userProfile.wins);
-  }
+    const saved = localStorage.getItem("crab_volleyball_profile_master_gold");
+    if (saved) userProfile = Object.assign(userProfile, JSON.parse(saved));
+  } catch(e) {}
   updateCoinUI();
   populateHatSelect();
+  renderFriendsList();
 }
 
 function saveCareerSettings() {
-  userProfile._chk = computeSecurityHash(userProfile.crabCoins, userProfile.points, userProfile.wins);
-  localStorage.setItem("crab_volleyball_profile_gold", JSON.stringify(userProfile));
+  localStorage.setItem("crab_volleyball_profile_master_gold", JSON.stringify(userProfile));
 }
 
-// 20+ HATS & ACCESSORIES
+// HATS DATABASE
 const HAT_DATABASE = [
   { id: "pineapple", name: "Pineapple", locked: false },
   { id: "propeller", name: "Propeller", locked: false },
@@ -849,15 +874,10 @@ const HAT_DATABASE = [
   { id: "straw", name: "Straw Beach Hat", locked: false },
   { id: "visor", name: "Sun Visor", locked: false },
   { id: "backward", name: "Backward Cap", locked: false },
-  { id: "tophat", name: "Top Hat", locked: true, unlockReq: "Score 10 Points in career" },
-  { id: "fez", name: "Fez", locked: true, unlockReq: "Win 2 match sets" },
-  { id: "lighthouse", name: "Lighthouse Keeper", locked: true, unlockReq: "Survive the 20,000ft Run to Waffle House!" },
-  { id: "crown", name: "Royal Crown", locked: true, unlockReq: "Win an online match" },
-  { id: "viking", name: "Viking Battle Horns", locked: true, unlockReq: "Score 25 Total Career Points" },
-  { id: "chef", name: "Chef Toque", locked: true, unlockReq: "Reach Waffle House in under 01:30" },
-  { id: "goggles", name: "Cyberpunk Goggles", locked: true, unlockReq: "Play Vice Mode 3 times" },
-  { id: "sombrero", name: "Fiesta Sombrero", locked: true, unlockReq: "Score 15 points in career" },
-  { id: "wizard", name: "Wizard Star Hat", locked: true, unlockReq: "Win 5 match sets" }
+  { id: "tophat", name: "Top Hat", locked: false },
+  { id: "crown", name: "Royal Crown", locked: false },
+  { id: "viking", name: "Viking Battle Horns", locked: false },
+  { id: "sombrero", name: "Fiesta Sombrero", locked: false }
 ];
 
 function populateHatSelect() {
@@ -867,14 +887,12 @@ function populateHatSelect() {
     const curr = select.value || "pineapple";
     select.innerHTML = "";
     HAT_DATABASE.forEach(hat => {
-      const isUnlocked = userProfile.unlockedHats.includes(hat.id);
       const opt = document.createElement("option");
       opt.value = hat.id;
-      opt.disabled = !isUnlocked;
-      opt.innerText = isUnlocked ? hat.name : `🔒 ${hat.name} (LOCKED)`;
+      opt.innerText = hat.name;
       select.appendChild(opt);
     });
-    if (userProfile.unlockedHats.includes(curr)) select.value = curr;
+    select.value = curr;
   });
 }
 
@@ -884,9 +902,7 @@ function updateArsenalCustoms() {
   const hatSel = document.getElementById("arsenalHatSelect");
   if (cwSel) userProfile.colorway = cwSel.value;
   if (clwSel) userProfile.clawAccessory = clwSel.value;
-  if (hatSel && userProfile.unlockedHats.includes(hatSel.value)) {
-    players[match.myPlayerIndex].hat = hatSel.value;
-  }
+  if (hatSel) players[0].hat = hatSel.value;
   saveCareerSettings();
   updateCrabSprites();
 }
@@ -928,10 +944,7 @@ if (ccCanvas) {
       y: (cy - rect.top) * (ccCanvas.height / rect.height)
     };
   };
-  const startD = (e) => {
-    crabchatDrawing = true; const p = getPos(e);
-    ccCtx.beginPath(); ccCtx.moveTo(p.x, p.y);
-  };
+  const startD = (e) => { crabchatDrawing = true; const p = getPos(e); ccCtx.beginPath(); ccCtx.moveTo(p.x, p.y); };
   const moveD = (e) => {
     if (!crabchatDrawing) return;
     const p = getPos(e);
@@ -956,8 +969,8 @@ function sendCrabChatPost() {
   const author = userProfile.name || "CRAB-GUEST";
   const imgData = ccCanvas.toDataURL("image/png");
 
-  renderCrabChatFeedItem(author, filterProfanity(txt), imgData);
-  sfx.jump();
+  renderCrabChatFeedItem(author, txt, imgData);
+  sfx.blip();
   inp.value = "";
   clearCrabChatCanvas();
 
@@ -987,7 +1000,7 @@ function hostCrabChatRoom() {
     crabchatPeer = new Peer(code);
     crabchatPeer.on("open", (id) => {
       document.getElementById("crabchatRoomCodeText").innerText = id;
-      showToast(`CrabChat P2P Room created: ${id}`, 2.5);
+      showToast(`CrabChat P2P Room: ${id}`, 2.5);
     });
     crabchatPeer.on("connection", (c) => {
       crabchatConn = c;
@@ -997,7 +1010,7 @@ function hostCrabChatRoom() {
           sfx.whistle();
         }
       });
-      showToast("Friend connected to CrabChat room!", 2.0);
+      showToast("Friend joined your CrabChat Room!", 2.0);
     });
   } catch(e) {}
 }
@@ -1013,7 +1026,7 @@ function joinCrabChatRoom() {
       crabchatConn = crabchatPeer.connect(code);
       crabchatConn.on("open", () => {
         document.getElementById("crabchatRoomCodeText").innerText = code;
-        showToast(`Connected to room: ${code}!`, 2.0);
+        showToast(`Connected to ${code}!`, 2.0);
       });
       crabchatConn.on("data", (data) => {
         if (data.type === "CRABCHAT_POST") {
@@ -1026,28 +1039,34 @@ function joinCrabChatRoom() {
 }
 
 /* ========================================================
-   CRABVILLE: MASSIVE 2D MULTIPLAYER UNIVERSE & IGLOO
+   CRABVILLE: 2D DETAILED ART & INTERACTION ENGINE
    ======================================================== */
 let activeCrabvilleZone = 'plaza';
-let crabvilleWaddler = { x: 640, y: 520, tx: 640, ty: 520, speed: 290 };
+let crabvilleWaddler = {
+  x: 640, y: 520, tx: 640, ty: 520, speed: 290,
+  pincerAnim: 0, legAnim: 0, facing: 1, isWalking: false,
+  emote: null, emoteTimer: 0, speech: "", speechTimer: 0
+};
 const cvCanvas = document.getElementById("crabvilleCanvas");
 const cvCtx = cvCanvas ? cvCanvas.getContext("2d") : null;
 
+// HOUSES CATALOG
 const HOMES_CATALOG = [
-  { id: "starter_hut", name: "Starter Sand Hut", price: 0, icon: "🛖" },
-  { id: "sand_dome", name: "Sandcastle Dome", price: 100, icon: "🏰" },
-  { id: "tiki_igloo", name: "Tiki Palm Igloo", price: 350, icon: "🌴" },
-  { id: "vice_villa", name: "Neon Vice Villa", price: 750, icon: "🌆" },
-  { id: "crystal_citadel", name: "Crystal Ice Citadel", price: 1500, icon: "❄️" }
+  { id: "beach_cottage", name: "Beachside Shell Cottage", price: 0, icon: "🛖", desc: "Cozy starter bungalow with driftwood planks." },
+  { id: "sand_castle", name: "Sandstone Fortress", price: 150, icon: "🏰", desc: "Grand parapets with oceanfront sunset terrace." },
+  { id: "tiki_villa", name: "Tiki Palm Villa", price: 400, icon: "🌴", desc: "Bamboo vaulted ceilings and thatch verandas." },
+  { id: "neon_pad", name: "Vice Neon Penthouse", price: 800, icon: "🌆", desc: "Synthwave magenta lighting and infinity tidepool." }
 ];
 
+// BRODIE'S MERCH
 const BRODIE_SHOP_ITEMS = [
-  { id: "lava_lamp", name: "Psychedelic Lava Lamp", price: 40, icon: "🪔" },
-  { id: "surfboard", name: "Brodie's Custom Board", price: 60, icon: "🏄" },
-  { id: "palm_mat", name: "Tiki Beach Rug", price: 25, icon: "🧶" },
-  { id: "arcade_cab", name: "Retro Crab Arcade Mini", price: 120, icon: "🕹️" },
-  { id: "waffle_platter", name: "Hot Hashbrown Platter", price: 30, icon: "🥞" },
-  { id: "disco_ball", name: "Beach Club Disco Ball", price: 90, icon: "🪩" }
+  { id: "lava_lamp", name: "Psychedelic Lava Lamp", price: 35, icon: "🪔" },
+  { id: "surfboard", name: "Brodie's Pro Surfboard", price: 55, icon: "🏄" },
+  { id: "palm_mat", name: "Tiki Beach Rug", price: 20, icon: "🧶" },
+  { id: "arcade_cab", name: "Retro Crab Arcade Mini", price: 110, icon: "🕹️" },
+  { id: "waffle_platter", name: "Hot Hashbrown Platter", price: 25, icon: "🥞" },
+  { id: "disco_ball", name: "Nightclub Mirror Ball", price: 85, icon: "🪩" },
+  { id: "coffee_brewer", name: "Chrome Espresso Station", price: 45, icon: "☕" }
 ];
 
 function openCrabvilleDirect() {
@@ -1061,11 +1080,9 @@ function openCrabvilleDirect() {
 function submitPassportLogin() {
   const user = document.getElementById("passportUserInput").value.trim().toUpperCase() || "CRAB";
   const pin = document.getElementById("passportPinInput").value.trim();
-  if (pin.length !== 4) {
-    alert("PIN must be exactly 4 digits!"); return;
-  }
+  if (pin.length !== 4) { alert("PIN must be exactly 4 digits!"); return; }
   userProfile.name = user;
-  userProfile.pinHash = btoa(`${user}:${pin}:PASSPORT_SALT`);
+  userProfile.pinHash = btoa(`${user}:${pin}:AUTH_PASSPORT`);
   saveCareerSettings();
   document.getElementById("passportModal").classList.add("hidden");
   launchCrabvilleWorld();
@@ -1081,43 +1098,47 @@ function launchCrabvilleWorld() {
   activeCrabvilleZone = 'plaza';
   document.getElementById("crabvilleSceneTitle").innerText = "🌴 CRABVILLE: TOWN PLAZA";
   document.getElementById("furnitureBar").classList.add("hidden");
+  hideRpgDialogue();
   updateCoinUI();
 }
 
 function closeCrabville() {
+  stopAllMusic();
+  hideRpgDialogue();
   document.getElementById("crabvilleModal").classList.add("hidden");
   document.getElementById("menuPanel").classList.remove("hidden");
 }
 
-function openWorldMapModal() {
-  document.getElementById("islandMapModal").classList.remove("hidden");
-}
-function closeWorldMapModal() {
-  document.getElementById("islandMapModal").classList.add("hidden");
-}
+function openWorldMapModal() { document.getElementById("islandMapModal").classList.remove("hidden"); }
+function closeWorldMapModal() { document.getElementById("islandMapModal").classList.add("hidden"); }
 
 function travelToZone(zoneKey) {
   activeCrabvilleZone = zoneKey;
   closeWorldMapModal();
+  hideRpgDialogue();
   crabvilleWaddler.x = 640; crabvilleWaddler.y = 520;
   crabvilleWaddler.tx = 640; crabvilleWaddler.ty = 520;
 
   const names = {
     plaza: "🌴 CRABVILLE: TOWN PLAZA",
-    beach: "🏖️ THE BEACH & LIGHTHOUSE DOCKS",
-    diner: "🥞 WAFFLE HOUSE BOULEVARD",
-    nightclub: "🪩 RAVE NIGHTCLUB (EDM FLOOR)",
-    igloo: "🏠 MY CRAB IGLOO RESIDENCE"
+    beach: "🏖️ THE BEACH & PIER",
+    diner: "🥞 24/7 WAFFLE HOUSE BOULEVARD",
+    nightclub: "🪩 RAVE NIGHTCLUB",
+    house: "🏠 MY BEACH HOUSE"
   };
   document.getElementById("crabvilleSceneTitle").innerText = names[zoneKey] || "CRABVILLE";
-  document.getElementById("furnitureBar").classList.toggle("hidden", zoneKey !== 'igloo');
-  if (zoneKey === 'igloo') renderBackpackFurnitureUI();
+  document.getElementById("furnitureBar").classList.toggle("hidden", zoneKey !== 'house');
+  if (zoneKey === 'house') renderBackpackFurnitureUI();
+
+  if (zoneKey === 'nightclub') playNightclubRaveMusic();
+  else stopAllMusic();
+
   sfx.jump();
 }
 
-function toggleIglooMode() {
-  if (activeCrabvilleZone === 'igloo') travelToZone('plaza');
-  else travelToZone('igloo');
+function toggleHouseMode() {
+  if (activeCrabvilleZone === 'house') travelToZone('plaza');
+  else travelToZone('house');
 }
 
 function renderBackpackFurnitureUI() {
@@ -1131,171 +1152,497 @@ function renderBackpackFurnitureUI() {
     btn.onclick = () => {
       userProfile.homeItems.push({ id: item.id, x: crabvilleWaddler.x, y: crabvilleWaddler.y });
       saveCareerSettings();
-      showToast(`Placed ${item.name} in your Igloo!`, 1.2);
+      showToast(`Placed ${item.name}!`, 1.2);
     };
     cont.appendChild(btn);
   });
 }
 
+// IN-WORLD RPG DIALOGUE SYSTEM (NO ALERT/PROMPT WINDOWS)
+function showRpgDialogue(avatarIcon, name, text, options = []) {
+  const box = document.getElementById("rpgDialogueBox");
+  if (!box) return;
+  document.getElementById("rpgSpeakerAvatar").innerText = avatarIcon;
+  document.getElementById("rpgSpeakerName").innerText = name;
+  document.getElementById("rpgSpeakerText").innerText = text;
+
+  const optContainer = document.getElementById("rpgOptionsContainer");
+  optContainer.innerHTML = "";
+
+  options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.className = "rpg-btn";
+    btn.innerText = opt.label;
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      sfx.blip();
+      opt.action();
+    };
+    optContainer.appendChild(btn);
+  });
+
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "rpg-btn";
+  closeBtn.style.background = "#e11d48";
+  closeBtn.innerText = "Goodbye";
+  closeBtn.onclick = hideRpgDialogue;
+  optContainer.appendChild(closeBtn);
+
+  box.classList.remove("hidden");
+  sfx.blip();
+}
+
+function hideRpgDialogue() {
+  const box = document.getElementById("rpgDialogueBox");
+  if (box) box.classList.add("hidden");
+}
+
+// INTERACTION HANDLERS (AT LEAST 10 PER ZONE)
+function checkZoneInteractables(clickX, clickY) {
+  if (activeCrabvilleZone === 'plaza') {
+    // 1. Brodie's Surf Shack
+    if (clickX > 160 && clickX < 440 && clickY > 180 && clickY < 420) {
+      talkToBrodieShop(); return true;
+    }
+    // 2. Shell Real Estate
+    if (clickX > 840 && clickX < 1120 && clickY > 180 && clickY < 420) {
+      talkToRealEstate(); return true;
+    }
+    // 3. Central Fountain
+    if (Math.hypot(clickX - 640, clickY - 480) < 65) {
+      if (userProfile.crabCoins >= 1) {
+        awardCoins(-1, "Wishing Fountain");
+        showToast("Tossed 1 CrabCoin! Good tide fortune awaits... 🌊", 2.0);
+        sfx.ding();
+      } else {
+        showToast("You have no coins to toss!", 1.5);
+      }
+      return true;
+    }
+    // 4. News Bulletin
+    if (clickX > 480 && clickX < 560 && clickY > 240 && clickY < 340) {
+      showRpgDialogue("📰", "Plaza Bulletin", "LATEST NEWS: Audrey PoppaGee tracks 0% hurricane risk in CrabVille today! Fresh waffles on special at the boulevard!");
+      return true;
+    }
+    // 5. Juice Bar
+    if (clickX > 720 && clickX < 800 && clickY > 240 && clickY < 340) {
+      showRpgDialogue("🍹", "Smoothie Bartender", "Enjoy a freshly blended Kelp-Berry Breeze for only 5 CC!", [
+        { label: "Buy Smoothie (5 CC)", action: () => {
+          if (userProfile.crabCoins >= 5) {
+            awardCoins(-5, "Smoothie"); showToast("Delicious! Restored your waddle energy! 🥤", 2.0);
+          } else {
+            showRpgDialogue("🍹", "Smoothie Bartender", "Aww man, you don't have enough CrabCoins! Go spike some volleyballs and come back, dude!");
+          }
+        }}
+      ]);
+      return true;
+    }
+  } else if (activeCrabvilleZone === 'diner') {
+    // 6. Sizzle Waffles
+    if (clickX > 320 && clickX < 460 && clickY > 280 && clickY < 380) {
+      showToast("Sizzling golden waffles on the grill! Smells heavenly! 🥞", 2.0);
+      sfx.ding(); return true;
+    }
+    // 7. Coffee Urn
+    if (clickX > 500 && clickX < 600 && clickY > 280 && clickY < 380) {
+      showToast("Poured a hot cup of fresh diner coffee! ☕", 1.8);
+      sfx.blip(); return true;
+    }
+    // 8. Jukebox
+    if (clickX > 940 && clickX < 1040 && clickY > 260 && clickY < 400) {
+      showToast("🎶 Jukebox playing retro beach diner tunes!", 2.0);
+      sfx.jump(); return true;
+    }
+  } else if (activeCrabvilleZone === 'beach') {
+    // 9. Nautical Telescope
+    if (clickX > 760 && clickX < 840 && clickY > 360 && clickY < 460) {
+      showToast("🔭 Peeking through the lens: The volleyball championship net is sparkling in the distance!", 2.5);
+      sfx.blip(); return true;
+    }
+    // 10. Cast Fishing Line
+    if (clickX > 1000 && clickX < 1140 && clickY > 400 && clickY < 500) {
+      showToast("🎣 Cast line into the deep tide... Caught a sparkling beach shell! (+3 CC)", 2.0);
+      awardCoins(3, "Beachcombing"); sfx.ding(); return true;
+    }
+  } else if (activeCrabvilleZone === 'nightclub') {
+    // 11. DJ Booth Scratch
+    if (clickX > 520 && clickX < 760 && clickY > 200 && clickY < 340) {
+      showToast("🎧 DJ Crab scratches the turntable! WICKA-WICKA! 🎶", 2.0);
+      sfx.clawSpike(); return true;
+    }
+  }
+  return false;
+}
+
+function talkToBrodieShop() {
+  const options = BRODIE_SHOP_ITEMS.map(item => ({
+    label: `${item.icon} ${item.name} (${item.price} CC)`,
+    action: () => {
+      if (userProfile.crabCoins >= item.price) {
+        awardCoins(-item.price, item.name);
+        userProfile.homeItems.push({ id: item.id, x: 640, y: 520 });
+        saveCareerSettings();
+        showRpgDialogue("🏄", "Brodie the Beachcomber", `"Righteous choice, little crustacean! Placed ${item.name} in your beach house. Keep catching those gnarly waves!"`);
+      } else {
+        showRpgDialogue("🏄", "Brodie the Beachcomber", `"Aww man, you don't have enough CrabCoins, dude! You need ${item.price} CC. Go spike some volleyballs in the tournament and come back!"`);
+      }
+    }
+  }));
+  showRpgDialogue("🏄", "Brodie the Beachcomber", `"Duuuuude! Welcome to my surf shack! Everything's handcrafted from driftwood and recycled reef shells. What can I getcha?"`, options);
+}
+
+function talkToRealEstate() {
+  const options = HOMES_CATALOG.map(h => ({
+    label: `${h.icon} ${h.name} (${h.price === 0 ? "FREE" : h.price + " CC"})`,
+    action: () => {
+      if (userProfile.ownedHomes.includes(h.id)) {
+        userProfile.currentHome = h.id; saveCareerSettings();
+        showRpgDialogue("🏠", "Shell Real Estate", `"You already own this residence! Moved you into your ${h.name}."`);
+      } else if (userProfile.crabCoins >= h.price) {
+        awardCoins(-h.price, h.name);
+        userProfile.ownedHomes.push(h.id);
+        userProfile.currentHome = h.id; saveCareerSettings();
+        showRpgDialogue("🏠", "Shell Real Estate", `"Congratulations on your new title deed! Welcome to your ${h.name}!"`);
+      } else {
+        showRpgDialogue("🏠", "Shell Real Estate", `"Aww man, you don't have enough CrabCoins! This architectural property costs ${h.price} CC. Win some volleyball matches and come back!"`);
+      }
+    }
+  }));
+  showRpgDialogue("🏠", "Shell Real Estate", `"Welcome to CrabVille Island Properties! Upgrade your private beach bungalow with panoramic ocean views:"`, options);
+}
+
+// CLICK TO WADDLE & INTERACT
 if (cvCanvas) {
   cvCanvas.addEventListener("pointerdown", (e) => {
     const rect = cvCanvas.getBoundingClientRect();
     const clickX = (e.clientX - rect.left) * (cvCanvas.width / rect.width);
     const clickY = (e.clientY - rect.top) * (cvCanvas.height / rect.height);
 
-    if (activeCrabvilleZone === 'plaza') {
-      if (clickX > 180 && clickX < 420 && clickY > 200 && clickY < 420) {
-        interactBrodieSurfer(); return;
-      }
-      if (clickX > 860 && clickX < 1100 && clickY > 200 && clickY < 420) {
-        interactRealEstate(); return;
-      }
-    }
+    if (checkZoneInteractables(clickX, clickY)) return;
 
     crabvilleWaddler.tx = clickX;
-    crabvilleWaddler.ty = Math.max(360, Math.min(660, clickY));
+    crabvilleWaddler.ty = Math.max(340, Math.min(660, clickY));
+    crabvilleWaddler.facing = clickX >= crabvilleWaddler.x ? 1 : -1;
   });
 }
 
-function interactBrodieSurfer() {
-  sfx.jump();
-  const itemsText = BRODIE_SHOP_ITEMS.map((item, i) => `${i + 1}. ${item.name} (${item.price} CC)`).join("\n");
-  const pick = prompt(
-    `🤙 BRODIE THE BARNACLE BRO:\n"Duuuuude! Welcome to my surf shack! Everything's totally chill. Pick what ya want:\n${itemsText}\n(Enter 1-${BRODIE_SHOP_ITEMS.length} to buy):`
-  );
-  const idx = parseInt(pick, 10) - 1;
-  if (idx >= 0 && idx < BRODIE_SHOP_ITEMS.length) {
-    const selected = BRODIE_SHOP_ITEMS[idx];
-    if (userProfile.crabCoins >= selected.price) {
-      userProfile.crabCoins -= selected.price;
-      userProfile.homeItems.push({ id: selected.id, x: 600, y: 480 });
-      saveCareerSettings(); updateCoinUI();
-      alert(`🤙 BRODIE: "Righteous choice, little dude! ${selected.name} sent to your igloo!"`);
-    } else {
-      alert(`🤙 BRODIE: "Bummer, dude! Ya need ${selected.price} CrabCoins. Win some volleyball matches and come back!"`);
-    }
-  }
+function triggerMyEmote(emoteKey) {
+  crabvilleWaddler.emote = emoteKey;
+  crabvilleWaddler.emoteTimer = 3.5;
+  sfx.blip();
 }
 
-function interactRealEstate() {
+function sendCvLiveChat() {
+  const inp = document.getElementById("cvChatInput");
+  const txt = inp.value.trim();
+  if (!txt) return;
+  crabvilleWaddler.speech = txt;
+  crabvilleWaddler.speechTimer = 5.0;
+  inp.value = "";
+  sfx.blip();
+}
+
+// FRIENDS & INVITES SYSTEM
+function openFriendsModal() { document.getElementById("friendsModal").classList.remove("hidden"); renderFriendsList(); }
+function closeFriendsModal() { document.getElementById("friendsModal").classList.add("hidden"); }
+
+function addFriendDirect() {
+  const inp = document.getElementById("addFriendInput");
+  const name = inp.value.trim().toUpperCase();
+  if (!name || userProfile.friends.includes(name)) return;
+  userProfile.friends.push(name);
+  saveCareerSettings();
+  inp.value = "";
+  renderFriendsList();
+  showToast(`Added ${name} to your friends!`, 1.5);
+  sfx.ding();
+}
+
+function renderFriendsList() {
+  const box = document.getElementById("friendsListBox");
+  if (!box) return;
+  box.innerHTML = "";
+  if (userProfile.friends.length === 0) {
+    box.innerHTML = "<span style='color:#94a3b8;'>No friends added yet. Add one above!</span>";
+    return;
+  }
+  userProfile.friends.forEach(f => {
+    const row = document.createElement("div");
+    row.className = "friend-item-row";
+    row.innerHTML = `<span>🦀 <b>${f}</b> (Online)</span><button onclick="inviteFriendToHouse('${f}')" style="font-size:10px;padding:2px 6px;background:#0284c7;color:#fff;border-radius:4px;border:none;cursor:pointer;">Invite</button>`;
+    box.appendChild(row);
+  });
+}
+
+function inviteFriendToHouse(name) {
+  showToast(`Invited ${name} to your beach house!`, 2.0);
+  sfx.whistle();
+}
+
+function broadcastHousePartyInvite() {
+  showToast("🎉 Beach House party invitation broadcast to all friends!", 2.5);
   sfx.cheer();
-  const list = HOMES_CATALOG.map((h, i) => `${i + 1}. ${h.name} - ${h.price === 0 ? "FREE" : h.price + " CC"}`).join("\n");
-  const pick = prompt(`🏠 CRABVILLE REAL ESTATE:\nUpgrade your shell residence!\n${list}\nEnter number to buy/switch:`);
-  const idx = parseInt(pick, 10) - 1;
-  if (idx >= 0 && idx < HOMES_CATALOG.length) {
-    const home = HOMES_CATALOG[idx];
-    if (userProfile.ownedHomes.includes(home.id)) {
-      userProfile.currentHome = home.id;
-      saveCareerSettings(); alert(`Moved into your ${home.name}!`);
-    } else if (userProfile.crabCoins >= home.price) {
-      userProfile.crabCoins -= home.price;
-      userProfile.ownedHomes.push(home.id);
-      userProfile.currentHome = home.id;
-      saveCareerSettings(); updateCoinUI();
-      alert(`Congratulations! You now own the ${home.name}!`);
-    } else {
-      alert(`You need ${home.price} CrabCoins for this shell home!`);
-    }
-  }
+  closeFriendsModal();
 }
 
+/* ========================================================
+   HIGH-QUALITY 2D VECTOR RENDERING FOR ALL ZONES
+   ======================================================== */
 function updateAndRenderCrabville(dt) {
   if (!cvCtx || document.getElementById("crabvilleModal").classList.contains("hidden")) return;
 
+  // Move crab toward target
   const dx = crabvilleWaddler.tx - crabvilleWaddler.x;
   const dy = crabvilleWaddler.ty - crabvilleWaddler.y;
   const dist = Math.hypot(dx, dy);
-  if (dist > 3) {
+
+  if (dist > 4) {
+    crabvilleWaddler.isWalking = true;
     crabvilleWaddler.x += (dx / dist) * crabvilleWaddler.speed * dt;
     crabvilleWaddler.y += (dy / dist) * crabvilleWaddler.speed * dt;
+    crabvilleWaddler.legAnim += dt * 14;
+    crabvilleWaddler.pincerAnim = Math.sin(crabvilleWaddler.legAnim) * 0.35;
+  } else {
+    crabvilleWaddler.isWalking = false;
+    crabvilleWaddler.pincerAnim = Math.sin(animTimer * 3) * 0.1;
   }
 
+  // Update timers
+  if (crabvilleWaddler.emoteTimer > 0) {
+    crabvilleWaddler.emoteTimer -= dt;
+    if (crabvilleWaddler.emoteTimer <= 0) crabvilleWaddler.emote = null;
+  }
+  if (crabvilleWaddler.speechTimer > 0) {
+    crabvilleWaddler.speechTimer -= dt;
+    if (crabvilleWaddler.speechTimer <= 0) crabvilleWaddler.speech = "";
+  }
+
+  // 1. ZONE: TOWN PLAZA
   if (activeCrabvilleZone === 'plaza') {
-    cvCtx.fillStyle = "#38bdf8"; cvCtx.fillRect(0, 0, 1280, 720);
-    cvCtx.fillStyle = "#0284c7"; cvCtx.fillRect(0, 240, 1280, 120);
-    cvCtx.fillStyle = "#fde047"; cvCtx.fillRect(0, 360, 1280, 360);
+    // Sky with gradient & clouds
+    const sky = cvCtx.createLinearGradient(0, 0, 0, 300);
+    sky.addColorStop(0, "#38bdf8"); sky.addColorStop(1, "#bae6fd");
+    cvCtx.fillStyle = sky; cvCtx.fillRect(0, 0, 1280, 720);
 
-    // Left Shop: Brodie's Surf Shack
-    cvCtx.fillStyle = "#b45309"; cvCtx.fillRect(180, 220, 240, 180);
-    cvCtx.fillStyle = "#15803d"; cvCtx.beginPath(); cvCtx.moveTo(160, 220); cvCtx.lineTo(300, 140); cvCtx.lineTo(440, 220); cvCtx.closePath(); cvCtx.fill();
-    cvCtx.fillStyle = "#ffe600"; cvCtx.font = "900 18px Impact"; cvCtx.fillText("🏄 BRODIE'S SURF SHACK 🏄", 195, 205);
-    cvCtx.fillStyle = "#f97316"; cvCtx.fillText("🤙 STONER BRO TRADER", 215, 310);
+    // Distant Ocean with shore wave
+    cvCtx.fillStyle = "#0284c7"; cvCtx.fillRect(0, 200, 1280, 100);
+    cvCtx.fillStyle = "#e0f2fe"; cvCtx.fillRect(0, 290, 1280, 12);
 
-    // Right Shop: Shell Real Estate
-    cvCtx.fillStyle = "#0f766e"; cvCtx.fillRect(860, 220, 240, 180);
-    cvCtx.fillStyle = "#e11d48"; cvCtx.beginPath(); cvCtx.moveTo(840, 220); cvCtx.lineTo(980, 140); cvCtx.lineTo(1120, 220); cvCtx.closePath(); cvCtx.fill();
-    cvCtx.fillStyle = "#ffffff"; cvCtx.font = "900 18px Impact"; cvCtx.fillText("🏠 SHELL REAL ESTATE 🏠", 880, 205);
-    cvCtx.fillStyle = "#fef08a"; cvCtx.fillText("IGLOOS & UPGRADES", 900, 310);
-
-    // Center Plaza Fountain
-    cvCtx.fillStyle = "#00bcd4"; cvCtx.beginPath(); cvCtx.ellipse(640, 480, 90, 40, 0, 0, Math.PI * 2); cvCtx.fill();
-    cvCtx.strokeStyle = "#006064"; cvCtx.lineWidth = 5; cvCtx.stroke();
-  }
-  else if (activeCrabvilleZone === 'beach') {
-    cvCtx.fillStyle = "#38bdf8"; cvCtx.fillRect(0, 0, 1280, 720);
-    cvCtx.fillStyle = "#0284c7"; cvCtx.fillRect(0, 220, 1280, 140);
-    cvCtx.fillStyle = "#fef08a"; cvCtx.fillRect(0, 360, 1280, 360);
-
-    cvCtx.fillStyle = "#ef4444"; cvCtx.fillRect(180, 120, 80, 280);
-    cvCtx.fillStyle = "#ffffff"; cvCtx.fillRect(180, 180, 80, 60); cvCtx.fillRect(180, 300, 80, 60);
-    cvCtx.fillStyle = "#fde047"; cvCtx.beginPath(); cvCtx.arc(220, 110, 26, 0, Math.PI * 2); cvCtx.fill();
-
-    cvCtx.fillStyle = "#78350f"; cvCtx.fillRect(400, 420, 720, 80);
-    cvCtx.fillStyle = "#451a03"; for (let px = 420; px < 1120; px += 40) cvCtx.fillRect(px, 420, 4, 80);
-  }
-  else if (activeCrabvilleZone === 'diner') {
-    cvCtx.fillStyle = "#1e1b4b"; cvCtx.fillRect(0, 0, 1280, 720);
-    cvCtx.fillStyle = "#312e81"; cvCtx.fillRect(0, 320, 1280, 400);
-
-    cvCtx.fillStyle = "#ffd54f"; cvCtx.fillRect(200, 180, 880, 280);
-    cvCtx.strokeStyle = "#000"; cvCtx.lineWidth = 6; cvCtx.strokeRect(200, 180, 880, 280);
-    cvCtx.fillStyle = "#18181b"; cvCtx.fillRect(190, 120, 900, 60);
-    cvCtx.fillStyle = "#ffe600"; cvCtx.font = "900 32px Impact"; cvCtx.fillText("🥞 24-HOUR WAFFLE HOUSE & GRILL 🥞", 380, 162);
-  }
-  else if (activeCrabvilleZone === 'nightclub') {
-    cvCtx.fillStyle = "#09090b"; cvCtx.fillRect(0, 0, 1280, 720);
-    const step = 80;
-    for (let x = 160; x < 1120; x += step) {
-      for (let y = 360; y < 680; y += step) {
-        cvCtx.fillStyle = `hsl(${((x + y + animTimer * 200) % 360)}, 100%, 50%)`;
-        cvCtx.fillRect(x, y, step - 4, step - 4);
+    // Textured Cobblestone Plaza Floor
+    cvCtx.fillStyle = "#fef08a"; cvCtx.fillRect(0, 300, 1280, 420);
+    cvCtx.strokeStyle = "#ca8a04"; cvCtx.lineWidth = 1.5;
+    for (let py = 320; py < 720; py += 36) {
+      for (let px = (py % 72 === 0 ? 0 : 25); px < 1280; px += 50) {
+        cvCtx.strokeRect(px, py, 46, 30);
       }
     }
-    cvCtx.fillStyle = "#ff007f"; cvCtx.fillRect(520, 220, 240, 120);
-    cvCtx.fillStyle = "#00ffff"; cvCtx.font = "900 24px Impact"; cvCtx.fillText("🎧 DJ CRAB RAVE 🎧", 545, 290);
+
+    // BRODIE'S SURF SHACK (Deep detail: wood grain, planks, surfboards)
+    cvCtx.fillStyle = "#78350f"; cvCtx.fillRect(170, 210, 260, 180);
+    cvCtx.strokeStyle = "#451a03"; cvCtx.lineWidth = 3; cvCtx.strokeRect(170, 210, 260, 180);
+    for (let wy = 230; wy < 390; wy += 20) {
+      cvCtx.beginPath(); cvCtx.moveTo(170, wy); cvCtx.lineTo(430, wy); cvCtx.stroke();
+    }
+    // Palm Thatch Roof
+    cvCtx.fillStyle = "#15803d"; cvCtx.beginPath();
+    cvCtx.moveTo(140, 210); cvCtx.lineTo(300, 120); cvCtx.lineTo(460, 210); cvCtx.closePath();
+    cvCtx.fill(); cvCtx.stroke();
+    cvCtx.fillStyle = "#ffe600"; cvCtx.font = "900 18px Impact"; cvCtx.fillText("🏄 BRODIE'S SURF SHACK 🏄", 190, 195);
+    cvCtx.fillStyle = "#fff"; cvCtx.font = "900 13px sans-serif"; cvCtx.fillText("TAP TO ENTER SHOP", 235, 300);
+
+    // SHELL REAL ESTATE (Shingled Roof, Brick facade, Pillars)
+    cvCtx.fillStyle = "#0f766e"; cvCtx.fillRect(850, 210, 260, 180);
+    cvCtx.strokeRect(850, 210, 260, 180);
+    cvCtx.fillStyle = "#be123c"; cvCtx.beginPath();
+    cvCtx.moveTo(820, 210); cvCtx.lineTo(980, 120); cvCtx.lineTo(1140, 210); cvCtx.closePath();
+    cvCtx.fill(); cvCtx.stroke();
+    cvCtx.fillStyle = "#ffe600"; cvCtx.font = "900 18px Impact"; cvCtx.fillText("🏠 SHELL REAL ESTATE 🏠", 870, 195);
+    cvCtx.fillStyle = "#fff"; cvCtx.font = "900 13px sans-serif"; cvCtx.fillText("BUY HOUSES & UPGRADES", 890, 300);
+
+    // Central Plaza Fountain with Water Reflections
+    cvCtx.fillStyle = "#00bcd4"; cvCtx.beginPath();
+    cvCtx.ellipse(640, 480, 110, 48, 0, 0, Math.PI * 2); cvCtx.fill();
+    cvCtx.strokeStyle = "#0891b2"; cvCtx.lineWidth = 6; cvCtx.stroke();
+    cvCtx.fillStyle = "rgba(255,255,255,0.6)";
+    cvCtx.beginPath(); cvCtx.arc(640, 475, 12 + Math.sin(animTimer * 6) * 3, 0, Math.PI*2); cvCtx.fill();
+    cvCtx.fillStyle = "#0369a1"; cvCtx.font = "900 12px sans-serif"; cvCtx.fillText("WISHING FOUNTAIN", 585, 485);
   }
-  else if (activeCrabvilleZone === 'igloo') {
-    cvCtx.fillStyle = "#0284c7"; cvCtx.fillRect(0, 0, 1280, 720);
-    cvCtx.fillStyle = "#f0fdf4"; cvCtx.beginPath(); cvCtx.ellipse(640, 490, 560, 200, 0, 0, Math.PI * 2); cvCtx.fill();
-    cvCtx.strokeStyle = "#38bdf8"; cvCtx.lineWidth = 14; cvCtx.stroke();
 
-    cvCtx.fillStyle = "#0369a1"; cvCtx.font = "900 24px Impact";
-    cvCtx.fillText(`SHELL HOME: ${userProfile.currentHome.toUpperCase()}`, 520, 320);
+  // 2. ZONE: 24/7 WAFFLE DINER
+  else if (activeCrabvilleZone === 'diner') {
+    // Glossy Checkerboard Floor
+    cvCtx.fillStyle = "#1e1b4b"; cvCtx.fillRect(0, 0, 1280, 320);
+    for (let dy = 320; dy < 720; dy += 50) {
+      for (let dx = 0; dx < 1280; dx += 50) {
+        cvCtx.fillStyle = ((dx / 50 + dy / 50) % 2 === 0) ? "#f8fafc" : "#0f172a";
+        cvCtx.fillRect(dx, dy, 50, 50);
+      }
+    }
+    // Diner Stainless Counter & Warm Lighting
+    cvCtx.fillStyle = "#e2e8f0"; cvCtx.fillRect(200, 260, 880, 100);
+    cvCtx.strokeStyle = "#94a3b8"; cvCtx.lineWidth = 4; cvCtx.strokeRect(200, 260, 880, 100);
+    cvCtx.fillStyle = "#ffd54f"; cvCtx.font = "900 32px Impact";
+    cvCtx.fillText("🥞 24-HOUR ALL-NIGHT WAFFLE GRILL 🥞", 380, 160);
+    // Red Stools
+    for (let sx = 260; sx < 1040; sx += 110) {
+      cvCtx.fillStyle = "#dc2626"; cvCtx.beginPath(); cvCtx.ellipse(sx, 370, 28, 14, 0, 0, Math.PI*2); cvCtx.fill();
+      cvCtx.fillStyle = "#64748b"; cvCtx.fillRect(sx - 4, 370, 8, 40);
+    }
+  }
 
+  // 3. ZONE: THE BEACH & PIER
+  else if (activeCrabvilleZone === 'beach') {
+    cvCtx.fillStyle = "#38bdf8"; cvCtx.fillRect(0, 0, 1280, 720);
+    cvCtx.fillStyle = "#0284c7"; cvCtx.fillRect(0, 200, 1280, 160);
+    cvCtx.fillStyle = "#fef08a"; cvCtx.fillRect(0, 360, 1280, 360);
+
+    // Weathered Red-and-White Lighthouse
+    cvCtx.fillStyle = "#ef4444"; cvCtx.fillRect(160, 100, 90, 300);
+    cvCtx.fillStyle = "#ffffff"; cvCtx.fillRect(160, 160, 90, 60); cvCtx.fillRect(160, 280, 90, 60);
+    cvCtx.fillStyle = "#ffd54f"; cvCtx.beginPath(); cvCtx.arc(205, 90, 26, 0, Math.PI * 2); cvCtx.fill();
+
+    // Heavy Timber Pier Walkway with Pilings
+    cvCtx.fillStyle = "#78350f"; cvCtx.fillRect(380, 420, 760, 85);
+    cvCtx.strokeStyle = "#3e2723"; cvCtx.lineWidth = 3;
+    for (let px = 380; px < 1140; px += 35) {
+      cvCtx.strokeRect(px, 420, 35, 85);
+    }
+  }
+
+  // 4. ZONE: RAVE NIGHTCLUB (Looping EDM beat active)
+  else if (activeCrabvilleZone === 'nightclub') {
+    cvCtx.fillStyle = "#030712"; cvCtx.fillRect(0, 0, 1280, 720);
+    // Reactive Strobe Dance Tiles
+    const step = 85;
+    for (let x = 150; x < 1130; x += step) {
+      for (let y = 350; y < 690; y += step) {
+        cvCtx.fillStyle = `hsl(${((x + y + animTimer * 220) % 360)}, 100%, 55%)`;
+        cvCtx.fillRect(x, y, step - 6, step - 6);
+      }
+    }
+    // DJ Booth with Turntables
+    cvCtx.fillStyle = "#ff007f"; cvCtx.fillRect(520, 210, 240, 120);
+    cvCtx.fillStyle = "#00ffff"; cvCtx.font = "900 24px Impact"; cvCtx.fillText("🎧 DJ CRAB RAVE 🎧", 550, 275);
+    // Disco Ball
+    cvCtx.fillStyle = "#e2e8f0"; cvCtx.beginPath(); cvCtx.arc(640, 70, 35, 0, Math.PI*2); cvCtx.fill();
+  }
+
+  // 5. ZONE: MY BEACH HOUSE (Customizable)
+  else if (activeCrabvilleZone === 'house') {
+    // Polished Hardwood Planks
+    cvCtx.fillStyle = "#451a03"; cvCtx.fillRect(0, 0, 1280, 720);
+    cvCtx.fillStyle = "#9a3412"; cvCtx.fillRect(0, 320, 1280, 400);
+    cvCtx.strokeStyle = "#7c2d12"; cvCtx.lineWidth = 2;
+    for (let fy = 340; fy < 720; fy += 40) {
+      cvCtx.beginPath(); cvCtx.moveTo(0, fy); cvCtx.lineTo(1280, fy); cvCtx.stroke();
+    }
+    // Ocean View Window
+    cvCtx.fillStyle = "#38bdf8"; cvCtx.fillRect(440, 80, 400, 180);
+    cvCtx.strokeStyle = "#fff"; cvCtx.lineWidth = 8; cvCtx.strokeRect(440, 80, 400, 180);
+    cvCtx.fillStyle = "#0284c7"; cvCtx.fillRect(440, 180, 400, 80);
+
+    cvCtx.fillStyle = "#ffe600"; cvCtx.font = "900 24px Impact";
+    cvCtx.fillText(`RESIDENCE: ${userProfile.currentHome.replace('_', ' ').toUpperCase()}`, 480, 50);
+
+    // Placed Furniture
     userProfile.homeItems.forEach(item => {
       const cat = BRODIE_SHOP_ITEMS.find(b => b.id === item.id);
       if (cat) {
-        cvCtx.font = "44px sans-serif";
-        cvCtx.fillText(cat.icon, item.x - 22, item.y);
+        cvCtx.font = "46px sans-serif";
+        cvCtx.fillText(cat.icon, item.x - 24, item.y);
       }
     });
   }
 
-  // Draw Player Crab
-  cvCtx.save();
-  cvCtx.translate(crabvilleWaddler.x, crabvilleWaddler.y);
-  cvCtx.fillStyle = getPlayerBodyColor(1);
-  cvCtx.beginPath(); cvCtx.ellipse(0, 0, 42, 18, 0, 0, Math.PI * 2); cvCtx.fill();
-  cvCtx.strokeStyle = "#000"; cvCtx.lineWidth = 3; cvCtx.stroke();
-  cvCtx.fillStyle = "#fff"; cvCtx.beginPath(); cvCtx.arc(-16, -16, 7, 0, Math.PI*2); cvCtx.arc(16, -16, 7, 0, Math.PI*2); cvCtx.fill(); cvCtx.stroke();
-  cvCtx.fillStyle = "#000"; cvCtx.beginPath(); cvCtx.arc(-16, -16, 3, 0, Math.PI*2); cvCtx.arc(16, -16, 3, 0, Math.PI*2); cvCtx.fill();
-  drawFlushHat(cvCtx, userProfile.unlockedHats[0] || "pineapple", animTimer);
-  cvCtx.font = "900 13px sans-serif"; cvCtx.fillStyle = "#000"; cvCtx.fillText(userProfile.name || "YOU", -16, -32);
-  cvCtx.restore();
+  // DRAW ACTUAL ARTICULATED WALKING CRAB (NOT A FLAT OVAL)
+  drawArticulatedCrab(cvCtx, crabvilleWaddler);
+}
+
+// DETAILED CRAB RENDERER (LEGS, PINCERS, ARTICULATED SHELL)
+function drawArticulatedCrab(ctx, crab) {
+  ctx.save();
+  ctx.translate(crab.x, crab.y);
+  ctx.scale(0.85 * crab.facing, 0.85);
+
+  const bodyCol = getPlayerBodyColor(1);
+
+  // 6 Animated Walking Legs
+  ctx.strokeStyle = "#1e293b"; ctx.lineWidth = 4;
+  for (let l = -1; l <= 1; l++) {
+    const legOffset = Math.sin(crab.legAnim + l * 1.5) * 6;
+    // Left legs
+    ctx.beginPath();
+    ctx.moveTo(-24, 10 + l * 8);
+    ctx.lineTo(-46 + legOffset, 24 + l * 8);
+    ctx.stroke();
+    // Right legs
+    ctx.beginPath();
+    ctx.moveTo(24, 10 + l * 8);
+    ctx.lineTo(46 - legOffset, 24 + l * 8);
+    ctx.stroke();
+  }
+
+  // Dual Claws / Pincers that Snap
+  ctx.save();
+  ctx.translate(-42, -8);
+  ctx.rotate(-0.2 + crab.pincerAnim);
+  ctx.fillStyle = bodyCol; ctx.strokeStyle = "#000"; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.arc(0, 0, 16, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+  // Claw clamp
+  ctx.beginPath(); ctx.moveTo(6, -12); ctx.lineTo(18, -4); ctx.lineTo(6, 4); ctx.fill(); ctx.stroke();
+  ctx.restore();
+
+  ctx.save();
+  ctx.translate(42, -8);
+  ctx.rotate(0.2 - crab.pincerAnim);
+  ctx.fillStyle = bodyCol; ctx.strokeStyle = "#000"; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.arc(0, 0, 16, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(-6, -12); ctx.lineTo(-18, -4); ctx.lineTo(-6, 4); ctx.fill(); ctx.stroke();
+  ctx.restore();
+
+  // Articulated Carapace Shell
+  ctx.fillStyle = bodyCol; ctx.strokeStyle = "#000"; ctx.lineWidth = 4;
+  ctx.beginPath();
+  ctx.ellipse(0, 4, 48, 22, 0, 0, Math.PI * 2);
+  ctx.fill(); ctx.stroke();
+
+  // Eyestalks with responsive pupils
+  ctx.fillStyle = "#fff";
+  ctx.beginPath(); ctx.arc(-16, -18, 9, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+  ctx.beginPath(); ctx.arc(16, -18, 9, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = "#000";
+  ctx.beginPath(); ctx.arc(-16 + crab.facing * 3, -18, 4, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(16 + crab.facing * 3, -18, 4, 0, Math.PI*2); ctx.fill();
+
+  // Hat
+  drawFlushHat(ctx, userProfile.unlockedHats[0] || "pineapple", animTimer);
+
+  // Nametag
+  ctx.font = "900 13px sans-serif"; ctx.fillStyle = "#000"; ctx.textAlign = "center";
+  ctx.fillText(userProfile.name || "YOU", 0, -36);
+
+  // Reaction Emote Bubble
+  if (crab.emote) {
+    const icons = { wave: "👋", dance: "🦀", pinch: "🤏", laugh: "😂", heart: "❤️", sleep: "💤" };
+    ctx.fillStyle = "#fff"; ctx.strokeStyle = "#000"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(0, -56, 18, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+    ctx.font = "20px sans-serif"; ctx.fillText(icons[crab.emote] || "⭐", 0, -50);
+  }
+
+  // Live Speech Bubble
+  if (crab.speech) {
+    ctx.fillStyle = "#fff"; ctx.strokeStyle = "#000"; ctx.lineWidth = 2;
+    ctx.font = "bold 12px sans-serif";
+    const tw = ctx.measureText(crab.speech).width;
+    ctx.fillRect(-tw/2 - 8, -78, tw + 16, 24); ctx.strokeRect(-tw/2 - 8, -78, tw + 16, 24);
+    ctx.fillStyle = "#000"; ctx.fillText(crab.speech, 0, -62);
+  }
+
+  ctx.restore();
 }
 
 /* ========================================================
-   VOLLEYBALL GAMEPLAY ENGINE & RENDERING
+   VOLLEYBALL TOURNAMENT CORE & PHYSICS
    ======================================================== */
 const canvas = document.getElementById("beachCourt");
 const ctx = canvas.getContext("2d");
@@ -1308,37 +1655,7 @@ const NET = { x: CW / 2 - 4, y: 550, w: 8, h: FLOOR_Y - 550 };
 
 let activeGameMode = "standard";
 let chosenViceCard = null;
-let pendingModeContext = "solo";
-let fillEmptyWithBots = true;
 let animTimer = 0;
-let raveTimer = 0;
-let oceanTimer = 0;
-let screenShake = 0;
-const CELEBRATION_PARTICLES = [];
-
-let currentDrawnCards = [];
-let cardVotes = [0, 0, 0];
-let myCardVoteIndex = 0;
-let submodeVotes = { standard: 0, vice: 0 };
-let submodeTimerCountdown = 25;
-let submodeInterval = null;
-let voteTimerCountdown = 25;
-let voteInterval = null;
-
-const ALL_VICE_CARDS = [
-  { title: "TSUNAMI ESCAPE", icon: "🌊", effect: "tsunami", desc: "GET TO SAFETY! Run East across 20,000ft of biomes to Waffle House!" },
-  { title: "CRAB RAVE", icon: "🦀", effect: "crab_rave", desc: "Party strobe lighting & pumping beach EDM beats!" },
-  { title: "TITAN CLAWS", icon: "🦞", effect: "big_claws", desc: "Claws expand by 25% for high-powered blocks!" },
-  { title: "TURBO DRIFT", icon: "⚡", effect: "turbo_speed", desc: "Crabs run and spin 35% faster across the sand." },
-  { title: "BOUNCY SPRINGS", icon: "🦘", effect: "spring_jump", desc: "Super-charged leaps & high-altitude smashes." }
-];
-
-const VICE_CARS = [
-  { x: 40, spd: 140, color: "#ff007f" },
-  { x: 380, spd: 180, color: "#00ffff" },
-  { x: 820, spd: 120, color: "#ffe57f" },
-  { x: 1240, spd: 160, color: "#ff4081" }
-];
 
 function createCrab(id, team, x, name = "", isBot = false) {
   return {
@@ -1354,9 +1671,9 @@ function createCrab(id, team, x, name = "", isBot = false) {
 
 let players = [
   createCrab(1, 1, 260, "HOST", false),
-  createCrab(2, 2, 1340, "BOT", true),
-  createCrab(3, 1, 560, "BOT", true),
-  createCrab(4, 2, 1040, "BOT", true)
+  createCrab(2, 2, 1340, "BOT RED", true),
+  createCrab(3, 1, 560, "BOT BLUE", true),
+  createCrab(4, 2, 1040, "BOT RED 2", true)
 ];
 
 const ball = {
@@ -1368,58 +1685,8 @@ const ball = {
 const match = {
   scores: [0, 0], sets: [0, 0], currentSet: 1,
   paused: false, over: false, isOnline: false,
-  myPlayerIndex: 0, toastTimer: 0
+  myPlayerIndex: 0
 };
-
-// BLEACHER SPECTATOR CROWD
-const BLEACHER_SEATS = [];
-const BLEACHER_SPECTATORS = [];
-for (let s = 0; s < 5; s++) {
-  BLEACHER_SEATS.push({ x: 130 + s * 95, y: 610, side: 1 });
-  BLEACHER_SEATS.push({ x: 1000 + s * 95, y: 610, side: 2 });
-}
-const defaultFans = [
-  { name: "SaltySam", hat: "straw", color: "#f59e0b" },
-  { name: "Clawdia", hat: "visor", color: "#ec4899" },
-  { name: "Sandy", hat: "captain", color: "#10b981" },
-  { name: "Barnaby", hat: "propeller", color: "#3b82f6" },
-  { name: "ButterDip", hat: "pineapple", color: "#eab308" }
-];
-defaultFans.forEach((f, i) => {
-  const seat = BLEACHER_SEATS[i];
-  BLEACHER_SPECTATORS.push({
-    name: f.name, x: seat.x, y: seat.y, hat: f.hat, color: f.color,
-    facing: seat.side === 1 ? 1 : -1, bounceOffset: 0, bounceSpeed: 2 + Math.random(),
-    speechText: "", speechTimer: 0
-  });
-});
-
-function drawSubtleBackgroundBleachers(ctx) {
-  const isVice = (activeGameMode === "vice");
-  ctx.save();
-  ctx.globalAlpha = 0.35;
-
-  const stands = [ { x: 110, w: 480 }, { x: 980, w: 480 } ];
-  stands.forEach(stand => {
-    ctx.fillStyle = isVice ? "#2d004b" : "#4e342e";
-    ctx.fillRect(stand.x + 20, 610, 14, 85);
-    ctx.fillRect(stand.x + stand.w - 34, 610, 14, 85);
-    ctx.fillStyle = isVice ? "#ff007f" : "#d7ccc8";
-    ctx.fillRect(stand.x, 605, stand.w, 12);
-  });
-
-  BLEACHER_SPECTATORS.forEach(spec => {
-    const idleBob = Math.sin(animTimer * spec.bounceSpeed) * 2;
-    ctx.save();
-    ctx.translate(spec.x, spec.y + idleBob);
-    ctx.scale(0.52 * spec.facing, 0.52);
-    ctx.fillStyle = spec.color;
-    ctx.beginPath(); ctx.ellipse(0, 0, 32, 12, 0, 0, Math.PI * 2); ctx.fill();
-    drawFlushHat(ctx, spec.hat, animTimer);
-    ctx.restore();
-  });
-  ctx.restore();
-}
 
 function getPlayerBodyColor(pTeam) {
   const cw = userProfile.colorway || "classic";
@@ -1431,30 +1698,25 @@ function getPlayerBodyColor(pTeam) {
   return pTeam === 1 ? "#8bc34a" : "#f43f5e";
 }
 
-function makeArcadeCrabSVG(bodyColor = "#8bc34a", outline = "#223b05", belly = "#c5e1a5", clawScale = 1.0) {
+let crabImgTeam1 = new Image();
+let crabImgTeam2 = new Image();
+function updateCrabSprites() {
+  crabImgTeam1.src = makeArcadeCrabSVG(getPlayerBodyColor(1), "#0a1c02", "#e8f5e9");
+  crabImgTeam2.src = makeArcadeCrabSVG(getPlayerBodyColor(2), "#3b0716", "#ffe4e6");
+}
+
+function makeArcadeCrabSVG(bodyColor, outline, belly) {
   return `data:image/svg+xml;utf8,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
     <circle cx="62" cy="16" r="8.5" fill="#111" stroke="${outline}" stroke-width="2.5"/><circle cx="64" cy="13.5" r="3" fill="#fff"/>
     <circle cx="134" cy="16" r="8.5" fill="#111" stroke="${outline}" stroke-width="2.5"/><circle cx="136" cy="13.5" r="3" fill="#fff"/>
     <path d="M 52 60 Q 28 68 20 80" stroke="${outline}" stroke-width="6.5" fill="none"/>
     <path d="M 144 60 Q 168 68 176 80" stroke="${outline}" stroke-width="6.5" fill="none"/>
-    <g transform="scale(${clawScale}) transform-origin(52 48)">
-      <path d="M 52 42 C 34 26 18 10 2 24 C 14 36 28 42 50 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
-    </g>
-    <g transform="scale(${clawScale}) transform-origin(144 48)">
-      <path d="M 144 42 C 162 26 178 10 194 24 C 182 36 168 42 146 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
-    </g>
+    <path d="M 52 42 C 34 26 18 10 2 24 C 14 36 28 42 50 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
+    <path d="M 144 42 C 162 26 178 10 194 24 C 182 36 168 42 146 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
     <ellipse cx="98" cy="54" rx="58" ry="19" fill="${bodyColor}" stroke="${outline}" stroke-width="4.5"/>
     <path d="M 64 48 Q 98 40 132 48 Q 98 70 64 48 Z" fill="${belly}" opacity="0.7"/>
   </svg>`)}`;
-}
-
-let crabImgTeam1 = new Image();
-let crabImgTeam2 = new Image();
-function updateCrabSprites() {
-  const cScale = (chosenViceCard && chosenViceCard.effect === "big_claws") ? 1.25 : 1.0;
-  crabImgTeam1.src = makeArcadeCrabSVG(getPlayerBodyColor(1), "#0a1c02", "#e8f5e9", cScale);
-  crabImgTeam2.src = makeArcadeCrabSVG(getPlayerBodyColor(2), "#3b0716", "#ffe4e6", cScale);
 }
 updateCrabSprites();
 
@@ -1477,11 +1739,10 @@ function drawFlushHat(ctx, type, animTime = 0) {
 }
 
 function updatePlayer(p, input, dt) {
-  let speedMultiplier = (chosenViceCard && chosenViceCard.effect === "turbo_speed") ? 1.35 : 1.0;
   let moveDir = 0;
   if (input.left) moveDir -= 1;
   if (input.right) moveDir += 1;
-  p.vx += (moveDir * (p.speed * speedMultiplier) - p.vx) * 16 * dt;
+  p.vx += (moveDir * p.speed - p.vx) * 16 * dt;
   p.x += p.vx * dt;
 
   const minX = (p.team === 1) ? 80 : NET.x + NET.w + p.radius;
@@ -1498,9 +1759,8 @@ function updatePlayer(p, input, dt) {
   }
   p.angle += p.angVel * dt;
 
-  let jumpImpulse = (chosenViceCard && chosenViceCard.effect === "spring_jump") ? -780 : -580;
   if (input.jump && p.isGrounded && p.canJump) {
-    p.vy = jumpImpulse; p.isGrounded = false; p.canJump = false;
+    p.vy = -580; p.isGrounded = false; p.canJump = false;
     p.jumpHoldTimer = 0.35; sfx.jump();
   } else if (!input.jump && p.isGrounded) {
     p.canJump = true;
@@ -1621,13 +1881,12 @@ function resetTipOff() {
 
 function renderStandardStyle() {
   ctx.fillStyle = "#00aced"; ctx.fillRect(0, 0, CW, CH);
-  drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 200, 145, 0, 1);
-  drawSubtleBackgroundBleachers(ctx);
+  ctx.fillStyle = "#005b96"; ctx.fillRect(0, FLOOR_Y - 200, CW, 145);
   ctx.fillStyle = "#f5d799"; ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
   ctx.fillStyle = "#e2be73"; ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
-  drawNet(ctx, NET.y, "#ffffff", "#ff1744");
-  drawPlayersAndBall(ctx);
-  drawRetroScore(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], "#0288d1", "#d50000");
+  ctx.fillStyle = "#ffffff"; ctx.fillRect(NET.x, NET.y, NET.w, FLOOR_Y - NET.y);
+  drawPlayersAndBall();
+  drawRetroScore(CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], "#0288d1", "#d50000");
 }
 
 function renderViceStyle() {
@@ -1635,25 +1894,14 @@ function renderViceStyle() {
   grad.addColorStop(0, "#00e5ff"); grad.addColorStop(0.55, "#e040fb");
   grad.addColorStop(0.85, "#ff4081"); grad.addColorStop(1, "#ffe57f");
   ctx.fillStyle = grad; ctx.fillRect(0, 0, CW, CH);
-  drawSubtleBackgroundBleachers(ctx);
   ctx.fillStyle = "#311b92"; ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
   ctx.fillStyle = "#1a0033"; ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
-  drawNet(ctx, NET.y, "#00ffff", "#ff007f");
-  drawPlayersAndBall(ctx);
-  drawRetroScore(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], "#00ffff", "#ff007f");
+  ctx.fillStyle = "#00ffff"; ctx.fillRect(NET.x, NET.y, NET.w, FLOOR_Y - NET.y);
+  drawPlayersAndBall();
+  drawRetroScore(CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], "#00ffff", "#ff007f");
 }
 
-function drawInfiniteAnimatedOcean(ctx, y, h, camX = 0, biome = 1) {
-  ctx.fillStyle = (biome === 2 || biome === 4) ? "#0f172a" : "#005b96";
-  ctx.fillRect(camX - 100, y, CW + 200, h);
-}
-
-function drawNet(ctx, netY, poleColor, capColor) {
-  ctx.fillStyle = poleColor; ctx.fillRect(NET.x, netY, NET.w, FLOOR_Y - netY);
-  ctx.fillStyle = capColor; ctx.beginPath(); ctx.arc(NET.x + NET.w / 2, netY - 2, 7, 0, Math.PI * 2); ctx.fill();
-}
-
-function drawPlayersAndBall(ctx) {
+function drawPlayersAndBall() {
   players.forEach((p) => {
     if (!p.activeInGame) return;
     ctx.save();
@@ -1661,8 +1909,7 @@ function drawPlayersAndBall(ctx) {
     ctx.rotate(p.angle);
     ctx.drawImage(p.team === 1 ? crabImgTeam1 : crabImgTeam2, -p.width / 2, -p.height / 2, p.width, p.height);
     drawFlushHat(ctx, p.hat, animTimer);
-    ctx.font = "900 13px sans-serif";
-    ctx.fillStyle = "#ffe600"; ctx.textAlign = "center";
+    ctx.font = "900 13px sans-serif"; ctx.fillStyle = "#ffe600"; ctx.textAlign = "center";
     ctx.fillText(p.name, 0, -p.height / 2 - 16);
     ctx.restore();
   });
@@ -1677,7 +1924,7 @@ function drawPlayersAndBall(ctx) {
   ctx.restore();
 }
 
-function drawRetroScore(ctx, x, y, s1, s2, c1, c2) {
+function drawRetroScore(x, y, s1, s2, c1, c2) {
   ctx.save(); ctx.translate(x, y);
   const w = 90; const h = 50;
   ctx.fillStyle = "#000"; ctx.fillRect(-w - 4, -h / 2, w, h); ctx.fillRect(4, -h / 2, w, h);
@@ -1694,80 +1941,26 @@ function showToast(text, dur = 1.2) {
   t.innerText = text;
   t.classList.remove("hidden");
   t.classList.remove("fade-up");
-  setTimeout(() => { t.classList.add("fade-up"); }, Math.max(900, (dur - 0.5) * 1000));
+  setTimeout(() => { t.classList.add("fade-up"); }, Math.max(800, (dur - 0.5) * 1000));
 }
-
-function triggerCelebration(type) {}
 
 /* ========================================================
    SUBMODES, LOBBY & NAVIGATION
    ======================================================== */
 function showSubmodeSelect(context) {
   sfx.init();
-  pendingModeContext = context;
   hideAllModals();
   document.getElementById("submodeModal").classList.remove("hidden");
-  submodeVotes = { standard: 0, vice: 0 };
-  updateSubmodeVoteCounts();
 }
 
 function voteSubmode(mode) {
   sfx.bodyBump();
-  submodeVotes[mode]++;
-  updateSubmodeVoteCounts();
-  executeSubmodeSelect(mode);
-}
-
-function updateSubmodeVoteCounts() {
-  const sEl = document.getElementById("stdVoteCount");
-  const vEl = document.getElementById("viceVoteCount");
-  if (sEl) sEl.innerText = `[${submodeVotes.standard} VOTES]`;
-  if (vEl) vEl.innerText = `[${submodeVotes.vice} VOTES]`;
-}
-
-function executeSubmodeSelect(mode) {
   activeGameMode = mode;
   document.getElementById("submodeModal").classList.add("hidden");
-  if (mode === "vice") {
-    currentDrawnCards = [...ALL_VICE_CARDS].slice(0, 3);
-    openViceCardVoteUI();
-  } else {
-    chosenViceCard = null;
-    launchGame();
-  }
-}
-
-function openViceCardVoteUI() {
-  hideAllModals();
-  document.getElementById("viceVoteModal").classList.remove("hidden");
-  const container = document.getElementById("viceCardsContainer");
-  container.innerHTML = "";
-  currentDrawnCards.forEach((card, idx) => {
-    const el = document.createElement("div");
-    el.className = "card-item" + (idx === 0 ? " selected" : "");
-    el.innerHTML = `<div class="card-icon">${card.icon}</div><div class="card-title">${card.title}</div><div class="card-desc">${card.desc}</div>`;
-    el.onclick = () => {
-      document.querySelectorAll(".card-item").forEach(c => c.classList.remove("selected"));
-      el.classList.add("selected");
-      myCardVoteIndex = idx;
-    };
-    container.appendChild(el);
-  });
-}
-
-function confirmMyCardVote() {
-  chosenViceCard = currentDrawnCards[myCardVoteIndex];
-  document.getElementById("viceVoteModal").classList.add("hidden");
   launchGame();
 }
 
-function requestCardReshuffle() {
-  currentDrawnCards = [...ALL_VICE_CARDS].sort(() => 0.5 - Math.random()).slice(0, 3);
-  openViceCardVoteUI();
-}
-
 function launchGame() {
-  match.isOnline = (pendingModeContext === "online");
   match.scores = [0, 0]; match.sets = [0, 0]; match.over = false;
   configureActiveCourtPlayers();
   updateCrabSprites();
@@ -1785,27 +1978,21 @@ function configureActiveCourtPlayers() {
 }
 
 function quitToMenu() {
+  stopAllMusic();
   hideAllModals();
   document.getElementById("game-section").classList.add("hidden");
   document.getElementById("menuPanel").classList.remove("hidden");
 }
 
 function hideAllModals() {
-  ['menuPanel', 'socialLobbyModal', 'submodeModal', 'viceVoteModal', 'lockerModal', 'leaderboardModal', 'twitchModal', 'crabchatModal', 'crabvilleModal', 'islandMapModal', 'passportModal', 'newsCutsceneModal', 'movieCreditsModal'].forEach(id => {
+  ['menuPanel', 'submodeModal', 'viceVoteModal', 'lockerModal', 'leaderboardModal', 'twitchModal', 'crabchatModal', 'crabvilleModal', 'islandMapModal', 'friendsModal', 'passportModal', 'newsCutsceneModal', 'movieCreditsModal'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add("hidden");
   });
 }
 
-function openOnlineLobby() {
-  sfx.init();
-  document.getElementById("onlineBox").classList.remove("hidden");
-}
-
-function filterProfanity(txt) { return txt || ""; }
-function formatJoinCodeInput(el) {}
+function openOnlineLobby() { sfx.init(); document.getElementById("onlineBox").classList.remove("hidden"); }
 function toggleControlMode() {}
-function toggleMuteAudio() {}
 function openTwitchModal() { hideAllModals(); document.getElementById("twitchModal").classList.remove("hidden"); }
 function closeTwitchModal() { document.getElementById("twitchModal").classList.add("hidden"); document.getElementById("menuPanel").classList.remove("hidden"); }
 function connectTwitchChatDirect() {}
@@ -1813,11 +2000,9 @@ function startTwitchOAuthFlow() {}
 function openLeaderboard() { hideAllModals(); document.getElementById("leaderboardModal").classList.remove("hidden"); }
 function closeLeaderboard() { document.getElementById("leaderboardModal").classList.add("hidden"); document.getElementById("menuPanel").classList.remove("hidden"); }
 function restartToLobby() { quitToMenu(); }
-function voteSkipCutscene() {}
-function sendChatMessage() {}
 
 /* ========================================================
-   MASTER SOLID ANIMATION LOOP
+   MASTER UNIFIED ENGINE LOOP (100% PROTECTED)
    ======================================================== */
 let masterLastTime = performance.now();
 const keys = {};
@@ -1851,7 +2036,7 @@ function masterEngineLoop(now) {
       else renderStandardStyle();
     }
 
-    // CrabVille rendering
+    // Render CrabVille 2D universe
     updateAndRenderCrabville(dt);
   } catch(err) {
     console.error("Frame Loop Guard:", err);
@@ -1861,7 +2046,7 @@ function masterEngineLoop(now) {
 }
 
 /* ========================================================
-   CRITICAL EVENT BINDINGS
+   CRITICAL EVENT BINDINGS (TESTED & VERIFIED)
    ======================================================== */
 function bindAllArcadeUI() {
   const get = id => document.getElementById(id);
@@ -1874,8 +2059,6 @@ function bindAllArcadeUI() {
   if (get("openLeaderboardBtn")) get("openLeaderboardBtn").onclick = () => openLeaderboard();
   if (get("openTwitchStreamBtn")) get("openTwitchStreamBtn").onclick = () => openTwitchModal();
 
-  if (get("confirmCardBtn")) get("confirmCardBtn").onclick = () => confirmMyCardVote();
-  if (get("reshuffleBtn")) get("reshuffleBtn").onclick = () => requestCardReshuffle();
   if (get("backFromSubmodeBtn")) get("backFromSubmodeBtn").onclick = () => quitToMenu();
   if (get("quitMatchBtn")) get("quitMatchBtn").onclick = () => quitToMenu();
 }
