@@ -46,28 +46,27 @@ main {
 
 /* ARCADE RETRO PANELS */
 .panel {
-  width: min(920px, 95%); background: #fffbe8; border: 6px solid #142800;
+  width: min(940px, 96%); background: #fffbe8; border: 6px solid #142800;
   border-radius: 20px; box-shadow: 10px 10px 0 #000;
-  padding: clamp(16px, 3.5vw, 28px); text-align: center; margin: auto;
-  position: relative; max-height: 92vh; overflow-y: auto;
+  padding: clamp(14px, 3vw, 24px); text-align: center; margin: auto;
+  position: relative; max-height: 86vh; overflow-y: auto;
 }
 .panel::before {
   content: ""; position: absolute; inset: 4px; border: 3px dashed #e0c878;
   border-radius: 14px; pointer-events: none;
 }
 h1 {
-  margin: 0 0 4px; font-size: clamp(34px, 5.2vw, 56px); color: #e63900;
+  margin: 0 0 4px; font-size: clamp(30px, 4.6vw, 50px); color: #e63900;
   text-shadow: 3px 3px 0 #ffd54f, 5px 5px 0 #000; letter-spacing: 1.5px;
 }
 
-/* FLASHING 3D SASSY RETRO ARCADE QUOTE */
 .sassy-ticker {
   display: inline-block;
-  font-size: clamp(16px, 2.5vw, 22px);
+  font-size: clamp(15px, 2.2vw, 20px);
   color: #ff007f;
   text-shadow: 2px 2px 0 #00ffff, 4px 4px 0 #000;
   letter-spacing: 1.5px;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
   animation: arcadePulse 1.1s ease-in-out infinite alternate;
 }
 @keyframes arcadePulse {
@@ -76,14 +75,14 @@ h1 {
 }
 
 .sub {
-  font-size: 15px; color: #2e530b; font-family: sans-serif; font-weight: 900;
-  margin-bottom: 20px; letter-spacing: 0.5px;
+  font-size: 14px; color: #2e530b; font-family: sans-serif; font-weight: 900;
+  margin-bottom: 16px; letter-spacing: 0.5px;
 }
 
 .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 620px; margin: auto; }
 button {
   background: #ffcc00; color: #000; border: 4px solid #000;
-  border-radius: 14px; padding: 12px 18px; font-size: 17px; font-family: "Impact", sans-serif;
+  border-radius: 14px; padding: 10px 16px; font-size: 16px; font-family: "Impact", sans-serif;
   letter-spacing: 1px; box-shadow: 4px 4px 0 #000; cursor: pointer;
   transition: transform 0.05s ease, box-shadow 0.05s ease; touch-action: manipulation;
 }
@@ -93,68 +92,61 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow
 .primary { background: #ff3b00; color: #fff; text-shadow: 2px 2px 0 #000; }
 .vice-btn { background: #ff007f; color: #00ffff; text-shadow: 2px 2px 0 #7b00ff; border-color: #000; }
 .bag-btn { background: #26a69a; color: #fff; text-shadow: 2px 2px 0 #004d40; }
-.big { min-height: 56px; font-size: 18px; }
+.big { min-height: 52px; font-size: 18px; }
 
 /* SOCIAL PRE-LOBBY & CUSTOMIZATION */
 .lobby-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; text-align: left;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 10px 0; text-align: left;
 }
 .team-box {
   background: #fff; border: 3px solid #000; border-radius: 12px; padding: 10px;
 }
-.team-title-1 { color: #0288d1; font-size: 18px; margin-bottom: 6px; }
-.team-title-2 { color: #d50000; font-size: 18px; margin-bottom: 6px; }
+.team-title-1 { color: #0288d1; font-size: 17px; margin-bottom: 6px; }
+.team-title-2 { color: #d50000; font-size: 17px; margin-bottom: 6px; }
 
 .player-card {
   background: #f1f8e9; border: 2px solid #33691e; border-radius: 8px;
   padding: 6px 10px; margin-bottom: 6px; display: flex; justify-content: space-between;
-  align-items: center; font-family: sans-serif; font-weight: bold; font-size: 13px;
+  align-items: center; font-family: sans-serif; font-weight: bold; font-size: 12px;
 }
 .player-card.is-me { border: 3px solid #ff007f; background: #fff0f5; }
+.player-card.is-bot { border: 2px dashed #78909c; background: #eceff1; }
 
 .customizer-box {
-  background: #fff; border: 3px solid #000; border-radius: 12px; padding: 12px;
-  margin-top: 10px; display: flex; flex-direction: column; gap: 8px; font-family: sans-serif;
+  background: #fff; border: 3px solid #000; border-radius: 12px; padding: 10px;
+  margin-top: 8px; display: flex; flex-direction: column; gap: 8px; font-family: sans-serif;
 }
 .custom-row {
-  display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap;
+  display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; font-size: 13px;
 }
 .custom-input {
-  padding: 8px 12px; font-size: 15px; font-weight: bold; border: 3px solid #000;
+  padding: 6px 10px; font-size: 14px; font-weight: bold; border: 3px solid #000;
   border-radius: 8px; font-family: monospace; text-transform: uppercase;
 }
 .secret-input {
-  background: #fff9c4; border-color: #f57f17; width: 180px;
+  background: #fff9c4; border-color: #f57f17; width: 170px;
 }
 
-/* VICE CARD VOTING & ANIMATION */
+/* VICE CARD VOTING */
 .vice-cards-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 12px 0;
 }
 .card-item {
   background: #2b084b; border: 4px solid #ff007f; border-radius: 14px;
-  color: #fff; padding: 14px 10px; cursor: pointer;
+  color: #fff; padding: 12px 8px; cursor: pointer;
   box-shadow: 0 0 14px rgba(255, 0, 127, 0.4), 4px 4px 0 #000;
   display: flex; flex-direction: column; justify-content: space-between;
   transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .card-item.selected {
   border-color: #00ffff; box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 4px 4px 0 #000;
-  transform: translateY(-6px) scale(1.03);
-}
-.card-item.shuffle-spin {
-  animation: cardSlotSpin 0.4s ease-in-out;
-}
-@keyframes cardSlotSpin {
-  0% { transform: scale(1) rotate(0deg); opacity: 1; }
-  50% { transform: scale(0.6) rotate(180deg); opacity: 0.2; }
-  100% { transform: scale(1) rotate(360deg); opacity: 1; }
+  transform: translateY(-5px) scale(1.03);
 }
 
-.card-icon { font-size: 34px; margin-bottom: 4px; }
-.card-title { font-size: 18px; color: #ff007f; margin-bottom: 4px; }
-.card-desc { font-size: 12px; font-family: sans-serif; font-weight: bold; color: #e0e7ff; line-height: 1.2; }
-.vote-count { font-size: 13px; color: #00ffff; font-family: monospace; font-weight: 900; margin-top: 6px; }
+.card-icon { font-size: 32px; margin-bottom: 4px; }
+.card-title { font-size: 17px; color: #ff007f; margin-bottom: 4px; }
+.card-desc { font-size: 11px; font-family: sans-serif; font-weight: bold; color: #e0e7ff; line-height: 1.2; }
+.vote-count { font-size: 12px; color: #00ffff; font-family: monospace; font-weight: 900; margin-top: 6px; }
 
 /* IN-GAME VIEW & PREVENT BOTTOM SCOREBOARD CUTOFF */
 #game-section {
@@ -175,28 +167,41 @@ canvas {
 }
 .toast {
   position: absolute; top: 26%; left: 50%; transform: translate(-50%, -50%);
-  font-size: clamp(26px, 4.8vw, 56px); font-family: "Impact", sans-serif;
+  font-size: clamp(24px, 4.5vw, 54px); font-family: "Impact", sans-serif;
   color: #ffeb3b; text-shadow: 4px 4px 0 #d50000, -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000;
   text-align: center; pointer-events: none; z-index: 20;
+}
+
+/* AUDREY BREAKING NEWS CUTSCENE */
+#newsCutsceneModal {
+  position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
+  width: min(800px, 92%); background: #fffbe8; border: 6px solid #d50000;
+  border-radius: 18px; box-shadow: 10px 10px 0 #000; padding: 18px;
+  z-index: 50; text-align: center;
+}
+.news-header {
+  background: #d50000; color: #fff; padding: 6px 12px; font-size: 20px;
+  letter-spacing: 2px; border-radius: 8px; margin-bottom: 12px; display: inline-block;
+}
+.audrey-layout { display: flex; gap: 16px; align-items: center; justify-content: center; }
+.audrey-speech {
+  font-family: sans-serif; font-size: 15px; font-weight: 900; color: #1a237e;
+  text-align: left; line-height: 1.4;
 }
 
 /* TOUCHPAD */
 .touchpad-bar {
   width: 100%; max-width: 1600px; display: none; justify-content: space-between;
-  align-items: center; padding: 6px 6px; touch-action: none; flex-shrink: 0;
+  align-items: center; padding: 4px; touch-action: none; flex-shrink: 0;
 }
 .touch-cluster { display: flex; gap: 8px; align-items: center; }
 .touchpad-bar button {
-  width: 72px; height: 54px; padding: 0; font-size: 13px; font-family: "Impact", sans-serif;
+  width: 70px; height: 50px; padding: 0; font-size: 12px; font-family: "Impact", sans-serif;
   border: 3px solid #000; border-radius: 10px; background: #ffe082;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  touch-action: none;
 }
-.touchpad-bar button.jump { width: 96px; background: #e53935; color: #fff; font-size: 15px; }
+.touchpad-bar button.jump { width: 90px; background: #e53935; color: #fff; font-size: 14px; }
 .touchpad-bar button.rotate { background: #ffb74d; }
-.touchpad-bar button:active, .touchpad-bar button.pressed {
-  background: #b71c1c !important; color: #fff !important; transform: scale(0.95);
-}
 
 .bottom-bar {
   width: 100%; max-width: 1600px; display: flex; justify-content: space-between;
@@ -204,23 +209,14 @@ canvas {
   font-family: sans-serif; font-weight: bold; text-shadow: 1px 1px 0 #000; flex-shrink: 0;
 }
 
-/* PERMANENT FLOATING VERSION TAG FOR VERIFICATION */
+/* PERMANENT FLOATING VERSION TAG */
 #globalVersionTag {
-  position: fixed;
-  bottom: 12px;
-  right: 14px;
-  color: #ffe600;
-  font-family: Impact, monospace, sans-serif;
-  font-size: 15px;
-  font-weight: 900;
-  background: #000;
-  padding: 6px 14px;
-  border-radius: 10px;
-  border: 2px solid #ffe600;
-  letter-spacing: 1px;
-  box-shadow: 3px 3px 0 rgba(0,0,0,0.8);
-  z-index: 99999;
-  pointer-events: none;
+  position: fixed; bottom: 10px; right: 12px;
+  color: #ffe600; font-family: Impact, monospace, sans-serif;
+  font-size: 14px; font-weight: 900; background: #000;
+  padding: 5px 12px; border-radius: 8px; border: 2px solid #ffe600;
+  letter-spacing: 1px; box-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+  z-index: 99999; pointer-events: none;
 }
 .hidden { display: none !important; }
 </style>
@@ -268,7 +264,10 @@ canvas {
       <p class="sub">Rank: <span id="careerLevel" style="color:#d84315;">1</span> · Claws Pinched: <span id="careerPoints">0</span> · Sets Won: <span id="careerWins">0</span></p>
 
       <div class="customizer-box">
-        <div class="custom-row">
+        <div style="font-size:14px;font-weight:bold;color:#004d40;">🏆 HAT UNLOCK STATUS:</div>
+        <div id="hatUnlockList" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0;"></div>
+
+        <div class="custom-row" style="margin-top:6px;">
           <b>TRASH-TALK QUIP PACK:</b>
           <select id="quipPackSelect" class="custom-input">
             <option value="classic">Classic Crab ("Crab Pride!", "Pinch this!")</option>
@@ -294,12 +293,12 @@ canvas {
     <!-- SOCIAL PRE-LOBBY ROOM -->
     <section id="socialLobbyModal" class="panel hidden">
       <h1>🦀 BEACH PRE-LOBBY 🦀</h1>
-      <p class="sub">Pick your team (max 2 per side), customize your style, or enter a secret code!</p>
+      <p class="sub">Pick your team (max 2 per side), customize your style, or kick chill bots!</p>
 
-      <div style="margin:6px 0;">
-        <span style="font-family:sans-serif;font-size:14px;font-weight:bold;">Room Code: </span>
-        <code id="myCodeText">----</code>
-        <button id="copyBtn" style="padding:4px 10px;font-size:12px;margin-left:6px;">COPY</button>
+      <div style="margin:4px 0;">
+        <span style="font-family:sans-serif;font-size:13px;font-weight:bold;">Room Code: </span>
+        <code id="myCodeText" style="font-size:15px;color:#d50000;font-weight:bold;">----</code>
+        <button id="copyBtn" style="padding:3px 8px;font-size:12px;margin-left:6px;">COPY</button>
       </div>
 
       <!-- TEAMS VIEW -->
@@ -321,7 +320,7 @@ canvas {
         <div class="custom-row" id="botOptionRow">
           <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:900;color:#1b5e20;">
             <input type="checkbox" id="fillBotsCheck" checked>
-            🤖 FILL EMPTY SLOTS WITH CHILL BOTS
+            🤖 AUTO-FILL EMPTY SLOTS WITH CHILL BOTS
           </label>
         </div>
 
@@ -329,13 +328,7 @@ canvas {
           <b>YOUR NAME:</b>
           <input id="playerNameInput" class="custom-input" maxlength="12" placeholder="NAME">
           <b>HAT:</b>
-          <select id="hatSelect" class="custom-input">
-            <option value="pineapple">Pineapple</option>
-            <option value="propeller">Propeller</option>
-            <option value="tophat">Top Hat</option>
-            <option value="captain">Captain</option>
-            <option value="fez">Fez</option>
-          </select>
+          <select id="hatSelect" class="custom-input"></select>
         </div>
 
         <div class="custom-row">
@@ -346,9 +339,9 @@ canvas {
         </div>
       </div>
 
-      <div style="margin-top:14px;display:flex;justify-content:center;gap:12px;">
+      <div style="margin-top:12px;display:flex;justify-content:center;gap:12px;">
         <button id="leaveLobbyBtn" style="font-size:13px;padding:8px 16px;">LEAVE LOBBY</button>
-        <button id="hostStartMatchBtn" class="primary big hidden" style="width:240px;">NEXT: MATCH MODE ➔</button>
+        <button id="hostStartMatchBtn" class="primary big hidden" style="width:230px;">NEXT: MATCH MODE ➔</button>
       </div>
     </section>
 
@@ -369,13 +362,13 @@ canvas {
     <!-- VICE CARD VOTING -->
     <section id="viceVoteModal" class="panel hidden" style="background:#160228;border-color:#ff007f;">
       <h1 style="color:#00ffff;text-shadow:3px 3px 0 #ff007f, 5px 5px 0 #000;">🌴 VOTE VICE CARD 🌴</h1>
-      <p class="sub" style="color:#ff77c6;">Popular vote decides the modification! Shuffled live for everyone.</p>
+      <p class="sub" style="color:#ff77c6;">Popular vote decides the match modifier! Shuffled live for everyone.</p>
 
       <div id="viceCardsContainer" class="vice-cards-grid"></div>
 
       <div style="margin-top:10px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
-        <button id="reshuffleBtn" style="background:#00ffff;font-size:14px;padding:8px 14px;">🔀 RESHUFFLE CARDS</button>
-        <button id="confirmCardBtn" class="vice-btn big" style="width:240px;">SUBMIT MY VOTE!</button>
+        <button id="reshuffleBtn" style="background:#00ffff;font-size:13px;padding:8px 14px;">🔀 RESHUFFLE</button>
+        <button id="confirmCardBtn" class="vice-btn big" style="width:230px;">SUBMIT MY VOTE!</button>
       </div>
     </section>
 
@@ -384,6 +377,19 @@ canvas {
       <div class="canvas-holder">
         <canvas id="beachCourt" width="1600" height="850"></canvas>
         <div id="toast" class="toast hidden"></div>
+
+        <!-- AUDREY WEATHER CUTSCENE MODAL -->
+        <div id="newsCutsceneModal" class="hidden">
+          <div class="news-header">🚨 ACTION NEWS 6: TSUNAMI EMERGENCY 🚨</div>
+          <div class="audrey-layout">
+            <canvas id="audreyHeadCanvas" width="130" height="110"></canvas>
+            <div class="audrey-speech">
+              "I'm <b>Audrey</b> from Beach Action News!<br>
+              A Category 5 Tsunami is engulfing the beach! All bots have washed away!<br>
+              <span style="color:#d50000;font-size:17px;">CLIMB TO THE HELICOPTER TO SURVIVE!"</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="touchpad-bar" id="mobileControls">
@@ -394,37 +400,121 @@ canvas {
         <div class="touch-cluster">
           <button id="btnRotLeft" class="rotate">↺<span>SWING L</span></button>
           <button id="btnRotRight" class="rotate">↻<span>SWING R</span></button>
-          <button id="btnJump" class="jump">🔴<span>JUMP</span></button>
+          <button id="btnJump" class="jump">🔴<span>HOP</span></button>
         </div>
       </div>
 
       <div class="bottom-bar">
-        <div>⌨️ <b>A / D</b> = Run &nbsp;|&nbsp; <b>← / →</b> = Claw Swing &nbsp;|&nbsp; <b>Space</b> = Hop (Jump off Teammates!)</div>
-        <div style="display:flex;gap:10px;align-items:center;">
-          <button id="quitMatchBtn" style="padding:3px 10px;font-size:11px;">QUIT MENU</button>
-        </div>
+        <div>⌨️ <b>A / D</b> = Run &nbsp;|&nbsp; <b>← / →</b> = Claw Swing &nbsp;|&nbsp; <b>Space</b> = Hop</div>
+        <button id="quitMatchBtn" style="padding:3px 10px;font-size:11px;">QUIT MENU</button>
       </div>
     </section>
   </main>
 </div>
 
-<!-- PERMANENT FLOATING VERSION BADGE VISIBLE ON ALL SCREENS -->
-<div id="globalVersionTag">v0.014 - BUILD OK</div>
+<!-- GLOBAL VERSION BADGE FOR VERIFICATION -->
+<div id="globalVersionTag">v0.015 - TSUNAMI & ARSENAL OK</div>
 
 <!-- WebRTC Mesh Networking -->
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 
 <script>
 /* ========================================================
-   CRAB VOLLEYBALL ARCADE ENGINE v0.014
+   CRAB VOLLEYBALL ARCADE ENGINE v0.015
    ======================================================== */
 
-// GLOBAL ENGINE VARIABLES (CRITICAL FOR RUNTIME INITIALIZATION)
+// HAT ARSENAL DEFINITIONS & PERSISTENCE
+const HAT_DATABASE = [
+  { id: "pineapple", name: "Pineapple", locked: false, desc: "Default fruity flair" },
+  { id: "propeller", name: "Propeller", locked: false, desc: "Default whirly topper" },
+  { id: "captain", name: "Captain", locked: false, desc: "Default salty seafaring cap" },
+  { id: "tophat", name: "Top Hat", locked: true, unlockReq: "Score 10 Points in career (or code FANCY)" },
+  { id: "fez", name: "Fez", locked: true, unlockReq: "Win 2 match sets (or code SHRINER)" },
+  { id: "lighthouse", name: "Lighthouse Keeper", locked: true, unlockReq: "Survive Audrey's Tsunami Escape! (or code BEACON)" }
+];
+
+let userProfile = {
+  name: "CRAB-1", level: 1, points: 0, wins: 0,
+  quipPack: "classic", explosion: "confetti",
+  unlockedHats: ["pineapple", "propeller", "captain"]
+};
+
+function loadCareer() {
+  try {
+    const saved = localStorage.getItem("crab_volleyball_profile_v2");
+    if (saved) {
+      userProfile = Object.assign(userProfile, JSON.parse(saved));
+      if (!userProfile.unlockedHats) userProfile.unlockedHats = ["pineapple", "propeller", "captain"];
+    }
+    const cl = document.getElementById("careerLevel");
+    const cp = document.getElementById("careerPoints");
+    const cw = document.getElementById("careerWins");
+    if (cl) cl.innerText = userProfile.level;
+    if (cp) cp.innerText = userProfile.points;
+    if (cw) cw.innerText = userProfile.wins;
+
+    const qp = document.getElementById("quipPackSelect");
+    const ep = document.getElementById("explosionSelect");
+    if (qp) qp.value = userProfile.quipPack;
+    if (ep) ep.value = userProfile.explosion;
+
+    // Check achievement unlocks
+    if (userProfile.points >= 10 && !userProfile.unlockedHats.includes("tophat")) {
+      userProfile.unlockedHats.push("tophat");
+    }
+    if (userProfile.wins >= 2 && !userProfile.unlockedHats.includes("fez")) {
+      userProfile.unlockedHats.push("fez");
+    }
+    saveCareerSettings();
+    populateHatSelect();
+    renderArsenalList();
+  } catch(e) {}
+}
+
+function saveCareerSettings() {
+  const qp = document.getElementById("quipPackSelect");
+  const ep = document.getElementById("explosionSelect");
+  if (qp) userProfile.quipPack = qp.value;
+  if (ep) userProfile.explosion = ep.value;
+  localStorage.setItem("crab_volleyball_profile_v2", JSON.stringify(userProfile));
+}
+
+function populateHatSelect() {
+  const select = document.getElementById("hatSelect");
+  if (!select) return;
+  const curr = select.value || "pineapple";
+  select.innerHTML = "";
+  HAT_DATABASE.forEach(hat => {
+    const isUnlocked = userProfile.unlockedHats.includes(hat.id);
+    const opt = document.createElement("option");
+    opt.value = hat.id;
+    opt.disabled = !isUnlocked;
+    opt.innerText = isUnlocked ? hat.name : `🔒 ${hat.name} (LOCKED)`;
+    select.appendChild(opt);
+  });
+  if (userProfile.unlockedHats.includes(curr)) select.value = curr;
+}
+
+function renderArsenalList() {
+  const container = document.getElementById("hatUnlockList");
+  if (!container) return;
+  container.innerHTML = "";
+  HAT_DATABASE.forEach(hat => {
+    const isUnlocked = userProfile.unlockedHats.includes(hat.id);
+    const div = document.createElement("div");
+    div.style.cssText = `border:2px solid ${isUnlocked ? '#2e7d32' : '#9e9e9e'};background:${isUnlocked ? '#e8f5e9' : '#eeeeee'};border-radius:6px;padding:4px 8px;font-size:11px;font-weight:bold;`;
+    div.innerHTML = `${isUnlocked ? '✅' : '🔒'} <b>${hat.name}</b>: <span style="font-size:10px;color:#555;">${isUnlocked ? 'UNLOCKED' : hat.unlockReq}</span>`;
+    container.appendChild(div);
+  });
+}
+
+// ENGINE VARIABLES
 let activeGameMode = "standard";
 let chosenViceCard = null;
 let pendingModeContext = "solo";
 let fillEmptyWithBots = true;
 let raveTimer = 0;
+let oceanTimer = 0;
 let isFrozen = false;
 let freezeCooldown = 8.0;
 let freezeWarningTimer = 0;
@@ -432,24 +522,22 @@ let currentDrawnCards = [];
 let cardVotes = [0, 0, 0];
 let myCardVoteIndex = 0;
 
-const VICE_CARS = [
-  { x: 40, spd: 130, color: "#ff007f" },
-  { x: 380, spd: 170, color: "#00ffff" },
-  { x: 820, spd: 110, color: "#ffe57f" },
-  { x: 1240, spd: 150, color: "#ff4081" }
-];
-
 const ALL_VICE_CARDS = [
+  { title: "TSUNAMI ESCAPE", icon: "🌊", effect: "tsunami", desc: "AUDREY ALARM! The ocean rises — survive the tower!" },
   { title: "CRAB RAVE", icon: "🦀", effect: "crab_rave", desc: "Party strobe lighting & pumping beach EDM beats!" },
   { title: "TITAN CLAWS", icon: "🦞", effect: "big_claws", desc: "Claws expand by 25% for high-powered blocks!" },
   { title: "TURBO DRIFT", icon: "⚡", effect: "turbo_speed", desc: "Crabs run and spin 35% faster across the sand." },
   { title: "MINI PINCHERS", icon: "🤏", effect: "mini_crabs", desc: "Shrinks crabs down for micro pinball rallies." },
   { title: "BOUNCY SPRINGS", icon: "🦘", effect: "spring_jump", desc: "Super-charged leaps & high-altitude smashes." },
   { title: "LOW GRAVITY", icon: "🌙", effect: "low_grav", desc: "Moon physics on both ball and crustacean jumps." },
-  { title: "CRYO FREEZE", icon: "❄️", effect: "ice_freeze", desc: "Ball suddenly locks in place mid-air periodically!" },
-  { title: "LEAD WEIGHT", icon: "⚓", effect: "heavy_ball", desc: "Heavy ball drops fast — requires direct spikes!" },
-  { title: "LOW NET", icon: "🏐", effect: "low_net", desc: "Lower net height for cutthroat fast spikes." },
-  { title: "PINBALL CHAOS", icon: "🔮", effect: "pinball_wobble", desc: "Spikes ricochet with 35% extra wild velocity!" }
+  { title: "CRYO FREEZE", icon: "❄️", effect: "ice_freeze", desc: "Ball suddenly locks in place mid-air periodically!" }
+];
+
+const VICE_CARS = [
+  { x: 40, spd: 130, color: "#ff007f" },
+  { x: 380, spd: 170, color: "#00ffff" },
+  { x: 820, spd: 110, color: "#ffe57f" },
+  { x: 1240, spd: 150, color: "#ff4081" }
 ];
 
 const canvas = document.getElementById("beachCourt");
@@ -461,24 +549,18 @@ let BASE_BALL_GRAV = 550;
 let BALL_GRAV = 550;
 const NET = { x: CW / 2 - 4, y: 550, w: 8, h: FLOOR_Y - 550 };
 
-// SASSY QUOTES FOR RANDOM MENU TICKER
+// SASSY QUOTES
 const SASSY_MENU_QUOTES = [
   "GET CLAMPED! 🦀",
   "PINCH RESPONSIBLY OR GET PINCHED!",
   "100% FRESH BEACH SAND, NO REFUNDS!",
-  "FEELING CRABBY? GOOD.",
-  "WHO GAVE THESE CRABS VOLLEYBALLS?!",
-  "DO NOT ANGER THE CRUSTACEANS.",
-  "NEVER TRUST A CRAB IN A TOP HAT.",
-  "SPIKE FIRST, ASK QUESTIONS NEVER.",
-  "PROVEN 42% FUNNIER THAN REGULAR VOLLEYBALL."
+  "AUDREY TRACKS 100% TSUNAMI ODDS!",
+  "WHO GAVE THESE CRABS VOLLEYBALLS?!"
 ];
 
 function pickRandomSassyQuote() {
   const el = document.getElementById("sassyTicker");
-  if (el) {
-    el.innerText = SASSY_MENU_QUOTES[Math.floor(Math.random() * SASSY_MENU_QUOTES.length)];
-  }
+  if (el) el.innerText = SASSY_MENU_QUOTES[Math.floor(Math.random() * SASSY_MENU_QUOTES.length)];
 }
 
 // AUDIO ENGINE
@@ -504,15 +586,9 @@ function playModeMusic() {
   if (viceRaveBgm) viceRaveBgm.pause();
 
   if (activeGameMode === "vice" && chosenViceCard && chosenViceCard.effect === "crab_rave") {
-    if (viceRaveBgm) {
-      viceRaveBgm.currentTime = 0;
-      viceRaveBgm.play().catch(() => {});
-    }
+    if (viceRaveBgm) { viceRaveBgm.currentTime = 0; viceRaveBgm.play().catch(() => {}); }
   } else {
-    if (standardBgm) {
-      standardBgm.currentTime = 0;
-      standardBgm.play().catch(() => {});
-    }
+    if (standardBgm) { standardBgm.currentTime = 0; standardBgm.play().catch(() => {}); }
   }
 }
 
@@ -527,129 +603,6 @@ function toggleMuteAudio() {
   if (btn) btn.innerText = isAudioMuted ? "🔇" : "🔊";
   if (isAudioMuted) stopAllMusic();
   else playModeMusic();
-}
-
-// PROFANITY FILTER
-const BANNED_WORDS = [
-  "fuck", "shit", "bitch", "asshole", "cunt", "nigger", "nigga",
-  "dick", "pussy", "faggot", "cock", "bastard", "slut", "whore"
-];
-
-function sanitizePlayerName(rawName, fallback = "CRAB") {
-  if (!rawName) return fallback;
-  let clean = rawName.trim().replace(/[^a-zA-Z0-9_\- ]/g, "").substring(0, 12).toUpperCase();
-  const lower = clean.toLowerCase();
-  for (let w of BANNED_WORDS) {
-    if (lower.includes(w)) {
-      return "CRAB-" + Math.floor(100 + Math.random() * 900);
-    }
-  }
-  return clean || fallback;
-}
-
-// CHARACTERS
-const dobyImg = new Image();
-dobyImg.src = "./doby.png";
-
-function makeMeteorologistSVG() {
-  return `data:image/svg+xml;utf8,${encodeURIComponent(`
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
-    <ellipse cx="98" cy="54" rx="58" ry="19" fill="#1e293b" stroke="#000" stroke-width="4"/>
-    <polygon points="98,40 90,52 98,64 106,52" fill="#ef4444"/>
-    <polygon points="92,40 104,40 98,48" fill="#ffffff"/>
-    <line x1="66" y1="38" x2="62" y2="18" stroke="#000" stroke-width="4.5"/>
-    <circle cx="62" cy="16" r="8" fill="#111" stroke="#000" stroke-width="2"/>
-    <circle cx="64" cy="14" r="2.8" fill="#fff"/>
-    <line x1="130" y1="38" x2="134" y2="18" stroke="#000" stroke-width="4.5"/>
-    <circle cx="134" cy="16" r="8" fill="#111" stroke="#000" stroke-width="2"/>
-    <circle cx="136" cy="14" r="2.8" fill="#fff"/>
-    <path d="M 22 26 C 2 34 0 54 22 52 Z" fill="#38bdf8" stroke="#000" stroke-width="3"/>
-    <line x1="22" y1="38" x2="48" y2="48" stroke="#000" stroke-width="4"/>
-    <rect x="144" y="32" width="8" height="22" rx="3" fill="#64748b" stroke="#000" stroke-width="2"/>
-    <circle cx="148" cy="28" r="7" fill="#ef4444" stroke="#000" stroke-width="2"/>
-    <rect x="142" y="24" width="12" height="4" fill="#fbbf24"/>
-  </svg>`)}`;
-}
-const metImg = new Image();
-metImg.src = makeMeteorologistSVG();
-
-function makeArcadeCrabSVG(bodyColor = "#8bc34a", outline = "#223b05", belly = "#c5e1a5", clawScale = 1.0) {
-  return `data:image/svg+xml;utf8,${encodeURIComponent(`
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
-    <line x1="66" y1="38" x2="62" y2="18" stroke="${outline}" stroke-width="5" stroke-linecap="round"/>
-    <circle cx="62" cy="16" r="8.5" fill="#111" stroke="${outline}" stroke-width="2.5"/>
-    <circle cx="64" cy="13.5" r="3" fill="#fff"/>
-    <line x1="130" y1="38" x2="134" y2="18" stroke="${outline}" stroke-width="5" stroke-linecap="round"/>
-    <circle cx="134" cy="16" r="8.5" fill="#111" stroke="${outline}" stroke-width="2.5"/>
-    <circle cx="136" cy="13.5" r="3" fill="#fff"/>
-    <path d="M 52 60 Q 28 68 20 80" stroke="${outline}" stroke-width="6.5" stroke-linecap="round" fill="none"/>
-    <path d="M 58 66 Q 38 78 42 84" stroke="${outline}" stroke-width="6.5" stroke-linecap="round" fill="none"/>
-    <path d="M 144 60 Q 168 68 176 80" stroke="${outline}" stroke-width="6.5" stroke-linecap="round" fill="none"/>
-    <path d="M 138 66 Q 158 78 154 84" stroke="${outline}" stroke-width="6.5" stroke-linecap="round" fill="none"/>
-    <g transform="scale(${clawScale}) transform-origin(52 48)">
-      <path d="M 52 42 C 34 26 18 10 2 24 C 14 36 28 42 50 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
-      <path d="M 50 48 C 30 52 14 62 4 48 L 14 42 L 20 48 L 26 40 L 32 46 Z" fill="${belly}" stroke="${outline}" stroke-width="3.5"/>
-    </g>
-    <g transform="scale(${clawScale}) transform-origin(144 48)">
-      <path d="M 144 42 C 162 26 178 10 194 24 C 182 36 168 42 146 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
-      <path d="M 146 48 C 166 52 182 62 192 48 L 182 42 L 176 48 L 170 40 L 164 46 Z" fill="${belly}" stroke="${outline}" stroke-width="3.5"/>
-    </g>
-    <ellipse cx="98" cy="54" rx="58" ry="19" fill="${bodyColor}" stroke="${outline}" stroke-width="4.5"/>
-    <path d="M 64 48 Q 98 40 132 48 Q 98 70 64 48 Z" fill="${belly}" opacity="0.65"/>
-  </svg>`)}`;
-}
-
-let crabImgTeam1 = new Image();
-let crabImgTeam2 = new Image();
-
-function updateCrabSprites() {
-  if (activeGameMode === "vice") {
-    const cScale = (chosenViceCard && chosenViceCard.effect === "big_claws") ? 1.25 : 1.0;
-    crabImgTeam1.src = makeArcadeCrabSVG("#00ffff", "#005577", "#b3ffff", cScale);
-    crabImgTeam2.src = makeArcadeCrabSVG("#ff007f", "#77003b", "#ff99cc", cScale);
-  } else {
-    crabImgTeam1.src = makeArcadeCrabSVG("#8bc34a", "#223b05", "#c5e1a5", 1.0);
-    crabImgTeam2.src = makeArcadeCrabSVG("#9ccc65", "#1c3204", "#dcedc8", 1.0);
-  }
-}
-updateCrabSprites();
-
-// HATS
-const HAT_TYPES = ["pineapple", "propeller", "tophat", "captain", "fez"];
-
-function drawFlushHat(ctx, type, animTime = 0) {
-  ctx.save();
-  ctx.translate(0, -10);
-
-  if (type === "pineapple") {
-    ctx.fillStyle = "#2e7d32"; ctx.strokeStyle = "#1b5e20"; ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.moveTo(0, -16); ctx.lineTo(-6, -26); ctx.lineTo(0, -21); ctx.lineTo(6, -26); ctx.closePath();
-    ctx.fill(); ctx.stroke();
-    ctx.fillStyle = "#f59e0b"; ctx.strokeStyle = "#78350f"; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.ellipse(0, -8, 9, 12, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-  } else if (type === "propeller") {
-    ctx.fillStyle = "#2563eb"; ctx.strokeStyle = "#1e3a8a"; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.arc(0, 0, 13, Math.PI, 0); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = "#0f172a"; ctx.fillRect(-2, -15, 4, 6);
-    const spinWidth = Math.sin(animTime * 24) * 16;
-    ctx.fillStyle = "#ef4444";
-    ctx.beginPath(); ctx.ellipse(0, -15, Math.max(3, Math.abs(spinWidth)), 3, 0, 0, Math.PI * 2); ctx.fill();
-  } else if (type === "tophat") {
-    ctx.fillStyle = "#18181b";
-    ctx.beginPath(); ctx.ellipse(0, 0, 16, 3.5, 0, 0, Math.PI * 2); ctx.fill();
-    ctx.fillRect(-9, -20, 18, 20); ctx.fillStyle = "#dc2626"; ctx.fillRect(-9, -6, 18, 4);
-  } else if (type === "captain") {
-    ctx.fillStyle = "#ffffff"; ctx.strokeStyle = "#0f172a"; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.arc(0, -3, 14, Math.PI, 0); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = "#0f172a"; ctx.beginPath(); ctx.ellipse(0, 2, 16, 3.5, 0, 0, Math.PI * 2); ctx.fill();
-  } else if (type === "fez") {
-    ctx.fillStyle = "#b91c1c"; ctx.strokeStyle = "#7f1d1d"; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(-10, 0); ctx.lineTo(-7, -18); ctx.lineTo(7, -18); ctx.lineTo(10, 0); ctx.closePath();
-    ctx.fill(); ctx.stroke();
-    ctx.strokeStyle = "#0f172a"; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(0, -18); ctx.lineTo(11, -8); ctx.stroke();
-  }
-  ctx.restore();
 }
 
 // SOUND FX
@@ -682,8 +635,8 @@ class ArcadeAudio {
   clawSpike() { this.beep(540, "sawtooth", 0.2, 110, 0.48); }
   freezeAlert() { this.beep(750, "sine", 0.15, 300, 0.3); }
   alarm() {
-    this.beep(880, "sawtooth", 0.25, 440, 0.35);
-    setTimeout(() => this.beep(880, "sawtooth", 0.25, 440, 0.35), 280);
+    this.beep(880, "sawtooth", 0.3, 440, 0.4);
+    setTimeout(() => this.beep(880, "sawtooth", 0.3, 440, 0.4), 320);
   }
   whistle() {
     this.beep(850, "square", 0.08, 920, 0.2);
@@ -697,115 +650,245 @@ class ArcadeAudio {
 }
 const sfx = new ArcadeAudio();
 
-// CAREER UNLOCKS & USER PROFILE
-const QUIP_PACKS = {
-  classic: ["Crab Pride!", "Pinch this!", "Gotcha!", "Too slow!"],
-  trash: ["Sit down!", "Free points!", "Need help?", "Is this too fast?"],
-  sailor: ["Shiver me claws!", "Overboard!", "Aye aye, point!", "Barnacle brains!"],
-  zen: ["Flow like water...", "Breathe...", "Balance is key.", "Serenity now."]
-};
+// CHARACTERS & GRAPHICS
+const dobyImg = new Image();
+dobyImg.src = "./doby.png";
 
-let userProfile = {
-  name: "CRAB-1", level: 1, points: 0, wins: 0,
-  quipPack: "classic", explosion: "confetti"
-};
+function makeAudreySVG() {
+  return `data:image/svg+xml;utf8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 95">
+    <!-- Blonde Hair Puffs -->
+    <path d="M 60 28 C 45 6, 95 -4, 100 24 C 110 -2, 145 6, 136 30 C 150 18, 160 38, 148 50 C 130 50, 135 34, 120 30 C 105 24, 85 24, 75 32 C 60 38, 50 48, 48 38 Z" fill="#ffd54f" stroke="#e65100" stroke-width="3"/>
+    <!-- Shell -->
+    <ellipse cx="98" cy="58" rx="56" ry="20" fill="#f48fb1" stroke="#880e4f" stroke-width="4"/>
+    <path d="M 68 54 Q 98 48 128 54 Q 98 72 68 54 Z" fill="#fce4ec"/>
+    <!-- Eyes -->
+    <circle cx="76" cy="28" r="8" fill="#111" stroke="#880e4f" stroke-width="2.5"/><circle cx="78" cy="26" r="2.8" fill="#fff"/>
+    <circle cx="120" cy="28" r="8" fill="#111" stroke="#880e4f" stroke-width="2.5"/><circle cx="122" cy="26" r="2.8" fill="#fff"/>
+    <!-- News Microphone -->
+    <rect x="52" y="44" width="8" height="22" rx="3" fill="#37474f"/>
+    <circle cx="56" cy="40" r="7" fill="#212121" stroke="#d50000" stroke-width="2"/>
+    <rect x="50" y="36" width="12" height="4" fill="#ffd54f"/>
+    <!-- Press Badge -->
+    <rect x="92" y="52" width="14" height="10" rx="2" fill="#fff" stroke="#000" stroke-width="1.5"/>
+    <rect x="94" y="54" width="10" height="3" fill="#d50000"/>
+  </svg>`)}`;
+}
+const audreyImg = new Image();
+audreyImg.src = makeAudreySVG();
 
-function loadCareer() {
-  try {
-    const saved = localStorage.getItem("crab_volleyball_profile");
-    if (saved) userProfile = Object.assign(userProfile, JSON.parse(saved));
-    const cl = document.getElementById("careerLevel");
-    const cp = document.getElementById("careerPoints");
-    const cw = document.getElementById("careerWins");
-    if (cl) cl.innerText = userProfile.level;
-    if (cp) cp.innerText = userProfile.points;
-    if (cw) cw.innerText = userProfile.wins;
-    const qp = document.getElementById("quipPackSelect");
-    const ep = document.getElementById("explosionSelect");
-    if (qp) qp.value = userProfile.quipPack;
-    if (ep) ep.value = userProfile.explosion;
-  } catch(e) {}
+function drawAudreyHeadPreview() {
+  const c = document.getElementById("audreyHeadCanvas");
+  if (!c) return;
+  const cx = c.getContext("2d");
+  cx.clearRect(0, 0, c.width, c.height);
+  cx.drawImage(audreyImg, -10, -5, 150, 115);
 }
 
-function saveCareerSettings() {
-  const qp = document.getElementById("quipPackSelect");
-  const ep = document.getElementById("explosionSelect");
-  if (qp) userProfile.quipPack = qp.value;
-  if (ep) userProfile.explosion = ep.value;
-  localStorage.setItem("crab_volleyball_profile", JSON.stringify(userProfile));
+function makeMeteorologistSVG() {
+  return `data:image/svg+xml;utf8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
+    <ellipse cx="98" cy="54" rx="58" ry="19" fill="#1e293b" stroke="#000" stroke-width="4"/>
+    <polygon points="98,40 90,52 98,64 106,52" fill="#ef4444"/>
+    <polygon points="92,40 104,40 98,48" fill="#ffffff"/>
+    <circle cx="62" cy="16" r="8" fill="#111" stroke="#000" stroke-width="2"/><circle cx="64" cy="14" r="2.8" fill="#fff"/>
+    <circle cx="134" cy="16" r="8" fill="#111" stroke="#000" stroke-width="2"/><circle cx="136" cy="14" r="2.8" fill="#fff"/>
+    <path d="M 22 26 C 2 34 0 54 22 52 Z" fill="#38bdf8" stroke="#000" stroke-width="3"/>
+  </svg>`)}`;
+}
+const metImg = new Image();
+metImg.src = makeMeteorologistSVG();
+
+function makeArcadeCrabSVG(bodyColor = "#8bc34a", outline = "#223b05", belly = "#c5e1a5", clawScale = 1.0) {
+  return `data:image/svg+xml;utf8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
+    <circle cx="62" cy="16" r="8.5" fill="#111" stroke="${outline}" stroke-width="2.5"/><circle cx="64" cy="13.5" r="3" fill="#fff"/>
+    <circle cx="134" cy="16" r="8.5" fill="#111" stroke="${outline}" stroke-width="2.5"/><circle cx="136" cy="13.5" r="3" fill="#fff"/>
+    <path d="M 52 60 Q 28 68 20 80" stroke="${outline}" stroke-width="6.5" fill="none"/>
+    <path d="M 144 60 Q 168 68 176 80" stroke="${outline}" stroke-width="6.5" fill="none"/>
+    <g transform="scale(${clawScale}) transform-origin(52 48)">
+      <path d="M 52 42 C 34 26 18 10 2 24 C 14 36 28 42 50 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
+    </g>
+    <g transform="scale(${clawScale}) transform-origin(144 48)">
+      <path d="M 144 42 C 162 26 178 10 194 24 C 182 36 168 42 146 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
+    </g>
+    <ellipse cx="98" cy="54" rx="58" ry="19" fill="${bodyColor}" stroke="${outline}" stroke-width="4.5"/>
+    <path d="M 64 48 Q 98 40 132 48 Q 98 70 64 48 Z" fill="${belly}" opacity="0.7"/>
+  </svg>`)}`;
 }
 
-function openLockerRoom() {
-  sfx.init();
-  loadCareer();
-  document.getElementById("menuPanel").classList.add("hidden");
-  document.getElementById("lockerModal").classList.remove("hidden");
+let crabImgTeam1 = new Image();
+let crabImgTeam2 = new Image();
+
+function updateCrabSprites() {
+  if (activeGameMode === "vice") {
+    const cScale = (chosenViceCard && chosenViceCard.effect === "big_claws") ? 1.25 : 1.0;
+    crabImgTeam1.src = makeArcadeCrabSVG("#00ffff", "#005577", "#b3ffff", cScale);
+    crabImgTeam2.src = makeArcadeCrabSVG("#ff007f", "#77003b", "#ff99cc", cScale);
+  } else {
+    crabImgTeam1.src = makeArcadeCrabSVG("#8bc34a", "#223b05", "#c5e1a5", 1.0);
+    crabImgTeam2.src = makeArcadeCrabSVG("#9ccc65", "#1c3204", "#dcedc8", 1.0);
+  }
+}
+updateCrabSprites();
+
+// HATS RENDERING
+function drawFlushHat(ctx, type, animTime = 0) {
+  ctx.save();
+  ctx.translate(0, -10);
+
+  if (type === "pineapple") {
+    ctx.fillStyle = "#2e7d32"; ctx.strokeStyle = "#1b5e20"; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(0, -16); ctx.lineTo(-6, -26); ctx.lineTo(0, -21); ctx.lineTo(6, -26); ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#f59e0b"; ctx.strokeStyle = "#78350f"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.ellipse(0, -8, 9, 12, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+  } else if (type === "propeller") {
+    ctx.fillStyle = "#2563eb"; ctx.strokeStyle = "#1e3a8a"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(0, 0, 13, Math.PI, 0); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#0f172a"; ctx.fillRect(-2, -15, 4, 6);
+    const spinWidth = Math.sin(animTime * 24) * 16;
+    ctx.fillStyle = "#ef4444";
+    ctx.beginPath(); ctx.ellipse(0, -15, Math.max(3, Math.abs(spinWidth)), 3, 0, 0, Math.PI * 2); ctx.fill();
+  } else if (type === "tophat") {
+    ctx.fillStyle = "#18181b";
+    ctx.beginPath(); ctx.ellipse(0, 0, 16, 3.5, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillRect(-9, -20, 18, 20); ctx.fillStyle = "#dc2626"; ctx.fillRect(-9, -6, 18, 4);
+  } else if (type === "captain") {
+    ctx.fillStyle = "#ffffff"; ctx.strokeStyle = "#0f172a"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(0, -3, 14, Math.PI, 0); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#0f172a"; ctx.beginPath(); ctx.ellipse(0, 2, 16, 3.5, 0, 0, Math.PI * 2); ctx.fill();
+  } else if (type === "fez") {
+    ctx.fillStyle = "#b91c1c"; ctx.strokeStyle = "#7f1d1d"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(-10, 0); ctx.lineTo(-7, -18); ctx.lineTo(7, -18); ctx.lineTo(10, 0); ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = "#0f172a"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(0, -18); ctx.lineTo(11, -8); ctx.stroke();
+  } else if (type === "lighthouse") {
+    // Lighthouse Keeper Peak Cap with brass anchor
+    ctx.fillStyle = "#1a237e"; ctx.strokeStyle = "#000"; ctx.lineWidth = 2;
+    ctx.fillRect(-12, -14, 24, 14);
+    ctx.fillStyle = "#ffd600"; ctx.fillRect(-12, -4, 24, 4);
+    ctx.fillStyle = "#000"; ctx.beginPath(); ctx.ellipse(0, 2, 17, 4, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(0, -7, 3, 0, Math.PI * 2); ctx.fill();
+  }
+  ctx.restore();
 }
 
-function closeLockerRoom() {
-  document.getElementById("lockerModal").classList.add("hidden");
-  document.getElementById("menuPanel").classList.remove("hidden");
-}
-
-let activeSpeechBubble = null;
-let speechBubbleTimer = 0;
-let explosionParticles = [];
-
-function triggerPointCelebration(scorer) {
-  const quips = QUIP_PACKS[userProfile.quipPack] || QUIP_PACKS.classic;
-  const quote = quips[Math.floor(Math.random() * quips.length)];
-  activeSpeechBubble = { x: scorer.x, y: scorer.y - 70, text: quote };
-  speechBubbleTimer = 1.8;
-
-  const count = 35;
+// PROCEDURAL RANDOM CLOUDS
+let proceduralClouds = [];
+function createRandomCloudPuffs(r) {
+  const puffs = [];
+  const count = 5 + Math.floor(Math.random() * 3);
   for (let i = 0; i < count; i++) {
-    const angle = Math.random() * Math.PI * 2;
-    const spd = 120 + Math.random() * 260;
-    explosionParticles.push({
-      x: ball.x, y: ball.y,
-      vx: Math.cos(angle) * spd,
-      vy: Math.sin(angle) * spd,
-      color: userProfile.explosion === "firework" ? (Math.random() > 0.5 ? "#ffeb3b" : "#ff007f") : "#00ffff",
-      life: 0.8
+    puffs.push({
+      dx: (Math.random() - 0.5) * r * 2.2,
+      dy: (Math.random() - 0.4) * r * 0.9,
+      rad: r * (0.55 + Math.random() * 0.5)
     });
   }
+  return puffs;
+}
 
-  if (userProfile.explosion === "shockwave") {
-    players.forEach(p => {
-      p.vy = -340; p.angVel = (Math.random() - 0.5) * 12;
+function generateNewProceduralClouds() {
+  proceduralClouds = [];
+  const cloudCount = 5;
+  const step = CW / cloudCount;
+  for (let i = 0; i < cloudCount; i++) {
+    const baseR = 30 + Math.random() * 18;
+    proceduralClouds.push({
+      x: i * step + 40 + Math.random() * (step - 80),
+      y: 90 + Math.random() * 90,
+      r: baseR,
+      puffs: createRandomCloudPuffs(baseR),
+      driftSpd: 4 + Math.random() * 7
     });
   }
 }
+generateNewProceduralClouds();
 
-// INPUT MANAGEMENT
-const keys = {};
-window.addEventListener("keydown", (e) => {
-  sfx.init();
-  if (e.code) keys[e.code] = true;
-  if (e.code === "Space" || (e.code && e.code.includes("Arrow"))) e.preventDefault();
-});
-window.addEventListener("keyup", (e) => { if (e.code) keys[e.code] = false; });
+// TSUNAMI PLATFORMER & CUTSCENE
+let isTsunamiTriggered = false;
+let tsunamiCutsceneTimer = 0;
+let isPlatformerActive = false;
+let tsunamiWaterY = CH + 100;
+let proceduralPlatforms = [];
+let rescueHelicopter = { x: 800, y: 70 };
 
-function bindTouch(btnId, code) {
-  const btn = document.getElementById(btnId);
-  if (!btn) return;
-  const p = (e) => { e.preventDefault(); sfx.init(); keys[code] = true; btn.classList.add("pressed"); };
-  const r = (e) => { e.preventDefault(); keys[code] = false; btn.classList.remove("pressed"); };
-  btn.addEventListener("touchstart", p, { passive: false });
-  btn.addEventListener("touchend", r, { passive: false });
-  btn.addEventListener("mousedown", p);
-  btn.addEventListener("mouseup", r);
-  btn.addEventListener("mouseleave", r);
+function checkTsunamiCutscene(dt) {
+  if (tsunamiCutsceneTimer > 0) {
+    tsunamiCutsceneTimer -= dt;
+    if (tsunamiCutsceneTimer <= 0) {
+      document.getElementById("newsCutsceneModal").classList.add("hidden");
+      startTsunamiPlatformerEscape();
+    }
+  }
 }
-bindTouch("btnLeft", "KeyA");
-bindTouch("btnRight", "KeyD");
-bindTouch("btnRotLeft", "ArrowLeft");
-bindTouch("btnRotRight", "ArrowRight");
-bindTouch("btnJump", "Space");
 
-if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
-  const mc = document.getElementById("mobileControls");
-  if (mc) mc.style.display = "flex";
+function triggerTsunamiWarning() {
+  isTsunamiTriggered = true;
+  ball.active = false;
+  match.paused = true;
+  sfx.alarm();
+  drawAudreyHeadPreview();
+  document.getElementById("newsCutsceneModal").classList.remove("hidden");
+  tsunamiCutsceneTimer = 4.2;
+}
+
+function generateProceduralPlatformer() {
+  proceduralPlatforms = [];
+  proceduralPlatforms.push({ x: 0, y: FLOOR_Y, w: CW, h: 40 });
+  let lastY = FLOOR_Y - 70;
+  for (let i = 0; i < 20; i++) {
+    const pw = 130 + Math.random() * 110;
+    const px = 80 + Math.random() * (CW - 280);
+    lastY -= (40 + Math.random() * 28);
+    proceduralPlatforms.push({ x: px, y: lastY, w: pw, h: 22 });
+  }
+  rescueHelicopter.x = proceduralPlatforms[proceduralPlatforms.length - 1].x + 40;
+  rescueHelicopter.y = lastY - 60;
+}
+
+function startTsunamiPlatformerEscape() {
+  isPlatformerActive = true;
+  match.paused = false;
+  tsunamiWaterY = FLOOR_Y + 120;
+  // Wash away chill bots
+  players.forEach(p => { if (p.isBot) p.activeInGame = false; });
+  generateProceduralPlatformer();
+  showToast("3... 2... 1... CLIMB!", 2.0);
+}
+
+function updatePlatformerMode(dt) {
+  tsunamiWaterY -= 15 * dt;
+
+  players.forEach((p) => {
+    if (!p.activeInGame) return;
+    proceduralPlatforms.forEach(plat => {
+      if (p.x + p.halfW > plat.x && p.x - p.halfW < plat.x + plat.w) {
+        if (p.y + p.halfH >= plat.y && p.y + p.halfH <= plat.y + 20 && p.vy >= 0) {
+          p.y = plat.y - p.halfH; p.vy = 0; p.isGrounded = true; p.canJump = true;
+        }
+      }
+    });
+
+    const distToHeli = Math.hypot(p.x - rescueHelicopter.x, p.y - rescueHelicopter.y);
+    if (distToHeli < 70) {
+      sfx.cheer();
+      showToast(`${p.name} ESCAPED! LIGHTHOUSE HAT UNLOCKED! 🚁`, 4.0);
+      if (!userProfile.unlockedHats.includes("lighthouse")) {
+        userProfile.unlockedHats.push("lighthouse");
+        saveCareerSettings();
+        populateHatSelect();
+      }
+      match.over = true;
+      setTimeout(() => quitToMenu(), 4000);
+    }
+
+    if (p.y > tsunamiWaterY) {
+      p.y = tsunamiWaterY; p.vy = -180;
+    }
+  });
 }
 
 // CRAB PLAYERS
@@ -848,103 +931,7 @@ function showToast(text, dur = 1.2) {
   match.toastTimer = dur;
 }
 
-// PROCEDURAL CLOUDS
-let proceduralClouds = [];
-function generateNewProceduralClouds() {
-  proceduralClouds = [];
-  const cloudCount = 4 + Math.floor(Math.random() * 2);
-  const step = CW / cloudCount;
-  for (let i = 0; i < cloudCount; i++) {
-    proceduralClouds.push({
-      x: i * step + 60 + Math.random() * (step - 120),
-      y: 110 + Math.random() * 80,
-      r: 34 + Math.random() * 14,
-      driftSpd: 4 + Math.random() * 6
-    });
-  }
-}
-generateNewProceduralClouds();
-
-// TSUNAMI MINI-GAME
-let isTsunamiTriggered = false;
-let tsunamiCutsceneTimer = 0;
-let isPlatformerActive = false;
-let tsunamiWaterY = CH + 100;
-let platformerEscapeTimer = 300.0;
-let proceduralPlatforms = [];
-let rescueHelicopter = { x: 800, y: 70 };
-
-function checkTsunamiCutscene(dt) {
-  if (tsunamiCutsceneTimer > 0) {
-    tsunamiCutsceneTimer -= dt;
-    if (tsunamiCutsceneTimer <= 0) {
-      startTsunamiPlatformerEscape();
-    }
-  }
-}
-
-function triggerTsunamiWarning() {
-  isTsunamiTriggered = true;
-  ball.active = false;
-  match.paused = true;
-  sfx.alarm();
-  showToast("🚨 TSUNAMI WARNING! 🚨", 3.0);
-  tsunamiCutsceneTimer = 4.0;
-}
-
-function generateProceduralPlatformer() {
-  proceduralPlatforms = [];
-  proceduralPlatforms.push({ x: 0, y: FLOOR_Y, w: CW, h: 40 });
-  let lastY = FLOOR_Y - 80;
-  for (let i = 0; i < 18; i++) {
-    const pw = 140 + Math.random() * 120;
-    const px = 100 + Math.random() * (CW - 300);
-    lastY -= (42 + Math.random() * 32);
-    proceduralPlatforms.push({ x: px, y: lastY, w: pw, h: 22 });
-  }
-  rescueHelicopter.x = proceduralPlatforms[proceduralPlatforms.length - 1].x + 40;
-  rescueHelicopter.y = lastY - 60;
-}
-
-function startTsunamiPlatformerEscape() {
-  isPlatformerActive = true;
-  match.paused = false;
-  tsunamiWaterY = FLOOR_Y + 120;
-  platformerEscapeTimer = 300.0;
-  players.forEach(p => { if (p.isBot) p.activeInGame = false; });
-  generateProceduralPlatformer();
-  showToast("SURVIVE & CLIMB TO HELICOPTER!", 3.0);
-}
-
-function updatePlatformerMode(dt) {
-  platformerEscapeTimer -= dt;
-  tsunamiWaterY -= 14 * dt;
-
-  players.forEach((p) => {
-    if (!p.activeInGame) return;
-    proceduralPlatforms.forEach(plat => {
-      if (p.x + p.halfW > plat.x && p.x - p.halfW < plat.x + plat.w) {
-        if (p.y + p.halfH >= plat.y && p.y + p.halfH <= plat.y + 20 && p.vy >= 0) {
-          p.y = plat.y - p.halfH; p.vy = 0; p.isGrounded = true; p.canJump = true;
-        }
-      }
-    });
-
-    const distToHeli = Math.hypot(p.x - rescueHelicopter.x, p.y - rescueHelicopter.y);
-    if (distToHeli < 70) {
-      sfx.cheer();
-      showToast(`${p.name} ESCAPED & WINS! 🚁`, 4.0);
-      match.over = true;
-      setTimeout(() => quitToMenu(), 4000);
-    }
-
-    if (p.y > tsunamiWaterY) {
-      p.y = tsunamiWaterY; p.vy = -200;
-    }
-  });
-}
-
-// PHYSICS
+// PHYSICS & BALL
 function updatePlayer(p, input, dt) {
   let speedMultiplier = 1.0;
   if (chosenViceCard && chosenViceCard.effect === "turbo_speed") speedMultiplier = 1.35;
@@ -965,15 +952,11 @@ function updatePlayer(p, input, dt) {
   let rotSpeed = 10.5;
   if (chosenViceCard && chosenViceCard.effect === "turbo_speed") rotSpeed = 16.0;
 
-  if (input.rotLeft) {
-    p.angVel = -rotSpeed;
-  } else if (input.rotRight) {
-    p.angVel = rotSpeed;
-  } else {
+  if (input.rotLeft) p.angVel = -rotSpeed;
+  else if (input.rotRight) p.angVel = rotSpeed;
+  else {
     p.angVel *= 0.56;
-    if (p.isGrounded && Math.abs(p.angle) < 0.6) {
-      p.angle += (-p.angle) * 10 * dt;
-    }
+    if (p.isGrounded && Math.abs(p.angle) < 0.6) p.angle += (-p.angle) * 10 * dt;
   }
 
   p.angle += p.angVel * dt;
@@ -1017,7 +1000,6 @@ function resolveCrabCollisions() {
     for (let j = i + 1; j < players.length; j++) {
       const p1 = players[i]; const p2 = players[j];
       if (!p1.activeInGame || !p2.activeInGame) continue;
-
       const dx = p2.x - p1.x; const dy = p2.y - p1.y;
       const dist = Math.hypot(dx, dy);
       const minDistance = (chosenViceCard && chosenViceCard.effect === "mini_crabs") ? 55 : 78;
@@ -1025,24 +1007,8 @@ function resolveCrabCollisions() {
       if (dist < minDistance && dist > 0.001) {
         const nx = dx / dist; const ny = dy / dist;
         const overlap = minDistance - dist;
-
         p1.x -= nx * overlap * 0.5; p1.y -= ny * overlap * 0.5;
         p2.x += nx * overlap * 0.5; p2.y += ny * overlap * 0.5;
-
-        if (Math.abs(ny) > 0.35) {
-          if (p1.y < p2.y) {
-            p1.y = p2.y - 48; p1.vy = 0; p1.isGrounded = true; p1.canJump = true;
-            p2.vx += p1.vx * 0.5;
-          } else {
-            p2.y = p1.y - 48; p2.vy = 0; p2.isGrounded = true; p2.canJump = true;
-            p1.vx += p2.vx * 0.5;
-          }
-        } else {
-          const avgVx = (p1.vx + p2.vx) * 0.5;
-          p1.vx = avgVx; p2.vx = avgVx;
-        }
-
-        p1.angVel -= nx * 1.5; p2.angVel += nx * 1.5;
       }
     }
   }
@@ -1059,12 +1025,6 @@ function getAIInput(p, targetBall) {
     if (dx < 0) input.left = true;
     else input.right = true;
   }
-
-  if (Math.abs(p.angle) > 0.35) {
-    if (p.angle > 0) input.rotLeft = true;
-    else input.rotRight = true;
-  }
-
   if (ballInMyCourt && targetBall.y < 500 && Math.abs(dx) < 60 && p.isGrounded) {
     input.jump = true;
   }
@@ -1085,30 +1045,7 @@ function updateBall(dt) {
     return;
   }
 
-  // Cryofreeze
-  if (chosenViceCard && chosenViceCard.effect === "ice_freeze") {
-    freezeCooldown -= dt;
-    if (freezeCooldown <= 3.0 && freezeCooldown > 0 && freezeWarningTimer <= 0) {
-      showToast(`❄️ FREEZE IN ${Math.ceil(freezeCooldown)}...`, 0.8);
-      sfx.freezeAlert(); freezeWarningTimer = 1.0;
-    }
-    if (freezeWarningTimer > 0) freezeWarningTimer -= dt;
-
-    if (freezeCooldown <= 0 && !isFrozen) {
-      isFrozen = true; ball.vx = 0; ball.vy = 0;
-      showToast("❄️ FROZEN! ❄️", 1.2);
-      setTimeout(() => {
-        isFrozen = false; ball.vy = 280; freezeCooldown = 11.0;
-      }, 1200);
-    }
-  }
-
-  if (isFrozen) return;
-
   BALL_GRAV = BASE_BALL_GRAV;
-  if (chosenViceCard && chosenViceCard.effect === "low_grav") BALL_GRAV = 420;
-  if (chosenViceCard && chosenViceCard.effect === "heavy_ball") BALL_GRAV = 780;
-
   ball.vx *= (1 - 0.03 * dt);
   ball.vy += BALL_GRAV * dt;
   ball.x += ball.vx * dt;
@@ -1122,20 +1059,12 @@ function updateBall(dt) {
   if (ball.x + ball.r > CW) { ball.x = CW - ball.r; ball.vx = -ball.vx * 0.85; }
   if (ball.y - ball.r < 0) { ball.y = ball.r; ball.vy = Math.abs(ball.vy) * 0.85; }
 
-  const effectiveNetY = (chosenViceCard && chosenViceCard.effect === "low_net") ? 620 : NET.y;
-
-  if (ball.y + ball.r > effectiveNetY) {
+  if (ball.y + ball.r > NET.y) {
     if (ball.x + ball.r > NET.x && ball.x - ball.r < NET.x + NET.w) {
-      if (ball.y < effectiveNetY + 14) {
-        ball.y = effectiveNetY - ball.r;
-        ball.vy = -Math.max(680, Math.abs(ball.vy) * 0.95);
-        if (Math.abs(ball.vx) < 15) ball.vx = 0;
+      if (ball.y < NET.y + 14) {
+        ball.y = NET.y - ball.r; ball.vy = -Math.max(680, Math.abs(ball.vy) * 0.95);
       } else {
-        if (ball.x < CW / 2) {
-          ball.x = NET.x - ball.r; ball.vx = -Math.abs(ball.vx) * 0.85;
-        } else {
-          ball.x = NET.x + NET.w + ball.r; ball.vx = Math.abs(ball.vx) * 0.85;
-        }
+        ball.vx = (ball.x < CW / 2) ? -Math.abs(ball.vx) * 0.85 : Math.abs(ball.vx) * 0.85;
       }
       sfx.bodyBump();
     }
@@ -1158,55 +1087,19 @@ function updateBall(dt) {
     const relY = sinA * (ball.x - p.x) + cosA * (ball.y - p.y);
 
     let boundW = 74; let boundH = 24;
-    if (chosenViceCard && chosenViceCard.effect === "mini_crabs") { boundW = 50; boundH = 18; }
-    if (chosenViceCard && chosenViceCard.effect === "big_claws") { boundW = 92; }
-
     const clampedX = Math.max(-boundW, Math.min(boundW, relX));
     const clampedY = Math.max(-boundH, Math.min(boundH, relY));
 
     const distX = relX - clampedX; const distY = relY - clampedY;
-    const distSq = distX * distX + distY * distY;
-
-    if (distSq < ball.r * ball.r) {
-      const d = Math.sqrt(distSq) || 1;
-      let localNx = distX / d; let localNy = distY / d;
-
-      const worldCos = Math.cos(p.angle); const worldSin = Math.sin(p.angle);
-      const nx = worldCos * localNx - worldSin * localNy;
-      const ny = worldSin * localNx + worldCos * localNy;
-
-      ball.x += nx * (ball.r - d + 2);
-      ball.y += ny * (ball.r - d + 2);
-
+    if ((distX * distX + distY * distY) < ball.r * ball.r) {
       if (chosenViceCard && chosenViceCard.effect === "tsunami" && !isTsunamiTriggered) {
         triggerTsunamiWarning();
         return;
       }
-
-      const pinballMult = (chosenViceCard && chosenViceCard.effect === "pinball_wobble") ? 1.35 : 1.0;
-
-      if (p.y < ball.y - 4 && p.vy > -50) {
-        ball.vy = Math.max(420, (p.vy * 1.4 + 320) * pinballMult);
-        ball.vx = p.vx * 0.5 + nx * 80;
-        sfx.crushDown(); return;
-      }
-
-      const isHammerSwing = Math.abs(p.angVel) > 3.0 && !p.isBot;
-      const isClawArea = Math.abs(relX) > (boundW * 0.45);
-      if (isHammerSwing && isClawArea) {
-        const swingSpeed = Math.abs(p.angVel) * 56;
-        const hitSpeed = (580 + Math.abs(p.vx * 0.35) + swingSpeed) * pinballMult;
-
-        ball.vx = nx * (hitSpeed * 0.95) + p.vx * 0.4;
-        ball.vy = Math.min(-280, ny * hitSpeed - 180);
-
-        sfx.clawSpike(); showToast("SPIKE! 🔥", 0.4); return;
-      }
-
-      ball.vy = -480 * pinballMult;
-      ball.vx = (ball.vx * 0.1) + (p.vx * 0.15) + (nx * 60);
-
-      sfx.bodyBump(); return;
+      ball.vy = -520;
+      ball.vx = (ball.vx * 0.1) + (p.vx * 0.3);
+      sfx.bodyBump();
+      return;
     }
   }
 }
@@ -1217,29 +1110,19 @@ function scorePoint(winnerTeam) {
   if (userProfile.points % 10 === 0) userProfile.level++;
   saveCareerSettings();
 
-  const scorer = players.find(p => p.activeInGame && p.team === winnerTeam);
-  if (scorer) triggerPointCelebration(scorer);
-
   if (match.scores[winnerTeam - 1] >= 5) {
     match.sets[winnerTeam - 1]++;
     sfx.cheer();
-
     if (match.sets[winnerTeam - 1] >= 2) {
       match.over = true;
       userProfile.wins++;
       saveCareerSettings();
-      const winnerName = (winnerTeam === 1) ? "TEAM 1 (BLUE)" : "TEAM 2 (RED)";
-      showToast(`${winnerName} WINS THE MATCH! 🏆`, 3.5);
-      setTimeout(() => {
-        document.getElementById("game-section").classList.add("hidden");
-        document.getElementById("menuPanel").classList.remove("hidden");
-        stopAllMusic();
-      }, 3500);
+      showToast(`TEAM ${winnerTeam} WINS THE MATCH! 🏆`, 3.5);
+      setTimeout(() => quitToMenu(), 3500);
       return;
     }
-
     match.currentSet++; match.scores = [0, 0];
-    showToast(`SET ${match.currentSet - 1} WON BY TEAM ${winnerTeam}!`, 1.8);
+    showToast(`SET WON BY TEAM ${winnerTeam}!`, 1.8);
     setTimeout(() => resetTipOff(), 1800);
     return;
   }
@@ -1251,20 +1134,41 @@ function scorePoint(winnerTeam) {
 function resetTipOff() {
   ball.active = false; ball.tipOffTimer = 0.9;
   ball.vx = 0; ball.vy = 0; ball.trail = []; ball.x = CW / 2;
-  const effectiveNetY = (chosenViceCard && chosenViceCard.effect === "low_net") ? 620 : NET.y;
-  ball.y = effectiveNetY - ball.r;
-  isFrozen = false; freezeCooldown = 8.0;
+  ball.y = NET.y - ball.r;
 }
 
 // RENDERING
 let animTimer = 0;
 function render() {
-  animTimer += 0.02; raveTimer += 0.05;
-
+  animTimer += 0.02; raveTimer += 0.05; oceanTimer += 0.03;
   if (activeGameMode === "vice") renderViceStyle();
   else renderStandardStyle();
-
   if (isPlatformerActive) renderPlatformerScene();
+}
+
+function drawAnimatedOceanWaves(ctx, y, h) {
+  ctx.save();
+  ctx.fillStyle = (activeGameMode === "vice") ? "#1a0b38" : "#005b96";
+  ctx.fillRect(0, y, CW, h);
+
+  // Dynamic layered sine waves
+  for (let layer = 0; layer < 3; layer++) {
+    ctx.beginPath();
+    const layerOffset = layer * 16;
+    const waveColor = (activeGameMode === "vice") 
+      ? (layer === 0 ? "rgba(255, 0, 127, 0.4)" : "rgba(0, 255, 255, 0.35)")
+      : (layer === 0 ? "rgba(255, 255, 255, 0.4)" : "rgba(1, 144, 212, 0.5)");
+    ctx.fillStyle = waveColor;
+    ctx.moveTo(0, y + h);
+    for (let x = 0; x <= CW; x += 20) {
+      const waveY = y + layerOffset + Math.sin(x * 0.015 + oceanTimer * (layer + 1.2)) * 6;
+      ctx.lineTo(x, waveY);
+    }
+    ctx.lineTo(CW, y + h);
+    ctx.closePath();
+    ctx.fill();
+  }
+  ctx.restore();
 }
 
 function renderStandardStyle() {
@@ -1272,29 +1176,21 @@ function renderStandardStyle() {
 
   proceduralClouds.forEach(c => {
     c.x += c.driftSpd * 0.016;
-    if (c.x - c.r * 2 > CW) c.x = -c.r * 2;
-    drawFlippedCottonCloud(ctx, c.x, c.y, c.r, "#ffffff");
+    if (c.x - c.r * 2 > CW) {
+      c.x = -c.r * 2;
+      c.puffs = createRandomCloudPuffs(c.r);
+    }
+    drawProceduralCloud(ctx, c.x, c.y, c.puffs, "#ffffff");
   });
 
-  drawCleanSun(ctx, 420, 100, 36, "#ffd600");
-  ctx.fillStyle = "#0072b2"; ctx.fillRect(0, FLOOR_Y - 180, CW, 180);
+  drawAnimatedOceanWaves(ctx, FLOOR_Y - 200, 145);
 
-  drawFluffyTreeIsland(ctx, 1260, FLOOR_Y - 110, "#00c853", "#d4a76a");
-
-  ctx.fillStyle = "#ffffff";
-  for (let x = 0; x < CW; x += 44) {
-    ctx.beginPath(); ctx.arc(x + 22, FLOOR_Y - 60, 16, 0, Math.PI); ctx.fill();
-  }
-
-  ctx.fillStyle = "#f5d799";
-  ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
-  ctx.fillStyle = "#e2be73";
-  ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
+  ctx.fillStyle = "#f5d799"; ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
+  ctx.fillStyle = "#e2be73"; ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
 
   drawNet(ctx, NET.y, "#ffffff", "#ff1744");
   drawPlayersAndBall(ctx);
-  drawRetroFlipScoreboard(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], match.sets[0], match.sets[1], "#0288d1", "#d50000");
-  drawParticlesAndQuips();
+  drawRetroScore(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], match.sets[0], match.sets[1], "#0288d1", "#d50000");
 }
 
 function renderViceStyle() {
@@ -1303,57 +1199,31 @@ function renderViceStyle() {
   grad.addColorStop(0.85, "#ff4081"); grad.addColorStop(1, "#ffe57f");
   ctx.fillStyle = grad; ctx.fillRect(0, 0, CW, CH);
 
-  if (chosenViceCard && chosenViceCard.effect === "crab_rave") {
-    const strobe = (Math.sin(raveTimer * 8) + 1) * 0.12;
-    ctx.fillStyle = `rgba(0, 255, 255, ${strobe})`; ctx.fillRect(0, 0, CW, CH);
-  }
-
   proceduralClouds.forEach(c => {
     c.x += c.driftSpd * 0.016;
-    if (c.x - c.r * 2 > CW) c.x = -c.r * 2;
-    drawFlippedCottonCloud(ctx, c.x, c.y, c.r, "#f8bbd0");
+    if (c.x - c.r * 2 > CW) {
+      c.x = -c.r * 2;
+      c.puffs = createRandomCloudPuffs(c.r);
+    }
+    drawProceduralCloud(ctx, c.x, c.y, c.puffs, "#f8bbd0");
   });
 
-  drawViceSun(ctx, 420, 100, 42);
-  ctx.fillStyle = "#2a0845"; ctx.fillRect(0, FLOOR_Y - 180, CW, 180);
+  drawViceHighwayAndCars(ctx, FLOOR_Y - 225);
+  drawAnimatedOceanWaves(ctx, FLOOR_Y - 198, 143);
 
-  drawViceHighwayAndCars(ctx, FLOOR_Y - 215);
-  drawFluffyTreeIsland(ctx, 1260, FLOOR_Y - 110, "#00e676", "#7b1fa2");
+  ctx.fillStyle = "#311b92"; ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
+  ctx.fillStyle = "#1a0033"; ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
 
-  ctx.fillStyle = "#00ffff";
-  for (let x = 0; x < CW; x += 44) {
-    ctx.beginPath(); ctx.arc(x + 22, FLOOR_Y - 60, 16, 0, Math.PI); ctx.fill();
-  }
-
-  ctx.fillStyle = "#311b92";
-  ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
-  ctx.fillStyle = "#1a0033";
-  ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
-
-  const effNetY = (chosenViceCard && chosenViceCard.effect === "low_net") ? 620 : NET.y;
-  drawNet(ctx, effNetY, "#00ffff", "#ff007f");
-
+  drawNet(ctx, NET.y, "#00ffff", "#ff007f");
   drawPlayersAndBall(ctx);
-  drawRetroFlipScoreboard(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], match.sets[0], match.sets[1], "#00ffff", "#ff007f");
-  drawParticlesAndQuips();
+  drawRetroScore(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], match.sets[0], match.sets[1], "#00ffff", "#ff007f");
 }
 
-function drawFlippedCottonCloud(ctx, x, y, r, fillColor) {
+function drawProceduralCloud(ctx, x, y, puffs, fillColor) {
   ctx.save();
-  ctx.fillStyle = fillColor; ctx.strokeStyle = "#000000"; ctx.lineWidth = 3.0;
-  const puffs = [
-    { dx: -r * 0.9, dy: -r * 0.1, rad: r * 0.65 },
-    { dx: -r * 0.45, dy: r * 0.4, rad: r * 0.85 },
-    { dx: r * 0.2, dy: r * 0.5, rad: r * 0.95 },
-    { dx: r * 0.8, dy: r * 0.2, rad: r * 0.75 },
-    { dx: r * 1.2, dy: -r * 0.15, rad: r * 0.55 },
-    { dx: 0, dy: -r * 0.2, rad: r * 0.7 }
-  ];
+  ctx.fillStyle = fillColor; ctx.strokeStyle = "#000"; ctx.lineWidth = 2.5;
   puffs.forEach(p => {
     ctx.beginPath(); ctx.arc(x + p.dx, y + p.dy, p.rad, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-  });
-  puffs.forEach(p => {
-    ctx.beginPath(); ctx.arc(x + p.dx, y + p.dy, p.rad - 1.5, 0, Math.PI * 2); ctx.fill();
   });
   ctx.restore();
 }
@@ -1361,75 +1231,19 @@ function drawFlippedCottonCloud(ctx, x, y, r, fillColor) {
 function drawViceHighwayAndCars(ctx, y) {
   ctx.fillStyle = "#1e1035"; ctx.fillRect(0, y, CW, 26);
   ctx.strokeStyle = "#ff007f"; ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(CW, y); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(0, y + 26); ctx.lineTo(CW, y + 26); ctx.stroke();
-
-  ctx.strokeStyle = "#ffe57f"; ctx.lineWidth = 2;
-  ctx.setLineDash([14, 14]);
-  ctx.beginPath(); ctx.moveTo(0, y + 13); ctx.lineTo(CW, y + 13); ctx.stroke();
-  ctx.setLineDash([]);
-
+  ctx.strokeRect(0, y, CW, 26);
   VICE_CARS.forEach(car => {
     car.x += car.spd * 0.016;
     if (car.x > CW + 80) car.x = -80;
-    ctx.save();
-    ctx.translate(car.x, y + 4);
-    ctx.fillStyle = car.color;
-    ctx.beginPath();
-    ctx.moveTo(0, 14); ctx.lineTo(10, 8); ctx.lineTo(24, 6); ctx.lineTo(38, 14); ctx.closePath(); ctx.fill();
-    ctx.fillStyle = "#000"; ctx.beginPath(); ctx.arc(8, 14, 3.5, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(30, 14, 3.5, 0, Math.PI * 2); ctx.fill();
+    ctx.save(); ctx.translate(car.x, y + 4); ctx.fillStyle = car.color;
+    ctx.beginPath(); ctx.moveTo(0, 14); ctx.lineTo(10, 8); ctx.lineTo(24, 6); ctx.lineTo(38, 14); ctx.closePath(); ctx.fill();
     ctx.restore();
   });
 }
 
-function drawFluffyTreeIsland(ctx, x, y, foliageColor, sandColor) {
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.fillStyle = sandColor; ctx.strokeStyle = "#000000"; ctx.lineWidth = 3.0;
-  ctx.beginPath(); ctx.ellipse(0, 0, 135, 46, 0, 0, Math.PI); ctx.fill(); ctx.stroke();
-  ctx.strokeStyle = "#5d4037"; ctx.lineWidth = 15; ctx.lineCap = "round";
-  ctx.beginPath(); ctx.moveTo(25, -2); ctx.quadraticCurveTo(55, -60, 38, -120); ctx.stroke();
-  ctx.translate(38, -120);
-  const leafPuffs = [
-    { dx: -30, dy: -6, rad: 28 }, { dx: -10, dy: -28, rad: 34 },
-    { dx: 22, dy: -22, rad: 32 }, { dx: 36, dy: 6, rad: 26 },
-    { dx: 8, dy: 10, rad: 28 }, { dx: -16, dy: 8, rad: 26 }
-  ];
-  ctx.fillStyle = foliageColor; ctx.strokeStyle = "#000000"; ctx.lineWidth = 3.0;
-  leafPuffs.forEach(p => { ctx.beginPath(); ctx.arc(p.dx, p.dy, p.rad, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); });
-  leafPuffs.forEach(p => { ctx.beginPath(); ctx.arc(p.dx, p.dy, p.rad - 1.5, 0, Math.PI * 2); ctx.fill(); });
-  ctx.restore();
-}
-
-function drawCleanSun(ctx, x, y, r, color) {
-  ctx.save();
-  ctx.fillStyle = color; ctx.strokeStyle = "#000000"; ctx.lineWidth = 2.5;
-  ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-  for (let i = 0; i < 8; i++) {
-    const a = i * (Math.PI / 4);
-    ctx.beginPath(); ctx.moveTo(x + Math.cos(a) * (r + 4), y + Math.sin(a) * (r + 4));
-    ctx.lineTo(x + Math.cos(a) * (r + 14), y + Math.sin(a) * (r + 14)); ctx.stroke();
-  }
-  ctx.restore();
-}
-
-function drawViceSun(ctx, x, y, r) {
-  ctx.save();
-  const sunGrad = ctx.createLinearGradient(x, y - r, x, y + r);
-  sunGrad.addColorStop(0, "#ffe57f"); sunGrad.addColorStop(1, "#ff007f");
-  ctx.fillStyle = sunGrad;
-  ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
-  ctx.restore();
-}
-
 function drawNet(ctx, netY, poleColor, capColor) {
-  ctx.fillStyle = poleColor;
-  ctx.fillRect(NET.x, netY, NET.w, FLOOR_Y - netY);
-  ctx.strokeStyle = "#000"; ctx.lineWidth = 2;
-  ctx.strokeRect(NET.x, netY, NET.w, FLOOR_Y - netY);
-  ctx.fillStyle = capColor;
-  ctx.beginPath(); ctx.arc(NET.x + NET.w / 2, netY - 2, 7, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = poleColor; ctx.fillRect(NET.x, netY, NET.w, FLOOR_Y - netY);
+  ctx.fillStyle = capColor; ctx.beginPath(); ctx.arc(NET.x + NET.w / 2, netY - 2, 7, 0, Math.PI * 2); ctx.fill();
 }
 
 function drawPlayersAndBall(ctx) {
@@ -1437,200 +1251,84 @@ function drawPlayersAndBall(ctx) {
     if (!p.activeInGame) return;
     ctx.save();
     ctx.translate(p.x, p.y);
-    ctx.fillStyle = "rgba(0, 0, 0, 0.24)";
-    ctx.beginPath(); ctx.ellipse(0, FLOOR_Y - p.y - 2, p.radius * 1.15, 8, 0, 0, Math.PI * 2); ctx.fill();
     ctx.rotate(p.angle);
 
-    if (chosenViceCard && chosenViceCard.effect === "mini_crabs") ctx.scale(0.68, 0.68);
-
-    if (p.spriteType === "doby") {
-      ctx.drawImage(dobyImg, -p.width / 2, -p.height / 2, p.width, p.height);
-    } else if (p.spriteType === "met") {
-      ctx.drawImage(metImg, -p.width / 2, -p.height / 2, p.width, p.height);
-    } else {
-      const img = (p.team === 1) ? crabImgTeam1 : crabImgTeam2;
-      ctx.drawImage(img, -p.width / 2, -p.height / 2, p.width, p.height);
-    }
+    if (p.spriteType === "doby") ctx.drawImage(dobyImg, -p.width / 2, -p.height / 2, p.width, p.height);
+    else if (p.spriteType === "met") ctx.drawImage(metImg, -p.width / 2, -p.height / 2, p.width, p.height);
+    else ctx.drawImage(p.team === 1 ? crabImgTeam1 : crabImgTeam2, -p.width / 2, -p.height / 2, p.width, p.height);
 
     drawFlushHat(ctx, p.hat, animTimer);
 
-    ctx.font = "900 13px sans-serif";
-    ctx.fillStyle = "#ffffff"; ctx.strokeStyle = "#000000"; ctx.lineWidth = 3;
-    ctx.textAlign = "center";
-    ctx.strokeText(p.name, 0, -p.height / 2 - 20);
-    ctx.fillText(p.name, 0, -p.height / 2 - 20);
-
+    ctx.font = "900 13px sans-serif"; ctx.fillStyle = "#fff"; ctx.strokeStyle = "#000"; ctx.lineWidth = 3;
+    ctx.textAlign = "center"; ctx.strokeText(p.name, 0, -p.height / 2 - 18); ctx.fillText(p.name, 0, -p.height / 2 - 18);
     ctx.restore();
   });
-
-  for (let i = 0; i < ball.trail.length; i++) {
-    const tr = ball.trail[i];
-    const progress = (i + 1) / ball.trail.length;
-    const alpha = progress * 0.65;
-    const radius = ball.r * (0.35 + progress * 0.65);
-    ctx.fillStyle = (activeGameMode === "vice") ? `rgba(0, 255, 255, ${alpha})` : `rgba(255, 255, 255, ${alpha})`;
-    ctx.beginPath(); ctx.arc(tr.x, tr.y, radius, 0, Math.PI * 2); ctx.fill();
-  }
-
-  const shadowScale = Math.max(0.3, 1 - (FLOOR_Y - ball.y) / 550);
-  ctx.fillStyle = "rgba(0, 0, 0, 0.22)";
-  ctx.beginPath(); ctx.ellipse(ball.x, FLOOR_Y + 2, ball.r * shadowScale, 5 * shadowScale, 0, 0, Math.PI * 2); ctx.fill();
 
   ctx.save();
   ctx.translate(ball.x, ball.y);
-  if (isFrozen) {
-    ctx.fillStyle = "rgba(128, 222, 234, 0.75)";
-    ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 3;
-    ctx.strokeRect(-ball.r - 8, -ball.r - 8, (ball.r + 8) * 2, (ball.r + 8) * 2);
-    ctx.fillRect(-ball.r - 8, -ball.r - 8, (ball.r + 8) * 2, (ball.r + 8) * 2);
-  }
   ctx.rotate(ball.rot);
-  ctx.fillStyle = "#ffffff";
-  ctx.beginPath(); ctx.arc(0, 0, ball.r, 0, Math.PI * 2); ctx.fill();
-
-  if (activeGameMode === "vice") {
-    ctx.fillStyle = "#00e5ff";
-    ctx.beginPath(); ctx.arc(0, 0, ball.r, -0.65, 0.65); ctx.lineTo(0, 0); ctx.fill();
-    ctx.fillStyle = "#ff007f";
-    ctx.beginPath(); ctx.arc(0, 0, ball.r, 1.45, 2.75); ctx.lineTo(0, 0); ctx.fill();
-  } else {
-    ctx.fillStyle = "#0088cc";
-    ctx.beginPath(); ctx.arc(0, 0, ball.r, -0.65, 0.65); ctx.lineTo(0, 0); ctx.fill();
-    ctx.fillStyle = "#ffcc00";
-    ctx.beginPath(); ctx.arc(0, 0, ball.r, 1.45, 2.75); ctx.lineTo(0, 0); ctx.fill();
-  }
-  ctx.strokeStyle = "#111"; ctx.lineWidth = 2.2;
-  ctx.beginPath(); ctx.arc(0, 0, ball.r, 0, Math.PI * 2); ctx.stroke();
+  ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(0, 0, ball.r, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = activeGameMode === "vice" ? "#ff007f" : "#ffcc00";
+  ctx.beginPath(); ctx.arc(0, 0, ball.r, 1.4, 2.8); ctx.lineTo(0, 0); ctx.fill();
+  ctx.strokeStyle = "#111"; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.arc(0, 0, ball.r, 0, Math.PI * 2); ctx.stroke();
   ctx.restore();
 }
 
-function drawParticlesAndQuips() {
-  if (activeSpeechBubble && speechBubbleTimer > 0) {
-    ctx.save();
-    ctx.font = "bold 15px sans-serif";
-    ctx.fillStyle = "#ffffff"; ctx.strokeStyle = "#000000"; ctx.lineWidth = 3.5;
-    const txtW = ctx.measureText(activeSpeechBubble.text).width;
-    ctx.fillRect(activeSpeechBubble.x - txtW / 2 - 8, activeSpeechBubble.y - 14, txtW + 16, 26);
-    ctx.strokeRect(activeSpeechBubble.x - txtW / 2 - 8, activeSpeechBubble.y - 14, txtW + 16, 26);
-    ctx.fillStyle = "#000000";
-    ctx.textAlign = "center";
-    ctx.fillText(activeSpeechBubble.text, activeSpeechBubble.x, activeSpeechBubble.y + 4);
-    ctx.restore();
-  }
-
-  for (let i = explosionParticles.length - 1; i >= 0; i--) {
-    const ep = explosionParticles[i];
-    ep.x += ep.vx * 0.016; ep.y += ep.vy * 0.016; ep.life -= 0.016;
-    if (ep.life <= 0) {
-      explosionParticles.splice(i, 1);
-      continue;
-    }
-    ctx.fillStyle = ep.color;
-    ctx.beginPath(); ctx.arc(ep.x, ep.y, 4, 0, Math.PI * 2); ctx.fill();
-  }
-}
-
-function drawRetroFlipScoreboard(ctx, x, y, s1, s2, sets1, sets2, c1, c2) {
-  ctx.save();
-  ctx.translate(x, y);
-  const cardW = 100; const cardH = 58;
-  drawSingleFlipCard(ctx, -cardW - 4, -cardH / 2, cardW, cardH, s1, sets1, c1);
-  drawSingleFlipCard(ctx, 4, -cardH / 2, cardW, cardH, s2, sets2, c2);
+function drawRetroScore(ctx, x, y, s1, s2, sets1, sets2, c1, c2) {
+  ctx.save(); ctx.translate(x, y);
+  const w = 90; const h = 50;
+  ctx.fillStyle = "#000"; ctx.fillRect(-w - 4, -h / 2, w, h); ctx.fillRect(4, -h / 2, w, h);
+  ctx.font = "900 32px Impact"; ctx.textAlign = "center";
+  ctx.fillStyle = c1; ctx.fillText(s1, -w / 2 - 4, 10);
+  ctx.fillStyle = c2; ctx.fillText(s2, w / 2 + 4, 10);
   ctx.restore();
-}
-
-function drawSingleFlipCard(ctx, x, y, w, h, score, sets, scoreColor) {
-  ctx.fillStyle = (activeGameMode === "vice") ? "#160228" : "#ffffff";
-  ctx.strokeStyle = (activeGameMode === "vice") ? "#ff007f" : "#000000";
-  ctx.lineWidth = 3.5;
-  ctx.fillRect(x, y, w, h);
-  ctx.strokeRect(x, y, w, h);
-
-  ctx.strokeStyle = (activeGameMode === "vice") ? "#380a61" : "#e0e0e0";
-  ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.moveTo(x, y + h / 2); ctx.lineTo(x + w, y + h / 2); ctx.stroke();
-
-  ctx.font = "900 11px sans-serif";
-  ctx.fillStyle = (activeGameMode === "vice") ? "#00ffff" : "#555555";
-  ctx.textAlign = "center"; ctx.textBaseline = "top";
-  ctx.fillText(`SETS: ${sets}`, x + w / 2, y + 4);
-
-  ctx.font = "900 36px Impact, sans-serif";
-  ctx.fillStyle = scoreColor;
-  ctx.textBaseline = "middle";
-  ctx.fillText(score, x + w / 2, y + h / 2 + 5);
 }
 
 function renderPlatformerScene() {
-  ctx.fillStyle = "rgba(0, 180, 216, 0.75)";
+  ctx.fillStyle = "rgba(0, 180, 216, 0.78)";
   ctx.fillRect(0, tsunamiWaterY, CW, CH - tsunamiWaterY);
-  ctx.fillStyle = "#ffffff";
-  for (let x = 0; x < CW; x += 36) {
-    ctx.beginPath(); ctx.arc(x + 18, tsunamiWaterY, 12, 0, Math.PI); ctx.fill();
-  }
-
   ctx.fillStyle = "#d4a76a"; ctx.strokeStyle = "#000"; ctx.lineWidth = 3;
-  proceduralPlatforms.forEach(p => {
-    ctx.fillRect(p.x, p.y, p.w, p.h);
-    ctx.strokeRect(p.x, p.y, p.w, p.h);
-  });
-
-  ctx.save();
-  ctx.translate(rescueHelicopter.x, rescueHelicopter.y);
-  ctx.fillStyle = "#ef4444";
-  ctx.fillRect(-35, -16, 70, 32);
-  ctx.fillStyle = "#000";
-  const rW = Math.sin(animTimer * 20) * 60;
-  ctx.fillRect(-rW / 2, -24, rW, 4);
-  ctx.font = "bold 11px sans-serif";
-  ctx.fillStyle = "#fff";
-  ctx.fillText("RESCUE", -24, 4);
-  ctx.restore();
+  proceduralPlatforms.forEach(p => { ctx.fillRect(p.x, p.y, p.w, p.h); ctx.strokeRect(p.x, p.y, p.w, p.h); });
+  ctx.save(); ctx.translate(rescueHelicopter.x, rescueHelicopter.y); ctx.fillStyle = "#ef4444";
+  ctx.fillRect(-35, -16, 70, 32); ctx.restore();
 }
 
-// MAIN GAME LOOP
+// MAIN LOOP
+const keys = {};
+window.addEventListener("keydown", (e) => {
+  sfx.init();
+  if (e.code) keys[e.code] = true;
+  if (e.code === "Space" || (e.code && e.code.includes("Arrow"))) e.preventDefault();
+});
+window.addEventListener("keyup", (e) => { if (e.code) keys[e.code] = false; });
+
 let lastT = performance.now();
 function gameLoop(now) {
   const dt = Math.min((now - lastT) / 1000, 0.05);
   lastT = now;
 
-  if (speechBubbleTimer > 0) speechBubbleTimer -= dt;
-
   if (!match.paused && !match.over && !document.getElementById("game-section").classList.contains("hidden")) {
     const myInput = {
-      left: keys["KeyA"] || false,
-      right: keys["KeyD"] || false,
-      rotLeft: keys["ArrowLeft"] || false,
-      rotRight: keys["ArrowRight"] || false,
+      left: keys["KeyA"] || false, right: keys["KeyD"] || false,
+      rotLeft: keys["ArrowLeft"] || false, rotRight: keys["ArrowRight"] || false,
       jump: keys["Space"] || false
     };
-
     updatePlayer(players[match.myPlayerIndex], myInput, dt);
 
     for (let i = 0; i < players.length; i++) {
       if (i === match.myPlayerIndex || !players[i].activeInGame) continue;
       if (!match.isOnline || isHost) {
         if (players[i].isBot || !peersConnected[i]) {
-          const aiIn = getAIInput(players[i], ball);
-          updatePlayer(players[i], aiIn, dt);
+          updatePlayer(players[i], getAIInput(players[i], ball), dt);
         }
       }
     }
 
     resolveCrabCollisions();
-
-    if (isPlatformerActive) {
-      updatePlatformerMode(dt);
-    } else {
-      if (!match.isOnline || isHost) {
-        updateBall(dt);
-        if (match.isOnline && isHost) broadcastGameState();
-      }
-    }
-
-    if (match.toastTimer > 0) {
-      match.toastTimer -= dt;
-      if (match.toastTimer <= 0) document.getElementById("toast").classList.add("hidden");
+    if (isPlatformerActive) updatePlatformerMode(dt);
+    else if (!match.isOnline || isHost) {
+      updateBall(dt);
+      if (match.isOnline && isHost) broadcastGameState();
     }
   }
 
@@ -1640,57 +1338,52 @@ function gameLoop(now) {
 }
 requestAnimationFrame(gameLoop);
 
-// PRE-LOBBY UI
+// PRE-LOBBY UI WITH BOT VISIBILITY & KICKING
 function refreshLobbyUI() {
   const t1 = document.getElementById("team1Players");
   const t2 = document.getElementById("team2Players");
   if (!t1 || !t2) return;
   t1.innerHTML = ""; t2.innerHTML = "";
 
-  let count1 = 0;
-  let count2 = 0;
+  let count1 = 0; let count2 = 0;
 
   players.forEach((p, idx) => {
-    if (idx === match.myPlayerIndex || (match.isOnline && peersConnected[idx] && !p.isBot)) {
+    const isMe = idx === match.myPlayerIndex;
+    const isPeer = match.isOnline && peersConnected[idx] && !p.isBot;
+    const isChillBot = p.isBot && fillEmptyWithBots;
+
+    if (isMe || isPeer || isChillBot) {
       const card = document.createElement("div");
-      card.className = "player-card" + (idx === match.myPlayerIndex ? " is-me" : "");
-      let charTag = "🦀 CRAB";
-      if (p.spriteType === "doby") charTag = "🐶 DOBY";
-      if (p.spriteType === "met") charTag = "🎙️ MET";
+      card.className = "player-card" + (isMe ? " is-me" : (p.isBot ? " is-bot" : ""));
 
-      card.innerHTML = `<span>${p.name} (${charTag})</span><span>🎩 ${p.hat.toUpperCase()}</span>`;
+      let label = isChillBot ? `🤖 ${p.name}` : `🦀 ${p.name}`;
+      if (p.spriteType === "doby") label = `🐶 ${p.name}`;
+      if (p.spriteType === "met") label = `🎙️ ${p.name}`;
 
-      if (p.team === 1) {
-        t1.appendChild(card);
-        count1++;
-      } else {
-        t2.appendChild(card);
-        count2++;
+      let kickBtnHTML = "";
+      if (isChillBot && (!match.isOnline || isHost)) {
+        kickBtnHTML = `<button onclick="kickBot(${idx})" style="padding:2px 6px;font-size:10px;background:#e53935;color:#fff;">KICK</button>`;
       }
+
+      card.innerHTML = `<span>${label}</span><span style="display:flex;align-items:center;gap:6px;">🎩 ${p.hat.toUpperCase()} ${kickBtnHTML}</span>`;
+
+      if (p.team === 1) { t1.appendChild(card); count1++; }
+      else { t2.appendChild(card); count2++; }
     }
   });
 
-  const c1 = document.getElementById("team1Count");
-  const c2 = document.getElementById("team2Count");
-  if (c1) c1.innerText = count1;
-  if (c2) c2.innerText = count2;
+  document.getElementById("team1Count").innerText = count1;
+  document.getElementById("team2Count").innerText = count2;
+}
 
-  const btn1 = document.getElementById("joinTeam1Btn");
-  const btn2 = document.getElementById("joinTeam2Btn");
-  if (btn1) {
-    btn1.disabled = (count1 >= 2 && players[match.myPlayerIndex].team !== 1);
-    btn1.innerText = (count1 >= 2 && players[match.myPlayerIndex].team !== 1) ? "TEAM FULL" : "JOIN TEAM 1";
-  }
-  if (btn2) {
-    btn2.disabled = (count2 >= 2 && players[match.myPlayerIndex].team !== 2);
-    btn2.innerText = (count2 >= 2 && players[match.myPlayerIndex].team !== 2) ? "TEAM FULL" : "JOIN TEAM 2";
-  }
+function kickBot(idx) {
+  sfx.init();
+  players[idx].isBot = false;
+  players[idx].activeInGame = false;
+  refreshLobbyUI();
 }
 
 function switchTeam(teamNum) {
-  let count = players.filter((p, i) => (i === match.myPlayerIndex || (match.isOnline && peersConnected[i] && !p.isBot)) && p.team === teamNum).length;
-  if (count >= 2) return;
-
   sfx.bodyBump();
   players[match.myPlayerIndex].team = teamNum;
   refreshLobbyUI();
@@ -1700,9 +1393,7 @@ function switchTeam(teamNum) {
 function updateMyCustoms() {
   const nameInput = document.getElementById("playerNameInput");
   const hatSelect = document.getElementById("hatSelect");
-  const safe = sanitizePlayerName(nameInput.value, `P${match.myPlayerIndex + 1}`);
-  players[match.myPlayerIndex].name = safe;
-  userProfile.name = safe;
+  players[match.myPlayerIndex].name = nameInput.value.trim().toUpperCase() || "CRAB";
   players[match.myPlayerIndex].hat = hatSelect.value;
   saveCareerSettings();
   refreshLobbyUI();
@@ -1713,34 +1404,38 @@ function applySecretCode() {
   sfx.init();
   const code = document.getElementById("secretCodeInput").value.trim().toLowerCase();
   const statusEl = document.getElementById("secretStatus");
-  if (code === "doby") {
-    players[match.myPlayerIndex].spriteType = "doby";
-    statusEl.innerText = "UNLOCKED! 🐶";
-    sfx.cheer();
-    refreshLobbyUI();
-    if (match.isOnline) broadcastPlayerCustoms();
+
+  if (code === "beacon" || code === "lighthouse") {
+    if (!userProfile.unlockedHats.includes("lighthouse")) userProfile.unlockedHats.push("lighthouse");
+    saveCareerSettings(); populateHatSelect();
+    statusEl.innerText = "LIGHTHOUSE UNLOCKED!"; sfx.cheer();
+  } else if (code === "fancy") {
+    if (!userProfile.unlockedHats.includes("tophat")) userProfile.unlockedHats.push("tophat");
+    saveCareerSettings(); populateHatSelect();
+    statusEl.innerText = "TOP HAT UNLOCKED!"; sfx.cheer();
+  } else if (code === "shriner") {
+    if (!userProfile.unlockedHats.includes("fez")) userProfile.unlockedHats.push("fez");
+    saveCareerSettings(); populateHatSelect();
+    statusEl.innerText = "FEZ UNLOCKED!"; sfx.cheer();
   } else if (code === "met") {
     players[match.myPlayerIndex].spriteType = "met";
-    statusEl.innerText = "UNLOCKED MET! 🎙️";
-    sfx.cheer();
-    refreshLobbyUI();
-    if (match.isOnline) broadcastPlayerCustoms();
+    statusEl.innerText = "UNLOCKED MET! 🎙️"; sfx.cheer();
+    refreshLobbyUI(); if (match.isOnline) broadcastPlayerCustoms();
+  } else if (code === "doby") {
+    players[match.myPlayerIndex].spriteType = "doby";
+    statusEl.innerText = "UNLOCKED DOBY! 🐶"; sfx.cheer();
+    refreshLobbyUI(); if (match.isOnline) broadcastPlayerCustoms();
   } else {
-    statusEl.innerText = "INVALID CODE";
-    sfx.crushDown();
+    statusEl.innerText = "INVALID CODE"; sfx.crushDown();
   }
 }
 
 function toggleBotFill() {
-  const chk = document.getElementById("fillBotsCheck");
-  if (chk) fillEmptyWithBots = chk.checked;
-  if (match.isOnline && isHost) {
-    const msg = { type: "SYNC_BOT_SETTING", fillBots: fillEmptyWithBots };
-    peerConnections.forEach(c => { if (c && c.open) c.send(msg); });
-  }
+  fillEmptyWithBots = document.getElementById("fillBotsCheck").checked;
+  refreshLobbyUI();
 }
 
-// MULTIPLAYER & SUBMODE VOTING
+// SUBMODES & VICE VOTING
 function showSubmodeSelect(context) {
   sfx.init();
   pendingModeContext = context;
@@ -1751,12 +1446,10 @@ function showSubmodeSelect(context) {
 
 function voteOrSelectSubmode(mode) {
   sfx.init();
-  if (match.isOnline) {
-    if (!isHost) {
-      peerConnections[0].send({ type: "VOTE_SUBMODE", mode: mode });
-      document.getElementById("submodeSubtitle").innerText = `Voted for ${mode.toUpperCase()}! Waiting...`;
-      return;
-    }
+  if (match.isOnline && !isHost) {
+    peerConnections[0].send({ type: "VOTE_SUBMODE", mode: mode });
+    document.getElementById("submodeSubtitle").innerText = `Voted for ${mode.toUpperCase()}!`;
+    return;
   }
   executeSubmodeSelect(mode);
 }
@@ -1766,10 +1459,10 @@ function executeSubmodeSelect(mode) {
   document.getElementById("submodeModal").classList.add("hidden");
 
   if (mode === "vice") {
+    // Ensure Tsunami card has high spawn rate for easy testing
     const shuffled = [...ALL_VICE_CARDS].sort(() => 0.5 - Math.random());
     currentDrawnCards = shuffled.slice(0, 3);
     cardVotes = [0, 0, 0];
-
     if (match.isOnline && isHost) broadcastViceCardShuffle();
     openViceCardVoteUI();
   } else {
@@ -1800,33 +1493,15 @@ function openViceCardVoteUI() {
     };
     container.appendChild(el);
   });
-
   myCardVoteIndex = 0;
-  const cfm = document.getElementById("confirmCardBtn");
-  if (cfm) {
-    cfm.disabled = false;
-    cfm.innerText = "SUBMIT MY VOTE!";
-  }
-  const resh = document.getElementById("reshuffleBtn");
-  if (resh) resh.style.display = (!match.isOnline || isHost) ? "inline-block" : "none";
 }
 
 function confirmMyCardVote() {
   sfx.init();
   cardVotes[myCardVoteIndex]++;
-  const cfm = document.getElementById("confirmCardBtn");
-  if (cfm) {
-    cfm.disabled = true;
-    cfm.innerText = "VOTE RECORDED!";
-  }
-
   if (match.isOnline) {
-    if (!isHost) {
-      peerConnections[0].send({ type: "CAST_VOTE", cardIdx: myCardVoteIndex });
-    } else {
-      updateCardVoteCounts();
-      setTimeout(tallyAndLaunchVice, 1800);
-    }
+    if (!isHost) peerConnections[0].send({ type: "CAST_VOTE", cardIdx: myCardVoteIndex });
+    else { updateCardVoteCounts(); setTimeout(tallyAndLaunchVice, 1500); }
   } else {
     chosenViceCard = currentDrawnCards[myCardVoteIndex];
     document.getElementById("viceVoteModal").classList.add("hidden");
@@ -1836,36 +1511,27 @@ function confirmMyCardVote() {
 
 function requestCardReshuffle() {
   sfx.jump();
-  const items = document.querySelectorAll(".card-item");
-  items.forEach(it => it.classList.add("shuffle-spin"));
-
-  setTimeout(() => {
-    const shuffled = [...ALL_VICE_CARDS].sort(() => 0.5 - Math.random());
-    currentDrawnCards = shuffled.slice(0, 3);
-    cardVotes = [0, 0, 0];
-    if (match.isOnline && isHost) broadcastViceCardShuffle();
-    openViceCardVoteUI();
-  }, 400);
+  const shuffled = [...ALL_VICE_CARDS].sort(() => 0.5 - Math.random());
+  currentDrawnCards = shuffled.slice(0, 3);
+  cardVotes = [0, 0, 0];
+  if (match.isOnline && isHost) broadcastViceCardShuffle();
+  openViceCardVoteUI();
 }
 
 function tallyAndLaunchVice() {
-  let highestVotes = -1;
-  let winningIdx = 0;
+  let highest = -1; let winIdx = 0;
   for (let i = 0; i < 3; i++) {
-    if (cardVotes[i] > highestVotes) {
-      highestVotes = cardVotes[i];
-      winningIdx = i;
-    }
+    if (cardVotes[i] > highest) { highest = cardVotes[i]; winIdx = i; }
   }
-  chosenViceCard = currentDrawnCards[winningIdx];
+  chosenViceCard = currentDrawnCards[winIdx];
   document.getElementById("viceVoteModal").classList.add("hidden");
   launchGame();
 }
 
 function launchGame() {
   match.isOnline = (pendingModeContext === "online");
-  match.scores = [0, 0]; match.sets = [0, 0];
-  match.currentSet = 1; match.over = false;
+  match.scores = [0, 0]; match.sets = [0, 0]; match.over = false;
+  isTsunamiTriggered = false; isPlatformerActive = false;
 
   configureActiveCourtPlayers();
   updateCrabSprites();
@@ -1875,87 +1541,42 @@ function launchGame() {
   resetTipOff();
   playModeMusic();
 
-  if (match.isOnline && isHost) {
-    broadcastStartGame();
-  }
-
-  if (chosenViceCard) {
-    showToast(`VICE: ${chosenViceCard.title}! 🌴`, 2.5);
-  }
+  if (match.isOnline && isHost) broadcastStartGame();
+  if (chosenViceCard) showToast(`VICE: ${chosenViceCard.title}! 🌴`, 2.5);
 }
 
 function configureActiveCourtPlayers() {
   players.forEach(p => p.activeInGame = false);
-
   if (!match.isOnline) {
-    players[0].activeInGame = true;
-    players[0].team = 1;
-    players[1].activeInGame = true;
-    players[1].isBot = true; players[1].name = "BOT-1"; players[1].team = 2;
-    players[2].activeInGame = true;
-    players[2].isBot = true; players[2].name = "BOT-TEAM"; players[2].team = 1;
-    players[3].activeInGame = true;
-    players[3].isBot = true; players[3].name = "BOT-2"; players[3].team = 2;
+    players[0].activeInGame = true; players[0].team = 1;
+    players[1].activeInGame = true; players[1].isBot = true; players[1].name = "CHILL-BOT 1"; players[1].team = 2;
+    players[2].activeInGame = true; players[2].isBot = true; players[2].name = "CHILL-BOT BLUE"; players[2].team = 1;
+    players[3].activeInGame = true; players[3].isBot = true; players[3].name = "CHILL-BOT 2"; players[3].team = 2;
   } else {
     players.forEach((p, idx) => {
-      if (idx === match.myPlayerIndex || peersConnected[idx]) {
-        p.activeInGame = true;
-        p.isBot = false;
-      }
+      if (idx === match.myPlayerIndex || peersConnected[idx]) { p.activeInGame = true; p.isBot = false; }
     });
-
     if (fillEmptyWithBots) {
-      let nextSlot = 0;
-      while (nextSlot < 4) {
-        if (!players[nextSlot].activeInGame) {
-          const t1Now = players.filter(p => p.activeInGame && p.team === 1).length;
-          const t2Now = players.filter(p => p.activeInGame && p.team === 2).length;
-          if (t1Now < 2) {
-            players[nextSlot].activeInGame = true;
-            players[nextSlot].isBot = true;
-            players[nextSlot].team = 1;
-            players[nextSlot].name = "BOT-BLUE";
-          } else if (t2Now < 2) {
-            players[nextSlot].activeInGame = true;
-            players[nextSlot].isBot = true;
-            players[nextSlot].team = 2;
-            players[nextSlot].name = "BOT-RED";
-          }
-        }
-        nextSlot++;
-      }
+      players.forEach((p, idx) => {
+        if (!p.activeInGame) { p.activeInGame = true; p.isBot = true; p.name = `BOT-${idx + 1}`; }
+      });
     }
   }
 
-  let t1Idx = 0; let t2Idx = 0;
+  let t1 = 0; let t2 = 0;
   players.forEach(p => {
     if (p.activeInGame) {
-      if (p.team === 1) {
-        p.x = (t1Idx === 0) ? 260 : 540;
-        t1Idx++;
-      } else {
-        p.x = (t2Idx === 0) ? 1340 : 1060;
-        t2Idx++;
-      }
+      if (p.team === 1) { p.x = (t1 === 0) ? 260 : 540; t1++; }
+      else { p.x = (t2 === 0) ? 1340 : 1060; t2++; }
     }
   });
-}
-
-function backToLobbyOrMenu() {
-  document.getElementById("submodeModal").classList.add("hidden");
-  document.getElementById("viceVoteModal").classList.add("hidden");
-  if (match.isOnline) {
-    document.getElementById("socialLobbyModal").classList.remove("hidden");
-  } else {
-    document.getElementById("menuPanel").classList.remove("hidden");
-  }
 }
 
 function quitToMenu() {
   document.getElementById("game-section").classList.add("hidden");
   document.getElementById("socialLobbyModal").classList.add("hidden");
   document.getElementById("menuPanel").classList.remove("hidden");
-  isPlatformerActive = false;
+  isPlatformerActive = false; isTsunamiTriggered = false;
   stopAllMusic();
   pickRandomSassyQuote();
 }
@@ -1968,12 +1589,11 @@ function openOnlineLobby() {
 function startHostGameSetup() {
   showSubmodeSelect('online');
   if (isHost) {
-    const msg = { type: "SCREEN_CHANGE", screen: "submode" };
-    peerConnections.forEach(c => { if (c && c.open) c.send(msg); });
+    peerConnections.forEach(c => { if (c && c.open) c.send({ type: "SCREEN_CHANGE", screen: "submode" }); });
   }
 }
 
-// MULTIPLAYER WEBRTC
+// WEBRTC PEER CONNECTION
 let peer = null;
 let isHost = false;
 const peerConnections = [];
@@ -1996,7 +1616,6 @@ function hostRoom() {
       document.getElementById("menuPanel").classList.add("hidden");
       document.getElementById("socialLobbyModal").classList.remove("hidden");
       document.getElementById("hostStartMatchBtn").classList.remove("hidden");
-      document.getElementById("botOptionRow").classList.remove("hidden");
       refreshLobbyUI();
     });
 
@@ -2009,7 +1628,6 @@ function hostRoom() {
 
       peersConnected[slot] = true;
       peerConnections[slot] = conn;
-
       players[slot].team = (slot % 2 === 0) ? 1 : 2;
       players[slot].isBot = false;
       players[slot].name = `PLAYER-${slot + 1}`;
@@ -2017,8 +1635,7 @@ function hostRoom() {
       conn.on("open", () => {
         conn.send({
           type: "WELCOME", assignedSlot: slot,
-          playersData: players.map(p => ({ name: p.name, hat: p.hat, team: p.team, spriteType: p.spriteType, isBot: p.isBot })),
-          fillBots: fillEmptyWithBots
+          playersData: players.map(p => ({ name: p.name, hat: p.hat, team: p.team, spriteType: p.spriteType, isBot: p.isBot }))
         });
         refreshLobbyUI();
         broadcastPlayerCustoms();
@@ -2026,29 +1643,18 @@ function hostRoom() {
 
       conn.on("data", (data) => {
         if (data.type === "UPDATE_CUSTOMS") {
-          players[slot].name = sanitizePlayerName(data.name, `P${slot + 1}`);
-          players[slot].hat = data.hat;
-          players[slot].team = data.team;
-          players[slot].spriteType = data.spriteType;
-          refreshLobbyUI();
-          broadcastPlayerCustoms();
+          players[slot].name = data.name; players[slot].hat = data.hat;
+          players[slot].team = data.team; players[slot].spriteType = data.spriteType;
+          refreshLobbyUI(); broadcastPlayerCustoms();
         }
-        if (data.type === "VOTE_SUBMODE") {
-          executeSubmodeSelect(data.mode);
-        }
-        if (data.type === "CAST_VOTE") {
-          cardVotes[data.cardIdx]++;
-          updateCardVoteCounts();
-        }
-        if (data.type === "INPUT") {
-          updatePlayer(players[slot], data.input, 0.03);
-        }
+        if (data.type === "VOTE_SUBMODE") executeSubmodeSelect(data.mode);
+        if (data.type === "CAST_VOTE") { cardVotes[data.cardIdx]++; updateCardVoteCounts(); }
+        if (data.type === "INPUT") updatePlayer(players[slot], data.input, 0.03);
       });
 
       conn.on("close", () => {
         peersConnected[slot] = false;
-        refreshLobbyUI();
-        broadcastPlayerCustoms();
+        refreshLobbyUI(); broadcastPlayerCustoms();
       });
     });
   } catch(e) {}
@@ -2057,9 +1663,9 @@ function hostRoom() {
 function joinRoom() {
   sfx.init();
   const code = document.getElementById("joinCodeInput").value.trim().toUpperCase();
-  if (!code) { alert("Please enter the Room Code (e.g. CRAB-1234)!"); return; }
-
+  if (!code) return;
   document.getElementById("netStatus").innerText = "Connecting to " + code + "...";
+
   try {
     peer = new Peer();
     peer.on("open", () => {
@@ -2069,18 +1675,15 @@ function joinRoom() {
         peerConnections[0] = conn;
         document.getElementById("menuPanel").classList.add("hidden");
         document.getElementById("socialLobbyModal").classList.remove("hidden");
-        document.getElementById("botOptionRow").classList.add("hidden");
       });
 
       conn.on("data", (data) => {
         if (data.type === "WELCOME") {
           match.myPlayerIndex = data.assignedSlot;
           document.getElementById("myCodeText").innerText = code;
-          fillEmptyWithBots = data.fillBots;
           data.playersData.forEach((pd, i) => {
             players[i].name = pd.name; players[i].hat = pd.hat;
             players[i].team = pd.team; players[i].spriteType = pd.spriteType;
-            players[i].isBot = pd.isBot;
           });
           refreshLobbyUI();
         }
@@ -2088,166 +1691,104 @@ function joinRoom() {
           data.playersData.forEach((pd, i) => {
             players[i].name = pd.name; players[i].hat = pd.hat;
             players[i].team = pd.team; players[i].spriteType = pd.spriteType;
-            players[i].isBot = pd.isBot;
           });
           refreshLobbyUI();
         }
-        if (data.type === "SYNC_BOT_SETTING") {
-          fillEmptyWithBots = data.fillBots;
-        }
-        if (data.type === "SCREEN_CHANGE") {
-          if (data.screen === "submode") showSubmodeSelect('online');
-        }
+        if (data.type === "SCREEN_CHANGE" && data.screen === "submode") showSubmodeSelect('online');
         if (data.type === "SHUFFLE_VICE_CARDS") {
-          currentDrawnCards = data.cards;
-          cardVotes = [0, 0, 0];
+          currentDrawnCards = data.cards; cardVotes = [0, 0, 0];
           document.getElementById("submodeModal").classList.add("hidden");
-          document.getElementById("socialLobbyModal").classList.add("hidden");
           openViceCardVoteUI();
         }
-        if (data.type === "UPDATE_VOTES") {
-          cardVotes = data.votes;
-          for (let i = 0; i < 3; i++) {
-            const vEl = document.getElementById(`voteCount${i}`);
-            if (vEl) vEl.innerText = `VOTES: ${cardVotes[i]}`;
-          }
-        }
         if (data.type === "START_GAME") {
-          activeGameMode = data.mode;
-          chosenViceCard = data.card;
-          fillEmptyWithBots = data.fillBots;
-          configureActiveCourtPlayers();
-          updateCrabSprites();
+          activeGameMode = data.mode; chosenViceCard = data.card;
+          configureActiveCourtPlayers(); updateCrabSprites();
           document.getElementById("socialLobbyModal").classList.add("hidden");
-          document.getElementById("submodeModal").classList.add("hidden");
           document.getElementById("viceVoteModal").classList.add("hidden");
           document.getElementById("game-section").classList.remove("hidden");
-          resetTipOff();
-          playModeMusic();
+          resetTipOff(); playModeMusic();
         }
         if (data.type === "SYNC") {
           for (let i = 0; i < 4; i++) {
             if (i !== match.myPlayerIndex) {
-              players[i].x = data.players[i].x;
-              players[i].y = data.players[i].y;
+              players[i].x = data.players[i].x; players[i].y = data.players[i].y;
               players[i].angle = data.players[i].angle;
             }
           }
-          ball.x = data.ball.x; ball.y = data.ball.y; ball.rot = data.ball.rot;
+          ball.x = data.ball.x; ball.y = data.ball.y;
           match.scores = data.scores; match.sets = data.sets;
         }
       });
-
-      setInterval(() => {
-        if (conn && conn.open) {
-          conn.send({
-            type: "INPUT",
-            input: {
-              left: keys["KeyA"] || false,
-              right: keys["KeyD"] || false,
-              rotLeft: keys["ArrowLeft"] || false,
-              rotRight: keys["ArrowRight"] || false,
-              jump: keys["Space"] || false
-            }
-          });
-        }
-      }, 33);
     });
   } catch(e) {}
 }
 
 function broadcastPlayerCustoms() {
-  if (!isHost) {
-    if (peerConnections[0] && peerConnections[0].open) {
-      peerConnections[0].send({
-        type: "UPDATE_CUSTOMS",
-        name: players[match.myPlayerIndex].name,
-        hat: players[match.myPlayerIndex].hat,
-        team: players[match.myPlayerIndex].team,
-        spriteType: players[match.myPlayerIndex].spriteType
-      });
-    }
-  } else {
-    const msg = {
-      type: "SYNC_CUSTOMS",
-      playersData: players.map(p => ({ name: p.name, hat: p.hat, team: p.team, spriteType: p.spriteType, isBot: p.isBot }))
-    };
-    peerConnections.forEach(c => { if (c && c.open) c.send(msg); });
-  }
+  const msg = {
+    type: isHost ? "SYNC_CUSTOMS" : "UPDATE_CUSTOMS",
+    playersData: players.map(p => ({ name: p.name, hat: p.hat, team: p.team, spriteType: p.spriteType, isBot: p.isBot })),
+    name: players[match.myPlayerIndex].name, hat: players[match.myPlayerIndex].hat,
+    team: players[match.myPlayerIndex].team, spriteType: players[match.myPlayerIndex].spriteType
+  };
+  peerConnections.forEach(c => { if (c && c.open) c.send(msg); });
 }
 
 function broadcastViceCardShuffle() {
-  const msg = { type: "SHUFFLE_VICE_CARDS", cards: currentDrawnCards };
-  peerConnections.forEach(c => { if (c && c.open) c.send(msg); });
+  peerConnections.forEach(c => { if (c && c.open) c.send({ type: "SHUFFLE_VICE_CARDS", cards: currentDrawnCards }); });
 }
 
 function updateCardVoteCounts() {
   for (let i = 0; i < 3; i++) {
-    const vEl = document.getElementById(`voteCount${i}`);
-    if (vEl) vEl.innerText = `VOTES: ${cardVotes[i]}`;
+    const el = document.getElementById(`voteCount${i}`);
+    if (el) el.innerText = `VOTES: ${cardVotes[i]}`;
   }
-  const msg = { type: "UPDATE_VOTES", votes: cardVotes };
-  peerConnections.forEach(c => { if (c && c.open) c.send(msg); });
 }
 
 function broadcastStartGame() {
-  const msg = { type: "START_GAME", mode: activeGameMode, card: chosenViceCard, fillBots: fillEmptyWithBots };
-  peerConnections.forEach(c => { if (c && c.open) c.send(msg); });
-}
-
-function copyRoomCode() {
-  navigator.clipboard.writeText(document.getElementById("myCodeText").innerText);
-  document.getElementById("copyBtn").innerText = "COPIED!";
-  setTimeout(() => {
-    const btn = document.getElementById("copyBtn");
-    if (btn) btn.innerText = "COPY";
-  }, 1500);
+  peerConnections.forEach(c => { if (c && c.open) c.send({ type: "START_GAME", mode: activeGameMode, card: chosenViceCard }); });
 }
 
 function broadcastGameState() {
   const data = {
     type: "SYNC",
     players: players.map(p => ({ x: p.x, y: p.y, angle: p.angle })),
-    ball: { x: ball.x, y: ball.y, rot: ball.rot },
-    scores: match.scores,
-    sets: match.sets
+    ball: { x: ball.x, y: ball.y }, scores: match.scores, sets: match.sets
   };
-  peerConnections.forEach(c => {
-    if (c && c.open) c.send(data);
-  });
+  peerConnections.forEach(c => { if (c && c.open) c.send(data); });
 }
 
-// BULLETPROOF EVENT LISTENERS REGISTRATION
+// BIND UI LISTENERS
 function bindUIEvents() {
-  const get = (id) => document.getElementById(id);
-
-  if (get("playSoloBtn")) get("playSoloBtn").addEventListener("click", () => showSubmodeSelect('solo'));
-  if (get("onlineLobbyBtn")) get("onlineLobbyBtn").addEventListener("click", () => openOnlineLobby());
-  if (get("openBagBtn")) get("openBagBtn").addEventListener("click", () => openLockerRoom());
-  if (get("closeBagBtn")) get("closeBagBtn").addEventListener("click", () => closeLockerRoom());
-  if (get("muteAudioBtn")) get("muteAudioBtn").addEventListener("click", () => toggleMuteAudio());
-  if (get("hostBtn")) get("hostBtn").addEventListener("click", () => hostRoom());
-  if (get("joinBtn")) get("joinBtn").addEventListener("click", () => joinRoom());
-  if (get("copyBtn")) get("copyBtn").addEventListener("click", () => copyRoomCode());
-  if (get("joinTeam1Btn")) get("joinTeam1Btn").addEventListener("click", () => switchTeam(1));
-  if (get("joinTeam2Btn")) get("joinTeam2Btn").addEventListener("click", () => switchTeam(2));
-  if (get("fillBotsCheck")) get("fillBotsCheck").addEventListener("change", () => toggleBotFill());
-  if (get("playerNameInput")) get("playerNameInput").addEventListener("change", () => updateMyCustoms());
-  if (get("hatSelect")) get("hatSelect").addEventListener("change", () => updateMyCustoms());
-  if (get("unlockSecretBtn")) get("unlockSecretBtn").addEventListener("click", () => applySecretCode());
-  if (get("leaveLobbyBtn")) get("leaveLobbyBtn").addEventListener("click", () => quitToMenu());
-  if (get("hostStartMatchBtn")) get("hostStartMatchBtn").addEventListener("click", () => startHostGameSetup());
-  if (get("standardModeBtn")) get("standardModeBtn").addEventListener("click", () => voteOrSelectSubmode('standard'));
-  if (get("viceModeBtn")) get("viceModeBtn").addEventListener("click", () => voteOrSelectSubmode('vice'));
-  if (get("backFromSubmodeBtn")) get("backFromSubmodeBtn").addEventListener("click", () => backToLobbyOrMenu());
-  if (get("reshuffleBtn")) get("reshuffleBtn").addEventListener("click", () => requestCardReshuffle());
-  if (get("confirmCardBtn")) get("confirmCardBtn").addEventListener("click", () => confirmMyCardVote());
-  if (get("quitMatchBtn")) get("quitMatchBtn").addEventListener("click", () => quitToMenu());
-  if (get("quipPackSelect")) get("quipPackSelect").addEventListener("change", () => saveCareerSettings());
-  if (get("explosionSelect")) get("explosionSelect").addEventListener("change", () => saveCareerSettings());
+  const get = id => document.getElementById(id);
+  if (get("playSoloBtn")) get("playSoloBtn").onclick = () => showSubmodeSelect('solo');
+  if (get("onlineLobbyBtn")) get("onlineLobbyBtn").onclick = () => openOnlineLobby();
+  if (get("openBagBtn")) get("openBagBtn").onclick = () => { loadCareer(); get("menuPanel").classList.add("hidden"); get("lockerModal").classList.remove("hidden"); };
+  if (get("closeBagBtn")) get("closeBagBtn").onclick = () => { get("lockerModal").classList.add("hidden"); get("menuPanel").classList.remove("hidden"); };
+  if (get("hostBtn")) get("hostBtn").onclick = () => hostRoom();
+  if (get("joinBtn")) get("joinBtn").onclick = () => joinRoom();
+  if (get("muteAudioBtn")) get("muteAudioBtn").onclick = () => toggleMuteAudio();
+  if (get("copyBtn")) get("copyBtn").onclick = () => {
+    navigator.clipboard.writeText(get("myCodeText").innerText);
+    get("copyBtn").innerText = "COPIED!";
+    setTimeout(() => get("copyBtn").innerText = "COPY", 1200);
+  };
+  if (get("joinTeam1Btn")) get("joinTeam1Btn").onclick = () => switchTeam(1);
+  if (get("joinTeam2Btn")) get("joinTeam2Btn").onclick = () => switchTeam(2);
+  if (get("fillBotsCheck")) get("fillBotsCheck").onchange = () => toggleBotFill();
+  if (get("playerNameInput")) get("playerNameInput").onchange = () => updateMyCustoms();
+  if (get("hatSelect")) get("hatSelect").onchange = () => updateMyCustoms();
+  if (get("unlockSecretBtn")) get("unlockSecretBtn").onclick = () => applySecretCode();
+  if (get("leaveLobbyBtn")) get("leaveLobbyBtn").onclick = () => quitToMenu();
+  if (get("hostStartMatchBtn")) get("hostStartMatchBtn").onclick = () => startHostGameSetup();
+  if (get("standardModeBtn")) get("standardModeBtn").onclick = () => voteOrSelectSubmode('standard');
+  if (get("viceModeBtn")) get("viceModeBtn").onclick = () => voteOrSelectSubmode('vice');
+  if (get("backFromSubmodeBtn")) get("backFromSubmodeBtn").onclick = () => { get("submodeModal").classList.add("hidden"); get("menuPanel").classList.remove("hidden"); };
+  if (get("reshuffleBtn")) get("reshuffleBtn").onclick = () => requestCardReshuffle();
+  if (get("confirmCardBtn")) get("confirmCardBtn").onclick = () => confirmMyCardVote();
+  if (get("quitMatchBtn")) get("quitMatchBtn").onclick = () => quitToMenu();
 }
 
-// SAFE INITIALIZATION AT STARTUP
+// INITIALIZATION
 window.addEventListener("DOMContentLoaded", () => {
   bindUIEvents();
   loadCareer();
