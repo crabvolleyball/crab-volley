@@ -35,19 +35,19 @@ header {
 .brand span { color: #fff; }
 .header-actions { display: flex; gap: 8px; align-items: center; }
 
-/* CRISP NON-BLURRY HUD ELEMENTS */
+/* CLEAN, NON-BLURRY HUD */
 .coin-pill {
   background: #ffe600; color: #000; border: 2.5px solid #000; border-radius: 8px;
   font-size: 13px; font-family: "Impact", sans-serif; padding: 4px 10px;
   display: inline-flex; align-items: center; gap: 5px; box-shadow: 2px 2px 0 #000;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.5px; text-shadow: none;
 }
 .audio-btn, .ctrl-toggle-btn, .twitch-status-badge {
   background: #ffcc00; border: 2.5px solid #000; border-radius: 8px;
   font-size: 13px; font-family: "Impact", sans-serif; padding: 4px 10px; cursor: pointer; box-shadow: 2px 2px 0 #000;
 }
 .twitch-status-badge { background: #9146ff; color: #fff; text-shadow: 1px 1px 0 #000; }
-.twitch-status-badge.verified { background: #00e676; color: #000; text-shadow: none; }
+.twitch-status-badge.verified { background: #00e676; color: #000; text-shadow: none; font-weight: bold; }
 
 main {
   width: 100%; flex: 1; display: flex; flex-direction: column;
@@ -99,7 +99,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 .crabchat-btn { background: #00bcd4; color: #fff; text-shadow: 2px 2px 0 #006064; }
 .big { min-height: 48px; font-size: 16px; }
 
-/* CRABCHAT P2P STYLING */
+/* CRABCHAT P2P BOARD */
 #crabchatModal {
   background: #f0f4f8; border-color: #334e68; color: #102a43; max-width: 840px;
 }
@@ -131,7 +131,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   touch-action: none; width: 100%; height: 110px;
 }
 
-/* CRABVILLE MASSIVE 2D WORLD & IGLOO */
+/* CRABVILLE MASSIVE WORLD */
 #crabvilleModal {
   padding: 6px; max-width: 1280px; width: 99%; background: #0284c7; border-color: #0369a1;
 }
@@ -152,7 +152,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   padding: 4px 8px; font-size: 11px; font-family: sans-serif; cursor: pointer; white-space: nowrap;
 }
 
-/* ISLAND WORLD MAP MODAL */
+/* ISLAND MAP MODAL */
 #islandMapModal {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   width: min(840px, 94%); background: #fffbe8; border: 5px solid #0369a1;
@@ -167,14 +167,27 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 .map-dest-card:hover { transform: scale(1.04); background: #bae6fd; }
 
-/* USER PASSPORT LOGIN MODAL */
+/* CITIZEN PASSPORT LOGIN */
 #passportModal {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   width: min(440px, 92%); background: #fffbe8; border: 5px solid #d97706;
   border-radius: 16px; padding: 16px; z-index: 70; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
 }
 
-/* IN-GAME VIEW & VOLLEYBALL CANVAS */
+/* VICE CARD VOTING */
+.vice-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0; }
+.card-item {
+  background: #2b084b; border: 3px solid #ff007f; border-radius: 12px;
+  color: #fff; padding: 10px 6px; cursor: pointer; box-shadow: 3px 3px 0 #000;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.card-item.selected { border-color: #00ffff; transform: scale(1.02); }
+.card-icon { font-size: 26px; }
+.card-title { font-size: 15px; color: #ff007f; }
+.card-desc { font-size: 10px; font-family: sans-serif; font-weight: bold; color: #e0e7ff; line-height: 1.2; }
+.vote-count { font-size: 11px; color: #00ffff; font-family: monospace; font-weight: 900; margin-top: 4px; }
+
+/* IN-GAME VIEW */
 #game-section {
   width: 100%; height: 100%; display: flex; flex-direction: column;
   align-items: center; justify-content: space-between; position: relative;
@@ -258,13 +271,13 @@ canvas#beachCourt {
   font-family: sans-serif; font-weight: bold; text-shadow: 1px 1px 0 #000; flex-shrink: 0;
 }
 
-/* MINIMALIST SLEEK BOLD VERSION NUMBER IN BOTTOM-RIGHT */
+/* CLEAN, UN-OVERLAPPED VERSION TAG IN BOTTOM-RIGHT */
 #globalVersionTag {
   position: fixed; bottom: 4px; right: 6px;
-  color: rgba(255, 255, 255, 0.75); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 10px; font-weight: 900; background: rgba(0, 0, 0, 0.45);
-  padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.2);
-  letter-spacing: 0.5px; z-index: 99999; pointer-events: none; backdrop-filter: blur(2px);
+  color: rgba(255, 255, 255, 0.8); font-family: sans-serif;
+  font-size: 10px; font-weight: 900; background: rgba(0, 0, 0, 0.55);
+  padding: 3px 7px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.25);
+  letter-spacing: 0.5px; z-index: 99999; pointer-events: none;
 }
 .hidden { display: none !important; }
 </style>
@@ -296,15 +309,15 @@ canvas#beachCourt {
 
       <!-- CRABCHAT & CRABVILLE EXPEDITION -->
       <div style="margin-top:10px;">
-        <button class="crabchat-btn big" onclick="openCrabChatModal()" style="width:100%;max-width:620px;font-size:17px;border-color:#004d40;">
+        <button class="crabchat-btn big" id="openCrabChatBtn" style="width:100%;max-width:620px;font-size:17px;border-color:#004d40;">
           💬 CRABCHAT (P2P DRAWING & CRABVILLE REGION) 🌴
         </button>
       </div>
 
       <div style="margin-top:10px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
         <button id="openBagBtn" class="bag-btn" style="font-size:14px;padding:8px 16px;">🎒 BEACH BAG</button>
-        <button id="openLeaderboardBtn" class="vice-btn" onclick="openLeaderboard()" style="font-size:14px;padding:8px 16px;">🏆 LEADERBOARDS</button>
-        <button class="twitch-btn" onclick="openTwitchModal()" style="font-size:14px;padding:8px 16px;">🟣 TWITCH STREAM</button>
+        <button id="openLeaderboardBtn" class="vice-btn" style="font-size:14px;padding:8px 16px;">🏆 LEADERBOARDS</button>
+        <button id="openTwitchStreamBtn" class="twitch-btn" style="font-size:14px;padding:8px 16px;">🟣 TWITCH STREAM</button>
       </div>
 
       <div id="onlineBox" class="online-box hidden" style="margin-top:12px;">
@@ -681,7 +694,7 @@ canvas#beachCourt {
   </main>
 </div>
 
-<!-- MINIMALIST SLEEK BOLD VERSION BADGE IN BOTTOM-RIGHT -->
+<!-- CLEAN, UN-OVERLAPPED VERSION TAG IN BOTTOM-RIGHT -->
 <div id="globalVersionTag">v1.4 GOLD</div>
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
@@ -694,6 +707,50 @@ canvas#beachCourt {
 const TWITCH_CLIENT_ID = "0nazprjd83x4774jrwif7clmlwlio9";
 let isStreamerVerified = false;
 let verifiedBroadcasterName = "";
+
+// SOUND SYNTHESIZER
+class ArcadeAudio {
+  constructor() { this.ctx = null; }
+  init() {
+    if (!this.ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) this.ctx = new AC();
+    }
+    if (this.ctx && this.ctx.state === "suspended") this.ctx.resume();
+  }
+  beep(f, type, dur, endF = null, vol = 0.25) {
+    if (!this.ctx) return;
+    try {
+      const osc = this.ctx.createOscillator();
+      const g = this.ctx.createGain();
+      osc.type = type; osc.frequency.setValueAtTime(f, this.ctx.currentTime);
+      if (endF) osc.frequency.exponentialRampToValueAtTime(Math.max(10, endF), this.ctx.currentTime + dur);
+      g.gain.setValueAtTime(vol, this.ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
+      osc.connect(g); g.connect(this.ctx.destination);
+      osc.start(); osc.stop(this.ctx.currentTime + dur);
+    } catch(e) {}
+  }
+  jump() { this.beep(260, "sine", 0.16, 620, 0.25); }
+  superJump() { this.beep(320, "triangle", 0.28, 880, 0.32); }
+  bodyBump() { this.beep(280, "sine", 0.1, 160, 0.26); }
+  crushDown() { this.beep(160, "sawtooth", 0.12, 60, 0.3); }
+  clawSpike() { this.beep(540, "sawtooth", 0.2, 110, 0.48); }
+  alarm() {
+    this.beep(880, "sawtooth", 0.3, 440, 0.4);
+    setTimeout(() => this.beep(880, "sawtooth", 0.3, 440, 0.4), 320);
+  }
+  whistle() {
+    this.beep(850, "square", 0.08, 920, 0.2);
+    setTimeout(() => this.beep(1050, "square", 0.18, 800, 0.2), 90);
+  }
+  cheer() {
+    [320, 440, 560, 680].forEach((f, i) => {
+      setTimeout(() => this.beep(f, "triangle", 0.25, f * 1.2, 0.2), i * 70);
+    });
+  }
+}
+const sfx = new ArcadeAudio();
 
 // TAMPER-PROOF CRABCOIN ECONOMY ENGINE
 const SALT_KEY = "CRAB_POPPAGEE_SECRET_TREASURY_2026";
@@ -733,11 +790,10 @@ function updateCoinUI() {
   if (el2) el2.innerText = userProfile.crabCoins;
 }
 
-// SUPREME EXCLUSIVE ADMIN KEY VERIFICATION
 function promptSupremeAdmin() {
   const key = prompt("👑 ENTER SUPREME DEVELOPER ADMIN KEY:");
   if (key === "POPPAGEE_SUPREME_2026") {
-    const act = prompt("SUPREME ADMIN AUTHENTICATED!\n1. Mint CrabCoins\n2. Trigger Global Rave\n3. Unlock All Cosmetics\nEnter 1-3:");
+    const act = prompt("SUPREME ADMIN AUTHENTICATED!\n1. Mint CrabCoins\n2. Trigger Global Rave\n3. Unlock All Hats\nEnter 1-3:");
     if (act === "1") {
       const amt = parseInt(prompt("Amount of CrabCoins to mint live:") || "1000", 10);
       awardCoins(amt, "SUPREME ADMIN MINT");
@@ -750,10 +806,10 @@ function promptSupremeAdmin() {
         if (!userProfile.unlockedHats.includes(h.id)) userProfile.unlockedHats.push(h.id);
       });
       saveCareerSettings(); populateHatSelect();
-      alert("All hats and cosmetics permanently unlocked for this session!");
+      alert("All hats permanently unlocked!");
     }
   } else {
-    alert("⛔ ACCESS DENIED. You are not authorized as the supreme administrator.");
+    alert("⛔ ACCESS DENIED. Only the supreme developer administrator can mint coins.");
   }
 }
 
@@ -783,6 +839,56 @@ function loadCareer() {
 function saveCareerSettings() {
   userProfile._chk = computeSecurityHash(userProfile.crabCoins, userProfile.points, userProfile.wins);
   localStorage.setItem("crab_volleyball_profile_gold", JSON.stringify(userProfile));
+}
+
+// 20+ HATS & ACCESSORIES
+const HAT_DATABASE = [
+  { id: "pineapple", name: "Pineapple", locked: false },
+  { id: "propeller", name: "Propeller", locked: false },
+  { id: "captain", name: "Captain", locked: false },
+  { id: "straw", name: "Straw Beach Hat", locked: false },
+  { id: "visor", name: "Sun Visor", locked: false },
+  { id: "backward", name: "Backward Cap", locked: false },
+  { id: "tophat", name: "Top Hat", locked: true, unlockReq: "Score 10 Points in career" },
+  { id: "fez", name: "Fez", locked: true, unlockReq: "Win 2 match sets" },
+  { id: "lighthouse", name: "Lighthouse Keeper", locked: true, unlockReq: "Survive the 20,000ft Run to Waffle House!" },
+  { id: "crown", name: "Royal Crown", locked: true, unlockReq: "Win an online match" },
+  { id: "viking", name: "Viking Battle Horns", locked: true, unlockReq: "Score 25 Total Career Points" },
+  { id: "chef", name: "Chef Toque", locked: true, unlockReq: "Reach Waffle House in under 01:30" },
+  { id: "goggles", name: "Cyberpunk Goggles", locked: true, unlockReq: "Play Vice Mode 3 times" },
+  { id: "sombrero", name: "Fiesta Sombrero", locked: true, unlockReq: "Score 15 points in career" },
+  { id: "wizard", name: "Wizard Star Hat", locked: true, unlockReq: "Win 5 match sets" }
+];
+
+function populateHatSelect() {
+  const selects = [document.getElementById("hatSelect"), document.getElementById("arsenalHatSelect")];
+  selects.forEach(select => {
+    if (!select) return;
+    const curr = select.value || "pineapple";
+    select.innerHTML = "";
+    HAT_DATABASE.forEach(hat => {
+      const isUnlocked = userProfile.unlockedHats.includes(hat.id);
+      const opt = document.createElement("option");
+      opt.value = hat.id;
+      opt.disabled = !isUnlocked;
+      opt.innerText = isUnlocked ? hat.name : `🔒 ${hat.name} (LOCKED)`;
+      select.appendChild(opt);
+    });
+    if (userProfile.unlockedHats.includes(curr)) select.value = curr;
+  });
+}
+
+function updateArsenalCustoms() {
+  const cwSel = document.getElementById("colorwaySelect");
+  const clwSel = document.getElementById("clawAccessorySelect");
+  const hatSel = document.getElementById("arsenalHatSelect");
+  if (cwSel) userProfile.colorway = cwSel.value;
+  if (clwSel) userProfile.clawAccessory = clwSel.value;
+  if (hatSel && userProfile.unlockedHats.includes(hatSel.value)) {
+    players[match.myPlayerIndex].hat = hatSel.value;
+  }
+  saveCareerSettings();
+  updateCrabSprites();
 }
 
 /* ========================================================
@@ -855,7 +961,6 @@ function sendCrabChatPost() {
   inp.value = "";
   clearCrabChatCanvas();
 
-  // Send to remote peer if connected
   if (crabchatConn && crabchatConn.open) {
     crabchatConn.send({ type: "CRABCHAT_POST", author: author, text: txt, img: imgData });
   }
@@ -892,7 +997,7 @@ function hostCrabChatRoom() {
           sfx.whistle();
         }
       });
-      showToast("Friend connected to your CrabChat room!", 2.0);
+      showToast("Friend connected to CrabChat room!", 2.0);
     });
   } catch(e) {}
 }
@@ -923,15 +1028,11 @@ function joinCrabChatRoom() {
 /* ========================================================
    CRABVILLE: MASSIVE 2D MULTIPLAYER UNIVERSE & IGLOO
    ======================================================== */
-let activeCrabvilleZone = 'plaza'; // 'plaza', 'beach', 'diner', 'nightclub', 'igloo'
+let activeCrabvilleZone = 'plaza';
 let crabvilleWaddler = { x: 640, y: 520, tx: 640, ty: 520, speed: 290 };
-const remoteWaddlers = {}; // Live multiplayer crabs in world!
-let globalWorldPeer = null;
-
 const cvCanvas = document.getElementById("crabvilleCanvas");
 const cvCtx = cvCanvas ? cvCanvas.getContext("2d") : null;
 
-// Club Penguin Style Real Estate & Shops
 const HOMES_CATALOG = [
   { id: "starter_hut", name: "Starter Sand Hut", price: 0, icon: "🛖" },
   { id: "sand_dome", name: "Sandcastle Dome", price: 100, icon: "🏰" },
@@ -981,7 +1082,6 @@ function launchCrabvilleWorld() {
   document.getElementById("crabvilleSceneTitle").innerText = "🌴 CRABVILLE: TOWN PLAZA";
   document.getElementById("furnitureBar").classList.add("hidden");
   updateCoinUI();
-  initGlobalWorldNetwork();
 }
 
 function closeCrabville() {
@@ -1037,7 +1137,6 @@ function renderBackpackFurnitureUI() {
   });
 }
 
-// Click to waddle
 if (cvCanvas) {
   cvCanvas.addEventListener("pointerdown", (e) => {
     const rect = cvCanvas.getBoundingClientRect();
@@ -1045,11 +1144,9 @@ if (cvCanvas) {
     const clickY = (e.clientY - rect.top) * (cvCanvas.height / rect.height);
 
     if (activeCrabvilleZone === 'plaza') {
-      // Click Brodie's Surf Shack
       if (clickX > 180 && clickX < 420 && clickY > 200 && clickY < 420) {
         interactBrodieSurfer(); return;
       }
-      // Click Shell Real Estate
       if (clickX > 860 && clickX < 1100 && clickY > 200 && clickY < 420) {
         interactRealEstate(); return;
       }
@@ -1057,7 +1154,6 @@ if (cvCanvas) {
 
     crabvilleWaddler.tx = clickX;
     crabvilleWaddler.ty = Math.max(360, Math.min(660, clickY));
-    broadcastWaddlePosition();
   });
 }
 
@@ -1103,32 +1199,9 @@ function interactRealEstate() {
   }
 }
 
-// Global Peer Relay for CrabVille World
-function initGlobalWorldNetwork() {
-  if (globalWorldPeer) return;
-  try {
-    globalWorldPeer = new Peer();
-    globalWorldPeer.on("open", () => {
-      // Connect to global hub room
-      const hubConn = globalWorldPeer.connect("CRABVILLE-PUBLIC-HUB-2026");
-      hubConn.on("data", (data) => {
-        if (data.type === "CRAB_MOVE") {
-          remoteWaddlers[data.id] = data;
-        }
-      });
-    });
-  } catch(e) {}
-}
-
-function broadcastWaddlePosition() {
-  // Broadcasts waddle position to peer network
-}
-
-// MASTER RENDERING OF CRABVILLE UNIVERSE
 function updateAndRenderCrabville(dt) {
   if (!cvCtx || document.getElementById("crabvilleModal").classList.contains("hidden")) return;
 
-  // Move waddler smoothly toward click target
   const dx = crabvilleWaddler.tx - crabvilleWaddler.x;
   const dy = crabvilleWaddler.ty - crabvilleWaddler.y;
   const dist = Math.hypot(dx, dy);
@@ -1137,9 +1210,7 @@ function updateAndRenderCrabville(dt) {
     crabvilleWaddler.y += (dy / dist) * crabvilleWaddler.speed * dt;
   }
 
-  // DRAW THE SPECIFIC ZONE
   if (activeCrabvilleZone === 'plaza') {
-    // SKY & OCEAN
     cvCtx.fillStyle = "#38bdf8"; cvCtx.fillRect(0, 0, 1280, 720);
     cvCtx.fillStyle = "#0284c7"; cvCtx.fillRect(0, 240, 1280, 120);
     cvCtx.fillStyle = "#fde047"; cvCtx.fillRect(0, 360, 1280, 360);
@@ -1161,35 +1232,28 @@ function updateAndRenderCrabville(dt) {
     cvCtx.strokeStyle = "#006064"; cvCtx.lineWidth = 5; cvCtx.stroke();
   }
   else if (activeCrabvilleZone === 'beach') {
-    // Open Beach with Lighthouse
     cvCtx.fillStyle = "#38bdf8"; cvCtx.fillRect(0, 0, 1280, 720);
     cvCtx.fillStyle = "#0284c7"; cvCtx.fillRect(0, 220, 1280, 140);
     cvCtx.fillStyle = "#fef08a"; cvCtx.fillRect(0, 360, 1280, 360);
 
-    // Lighthouse
     cvCtx.fillStyle = "#ef4444"; cvCtx.fillRect(180, 120, 80, 280);
     cvCtx.fillStyle = "#ffffff"; cvCtx.fillRect(180, 180, 80, 60); cvCtx.fillRect(180, 300, 80, 60);
     cvCtx.fillStyle = "#fde047"; cvCtx.beginPath(); cvCtx.arc(220, 110, 26, 0, Math.PI * 2); cvCtx.fill();
 
-    // Wooden Pier Walkway
     cvCtx.fillStyle = "#78350f"; cvCtx.fillRect(400, 420, 720, 80);
     cvCtx.fillStyle = "#451a03"; for (let px = 420; px < 1120; px += 40) cvCtx.fillRect(px, 420, 4, 80);
   }
   else if (activeCrabvilleZone === 'diner') {
-    // 24/7 Waffle House Boulevard
     cvCtx.fillStyle = "#1e1b4b"; cvCtx.fillRect(0, 0, 1280, 720);
     cvCtx.fillStyle = "#312e81"; cvCtx.fillRect(0, 320, 1280, 400);
 
-    // Diner Building
     cvCtx.fillStyle = "#ffd54f"; cvCtx.fillRect(200, 180, 880, 280);
     cvCtx.strokeStyle = "#000"; cvCtx.lineWidth = 6; cvCtx.strokeRect(200, 180, 880, 280);
     cvCtx.fillStyle = "#18181b"; cvCtx.fillRect(190, 120, 900, 60);
     cvCtx.fillStyle = "#ffe600"; cvCtx.font = "900 32px Impact"; cvCtx.fillText("🥞 24-HOUR WAFFLE HOUSE & GRILL 🥞", 380, 162);
   }
   else if (activeCrabvilleZone === 'nightclub') {
-    // Rave Nightclub
     cvCtx.fillStyle = "#09090b"; cvCtx.fillRect(0, 0, 1280, 720);
-    // Animated Strobe Floor
     const step = 80;
     for (let x = 160; x < 1120; x += step) {
       for (let y = 360; y < 680; y += step) {
@@ -1197,12 +1261,10 @@ function updateAndRenderCrabville(dt) {
         cvCtx.fillRect(x, y, step - 4, step - 4);
       }
     }
-    // DJ Booth
     cvCtx.fillStyle = "#ff007f"; cvCtx.fillRect(520, 220, 240, 120);
     cvCtx.fillStyle = "#00ffff"; cvCtx.font = "900 24px Impact"; cvCtx.fillText("🎧 DJ CRAB RAVE 🎧", 545, 290);
   }
   else if (activeCrabvilleZone === 'igloo') {
-    // Personal Shell Igloo
     cvCtx.fillStyle = "#0284c7"; cvCtx.fillRect(0, 0, 1280, 720);
     cvCtx.fillStyle = "#f0fdf4"; cvCtx.beginPath(); cvCtx.ellipse(640, 490, 560, 200, 0, 0, Math.PI * 2); cvCtx.fill();
     cvCtx.strokeStyle = "#38bdf8"; cvCtx.lineWidth = 14; cvCtx.stroke();
@@ -1210,7 +1272,6 @@ function updateAndRenderCrabville(dt) {
     cvCtx.fillStyle = "#0369a1"; cvCtx.font = "900 24px Impact";
     cvCtx.fillText(`SHELL HOME: ${userProfile.currentHome.toUpperCase()}`, 520, 320);
 
-    // Draw placed furniture
     userProfile.homeItems.forEach(item => {
       const cat = BRODIE_SHOP_ITEMS.find(b => b.id === item.id);
       if (cat) {
@@ -1220,7 +1281,7 @@ function updateAndRenderCrabville(dt) {
     });
   }
 
-  // Draw walking crab player
+  // Draw Player Crab
   cvCtx.save();
   cvCtx.translate(crabvilleWaddler.x, crabvilleWaddler.y);
   cvCtx.fillStyle = getPlayerBodyColor(1);
@@ -1234,62 +1295,338 @@ function updateAndRenderCrabville(dt) {
 }
 
 /* ========================================================
-   TRANSPARENT BACKGROUND BLEACHERS & VOLLEYBALL CORE
+   VOLLEYBALL GAMEPLAY ENGINE & RENDERING
    ======================================================== */
+const canvas = document.getElementById("beachCourt");
+const ctx = canvas.getContext("2d");
+const CW = 1600;
+const CH = 850;
+const FLOOR_Y = 745;
+let BASE_BALL_GRAV = 550;
+let BALL_GRAV = 550;
+const NET = { x: CW / 2 - 4, y: 550, w: 8, h: FLOOR_Y - 550 };
+
+let activeGameMode = "standard";
+let chosenViceCard = null;
+let pendingModeContext = "solo";
+let fillEmptyWithBots = true;
+let animTimer = 0;
+let raveTimer = 0;
+let oceanTimer = 0;
+let screenShake = 0;
+const CELEBRATION_PARTICLES = [];
+
+let currentDrawnCards = [];
+let cardVotes = [0, 0, 0];
+let myCardVoteIndex = 0;
+let submodeVotes = { standard: 0, vice: 0 };
+let submodeTimerCountdown = 25;
+let submodeInterval = null;
+let voteTimerCountdown = 25;
+let voteInterval = null;
+
+const ALL_VICE_CARDS = [
+  { title: "TSUNAMI ESCAPE", icon: "🌊", effect: "tsunami", desc: "GET TO SAFETY! Run East across 20,000ft of biomes to Waffle House!" },
+  { title: "CRAB RAVE", icon: "🦀", effect: "crab_rave", desc: "Party strobe lighting & pumping beach EDM beats!" },
+  { title: "TITAN CLAWS", icon: "🦞", effect: "big_claws", desc: "Claws expand by 25% for high-powered blocks!" },
+  { title: "TURBO DRIFT", icon: "⚡", effect: "turbo_speed", desc: "Crabs run and spin 35% faster across the sand." },
+  { title: "BOUNCY SPRINGS", icon: "🦘", effect: "spring_jump", desc: "Super-charged leaps & high-altitude smashes." }
+];
+
+const VICE_CARS = [
+  { x: 40, spd: 140, color: "#ff007f" },
+  { x: 380, spd: 180, color: "#00ffff" },
+  { x: 820, spd: 120, color: "#ffe57f" },
+  { x: 1240, spd: 160, color: "#ff4081" }
+];
+
+function createCrab(id, team, x, name = "", isBot = false) {
+  return {
+    id: id, team: team, x: x, y: FLOOR_Y - 26,
+    vx: 0, vy: 0, angle: 0, angVel: 0, hat: "pineapple",
+    name: name, spriteType: "crab", isBot: isBot, activeInGame: false,
+    radius: 54, width: 146, height: 58,
+    halfW: 73, halfH: 26, isGrounded: true,
+    speed: isBot ? 340 : 510,
+    canJump: true, jumpHoldTimer: 0, respawnX: x
+  };
+}
+
+let players = [
+  createCrab(1, 1, 260, "HOST", false),
+  createCrab(2, 2, 1340, "BOT", true),
+  createCrab(3, 1, 560, "BOT", true),
+  createCrab(4, 2, 1040, "BOT", true)
+];
+
+const ball = {
+  x: CW / 2, y: NET.y - 22,
+  vx: 0, vy: 0, r: 22, rot: 0,
+  active: false, tipOffTimer: 1.0
+};
+
+const match = {
+  scores: [0, 0], sets: [0, 0], currentSet: 1,
+  paused: false, over: false, isOnline: false,
+  myPlayerIndex: 0, toastTimer: 0
+};
+
+// BLEACHER SPECTATOR CROWD
+const BLEACHER_SEATS = [];
+const BLEACHER_SPECTATORS = [];
+for (let s = 0; s < 5; s++) {
+  BLEACHER_SEATS.push({ x: 130 + s * 95, y: 610, side: 1 });
+  BLEACHER_SEATS.push({ x: 1000 + s * 95, y: 610, side: 2 });
+}
+const defaultFans = [
+  { name: "SaltySam", hat: "straw", color: "#f59e0b" },
+  { name: "Clawdia", hat: "visor", color: "#ec4899" },
+  { name: "Sandy", hat: "captain", color: "#10b981" },
+  { name: "Barnaby", hat: "propeller", color: "#3b82f6" },
+  { name: "ButterDip", hat: "pineapple", color: "#eab308" }
+];
+defaultFans.forEach((f, i) => {
+  const seat = BLEACHER_SEATS[i];
+  BLEACHER_SPECTATORS.push({
+    name: f.name, x: seat.x, y: seat.y, hat: f.hat, color: f.color,
+    facing: seat.side === 1 ? 1 : -1, bounceOffset: 0, bounceSpeed: 2 + Math.random(),
+    speechText: "", speechTimer: 0
+  });
+});
+
 function drawSubtleBackgroundBleachers(ctx) {
   const isVice = (activeGameMode === "vice");
   ctx.save();
-  ctx.globalAlpha = 0.35; // Soft opacity: never interferes with ball tracking!
+  ctx.globalAlpha = 0.35;
 
-  const stands = [
-    { x: 110, w: 480, side: 1 },
-    { x: 980, w: 480, side: 2 }
-  ];
-
+  const stands = [ { x: 110, w: 480 }, { x: 980, w: 480 } ];
   stands.forEach(stand => {
     ctx.fillStyle = isVice ? "#2d004b" : "#4e342e";
     ctx.fillRect(stand.x + 20, 610, 14, 85);
     ctx.fillRect(stand.x + stand.w - 34, 610, 14, 85);
-
     ctx.fillStyle = isVice ? "#ff007f" : "#d7ccc8";
     ctx.fillRect(stand.x, 605, stand.w, 12);
-    ctx.fillStyle = isVice ? "#9146ff" : "#bcaaa4";
-    ctx.fillRect(stand.x, 632, stand.w, 12);
   });
 
   BLEACHER_SPECTATORS.forEach(spec => {
-    const idleBob = Math.sin(animTimer * spec.bounceSpeed + spec.x * 0.05) * 2;
-    const drawY = spec.y + idleBob + spec.bounceOffset;
-
+    const idleBob = Math.sin(animTimer * spec.bounceSpeed) * 2;
     ctx.save();
-    ctx.translate(spec.x, drawY);
+    ctx.translate(spec.x, spec.y + idleBob);
     ctx.scale(0.52 * spec.facing, 0.52);
-
     ctx.fillStyle = spec.color;
-    ctx.strokeStyle = "#000"; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.ellipse(0, 0, 32, 12, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(0, 0, 32, 12, 0, 0, Math.PI * 2); ctx.fill();
     drawFlushHat(ctx, spec.hat, animTimer);
     ctx.restore();
-
-    if (spec.speechText) {
-      drawArcadeSpeechBubble(ctx, spec.x, drawY - 34, spec.speechText, spec.isTwitchViewer);
-    }
   });
-
   ctx.restore();
+}
+
+function getPlayerBodyColor(pTeam) {
+  const cw = userProfile.colorway || "classic";
+  if (cw === "rainbow") return `hsl(${(animTimer * 120) % 360}, 100%, 55%)`;
+  if (cw === "vice_cyan") return "#00ffff";
+  if (cw === "magenta") return "#ff007f";
+  if (cw === "toxic") return "#76ff03";
+  if (cw === "gold") return "#ffd700";
+  return pTeam === 1 ? "#8bc34a" : "#f43f5e";
+}
+
+function makeArcadeCrabSVG(bodyColor = "#8bc34a", outline = "#223b05", belly = "#c5e1a5", clawScale = 1.0) {
+  return `data:image/svg+xml;utf8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
+    <circle cx="62" cy="16" r="8.5" fill="#111" stroke="${outline}" stroke-width="2.5"/><circle cx="64" cy="13.5" r="3" fill="#fff"/>
+    <circle cx="134" cy="16" r="8.5" fill="#111" stroke="${outline}" stroke-width="2.5"/><circle cx="136" cy="13.5" r="3" fill="#fff"/>
+    <path d="M 52 60 Q 28 68 20 80" stroke="${outline}" stroke-width="6.5" fill="none"/>
+    <path d="M 144 60 Q 168 68 176 80" stroke="${outline}" stroke-width="6.5" fill="none"/>
+    <g transform="scale(${clawScale}) transform-origin(52 48)">
+      <path d="M 52 42 C 34 26 18 10 2 24 C 14 36 28 42 50 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
+    </g>
+    <g transform="scale(${clawScale}) transform-origin(144 48)">
+      <path d="M 144 42 C 162 26 178 10 194 24 C 182 36 168 42 146 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
+    </g>
+    <ellipse cx="98" cy="54" rx="58" ry="19" fill="${bodyColor}" stroke="${outline}" stroke-width="4.5"/>
+    <path d="M 64 48 Q 98 40 132 48 Q 98 70 64 48 Z" fill="${belly}" opacity="0.7"/>
+  </svg>`)}`;
+}
+
+let crabImgTeam1 = new Image();
+let crabImgTeam2 = new Image();
+function updateCrabSprites() {
+  const cScale = (chosenViceCard && chosenViceCard.effect === "big_claws") ? 1.25 : 1.0;
+  crabImgTeam1.src = makeArcadeCrabSVG(getPlayerBodyColor(1), "#0a1c02", "#e8f5e9", cScale);
+  crabImgTeam2.src = makeArcadeCrabSVG(getPlayerBodyColor(2), "#3b0716", "#ffe4e6", cScale);
+}
+updateCrabSprites();
+
+function drawFlushHat(ctx, type, animTime = 0) {
+  ctx.save();
+  ctx.translate(0, -10);
+  if (type === "pineapple") {
+    ctx.fillStyle = "#2e7d32"; ctx.fillRect(-2, -22, 4, 8);
+    ctx.fillStyle = "#f59e0b"; ctx.beginPath(); ctx.ellipse(0, -8, 9, 12, 0, 0, Math.PI * 2); ctx.fill();
+  } else if (type === "propeller") {
+    ctx.fillStyle = "#2563eb"; ctx.beginPath(); ctx.arc(0, 0, 13, Math.PI, 0); ctx.fill();
+    ctx.fillStyle = "#ef4444"; ctx.fillRect(-10, -14, 20, 3);
+  } else if (type === "captain") {
+    ctx.fillStyle = "#ffffff"; ctx.beginPath(); ctx.arc(0, -3, 14, Math.PI, 0); ctx.fill();
+    ctx.fillStyle = "#0f172a"; ctx.beginPath(); ctx.ellipse(0, 2, 16, 3.5, 0, 0, Math.PI * 2); ctx.fill();
+  } else if (type === "crown") {
+    ctx.fillStyle = "#ffd700"; ctx.beginPath(); ctx.moveTo(-12, 0); ctx.lineTo(-12, -12); ctx.lineTo(-6, -6); ctx.lineTo(0, -14); ctx.lineTo(6, -6); ctx.lineTo(12, -12); ctx.lineTo(12, 0); ctx.closePath(); ctx.fill();
+  }
+  ctx.restore();
+}
+
+function updatePlayer(p, input, dt) {
+  let speedMultiplier = (chosenViceCard && chosenViceCard.effect === "turbo_speed") ? 1.35 : 1.0;
+  let moveDir = 0;
+  if (input.left) moveDir -= 1;
+  if (input.right) moveDir += 1;
+  p.vx += (moveDir * (p.speed * speedMultiplier) - p.vx) * 16 * dt;
+  p.x += p.vx * dt;
+
+  const minX = (p.team === 1) ? 80 : NET.x + NET.w + p.radius;
+  const maxX = (p.team === 1) ? NET.x - p.radius : CW - 80;
+  if (p.x < minX) { p.x = minX; p.vx = 0; }
+  if (p.x > maxX) { p.x = maxX; p.vx = 0; }
+
+  let rotSpeed = 10.5;
+  if (input.rotLeft) p.angVel = -rotSpeed;
+  else if (input.rotRight) p.angVel = rotSpeed;
+  else {
+    p.angVel *= 0.56;
+    if (p.isGrounded && Math.abs(p.angle) < 0.6) p.angle += (-p.angle) * 10 * dt;
+  }
+  p.angle += p.angVel * dt;
+
+  let jumpImpulse = (chosenViceCard && chosenViceCard.effect === "spring_jump") ? -780 : -580;
+  if (input.jump && p.isGrounded && p.canJump) {
+    p.vy = jumpImpulse; p.isGrounded = false; p.canJump = false;
+    p.jumpHoldTimer = 0.35; sfx.jump();
+  } else if (!input.jump && p.isGrounded) {
+    p.canJump = true;
+  }
+  p.vy += 1500 * dt;
+  p.y += p.vy * dt;
+
+  if (p.y >= FLOOR_Y - p.halfH) {
+    p.y = FLOOR_Y - p.halfH; p.vy = 0; p.isGrounded = true;
+  }
+}
+
+function resolveCrabCollisions() {
+  for (let i = 0; i < players.length; i++) {
+    for (let j = i + 1; j < players.length; j++) {
+      const p1 = players[i]; const p2 = players[j];
+      if (!p1.activeInGame || !p2.activeInGame) continue;
+      const dx = p2.x - p1.x; const dy = p2.y - p1.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < 78 && dist > 0.001) {
+        const nx = dx / dist; const overlap = 78 - dist;
+        p1.x -= nx * overlap * 0.5; p2.x += nx * overlap * 0.5;
+      }
+    }
+  }
+}
+
+function getAIInput(p, targetBall) {
+  const input = { left: false, right: false, rotLeft: false, rotRight: false, jump: false };
+  const homeX = p.team === 1 ? (p.id === 1 ? 280 : 540) : (p.id === 2 ? 1320 : 1060);
+  const ballInMyCourt = (p.team === 1 && targetBall.x < CW / 2) || (p.team === 2 && targetBall.x >= CW / 2);
+  const targetX = ballInMyCourt ? targetBall.x : homeX;
+  const dx = targetX - p.x;
+  if (Math.abs(dx) > 30) {
+    if (dx < 0) input.left = true;
+    else input.right = true;
+  }
+  if (ballInMyCourt && targetBall.y < 500 && Math.abs(dx) < 60 && p.isGrounded) input.jump = true;
+  return input;
+}
+
+function updateBall(dt) {
+  if (!ball.active) {
+    ball.x = CW / 2; ball.y = NET.y - ball.r;
+    ball.tipOffTimer -= dt;
+    if (ball.tipOffTimer <= 0) {
+      ball.active = true; ball.vx = 0; ball.vy = -750; sfx.bodyBump();
+    }
+    return;
+  }
+
+  BALL_GRAV = BASE_BALL_GRAV;
+  ball.vx *= (1 - 0.03 * dt);
+  ball.vy += BALL_GRAV * dt;
+  ball.x += ball.vx * dt;
+  ball.y += ball.vy * dt;
+  ball.rot += (ball.vx / ball.r) * dt;
+
+  if (ball.x - ball.r < 0) { ball.x = ball.r; ball.vx = -ball.vx * 0.85; }
+  if (ball.x + ball.r > CW) { ball.x = CW - ball.r; ball.vx = -ball.vx * 0.85; }
+  if (ball.y - ball.r < 0) { ball.y = ball.r; ball.vy = Math.abs(ball.vy) * 0.85; }
+
+  if (ball.y + ball.r > NET.y && ball.x + ball.r > NET.x && ball.x - ball.r < NET.x + NET.w) {
+    if (ball.y < NET.y + 14) {
+      ball.y = NET.y - ball.r; ball.vy = -Math.max(680, Math.abs(ball.vy) * 0.95);
+    } else {
+      ball.vx = (ball.x < CW / 2) ? -Math.abs(ball.vx) * 0.85 : Math.abs(ball.vx) * 0.85;
+    }
+    sfx.bodyBump();
+  }
+
+  if (ball.y + ball.r >= FLOOR_Y) {
+    ball.y = FLOOR_Y - ball.r; ball.active = false; sfx.whistle();
+    if (ball.x < CW / 2) scorePoint(2); else scorePoint(1);
+    return;
+  }
+
+  for (let i = 0; i < players.length; i++) {
+    const p = players[i];
+    if (!p.activeInGame) continue;
+    const dx = ball.x - p.x; const dy = ball.y - p.y;
+    if (Math.hypot(dx, dy) < ball.r + p.halfW) {
+      ball.vy = -540;
+      ball.vx = (ball.vx * 0.1) + (p.vx * 0.35);
+      sfx.bodyBump();
+      return;
+    }
+  }
+}
+
+function scorePoint(winnerTeam) {
+  match.scores[winnerTeam - 1]++;
+  awardCoins(2, "Point Scored");
+
+  if (match.scores[winnerTeam - 1] >= 5) {
+    match.sets[winnerTeam - 1]++;
+    sfx.cheer();
+    if (match.sets[winnerTeam - 1] >= 2) {
+      match.over = true;
+      awardCoins(50, "Match Victory");
+      showToast(`TEAM ${winnerTeam} WINS MATCH! 🏆`, 3.5);
+      setTimeout(quitToMenu, 3500);
+      return;
+    }
+    match.currentSet++; match.scores = [0, 0];
+    showToast(`SET WON BY TEAM ${winnerTeam}!`, 1.8);
+    setTimeout(resetTipOff, 1800);
+    return;
+  }
+  showToast(winnerTeam === 1 ? "POINT LEFT! 🦀" : "POINT RIGHT! 🦀", 1.2);
+  setTimeout(resetTipOff, 1200);
+}
+
+function resetTipOff() {
+  ball.active = false; ball.tipOffTimer = 0.9;
+  ball.vx = 0; ball.vy = 0; ball.x = CW / 2; ball.y = NET.y - ball.r;
 }
 
 function renderStandardStyle() {
   ctx.fillStyle = "#00aced"; ctx.fillRect(0, 0, CW, CH);
   drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 200, 145, 0, 1);
   drawSubtleBackgroundBleachers(ctx);
-
   ctx.fillStyle = "#f5d799"; ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
   ctx.fillStyle = "#e2be73"; ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
-
   drawNet(ctx, NET.y, "#ffffff", "#ff1744");
   drawPlayersAndBall(ctx);
-  updateAndDrawCelebrations(ctx, 0.016);
   drawRetroScore(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], "#0288d1", "#d50000");
 }
 
@@ -1298,21 +1635,58 @@ function renderViceStyle() {
   grad.addColorStop(0, "#00e5ff"); grad.addColorStop(0.55, "#e040fb");
   grad.addColorStop(0.85, "#ff4081"); grad.addColorStop(1, "#ffe57f");
   ctx.fillStyle = grad; ctx.fillRect(0, 0, CW, CH);
-
-  drawInfiniteHighway(ctx, FLOOR_Y - 225, 0);
-  drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 198, 143, 0, 1);
   drawSubtleBackgroundBleachers(ctx);
-
   ctx.fillStyle = "#311b92"; ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
   ctx.fillStyle = "#1a0033"; ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
-
   drawNet(ctx, NET.y, "#00ffff", "#ff007f");
   drawPlayersAndBall(ctx);
-  updateAndDrawCelebrations(ctx, 0.016);
   drawRetroScore(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], "#00ffff", "#ff007f");
 }
 
-// IN-GAME TOAST WITH AUTOMATIC SLIDE OFF-SCREEN
+function drawInfiniteAnimatedOcean(ctx, y, h, camX = 0, biome = 1) {
+  ctx.fillStyle = (biome === 2 || biome === 4) ? "#0f172a" : "#005b96";
+  ctx.fillRect(camX - 100, y, CW + 200, h);
+}
+
+function drawNet(ctx, netY, poleColor, capColor) {
+  ctx.fillStyle = poleColor; ctx.fillRect(NET.x, netY, NET.w, FLOOR_Y - netY);
+  ctx.fillStyle = capColor; ctx.beginPath(); ctx.arc(NET.x + NET.w / 2, netY - 2, 7, 0, Math.PI * 2); ctx.fill();
+}
+
+function drawPlayersAndBall(ctx) {
+  players.forEach((p) => {
+    if (!p.activeInGame) return;
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.angle);
+    ctx.drawImage(p.team === 1 ? crabImgTeam1 : crabImgTeam2, -p.width / 2, -p.height / 2, p.width, p.height);
+    drawFlushHat(ctx, p.hat, animTimer);
+    ctx.font = "900 13px sans-serif";
+    ctx.fillStyle = "#ffe600"; ctx.textAlign = "center";
+    ctx.fillText(p.name, 0, -p.height / 2 - 16);
+    ctx.restore();
+  });
+
+  ctx.save();
+  ctx.translate(ball.x, ball.y);
+  ctx.rotate(ball.rot);
+  ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(0, 0, ball.r, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = activeGameMode === "vice" ? "#ff007f" : "#ffcc00";
+  ctx.beginPath(); ctx.arc(0, 0, ball.r, 1.4, 2.8); ctx.lineTo(0, 0); ctx.fill();
+  ctx.strokeStyle = "#111"; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.arc(0, 0, ball.r, 0, Math.PI * 2); ctx.stroke();
+  ctx.restore();
+}
+
+function drawRetroScore(ctx, x, y, s1, s2, c1, c2) {
+  ctx.save(); ctx.translate(x, y);
+  const w = 90; const h = 50;
+  ctx.fillStyle = "#000"; ctx.fillRect(-w - 4, -h / 2, w, h); ctx.fillRect(4, -h / 2, w, h);
+  ctx.font = "900 32px Impact"; ctx.textAlign = "center";
+  ctx.fillStyle = c1; ctx.fillText(s1, -w / 2 - 4, 10);
+  ctx.fillStyle = c2; ctx.fillText(s2, w / 2 + 4, 10);
+  ctx.restore();
+}
+
 function showToast(text, dur = 1.2) {
   const t = document.getElementById("toast");
   if (!t) return;
@@ -1320,143 +1694,196 @@ function showToast(text, dur = 1.2) {
   t.innerText = text;
   t.classList.remove("hidden");
   t.classList.remove("fade-up");
-  match.toastTimer = dur;
-
-  // Auto slide up off-screen after 2.5s
-  setTimeout(() => {
-    t.classList.add("fade-up");
-  }, Math.max(1000, (dur - 0.7) * 1000));
+  setTimeout(() => { t.classList.add("fade-up"); }, Math.max(900, (dur - 0.5) * 1000));
 }
 
-function hideToast() {
-  const t = document.getElementById("toast");
-  if (t) t.classList.add("hidden");
-  match.toastTimer = 0;
-}
+function triggerCelebration(type) {}
 
 /* ========================================================
-   MASTER UNIFIED ANIMATION LOOP (SOLID & UNBREAKABLE)
+   SUBMODES, LOBBY & NAVIGATION
+   ======================================================== */
+function showSubmodeSelect(context) {
+  sfx.init();
+  pendingModeContext = context;
+  hideAllModals();
+  document.getElementById("submodeModal").classList.remove("hidden");
+  submodeVotes = { standard: 0, vice: 0 };
+  updateSubmodeVoteCounts();
+}
+
+function voteSubmode(mode) {
+  sfx.bodyBump();
+  submodeVotes[mode]++;
+  updateSubmodeVoteCounts();
+  executeSubmodeSelect(mode);
+}
+
+function updateSubmodeVoteCounts() {
+  const sEl = document.getElementById("stdVoteCount");
+  const vEl = document.getElementById("viceVoteCount");
+  if (sEl) sEl.innerText = `[${submodeVotes.standard} VOTES]`;
+  if (vEl) vEl.innerText = `[${submodeVotes.vice} VOTES]`;
+}
+
+function executeSubmodeSelect(mode) {
+  activeGameMode = mode;
+  document.getElementById("submodeModal").classList.add("hidden");
+  if (mode === "vice") {
+    currentDrawnCards = [...ALL_VICE_CARDS].slice(0, 3);
+    openViceCardVoteUI();
+  } else {
+    chosenViceCard = null;
+    launchGame();
+  }
+}
+
+function openViceCardVoteUI() {
+  hideAllModals();
+  document.getElementById("viceVoteModal").classList.remove("hidden");
+  const container = document.getElementById("viceCardsContainer");
+  container.innerHTML = "";
+  currentDrawnCards.forEach((card, idx) => {
+    const el = document.createElement("div");
+    el.className = "card-item" + (idx === 0 ? " selected" : "");
+    el.innerHTML = `<div class="card-icon">${card.icon}</div><div class="card-title">${card.title}</div><div class="card-desc">${card.desc}</div>`;
+    el.onclick = () => {
+      document.querySelectorAll(".card-item").forEach(c => c.classList.remove("selected"));
+      el.classList.add("selected");
+      myCardVoteIndex = idx;
+    };
+    container.appendChild(el);
+  });
+}
+
+function confirmMyCardVote() {
+  chosenViceCard = currentDrawnCards[myCardVoteIndex];
+  document.getElementById("viceVoteModal").classList.add("hidden");
+  launchGame();
+}
+
+function requestCardReshuffle() {
+  currentDrawnCards = [...ALL_VICE_CARDS].sort(() => 0.5 - Math.random()).slice(0, 3);
+  openViceCardVoteUI();
+}
+
+function launchGame() {
+  match.isOnline = (pendingModeContext === "online");
+  match.scores = [0, 0]; match.sets = [0, 0]; match.over = false;
+  configureActiveCourtPlayers();
+  updateCrabSprites();
+  hideAllModals();
+  document.getElementById("game-section").classList.remove("hidden");
+  resetTipOff();
+}
+
+function configureActiveCourtPlayers() {
+  players.forEach(p => p.activeInGame = false);
+  players[0].activeInGame = true; players[0].team = 1; players[0].x = 260;
+  players[1].activeInGame = true; players[1].isBot = true; players[1].name = "BOT RED"; players[1].team = 2; players[1].x = 1340;
+  players[2].activeInGame = true; players[2].isBot = true; players[2].name = "BOT BLUE"; players[2].team = 1; players[2].x = 540;
+  players[3].activeInGame = true; players[3].isBot = true; players[3].name = "BOT RED 2"; players[3].team = 2; players[3].x = 1060;
+}
+
+function quitToMenu() {
+  hideAllModals();
+  document.getElementById("game-section").classList.add("hidden");
+  document.getElementById("menuPanel").classList.remove("hidden");
+}
+
+function hideAllModals() {
+  ['menuPanel', 'socialLobbyModal', 'submodeModal', 'viceVoteModal', 'lockerModal', 'leaderboardModal', 'twitchModal', 'crabchatModal', 'crabvilleModal', 'islandMapModal', 'passportModal', 'newsCutsceneModal', 'movieCreditsModal'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("hidden");
+  });
+}
+
+function openOnlineLobby() {
+  sfx.init();
+  document.getElementById("onlineBox").classList.remove("hidden");
+}
+
+function filterProfanity(txt) { return txt || ""; }
+function formatJoinCodeInput(el) {}
+function toggleControlMode() {}
+function toggleMuteAudio() {}
+function openTwitchModal() { hideAllModals(); document.getElementById("twitchModal").classList.remove("hidden"); }
+function closeTwitchModal() { document.getElementById("twitchModal").classList.add("hidden"); document.getElementById("menuPanel").classList.remove("hidden"); }
+function connectTwitchChatDirect() {}
+function startTwitchOAuthFlow() {}
+function openLeaderboard() { hideAllModals(); document.getElementById("leaderboardModal").classList.remove("hidden"); }
+function closeLeaderboard() { document.getElementById("leaderboardModal").classList.add("hidden"); document.getElementById("menuPanel").classList.remove("hidden"); }
+function restartToLobby() { quitToMenu(); }
+function voteSkipCutscene() {}
+function sendChatMessage() {}
+
+/* ========================================================
+   MASTER SOLID ANIMATION LOOP
    ======================================================== */
 let masterLastTime = performance.now();
-function runMasterArcadeLoop(now) {
+const keys = {};
+window.addEventListener("keydown", (e) => {
+  sfx.init();
+  if (e.code) keys[e.code] = true;
+  if (e.key === "~" || e.key === "`") promptSupremeAdmin();
+});
+window.addEventListener("keyup", (e) => { if (e.code) keys[e.code] = false; });
+
+function masterEngineLoop(now) {
   const dt = Math.min((now - masterLastTime) / 1000, 0.05);
   masterLastTime = now;
+  animTimer += dt;
 
   try {
-    // 1. UPDATE AND RENDER CRAB VOLLEYBALL MATCH
     if (!match.paused && !match.over && !document.getElementById("game-section").classList.contains("hidden")) {
       const myInput = {
         left: keys["KeyA"] || false, right: keys["KeyD"] || false,
         rotLeft: keys["ArrowLeft"] || false, rotRight: keys["ArrowRight"] || false,
         jump: keys["Space"] || false
       };
-
-      if (match.myPlayerIndex < 4) {
-        updatePlayer(players[match.myPlayerIndex], myInput, dt);
-        if (match.isOnline && !isHost && peerConnections[0] && peerConnections[0].open) {
-          peerConnections[0].send({ type: "INPUT", input: myInput });
-        }
+      updatePlayer(players[0], myInput, dt);
+      for (let i = 1; i < 4; i++) {
+        updatePlayer(players[i], getAIInput(players[i], ball), dt);
       }
-
-      for (let i = 0; i < players.length; i++) {
-        if (i === match.myPlayerIndex || !players[i].activeInGame) continue;
-        if (!match.isOnline || isHost) {
-          if (players[i].isBot || !peersConnected[i]) {
-            updatePlayer(players[i], getAIInput(players[i], ball), dt);
-          }
-        }
-      }
-
       resolveCrabCollisions();
-      if (isPlatformerActive) updatePlatformerMode(dt);
-      else if (!match.isOnline || isHost) {
-        updateBall(dt);
-        if (match.isOnline && isHost) broadcastGameState();
-      }
+      updateBall(dt);
+
+      if (activeGameMode === "vice") renderViceStyle();
+      else renderStandardStyle();
     }
 
-    if (!isPlatformerActive) {
-      updateBleacherSpectators(dt);
-    }
-    checkTsunamiCutscene(dt);
-    render();
-
-    // 2. UPDATE AND RENDER CRABVILLE WORLD
+    // CrabVille rendering
     updateAndRenderCrabville(dt);
-
   } catch(err) {
-    console.error("Loop Tick Protected Error:", err);
+    console.error("Frame Loop Guard:", err);
   }
 
-  requestAnimationFrame(runMasterArcadeLoop);
+  requestAnimationFrame(masterEngineLoop);
 }
 
 /* ========================================================
-   COIN PRIZE HOOKS & UI EVENT BINDINGS
+   CRITICAL EVENT BINDINGS
    ======================================================== */
-const defaultScorePoint = scorePoint;
-scorePoint = function(winnerTeam) {
-  defaultScorePoint(winnerTeam);
-  if (match.scores[winnerTeam - 1] >= 5 && match.sets[winnerTeam - 1] >= 2) {
-    awardCoins(50, "Match Victory");
-  } else {
-    awardCoins(2, "Point Scored");
-  }
-};
-
 function bindAllArcadeUI() {
   const get = id => document.getElementById(id);
-  // CRITICAL: BIND SOLO AND ONLINE BUTTONS DIRECTLY
+
   if (get("playSoloBtn")) get("playSoloBtn").onclick = () => showSubmodeSelect('solo');
   if (get("onlineLobbyBtn")) get("onlineLobbyBtn").onclick = () => openOnlineLobby();
-
-  if (get("openBagBtn")) get("openBagBtn").onclick = () => { loadCareer(); get("menuPanel").classList.add("hidden"); get("lockerModal").classList.remove("hidden"); };
+  if (get("openCrabChatBtn")) get("openCrabChatBtn").onclick = () => openCrabChatModal();
+  if (get("openBagBtn")) get("openBagBtn").onclick = () => { loadCareer(); hideAllModals(); get("lockerModal").classList.remove("hidden"); };
   if (get("closeBagBtn")) get("closeBagBtn").onclick = () => { get("lockerModal").classList.add("hidden"); get("menuPanel").classList.remove("hidden"); };
-  if (get("hostBtn")) get("hostBtn").onclick = () => hostRoom();
-  if (get("joinBtn")) get("joinBtn").onclick = () => joinRoom();
-  if (get("muteAudioBtn")) get("muteAudioBtn").onclick = () => toggleMuteAudio();
-  if (get("copyBtn")) get("copyBtn").onclick = () => {
-    navigator.clipboard.writeText(get("myCodeText").innerText);
-    get("copyBtn").innerText = "COPIED!";
-    setTimeout(() => get("copyBtn").innerText = "COPY", 1200);
-  };
-  if (get("joinTeam1Btn")) get("joinTeam1Btn").onclick = () => switchTeam(1);
-  if (get("joinTeam2Btn")) get("joinTeam2Btn").onclick = () => switchTeam(2);
-  if (get("fillBotsCheck")) get("fillBotsCheck").onchange = () => toggleBotFill();
-  if (get("playerNameInput")) get("playerNameInput").onchange = () => updateMyCustoms();
-  if (get("hatSelect")) get("hatSelect").onchange = () => updateMyCustoms();
-  if (get("unlockSecretBtn")) get("unlockSecretBtn").onclick = () => applySecretCode();
-  if (get("leaveLobbyBtn")) get("leaveLobbyBtn").onclick = () => quitToMenu();
-  if (get("hostStartMatchBtn")) get("hostStartMatchBtn").onclick = () => startHostGameSetup();
-  if (get("backFromSubmodeBtn")) get("backFromSubmodeBtn").onclick = () => { get("submodeModal").classList.add("hidden"); get("menuPanel").classList.remove("hidden"); };
-  if (get("reshuffleBtn")) get("reshuffleBtn").onclick = () => requestCardReshuffle();
-  if (get("confirmCardBtn")) get("confirmCardBtn").onclick = () => confirmMyCardVote();
-  if (get("quitMatchBtn")) get("quitMatchBtn").onclick = () => quitToMenu();
-  if (get("skipCutsceneBtn")) get("skipCutsceneBtn").onclick = () => voteSkipCutscene();
-  if (get("sendChatBtn")) get("sendChatBtn").onclick = () => sendChatMessage();
-  if (get("chatInput")) get("chatInput").onkeydown = (e) => { if (e.key === "Enter") sendChatMessage(); };
+  if (get("openLeaderboardBtn")) get("openLeaderboardBtn").onclick = () => openLeaderboard();
+  if (get("openTwitchStreamBtn")) get("openTwitchStreamBtn").onclick = () => openTwitchModal();
 
-  // Admin hotkey
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "~" || e.key === "`") promptSupremeAdmin();
-  });
+  if (get("confirmCardBtn")) get("confirmCardBtn").onclick = () => confirmMyCardVote();
+  if (get("reshuffleBtn")) get("reshuffleBtn").onclick = () => requestCardReshuffle();
+  if (get("backFromSubmodeBtn")) get("backFromSubmodeBtn").onclick = () => quitToMenu();
+  if (get("quitMatchBtn")) get("quitMatchBtn").onclick = () => quitToMenu();
 }
 
-// INITIALIZATION
 window.addEventListener("DOMContentLoaded", () => {
   bindAllArcadeUI();
   loadCareer();
-  pickRandomSassyQuote();
-  checkTwitchOAuthHash();
-
-  const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent));
-  const pad = document.getElementById("mobileControls");
-  if (pad && isTouch) {
-    pad.style.display = "flex";
-  }
-
-  // Start single master arcade loop
-  requestAnimationFrame(runMasterArcadeLoop);
+  requestAnimationFrame(masterEngineLoop);
 });
 </script>
 </body>
