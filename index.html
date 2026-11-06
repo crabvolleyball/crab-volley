@@ -161,7 +161,7 @@ canvas {
 }
 .toast {
   position: absolute; top: 18%; left: 50%; transform: translate(-50%, -50%);
-  font-size: clamp(20px, 4.2vw, 46px); font-family: "Impact", sans-serif;
+  font-size: clamp(20px, 4.2vw, 44px); font-family: "Impact", sans-serif;
   color: #ffeb3b; text-shadow: 3px 3px 0 #d50000, -2px -2px 0 #000, 2px -2px 0 #000;
   text-align: center; pointer-events: none; z-index: 25; width: 90%;
 }
@@ -214,6 +214,7 @@ canvas {
   width: 64px; height: 48px; padding: 0; font-size: 11px; font-family: "Impact", sans-serif;
   border: 3px solid #000; border-radius: 10px; background: #ffe082;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
+  opacity: 0.85;
 }
 .touchpad-bar button.jump { width: 84px; background: #e53935; color: #fff; font-size: 13px; }
 .touchpad-bar button.rotate { background: #ffb74d; }
@@ -383,8 +384,8 @@ canvas {
 
     <!-- VICE CARD VOTING -->
     <section id="viceVoteModal" class="panel hidden" style="background:#160228;border-color:#ff007f;">
-      <h1 style="color:#00ffff;text-shadow:3px 3px 0 #ff007f, 4px 4px 0 #000;">🌴 VOTE VICE CARD 🌴</h1>
-      <p class="sub" style="color:#ff77c6;">Popular vote decides the match modifier! Live synchronized voting.</p>
+      <h1 style="color:#00ffff;text-shadow:3px 3px 0 #ff007f, 5px 5px 0 #000;">🌴 VOTE VICE CARD 🌴</h1>
+      <p class="sub" style="color:#ff77c6;">Popular vote decides the modifier! <span id="voteTimerText" style="color:#ffe600;">(8s REMAINING)</span></p>
 
       <div id="viceCardsContainer" class="vice-cards-grid"></div>
 
@@ -400,7 +401,7 @@ canvas {
         <canvas id="beachCourt" width="1600" height="850"></canvas>
         <div id="toast" class="toast hidden"></div>
 
-        <!-- 20-SECOND AUDREY NEWS CUTSCENE -->
+        <!-- 20-SECOND AUDREY CUTSCENE -->
         <div id="newsCutsceneModal" class="hidden">
           <div class="news-topbar">
             <span>🚨 ACTION NEWS 6: TSUNAMI EMERGENCY 🚨</span>
@@ -410,7 +411,7 @@ canvas {
             <div id="audreyAnchorArt" style="width:110px;height:110px;flex-shrink:0;"></div>
             <div class="audrey-speech">
               "This is <b>Audrey</b> reporting LIVE from Beach Action News 6!<br>
-              A Category 5 Tsunami is engulfing the coast! <b>The volleyball net has washed out!</b><br>
+              A Category 5 Tsunami is engulfing the coast! <b>The net is gone!</b><br>
               All crabs must run <b>EAST</b> across 20,000 feet of piers to shelter at the<br>
               <b style="color:#ffe57f;font-size:16px;">🥞 24-HOUR ALL-NIGHT WAFFLE HOUSE! 🥞</b><br>
               <span style="color:#ff5252;">WATCH YOUR JUMPS AND GET TO SAFETY!"</span>
@@ -419,7 +420,7 @@ canvas {
           <div class="timer-bar"><div id="newsTimerFill" class="timer-fill"></div></div>
         </div>
 
-        <!-- DRAMATIC MOVIE CREDITS ROLL -->
+        <!-- MOVIE CREDITS -->
         <div id="movieCreditsModal" class="hidden">
           <div class="credits-roll" id="creditsRollContent"></div>
           <div style="position:absolute;bottom:16px;display:flex;gap:12px;">
@@ -429,7 +430,7 @@ canvas {
         </div>
       </div>
 
-      <!-- TOUCH CONTROLS -->
+      <!-- ON-SCREEN TOUCH CONTROLS -->
       <div class="touchpad-bar" id="mobileControls">
         <div class="touch-cluster">
           <button id="btnLeft">◀<span>RUN</span></button>
@@ -451,16 +452,16 @@ canvas {
 </div>
 
 <!-- GLOBAL VERSION BADGE -->
-<div id="globalVersionTag">v0.018 - ULTRA MULTIPLAYER & WAFFLE OVERHAUL</div>
+<div id="globalVersionTag">v0.019 - MULTIPLAYER OVERHAUL</div>
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 
 <script>
 /* ========================================================
-   CRAB VOLLEYBALL ARCADE ENGINE v0.018
+   CRAB VOLLEYBALL ARCADE ENGINE v0.019
    ======================================================== */
 
-// HAT ARSENAL (NO CODES SPOILED)
+// HAT ARSENAL
 const HAT_DATABASE = [
   { id: "pineapple", name: "Pineapple", locked: false, desc: "Default tropical style" },
   { id: "propeller", name: "Propeller", locked: false, desc: "Default whirly topper" },
@@ -478,7 +479,7 @@ let userProfile = {
 
 function loadCareer() {
   try {
-    const saved = localStorage.getItem("crab_volleyball_profile_v5");
+    const saved = localStorage.getItem("crab_volleyball_profile_v6");
     if (saved) {
       userProfile = Object.assign(userProfile, JSON.parse(saved));
       if (!userProfile.unlockedHats) userProfile.unlockedHats = ["pineapple", "propeller", "captain"];
@@ -509,7 +510,7 @@ function saveCareerSettings() {
   const ep = document.getElementById("explosionSelect");
   if (qp) userProfile.quipPack = qp.value;
   if (ep) userProfile.explosion = ep.value;
-  localStorage.setItem("crab_volleyball_profile_v5", JSON.stringify(userProfile));
+  localStorage.setItem("crab_volleyball_profile_v6", JSON.stringify(userProfile));
 }
 
 function populateHatSelect() {
@@ -552,7 +553,7 @@ function filterProfanity(txt) {
   return res;
 }
 
-// CONTROL MODES (BUTTONS vs DRAG/TOUCH)
+// MOBILE CONTROLS
 let mobileControlMode = "buttons";
 function toggleControlMode() {
   mobileControlMode = (mobileControlMode === "buttons") ? "drag" : "buttons";
@@ -572,6 +573,8 @@ let oceanTimer = 0;
 let currentDrawnCards = [];
 let cardVotes = [0, 0, 0];
 let myCardVoteIndex = 0;
+let voteTimerCountdown = 8;
+let voteInterval = null;
 
 const ALL_VICE_CARDS = [
   { title: "TSUNAMI ESCAPE", icon: "🌊", effect: "tsunami", desc: "GET TO SAFETY! Run East across 20,000ft of piers to the Waffle House!" },
@@ -582,10 +585,10 @@ const ALL_VICE_CARDS = [
 ];
 
 const VICE_CARS = [
-  { x: 40, spd: 130, color: "#ff007f" },
-  { x: 380, spd: 170, color: "#00ffff" },
-  { x: 820, spd: 110, color: "#ffe57f" },
-  { x: 1240, spd: 150, color: "#ff4081" }
+  { x: 40, spd: 140, color: "#ff007f" },
+  { x: 380, spd: 180, color: "#00ffff" },
+  { x: 820, spd: 120, color: "#ffe57f" },
+  { x: 1240, spd: 160, color: "#ff4081" }
 ];
 
 const canvas = document.getElementById("beachCourt");
@@ -695,26 +698,34 @@ const sfx = new ArcadeAudio();
 const dobyImg = new Image();
 dobyImg.src = "./doby.png";
 
+// CUTE CHIBI AUDREY SVG
 function makeAudreySVG() {
   return `data:image/svg+xml;utf8,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-    <rect width="200" height="200" rx="16" fill="#0f172a"/>
+    <rect width="200" height="200" rx="20" fill="#0f172a"/>
     <circle cx="100" cy="100" r="70" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.3"/>
-    <circle cx="100" cy="100" r="45" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.4"/>
-    <path d="M 50 80 C 40 30, 160 30, 150 80 C 165 110, 155 140, 140 145 C 140 120, 135 90, 100 85 C 65 90, 60 120, 60 145 C 45 140, 35 110, 50 80 Z" fill="#ffd54f" stroke="#b45309" stroke-width="3"/>
-    <ellipse cx="100" cy="120" rx="48" ry="24" fill="#f43f5e" stroke="#881337" stroke-width="4"/>
+    <!-- Cute blonde bob hairstyle -->
+    <path d="M 45 70 C 35 25, 165 25, 155 70 C 170 100, 160 135, 145 140 C 145 115, 135 85, 100 80 C 65 85, 55 115, 55 140 C 40 135, 30 100, 45 70 Z" fill="#ffd54f" stroke="#b45309" stroke-width="3"/>
+    <!-- Soft Pink Crab Shell -->
+    <ellipse cx="100" cy="118" rx="46" ry="24" fill="#fb7185" stroke="#9f1239" stroke-width="3.5"/>
+    <!-- Professional blue anchor vest -->
     <polygon points="100,105 80,140 120,140" fill="#1e3a8a"/>
-    <polygon points="100,115 92,105 108,105" fill="#ffffff"/>
-    <polygon points="100,118 96,132 104,132" fill="#ef4444"/>
-    <circle cx="82" cy="95" r="14" fill="#ffffff" stroke="#000" stroke-width="3.5"/>
-    <circle cx="118" cy="95" r="14" fill="#ffffff" stroke="#000" stroke-width="3.5"/>
-    <line x1="96" y1="95" x2="104" y2="95" stroke="#000" stroke-width="4"/>
-    <circle cx="84" cy="95" r="6" fill="#0f172a"/><circle cx="86" cy="92" r="2.5" fill="#fff"/>
-    <circle cx="120" cy="95" r="6" fill="#0f172a"/><circle cx="122" cy="92" r="2.5" fill="#fff"/>
-    <path d="M 62 90 A 42 42 0 0 1 138 90" fill="none" stroke="#334155" stroke-width="4"/>
-    <line x1="62" y1="90" x2="78" y2="128" stroke="#334155" stroke-width="3.5"/>
-    <circle cx="80" cy="130" r="7" fill="#ef4444" stroke="#000" stroke-width="2"/>
-    <rect x="74" y="127" width="12" height="6" fill="#fbbf24"/>
+    <polygon points="100,114 94,105 106,105" fill="#ffffff"/>
+    <polygon points="100,118 97,130 103,130" fill="#ef4444"/>
+    <!-- Big cute anime cartoon eyes with eyelashes -->
+    <circle cx="82" cy="95" r="14" fill="#ffffff" stroke="#000" stroke-width="2.5"/>
+    <circle cx="118" cy="95" r="14" fill="#ffffff" stroke="#000" stroke-width="2.5"/>
+    <circle cx="83" cy="95" r="7" fill="#0f172a"/><circle cx="85" cy="92" r="3" fill="#fff"/>
+    <circle cx="119" cy="95" r="7" fill="#0f172a"/><circle cx="121" cy="92" r="3" fill="#fff"/>
+    <path d="M 72 82 Q 82 78 88 82" stroke="#000" stroke-width="2.5" fill="none"/>
+    <path d="M 112 82 Q 118 78 128 82" stroke="#000" stroke-width="2.5" fill="none"/>
+    <!-- Cute smile -->
+    <path d="M 94 122 Q 100 128 106 122" stroke="#9f1239" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <!-- Broadcast headset with glowing mic -->
+    <path d="M 64 90 A 40 40 0 0 1 136 90" fill="none" stroke="#475569" stroke-width="4"/>
+    <line x1="64" y1="90" x2="78" y2="126" stroke="#475569" stroke-width="3"/>
+    <circle cx="80" cy="128" r="6" fill="#ef4444" stroke="#000" stroke-width="2"/>
+    <rect x="74" y="125" width="12" height="6" fill="#fbbf24"/>
   </svg>`)}`;
 }
 
@@ -829,6 +840,7 @@ let checkpoints = [
 const WAFFLE_HOUSE_X = 19500;
 let cameraOffsetX = 0;
 let playerFinishedMap = {};
+let waffleDoorsClosingTimer = null; // 60s countdown once first player arrives
 
 function triggerTsunamiWarning() {
   isTsunamiTriggered = true;
@@ -872,14 +884,14 @@ function voteSkipCutscene() {
 }
 
 function updateSkipButtonUI() {
-  const humanCount = players.filter((p, i) => i === match.myPlayerIndex || (match.isOnline && peersConnected[i] && !p.isBot)).length;
+  const humanCount = players.filter((p, i) => (i === match.myPlayerIndex || peersConnected[i]) && !p.isBot).length;
   const currentVotes = Object.keys(skipVotes).length;
   const btn = document.getElementById("skipCutsceneBtn");
   if (btn) btn.innerText = `SKIP [${currentVotes}/${humanCount}]`;
 }
 
 function checkAllHumansSkipped() {
-  const humanCount = players.filter((p, i) => i === match.myPlayerIndex || (match.isOnline && peersConnected[i] && !p.isBot)).length;
+  const humanCount = players.filter((p, i) => (i === match.myPlayerIndex || peersConnected[i]) && !p.isBot).length;
   const currentVotes = Object.keys(skipVotes).length;
   if (currentVotes >= humanCount) {
     skipCutsceneImmediately();
@@ -947,7 +959,6 @@ function generateHorizontalPlatforms() {
     curX += pw + (60 + Math.random() * 75);
   }
 
-  // Final Waffle House Pier
   horizontalPlatforms.push({ x: WAFFLE_HOUSE_X - 120, y: FLOOR_Y, w: 800, h: 60, isWaffleFloor: true });
 }
 
@@ -956,8 +967,8 @@ function startHorizontalWaffleEscape() {
   match.paused = false;
   platformerCountdown = 4.0;
   playerFinishedMap = {};
+  waffleDoorsClosingTimer = null;
 
-  // All human players spawn on the wide starting boardwalk
   let spawnX = 150;
   players.forEach((p, i) => {
     if (p.isBot) p.activeInGame = false;
@@ -985,6 +996,25 @@ function updatePlatformerMode(dt) {
     else showToast(`${Math.ceil(platformerCountdown - 1)}...`, 0.9);
   }
 
+  // 60-Second Doors Closing Countdown once 1st crab makes it!
+  if (waffleDoorsClosingTimer !== null) {
+    waffleDoorsClosingTimer -= dt;
+    if (waffleDoorsClosingTimer <= 0) {
+      waffleDoorsClosingTimer = 0;
+      // Anyone who hasn't reached it didn't make it!
+      players.forEach((p, idx) => {
+        if (p.activeInGame && !playerFinishedMap[idx]) {
+          playerFinishedMap[idx] = "FAILED";
+        }
+      });
+      showToast("🚪 DOORS CLOSED! WAITING ROOM LOCKED!", 2.5);
+      setTimeout(showDramaticMovieCredits, 2500);
+      return;
+    } else {
+      showToast(`🥞 WAFFLE DOORS CLOSING IN: ${Math.ceil(waffleDoorsClosingTimer)}s!`, 0.5);
+    }
+  }
+
   const myP = players[match.myPlayerIndex];
   if (myP) {
     cameraOffsetX += ((myP.x - 450) - cameraOffsetX) * 8 * dt;
@@ -994,9 +1024,10 @@ function updatePlatformerMode(dt) {
   players.forEach((p, idx) => {
     if (!p.activeInGame) return;
 
-    if (playerFinishedMap[idx]) {
+    if (playerFinishedMap[idx] === true) {
       p.x = WAFFLE_HOUSE_X + 160; p.y = FLOOR_Y - 30; return;
     }
+    if (playerFinishedMap[idx] === "FAILED") return;
 
     horizontalPlatforms.forEach(plat => {
       if (p.x + p.halfW > plat.x && p.x - p.halfW < plat.x + plat.w) {
@@ -1014,7 +1045,7 @@ function updatePlatformerMode(dt) {
       }
     });
 
-    // PVP Claw Smack (Rotate to knock other crabs!)
+    // PVP Claw Smack
     if (Math.abs(p.angVel) > 4.0) {
       players.forEach((other, oIdx) => {
         if (idx !== oIdx && other.activeInGame && !playerFinishedMap[oIdx]) {
@@ -1028,13 +1059,17 @@ function updatePlatformerMode(dt) {
       });
     }
 
-    // Waffle House Door Win!
+    // Waffle House Door Reached!
     if (p.x >= WAFFLE_HOUSE_X + 80 && !playerFinishedMap[idx]) {
       playerFinishedMap[idx] = true;
       sfx.cheer();
 
+      if (waffleDoorsClosingTimer === null) {
+        waffleDoorsClosingTimer = 60.0; // Start 1-minute timer for everyone else!
+      }
+
       if (idx === match.myPlayerIndex) {
-        showToast("☕ YOU MADE IT! Sipping coffee inside Waffle House...", 3.5);
+        showToast("☕ YOU MADE IT! Chilling in a booth with hashbrowns...", 3.5);
         if (!userProfile.unlockedHats.includes("lighthouse")) {
           userProfile.unlockedHats.push("lighthouse");
           saveCareerSettings(); populateHatSelect();
@@ -1064,10 +1099,11 @@ function broadcastPlatformerSync() {
 }
 
 function checkAllPlayersEscaped() {
-  const activeHumans = players.filter((p, i) => i === match.myPlayerIndex || (match.isOnline && peersConnected[i] && !p.isBot));
+  const activeHumans = players.filter((p, i) => (i === match.myPlayerIndex || peersConnected[i]) && !p.isBot);
   const finishedCount = Object.keys(playerFinishedMap).length;
 
   if (finishedCount >= activeHumans.length) {
+    waffleDoorsClosingTimer = null;
     setTimeout(showDramaticMovieCredits, 2000);
   }
 }
@@ -1077,24 +1113,27 @@ function showDramaticMovieCredits() {
   const content = document.getElementById("creditsRollContent");
   if (!modal || !content) return;
 
-  const p1Name = players[0].name || "TOM";
-  const p2Name = players[1].name || "JEFF";
+  const humanPlayers = players.filter((p, i) => (i === match.myPlayerIndex || peersConnected[i]) && !p.isBot);
+  let playerLines = "";
+  humanPlayers.forEach(hp => {
+    const status = (playerFinishedMap[hp.id - 1] === true) ? "🥞 SURVIVOR (ENJOYING WAFFLES)" : "🌊 SWEPT INTO THE GULF";
+    playerLines += `<p style="font-size:22px;color:#ffe600;">${hp.name} &nbsp;·&nbsp; ${status}</p>`;
+  });
 
   content.innerHTML = `
-    <h1 style="color:#00ffff;font-size:38px;margin-bottom:16px;">🎬 CRAB VOLLEYBALL PICTURES PRESENTS 🎬</h1>
-    <h2 style="color:#ff007f;font-size:28px;">"ESCAPE TO WAFFLE HOUSE: TSUNAMI '85"</h2>
-    <br><br>
-    <p style="font-size:18px;color:#fff;">STARRING</p>
-    <p style="font-size:24px;color:#ffe600;">${p1Name} &nbsp;·&nbsp; as The Wave Strider</p>
-    <p style="font-size:24px;color:#ffe600;">${p2Name} &nbsp;·&nbsp; as The Determined Crustacean</p>
+    <h1 style="color:#00ffff;font-size:38px;margin-bottom:14px;">🎬 CRAB VOLLEYBALL PICTURES PRESENTS 🎬</h1>
+    <h2 style="color:#ff007f;font-size:26px;">"ESCAPE TO WAFFLE HOUSE: TSUNAMI '85"</h2>
     <br>
-    <p style="font-size:18px;color:#fff;">SPECIAL APPEARANCE</p>
-    <p style="font-size:22px;color:#00ffff;">AUDREY &nbsp;·&nbsp; Beach Action News 6</p>
+    <p style="font-size:16px;color:#fff;">CRUSTACEAN CAST</p>
+    ${playerLines}
     <br>
-    <p style="font-size:18px;color:#fff;">CATERING & SANCTUARY</p>
-    <p style="font-size:22px;color:#ffd54f;">24-HOUR ALL-NIGHT WAFFLE HOUSE (Smothered & Covered)</p>
+    <p style="font-size:16px;color:#fff;">FIELD CORRESPONDENT</p>
+    <p style="font-size:20px;color:#00ffff;">AUDREY &nbsp;·&nbsp; Beach Action News 6</p>
     <br>
-    <p style="font-size:16px;color:#aaa;">NO REAL CRABS WERE BOILED DURING THE FILMING OF THIS ESCAPE.</p>
+    <p style="font-size:16px;color:#fff;">CATERING & SANCTUARY</p>
+    <p style="font-size:20px;color:#ffd54f;">24-HOUR ALL-NIGHT WAFFLE HOUSE (Smothered & Covered)</p>
+    <br>
+    <p style="font-size:14px;color:#aaa;">NO REAL CRABS WERE BOILED DURING THE FILMING OF THIS ESCAPE.</p>
   `;
 
   modal.classList.remove("hidden");
@@ -1399,6 +1438,7 @@ function renderViceStyle() {
   grad.addColorStop(0.85, "#ff4081"); grad.addColorStop(1, "#ffe57f");
   ctx.fillStyle = grad; ctx.fillRect(0, 0, CW, CH);
 
+  // Highway with arcade sports cars
   drawViceHighwayAndCars(ctx, FLOOR_Y - 225);
   drawAnimatedOceanWaves(ctx, FLOOR_Y - 198, 143);
 
@@ -1414,11 +1454,22 @@ function drawViceHighwayAndCars(ctx, y) {
   ctx.fillStyle = "#1e1035"; ctx.fillRect(0, y, CW, 26);
   ctx.strokeStyle = "#ff007f"; ctx.lineWidth = 2;
   ctx.strokeRect(0, y, CW, 26);
+
+  // Dashed highway lines
+  ctx.strokeStyle = "#ffe57f"; ctx.lineWidth = 2; ctx.setLineDash([12, 12]);
+  ctx.beginPath(); ctx.moveTo(0, y + 13); ctx.lineTo(CW, y + 13); ctx.stroke();
+  ctx.setLineDash([]);
+
   VICE_CARS.forEach(car => {
     car.x += car.spd * 0.016;
     if (car.x > CW + 80) car.x = -80;
     ctx.save(); ctx.translate(car.x, y + 4); ctx.fillStyle = car.color;
+    // Slick sports car wedge
     ctx.beginPath(); ctx.moveTo(0, 14); ctx.lineTo(10, 8); ctx.lineTo(24, 6); ctx.lineTo(38, 14); ctx.closePath(); ctx.fill();
+    // Headlights
+    ctx.fillStyle = "#fff"; ctx.fillRect(36, 10, 3, 3);
+    // Wheels
+    ctx.fillStyle = "#000"; ctx.beginPath(); ctx.arc(8, 14, 3, 0, Math.PI*2); ctx.arc(28, 14, 3, 0, Math.PI*2); ctx.fill();
     ctx.restore();
   });
 }
@@ -1441,6 +1492,7 @@ function drawPlayersAndBall(ctx, offsetX = 0) {
 
     drawFlushHat(ctx, p.hat, animTimer);
 
+    // Overhead tag
     ctx.font = "900 13px sans-serif";
     const nw = ctx.measureText(p.name).width;
     ctx.fillStyle = "rgba(0,0,0,0.75)"; ctx.fillRect(-nw / 2 - 4, -p.height / 2 - 28, nw + 8, 16);
@@ -1480,10 +1532,11 @@ function renderHorizontalEscape() {
   ctx.save();
   ctx.translate(-cameraOffsetX, 0);
 
-  // Sloshing storm ocean behind the platforms
+  // Background coastal highway with moving cars (Always in Vice Escape!)
+  drawViceHighwayAndCars(ctx, FLOOR_Y - 220);
   drawAnimatedOceanWaves(ctx, FLOOR_Y - 140, 160);
 
-  // Render 5 Biome Platforms
+  // 5 Biome Platforms
   horizontalPlatforms.forEach(p => {
     if (p.isHighway) ctx.fillStyle = "#37474f";
     else if (p.biome === 2) ctx.fillStyle = "#4e342e";
@@ -1535,33 +1588,6 @@ window.addEventListener("keydown", (e) => {
   if (e.code === "Space" || (e.code && e.code.includes("Arrow"))) e.preventDefault();
 });
 window.addEventListener("keyup", (e) => { if (e.code) keys[e.code] = false; });
-
-// TOUCH DRAG & FLICK MODE
-let touchStartX = 0;
-let touchStartY = 0;
-canvas.addEventListener("touchstart", (e) => {
-  if (mobileControlMode !== "drag") return;
-  sfx.init();
-  const t = e.touches[0];
-  touchStartX = t.clientX; touchStartY = t.clientY;
-}, { passive: false });
-
-canvas.addEventListener("touchmove", (e) => {
-  if (mobileControlMode !== "drag") return;
-  e.preventDefault();
-  const t = e.touches[0];
-  const dx = t.clientX - touchStartX;
-  const dy = t.clientY - touchStartY;
-
-  keys["KeyA"] = dx < -20;
-  keys["KeyD"] = dx > 20;
-  if (dy < -35) keys["Space"] = true;
-}, { passive: false });
-
-canvas.addEventListener("touchend", () => {
-  if (mobileControlMode !== "drag") return;
-  keys["KeyA"] = false; keys["KeyD"] = false; keys["Space"] = false;
-});
 
 function bindTouch(btnId, code) {
   const btn = document.getElementById(btnId);
@@ -1621,7 +1647,7 @@ function gameLoop(now) {
 }
 requestAnimationFrame(gameLoop);
 
-// PRE-LOBBY UI
+// PRE-LOBBY UI WITH REAL-TIME SYNC & KICK FEATURE
 function refreshLobbyUI() {
   const t1 = document.getElementById("team1Players");
   const t2 = document.getElementById("team2Players");
@@ -1644,8 +1670,8 @@ function refreshLobbyUI() {
       if (p.spriteType === "met") label = `🎙️ ${p.name}`;
 
       let kickBtnHTML = "";
-      if (isChillBot && (!match.isOnline || isHost)) {
-        kickBtnHTML = `<button onclick="kickBot(${idx})" style="padding:2px 6px;font-size:10px;background:#e53935;color:#fff;">KICK</button>`;
+      if ((isChillBot || isPeer) && (!match.isOnline || isHost) && !isMe) {
+        kickBtnHTML = `<button onclick="kickPlayerSlot(${idx})" style="padding:2px 6px;font-size:10px;background:#e53935;color:#fff;">KICK</button>`;
       }
 
       card.innerHTML = `<span>${label}</span><span style="display:flex;align-items:center;gap:6px;">🎩 ${p.hat.toUpperCase()} ${kickBtnHTML}</span>`;
@@ -1659,8 +1685,13 @@ function refreshLobbyUI() {
   document.getElementById("team2Count").innerText = count2;
 }
 
-function kickBot(idx) {
+function kickPlayerSlot(idx) {
   sfx.init();
+  if (peerConnections[idx]) {
+    try { peerConnections[idx].close(); } catch(e) {}
+    peerConnections[idx] = null;
+  }
+  peersConnected[idx] = false;
   players[idx].isBot = false;
   players[idx].activeInGame = false;
   refreshLobbyUI();
@@ -1741,7 +1772,7 @@ function addChatEntry(sender, txt) {
   logs.scrollTop = logs.scrollHeight;
 }
 
-// SUBMODES & SYNCHRONIZED VICE VOTING
+// SUBMODES & EQUAL-WEIGHT VICE VOTING
 function showSubmodeSelect(context) {
   sfx.init();
   pendingModeContext = context;
@@ -1797,18 +1828,32 @@ function openViceCardVoteUI() {
     container.appendChild(el);
   });
   myCardVoteIndex = 0;
+
+  // Shared 8s voting timer
+  if (voteInterval) clearInterval(voteInterval);
+  voteTimerCountdown = 8;
+  const timeText = document.getElementById("voteTimerText");
+  if (timeText) timeText.innerText = `(${voteTimerCountdown}s REMAINING)`;
+
+  voteInterval = setInterval(() => {
+    voteTimerCountdown--;
+    if (timeText) timeText.innerText = `(${voteTimerCountdown}s REMAINING)`;
+    if (voteTimerCountdown <= 0) {
+      clearInterval(voteInterval);
+      if (!match.isOnline || isHost) tallyAndLaunchVice();
+    }
+  }, 1000);
 }
 
 function confirmMyCardVote() {
   sfx.init();
   cardVotes[myCardVoteIndex]++;
+  const cfm = document.getElementById("confirmCardBtn");
+  if (cfm) { cfm.disabled = true; cfm.innerText = "VOTED!"; }
+
   if (match.isOnline) {
     if (!isHost) peerConnections[0].send({ type: "CAST_VOTE", cardIdx: myCardVoteIndex });
-    else { updateCardVoteCounts(); setTimeout(tallyAndLaunchVice, 1500); }
-  } else {
-    chosenViceCard = currentDrawnCards[myCardVoteIndex];
-    document.getElementById("viceVoteModal").classList.add("hidden");
-    launchGame();
+    else updateCardVoteCounts();
   }
 }
 
@@ -1822,6 +1867,7 @@ function requestCardReshuffle() {
 }
 
 function tallyAndLaunchVice() {
+  if (voteInterval) clearInterval(voteInterval);
   let highest = -1; let winIdx = 0;
   for (let i = 0; i < 3; i++) {
     if (cardVotes[i] > highest) { highest = cardVotes[i]; winIdx = i; }
@@ -1901,7 +1947,7 @@ function startHostGameSetup() {
   showSubmodeSelect('online');
 }
 
-// MULTIPLAYER WEBRTC
+// MULTIPLAYER WEBRTC WITH CLEAN UNIQUE PEER ASSIGNMENT
 let peer = null;
 let isHost = false;
 const peerConnections = [];
@@ -1919,7 +1965,7 @@ function hostRoom() {
     peer = new Peer(roomId);
     peer.on("open", (id) => {
       isHost = true;
-      match.isOnline = true; // CRITICAL: Enables peer visibility in lobby!
+      match.isOnline = true;
       match.myPlayerIndex = 0;
       players[0].name = userProfile.name; players[0].team = 1; players[0].isBot = false;
 
@@ -1932,9 +1978,19 @@ function hostRoom() {
     });
 
     peer.on("connection", (conn) => {
-      let slot = -1;
+      // Check if peer is already connected (prevent duplicate Jeffs!)
+      let existingSlot = -1;
       for (let i = 1; i < 4; i++) {
-        if (!peersConnected[i]) { slot = i; break; }
+        if (peerConnections[i] && peerConnections[i].peer === conn.peer) {
+          existingSlot = i; break;
+        }
+      }
+
+      let slot = (existingSlot !== -1) ? existingSlot : -1;
+      if (slot === -1) {
+        for (let i = 1; i < 4; i++) {
+          if (!peersConnected[i]) { slot = i; break; }
+        }
       }
       if (slot === -1) { conn.close(); return; }
 
@@ -1963,13 +2019,21 @@ function hostRoom() {
           addChatEntry(data.sender, data.text);
           peerConnections.forEach(c => { if (c && c.open) c.send(data); });
         }
-        if (data.type === "CAST_VOTE") { cardVotes[data.cardIdx]++; updateCardVoteCounts(); }
-        if (data.type === "VOTE_SKIP") { skipVotes[data.slot] = true; updateSkipButtonUI(); checkAllHumansSkipped(); }
+        if (data.type === "CAST_VOTE") {
+          cardVotes[data.cardIdx]++;
+          updateCardVoteCounts();
+        }
+        if (data.type === "VOTE_SKIP") {
+          skipVotes[data.slot] = true; updateSkipButtonUI(); checkAllHumansSkipped();
+        }
         if (data.type === "INPUT") updatePlayer(players[slot], data.input, 0.03);
       });
 
       conn.on("close", () => {
         peersConnected[slot] = false;
+        peerConnections[slot] = null;
+        players[slot].isBot = false;
+        players[slot].activeInGame = false;
         refreshLobbyUI(); broadcastPlayerCustoms();
       });
     });
@@ -2035,16 +2099,12 @@ function joinRoom() {
             if (el) el.innerText = `VOTES: ${cardVotes[i]}`;
           }
         }
-        if (data.type === "TSUNAMI_TRIGGER") {
-          triggerTsunamiWarning();
-        }
+        if (data.type === "TSUNAMI_TRIGGER") triggerTsunamiWarning();
         if (data.type === "START_ESCAPE") {
           horizontalPlatforms = data.platforms;
           startHorizontalWaffleEscape();
         }
-        if (data.type === "EXECUTE_SKIP") {
-          skipCutsceneImmediately();
-        }
+        if (data.type === "EXECUTE_SKIP") skipCutsceneImmediately();
         if (data.type === "START_GAME") {
           activeGameMode = data.mode; chosenViceCard = data.card;
           configureActiveCourtPlayers(); updateCrabSprites();
@@ -2119,6 +2179,7 @@ function bindUIEvents() {
   if (get("closeBagBtn")) get("closeBagBtn").onclick = () => { get("lockerModal").classList.add("hidden"); get("menuPanel").classList.remove("hidden"); };
   if (get("hostBtn")) get("hostBtn").onclick = () => hostRoom();
   if (get("joinBtn")) get("joinBtn").onclick = () => joinRoom();
+  if (get("muteAudioBtn")) get("muteAudioBtn").onclick = () => toggleMuteAudio();
   if (get("copyBtn")) get("copyBtn").onclick = () => {
     navigator.clipboard.writeText(get("myCodeText").innerText);
     get("copyBtn").innerText = "COPIED!";
@@ -2143,11 +2204,17 @@ function bindUIEvents() {
   if (get("chatInput")) get("chatInput").onkeydown = (e) => { if (e.key === "Enter") sendChatMessage(); };
 }
 
-// INITIALIZATION
+// DETECT TOUCH / MOBILE DEVICES AUTOMATICALLY
 window.addEventListener("DOMContentLoaded", () => {
   bindUIEvents();
   loadCareer();
   pickRandomSassyQuote();
+
+  const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent));
+  const pad = document.getElementById("mobileControls");
+  if (pad && isTouch) {
+    pad.style.display = "flex";
+  }
 });
 </script>
 </body>
