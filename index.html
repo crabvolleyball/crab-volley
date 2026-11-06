@@ -284,7 +284,7 @@ canvas {
       </div>
     </section>
 
-    <!-- WORLDWIDE LEADERBOARD MODAL -->
+    <!-- WORLDWIDE LEADERBOARD -->
     <section id="leaderboardModal" class="panel hidden">
       <h1>🏆 WORLDWIDE LEADERBOARD 🏆</h1>
       <p class="sub">Fastest Escapes to Waffle House & Top Beach Competitors</p>
@@ -398,7 +398,7 @@ canvas {
       </div>
     </section>
 
-    <!-- DEMOCRATIC SUB-MODE SELECTION WITH 25s TIMER -->
+    <!-- DEMOCRATIC SUB-MODE SELECTION -->
     <section id="submodeModal" class="panel hidden">
       <h1 id="submodeTitle">CHOOSE MATCH STYLE</h1>
       <p class="sub" id="submodeSubtitle">Select your game environment! <span id="submodeTimerText" style="color:#d50000;">(25s REMAINING)</span></p>
@@ -412,7 +412,7 @@ canvas {
       </div>
     </section>
 
-    <!-- DEMOCRATIC VICE CARD VOTING WITH 25s TIMER -->
+    <!-- DEMOCRATIC VICE CARD VOTING -->
     <section id="viceVoteModal" class="panel hidden" style="background:#160228;border-color:#ff007f;">
       <h1 style="color:#00ffff;text-shadow:3px 3px 0 #ff007f, 5px 5px 0 #000;">🌴 VOTE VICE CARD 🌴</h1>
       <p class="sub" style="color:#ff77c6;">Popular vote decides the modifier! <span id="voteTimerText" style="color:#ffe600;">(25s REMAINING)</span></p>
@@ -482,16 +482,15 @@ canvas {
 </div>
 
 <!-- GLOBAL VERSION BADGE -->
-<div id="globalVersionTag">v0.021 - POPPAGEE & BIOME OVERHAUL</div>
+<div id="globalVersionTag">v0.022 - PARALLAX & BIOME EVOLUTION</div>
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 
 <script>
 /* ========================================================
-   CRAB VOLLEYBALL ARCADE ENGINE v0.021
+   CRAB VOLLEYBALL ARCADE ENGINE v0.022
    ======================================================== */
 
-// FORMAT JOIN CODE AUTOMATICALLY (E.G. USER TYPES 4840 -> CRAB-4840)
 function formatJoinCodeInput(el) {
   let val = el.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
   if (val.startsWith("CRAB")) val = val.substring(4);
@@ -519,7 +518,7 @@ let userProfile = {
 
 function loadCareer() {
   try {
-    const saved = localStorage.getItem("crab_volleyball_profile_v21");
+    const saved = localStorage.getItem("crab_volleyball_profile_v22");
     if (saved) {
       userProfile = Object.assign(userProfile, JSON.parse(saved));
       if (!userProfile.unlockedHats) userProfile.unlockedHats = ["pineapple", "propeller", "captain"];
@@ -554,7 +553,7 @@ function saveCareerSettings() {
   const ep = document.getElementById("explosionSelect");
   if (qp) userProfile.quipPack = qp.value;
   if (ep) userProfile.explosion = ep.value;
-  localStorage.setItem("crab_volleyball_profile_v21", JSON.stringify(userProfile));
+  localStorage.setItem("crab_volleyball_profile_v22", JSON.stringify(userProfile));
 }
 
 function populateHatSelect() {
@@ -586,7 +585,7 @@ function renderArsenalList() {
   });
 }
 
-// LEADERBOARD SYSTEM
+// LEADERBOARD
 const DEFAULT_LEADERBOARD = [
   { rank: 1, name: "POPPAGEE", time: "01:14.2", points: 84 },
   { rank: 2, name: "CRAB-CHAMP", time: "01:28.6", points: 62 },
@@ -624,7 +623,6 @@ function closeLeaderboard() {
   document.getElementById("menuPanel").classList.remove("hidden");
 }
 
-// PROFANITY FILTER
 const BANNED_WORDS = ["fuck", "shit", "bitch", "asshole", "cunt", "nigger", "nigga", "dick", "pussy", "bastard", "slut"];
 function filterProfanity(txt) {
   let res = txt;
@@ -635,7 +633,6 @@ function filterProfanity(txt) {
   return res;
 }
 
-// MOBILE CONTROLS TOGGLE
 let mobileControlMode = "buttons";
 function toggleControlMode() {
   mobileControlMode = (mobileControlMode === "buttons") ? "drag" : "buttons";
@@ -645,7 +642,6 @@ function toggleControlMode() {
   if (pad) pad.style.display = (mobileControlMode === "buttons") ? "flex" : "none";
 }
 
-// ENGINE VARIABLES
 let activeGameMode = "standard";
 let chosenViceCard = null;
 let pendingModeContext = "solo";
@@ -687,7 +683,6 @@ let BASE_BALL_GRAV = 550;
 let BALL_GRAV = 550;
 const NET = { x: CW / 2 - 4, y: 550, w: 8, h: FLOOR_Y - 550 };
 
-// SASSY QUOTES
 const SASSY_MENU_QUOTES = [
   "GET CLAMPED! 🦀",
   "PINCH RESPONSIBLY OR GET PINCHED!",
@@ -701,7 +696,6 @@ function pickRandomSassyQuote() {
   if (el) el.innerText = SASSY_MENU_QUOTES[Math.floor(Math.random() * SASSY_MENU_QUOTES.length)];
 }
 
-// AUDIO
 let standardBgm = null;
 let viceRaveBgm = null;
 let isAudioMuted = false;
@@ -737,7 +731,6 @@ function toggleMuteAudio() {
   else playModeMusic();
 }
 
-// SFX
 class ArcadeAudio {
   constructor() { this.ctx = null; }
   init() {
@@ -781,32 +774,24 @@ class ArcadeAudio {
 }
 const sfx = new ArcadeAudio();
 
-// CHARACTERS & GRAPHICS
 const dobyImg = new Image();
 dobyImg.src = "./doby.png";
 
-// CUTE AUDREY POPPAGEE SVG (WITH STENCILED SMILE)
 function makeAudreySVG() {
   return `data:image/svg+xml;utf8,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
     <rect width="200" height="200" rx="20" fill="#0f172a"/>
     <circle cx="100" cy="100" r="70" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.3"/>
-    <!-- Cute blonde bob hairstyle -->
     <path d="M 45 70 C 35 25, 165 25, 155 70 C 170 100, 160 135, 145 140 C 145 115, 135 85, 100 80 C 65 85, 55 115, 55 140 C 40 135, 30 100, 45 70 Z" fill="#ffd54f" stroke="#b45309" stroke-width="3"/>
-    <!-- Soft Pink Crab Shell -->
     <ellipse cx="100" cy="118" rx="46" ry="24" fill="#fb7185" stroke="#9f1239" stroke-width="3.5"/>
-    <!-- Professional blue anchor vest -->
     <polygon points="100,105 80,140 120,140" fill="#1e3a8a"/>
     <polygon points="100,114 94,105 106,105" fill="#ffffff"/>
     <polygon points="100,118 97,130 103,130" fill="#ef4444"/>
-    <!-- Big cute anime cartoon eyes with eyelashes -->
     <circle cx="82" cy="95" r="14" fill="#ffffff" stroke="#000" stroke-width="2.5"/>
     <circle cx="118" cy="95" r="14" fill="#ffffff" stroke="#000" stroke-width="2.5"/>
     <circle cx="83" cy="95" r="7" fill="#0f172a"/><circle cx="85" cy="92" r="3" fill="#fff"/>
     <circle cx="119" cy="95" r="7" fill="#0f172a"/><circle cx="121" cy="92" r="3" fill="#fff"/>
-    <!-- Cute Stenciled Smile :) -->
     <path d="M 92 122 Q 100 130 108 122" stroke="#000" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-    <!-- Broadcast headset with glowing mic -->
     <path d="M 64 90 A 40 40 0 0 1 136 90" fill="none" stroke="#475569" stroke-width="4"/>
     <line x1="64" y1="90" x2="78" y2="126" stroke="#475569" stroke-width="3"/>
     <circle cx="80" cy="128" r="6" fill="#ef4444" stroke="#000" stroke-width="2"/>
@@ -834,7 +819,6 @@ function makeMeteorologistSVG() {
 const metImg = new Image();
 metImg.src = makeMeteorologistSVG();
 
-// POPPAGEE CHARACTER SPRITE (AUDREY IN GAME)
 const poppaGeeImg = new Image();
 poppaGeeImg.src = makeAudreySVG();
 
@@ -936,7 +920,7 @@ function triggerTsunamiWarning() {
   isTsunamiTriggered = true;
   ball.active = false;
   match.paused = true;
-  hideToast(); // Remove any leftover big text!
+  hideToast();
   sfx.alarm();
   renderAudreyArt();
   document.getElementById("newsCutsceneModal").classList.remove("hidden");
@@ -1003,12 +987,15 @@ function generateHorizontalPlatforms() {
   // Biome 1: Safe Start Beach & Sandy Boardwalk (0 - 4,000px)
   horizontalPlatforms.push({ x: 0, y: FLOOR_Y, w: 1000, h: 40 });
   let curX = 1100;
-  while (curX < 4000) {
-    const pw = 140 + Math.random() * 110;
+  while (curX < 3800) {
+    const pw = 150 + Math.random() * 110;
     const py = FLOOR_Y - (30 + Math.random() * 90);
     horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 1 });
-    curX += pw + (80 + Math.random() * 95);
+    curX += pw + (85 + Math.random() * 95);
   }
+
+  // Broken Crumbling Highway Edge (Ends at 3,900px!)
+  horizontalPlatforms.push({ x: 3750, y: FLOOR_Y - 20, w: 160, h: 24, biome: 1, isBrokenHighwayEdge: true });
 
   // Biome 2: Sinking Docks & Floating Rafts (4,000 - 8,500px)
   horizontalPlatforms.push({ x: 3950, y: FLOOR_Y, w: 450, h: 40, isCP: true });
@@ -1016,7 +1003,7 @@ function generateHorizontalPlatforms() {
   while (curX < 8500) {
     const pw = 120 + Math.random() * 100;
     const py = FLOOR_Y - (40 + Math.random() * 120);
-    horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 2 });
+    horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 2, bobbing: true });
     curX += pw + (90 + Math.random() * 105);
   }
 
@@ -1111,6 +1098,9 @@ function updatePlatformerMode(dt) {
     if (cameraOffsetX < 0) cameraOffsetX = 0;
   }
 
+  // Biome 4 Wind Force mid-air
+  const curBiome = Math.min(5, Math.floor(cameraOffsetX / 4000) + 1);
+
   players.forEach((p, idx) => {
     if (!p.activeInGame) return;
 
@@ -1119,12 +1109,22 @@ function updatePlatformerMode(dt) {
     }
     if (playerFinishedMap[idx] === "FAILED") return;
 
+    if (curBiome === 4 && !p.isGrounded) {
+      p.vx -= 40 * dt; // Gust of wind pushes crabs
+    }
+
+    // ROTATED CONTACT & CLAW LIFTING COLLISION
     const dynamicHalfH = p.halfW * Math.abs(Math.sin(p.angle)) + p.halfH * Math.abs(Math.cos(p.angle));
 
     horizontalPlatforms.forEach(plat => {
+      let platY = plat.y;
+      if (plat.bobbing) {
+        platY += Math.sin(oceanTimer * 2 + plat.x * 0.01) * 6;
+      }
+
       if (p.x + p.halfW > plat.x && p.x - p.halfW < plat.x + plat.w) {
-        if (p.y + dynamicHalfH >= plat.y && p.y + dynamicHalfH <= plat.y + 24 && p.vy >= 0) {
-          p.y = plat.y - dynamicHalfH; p.vy = 0; p.isGrounded = true; p.canJump = true;
+        if (p.y + dynamicHalfH >= platY && p.y + dynamicHalfH <= platY + 24 && p.vy >= 0) {
+          p.y = platY - dynamicHalfH; p.vy = 0; p.isGrounded = true; p.canJump = true;
         }
       }
     });
@@ -1242,7 +1242,6 @@ function restartToLobby() {
   refreshLobbyUI();
 }
 
-// CRAB PLAYERS & VOLLEYBALL
 function createCrab(id, team, x, name = "", isBot = false) {
   return {
     id: id, team: team, x: x, y: FLOOR_Y - 26,
@@ -1289,7 +1288,6 @@ function hideToast() {
   match.toastTimer = 0;
 }
 
-// PHYSICS & CLAW LIFTING
 function updatePlayer(p, input, dt) {
   let speedMultiplier = 1.0;
   if (chosenViceCard && chosenViceCard.effect === "turbo_speed") speedMultiplier = 1.35;
@@ -1498,14 +1496,14 @@ function render() {
 
 function drawInfiniteAnimatedOcean(ctx, y, h, camX = 0, biome = 1) {
   ctx.save();
-  ctx.fillStyle = (biome === 2) ? "#1e1b4b" : ((activeGameMode === "vice") ? "#1a0b38" : "#005b96");
+  ctx.fillStyle = (biome === 2 || biome === 4) ? "#0f172a" : ((activeGameMode === "vice") ? "#1a0b38" : "#005b96");
   ctx.fillRect(camX - 100, y, CW + 200, h);
 
   for (let layer = 0; layer < 3; layer++) {
     ctx.beginPath();
     const layerOffset = layer * 16;
-    const waveColor = (biome === 2)
-      ? "rgba(129, 140, 248, 0.4)"
+    const waveColor = (biome === 2 || biome === 4)
+      ? "rgba(148, 163, 184, 0.45)"
       : ((activeGameMode === "vice") 
         ? (layer === 0 ? "rgba(255, 0, 127, 0.4)" : "rgba(0, 255, 255, 0.35)")
         : (layer === 0 ? "rgba(255, 255, 255, 0.4)" : "rgba(1, 144, 212, 0.5)"));
@@ -1621,26 +1619,21 @@ function drawRetroScore(ctx, x, y, s1, s2, c1, c2) {
   ctx.restore();
 }
 
-// 5 DISTINCT TRANSFORMATIONAL BIOME BACKGROUNDS & PROPS
+// 5 DISTINCT TRANSFORMATIONAL BIOME BACKGROUNDS & STRUCTURAL PILINGS
 function renderHorizontalEscape() {
   const curBiome = Math.min(5, Math.floor(cameraOffsetX / 4000) + 1);
 
-  // Dynamic Biome Sky Gradient
+  // Dynamic Seamless Biome Sky
   const grad = ctx.createLinearGradient(0, 0, 0, CH);
   if (curBiome === 1) {
-    // Biome 1: Sunset Vice Beach
     grad.addColorStop(0, "#00e5ff"); grad.addColorStop(0.5, "#e040fb"); grad.addColorStop(1, "#ffe57f");
   } else if (curBiome === 2) {
-    // Biome 2: Tropical Storm
     grad.addColorStop(0, "#1e1b4b"); grad.addColorStop(0.6, "#312e81"); grad.addColorStop(1, "#0f172a");
   } else if (curBiome === 3) {
-    // Biome 3: Neon Highway Ruins
     grad.addColorStop(0, "#2b0036"); grad.addColorStop(0.6, "#700045"); grad.addColorStop(1, "#150024");
   } else if (curBiome === 4) {
-    // Biome 4: Tempest Suspension Bridge
     grad.addColorStop(0, "#09090b"); grad.addColorStop(0.6, "#18181b"); grad.addColorStop(1, "#27272a");
   } else {
-    // Biome 5: Golden Waffle Sanctuary
     grad.addColorStop(0, "#451a03"); grad.addColorStop(0.6, "#78350f"); grad.addColorStop(1, "#f59e0b");
   }
   ctx.fillStyle = grad; ctx.fillRect(0, 0, CW, CH);
@@ -1648,51 +1641,63 @@ function renderHorizontalEscape() {
   ctx.save();
   ctx.translate(-cameraOffsetX, 0);
 
-  // Biome-Specific Background Elements
+  // Biome-Specific Backgrounds (ROAD ENDS AT BIOME 1!)
   if (curBiome === 1) {
-    drawInfiniteHighway(ctx, FLOOR_Y - 220, cameraOffsetX);
+    if (cameraOffsetX < 3800) {
+      drawInfiniteHighway(ctx, FLOOR_Y - 220, cameraOffsetX);
+    }
     drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 140, 160, cameraOffsetX, 1);
   } else if (curBiome === 2) {
-    // Sinking docks: road has washed away! Rain streaks & flashing buoy
+    // Sinking Docks: FULL RAIN STORM, NO ROAD AT ALL!
     drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 140, 160, cameraOffsetX, 2);
-    ctx.strokeStyle = "rgba(255,255,255,0.25)"; ctx.lineWidth = 1.5;
-    for (let rx = cameraOffsetX; rx < cameraOffsetX + CW; rx += 60) {
-      ctx.beginPath(); ctx.moveTo(rx, 40); ctx.lineTo(rx - 25, 140); ctx.stroke();
+    ctx.strokeStyle = "rgba(255,255,255,0.35)"; ctx.lineWidth = 1.8;
+    for (let rx = cameraOffsetX - 50; rx < cameraOffsetX + CW + 100; rx += 45) {
+      ctx.beginPath(); ctx.moveTo(rx, 20); ctx.lineTo(rx - 30, 160); ctx.stroke();
     }
   } else if (curBiome === 3) {
-    // Ruined highway with overturned sports cars & neon road signs
+    // Shattered Highway Overpass with Abandoned Sports Cars
     drawInfiniteHighway(ctx, FLOOR_Y - 220, cameraOffsetX);
     drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 140, 160, cameraOffsetX, 3);
     ctx.fillStyle = "#ff007f"; ctx.font = "900 20px Impact";
-    ctx.fillText("⚡ MIAMI 5 MILES ⚡", cameraOffsetX + 400, FLOOR_Y - 260);
+    ctx.fillText("⚡ SPEED TRAP: MIAMI 5 MILES ⚡", cameraOffsetX + 350, FLOOR_Y - 260);
   } else if (curBiome === 4) {
-    // Suspension bridge towers & aviation beacons
+    // Tempest Suspension Bridge: Steel Girder Towers & Aviation Beacons
     drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 140, 160, cameraOffsetX, 4);
     ctx.strokeStyle = "#52525b"; ctx.lineWidth = 8;
-    for (let tx = 13200; tx <= 17000; tx += 900) {
-      ctx.beginPath(); ctx.moveTo(tx, FLOOR_Y); ctx.lineTo(tx + 60, 120); ctx.stroke();
+    for (let tx = 13200; tx <= 17000; tx += 850) {
+      ctx.beginPath(); ctx.moveTo(tx, FLOOR_Y); ctx.lineTo(tx + 60, 100); ctx.stroke();
       ctx.fillStyle = Math.sin(animTimer * 6) > 0 ? "#ef4444" : "#7f1d1d";
-      ctx.beginPath(); ctx.arc(tx + 60, 115, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(tx + 60, 95, 6, 0, Math.PI * 2); ctx.fill();
     }
   } else {
-    // Waffle Hill: glowing diner parking lot & warm windows
+    // Waffle Hill: Golden diner sanctuary
     drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 140, 160, cameraOffsetX, 5);
   }
 
-  // 5 Biome Platforms (Distinct visual textures)
+  // 5 Biome Platforms with STRUCTURAL GROUND PILINGS (No floating stilts!)
   horizontalPlatforms.forEach(p => {
+    let platY = p.y;
+    if (p.bobbing) platY += Math.sin(oceanTimer * 2 + p.x * 0.01) * 6;
+
+    // Solid structural pilings rooted into ocean
+    if (!p.isWaffleFloor && p.w > 40) {
+      ctx.fillStyle = (p.biome === 4) ? "#27272a" : "#3e2723";
+      ctx.fillRect(p.x + 15, platY + p.h, 12, FLOOR_Y - platY + 20);
+      ctx.fillRect(p.x + p.w - 27, platY + p.h, 12, FLOOR_Y - platY + 20);
+    }
+
     if (p.isHighway) ctx.fillStyle = "#37474f";
-    else if (p.biome === 2) ctx.fillStyle = "#271c19"; // dark barnacle wood
-    else if (p.biome === 4) ctx.fillStyle = "#3f3f46"; // steel girder
-    else if (p.biome === 5) ctx.fillStyle = "#b45309"; // polished brick
-    else ctx.fillStyle = "#d4a76a"; // golden boardwalk
+    else if (p.biome === 2) ctx.fillStyle = "#271c19";
+    else if (p.biome === 4) ctx.fillStyle = "#3f3f46";
+    else if (p.biome === 5) ctx.fillStyle = "#b45309";
+    else ctx.fillStyle = "#d4a76a";
 
     ctx.strokeStyle = "#000"; ctx.lineWidth = 3;
-    ctx.fillRect(p.x, p.y, p.w, p.h); ctx.strokeRect(p.x, p.y, p.w, p.h);
+    ctx.fillRect(p.x, platY, p.w, p.h); ctx.strokeRect(p.x, platY, p.w, p.h);
 
     if (p.isHighway) {
       ctx.fillStyle = "#ffd54f";
-      for (let px = p.x + 10; px < p.x + p.w - 10; px += 35) ctx.fillRect(px, p.y + 9, 16, 4);
+      for (let px = p.x + 10; px < p.x + p.w - 10; px += 35) ctx.fillRect(px, platY + 9, 16, 4);
     }
   });
 
@@ -1718,13 +1723,11 @@ function renderHorizontalEscape() {
   ctx.fillStyle = "#000"; ctx.font = "900 16px Impact"; ctx.fillText("COME IN!", 142, 115);
   ctx.restore();
 
-  // Draw Players
   drawPlayersAndBall(ctx, 0);
 
   ctx.restore();
 }
 
-// TOUCH & KEYBOARD CONTROLS
 const keys = {};
 window.addEventListener("keydown", (e) => {
   sfx.init();
@@ -1791,7 +1794,6 @@ function gameLoop(now) {
 }
 requestAnimationFrame(gameLoop);
 
-// PRE-LOBBY UI
 function refreshLobbyUI() {
   const t1 = document.getElementById("team1Players");
   const t2 = document.getElementById("team2Players");
@@ -1896,7 +1898,6 @@ function toggleBotFill() {
   if (match.isOnline && isHost) broadcastPlayerCustoms();
 }
 
-// LOBBY CHAT
 function sendChatMessage() {
   const inp = document.getElementById("chatInput");
   const txt = inp.value.trim();
@@ -1923,7 +1924,7 @@ function addChatEntry(sender, txt) {
   logs.scrollTop = logs.scrollHeight;
 }
 
-// DEMOCRATIC SUB-MODE VOTING (PROCEEDS INSTANTLY ONCE ALL VOTE)
+// SYNCHRONIZED DEMOCRATIC SUB-MODE VOTING (INSTANT PROCEED)
 function showSubmodeSelect(context) {
   sfx.init();
   pendingModeContext = context;
@@ -1934,6 +1935,10 @@ function showSubmodeSelect(context) {
   submodeVotes = { standard: 0, vice: 0 };
   submodeTimerCountdown = 25;
   updateSubmodeVoteCounts();
+
+  if (match.isOnline && isHost) {
+    peerConnections.forEach(c => { if (c && c.open) c.send({ type: "OPEN_SUBMODE_VOTE" }); });
+  }
 
   if (submodeInterval) clearInterval(submodeInterval);
   submodeInterval = setInterval(() => {
@@ -2004,7 +2009,7 @@ function executeSubmodeSelect(mode) {
   }
 }
 
-// DEMOCRATIC VICE CARD VOTING (PROCEEDS INSTANTLY ONCE ALL VOTE)
+// SYNCHRONIZED VICE CARD VOTING (INSTANT PROCEED)
 function openViceCardVoteUI() {
   document.getElementById("submodeModal").classList.add("hidden");
   document.getElementById("socialLobbyModal").classList.add("hidden");
@@ -2309,7 +2314,10 @@ function joinRoom() {
           refreshLobbyUI();
         }
         if (data.type === "CHAT") addChatEntry(data.sender, data.text);
-        if (data.type === "SCREEN_CHANGE" && data.screen === "submode") showSubmodeSelect('online');
+        if (data.type === "OPEN_SUBMODE_VOTE") {
+          document.getElementById("socialLobbyModal").classList.add("hidden");
+          document.getElementById("submodeModal").classList.remove("hidden");
+        }
         if (data.type === "SYNC_SUBMODE_VOTES") {
           submodeVotes = data.votes;
           updateSubmodeVoteCounts();
@@ -2396,7 +2404,6 @@ function broadcastGameState() {
   peerConnections.forEach(c => { if (c && c.open) c.send(data); });
 }
 
-// BIND UI
 function bindUIEvents() {
   const get = id => document.getElementById(id);
   if (get("playSoloBtn")) get("playSoloBtn").onclick = () => showSubmodeSelect('solo');
@@ -2428,7 +2435,6 @@ function bindUIEvents() {
   if (get("chatInput")) get("chatInput").onkeydown = (e) => { if (e.key === "Enter") sendChatMessage(); };
 }
 
-// INITIALIZATION
 window.addEventListener("DOMContentLoaded", () => {
   bindUIEvents();
   loadCareer();
