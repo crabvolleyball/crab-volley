@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>Crab Volleyball Arcade</title>
+<title>Crab Volleyball Arcade 2026</title>
 <style>
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body {
@@ -45,12 +45,12 @@ main {
   overflow: hidden;
 }
 
-/* ARCADE RETRO PANELS */
+/* ARCADE PANELS */
 .panel {
-  width: min(960px, 98%); background: #fffbe8; border: 5px solid #142800;
+  width: min(980px, 98%); background: #fffbe8; border: 5px solid #142800;
   border-radius: 18px; box-shadow: 8px 8px 0 #000;
   padding: clamp(10px, 2.5vw, 20px); text-align: center; margin: auto;
-  position: relative; max-height: 88vh; overflow-y: auto;
+  position: relative; max-height: 90vh; overflow-y: auto;
 }
 h1 {
   margin: 0 0 2px; font-size: clamp(26px, 4.2vw, 42px); color: #e63900;
@@ -173,7 +173,7 @@ canvas {
   text-align: center; pointer-events: none; z-index: 25; width: 90%;
 }
 
-/* 20-SECOND AUDREY CUTSCENE */
+/* 20-SECOND AUDREY POPPAGEE CUTSCENE */
 #newsCutsceneModal {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   width: min(860px, 94%); background: #1a0026; border: 5px solid #ff007f;
@@ -185,9 +185,9 @@ canvas {
   letter-spacing: 1.5px; border-radius: 6px; margin-bottom: 8px; display: flex;
   justify-content: space-between; align-items: center;
 }
-.audrey-layout { display: flex; gap: 12px; align-items: center; justify-content: center; }
+.audrey-layout { display: flex; gap: 16px; align-items: center; justify-content: center; }
 .audrey-speech {
-  font-family: sans-serif; font-size: 13px; font-weight: 900; color: #e0f2fe;
+  font-family: sans-serif; font-size: 14px; font-weight: 900; color: #e0f2fe;
   text-align: left; line-height: 1.4;
 }
 .timer-bar {
@@ -196,7 +196,7 @@ canvas {
 }
 .timer-fill { width: 100%; height: 100%; background: #00ffff; transition: width 0.1s linear; }
 
-/* MOVIE CREDITS */
+/* 2026 MOVIE CREDITS */
 #movieCreditsModal {
   position: absolute; inset: 0; background: #000; z-index: 90;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -306,22 +306,35 @@ canvas {
       </div>
     </section>
 
-    <!-- BEACH BAG / ARSENAL -->
+    <!-- BEACH BAG / ARSENAL (20+ CUSTOMIZATIONS) -->
     <section id="lockerModal" class="panel hidden">
       <h1>🎒 YOUR BEACH BAG 🎒</h1>
       <p class="sub">Rank: <span id="careerLevel" style="color:#d84315;">1</span> · Claws Pinched: <span id="careerPoints">0</span> · Sets Won: <span id="careerWins">0</span></p>
 
       <div class="customizer-box">
-        <div style="font-size:13px;font-weight:bold;color:#004d40;">🏆 HAT ARSENAL (UNLOCK VIA PLAY):</div>
+        <div style="font-size:13px;font-weight:bold;color:#004d40;">🏆 20+ UNLOCKABLE HATS & ACCESSORIES:</div>
         <div id="hatUnlockList" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:4px 0;"></div>
 
         <div class="custom-row" style="margin-top:4px;">
+          <b>CRAB COLORWAY:</b>
+          <select id="colorwaySelect" class="custom-input" onchange="updatePlayerColorway()">
+            <option value="classic">Coral Crab (Classic)</option>
+            <option value="vice_cyan">Vice Cyan Neon</option>
+            <option value="magenta">Synthwave Magenta</option>
+            <option value="toxic">Toxic Slime Green</option>
+            <option value="gold">Royal Midas Gold</option>
+            <option value="obsidian">Obsidian Shadow Black</option>
+            <option value="ghost">Ghost Crab Albino</option>
+            <option value="rainbow">🌈 ANIMATED RAINBOW CHROMA</option>
+          </select>
+
           <b>TRASH-TALK QUIP PACK:</b>
           <select id="quipPackSelect" class="custom-input">
-            <option value="classic">Classic Crab ("Crab Pride!", "Pinch this!")</option>
-            <option value="trash">Trash Talker ("Sit down!", "Free points!")</option>
+            <option value="classic">Classic ("Crab Pride!", "Pinch this!")</option>
+            <option value="trash">Trash Talker ("Sit down!", "Free real estate!")</option>
             <option value="sailor">Salty Sailor ("Shiver me claws!", "Overboard!")</option>
-            <option value="zen">Zen Beachcomber ("Flow like water...", "Breathe...")</option>
+            <option value="zen">Zen Beachcomber ("Flow like water...", "Inner peace...")</option>
+            <option value="cyber2026">Cyber 2026 ("Wake up samurai!", "Error 404!")</option>
           </select>
         </div>
         <div class="custom-row">
@@ -398,7 +411,7 @@ canvas {
       </div>
     </section>
 
-    <!-- DEMOCRATIC SUB-MODE SELECTION -->
+    <!-- DEMOCRATIC SUB-MODE SELECTION (25s TIMER + INSTANT ADVANCE) -->
     <section id="submodeModal" class="panel hidden">
       <h1 id="submodeTitle">CHOOSE MATCH STYLE</h1>
       <p class="sub" id="submodeSubtitle">Select your game environment! <span id="submodeTimerText" style="color:#d50000;">(25s REMAINING)</span></p>
@@ -412,7 +425,7 @@ canvas {
       </div>
     </section>
 
-    <!-- DEMOCRATIC VICE CARD VOTING -->
+    <!-- DEMOCRATIC VICE CARD VOTING (25s TIMER + INSTANT ADVANCE) -->
     <section id="viceVoteModal" class="panel hidden" style="background:#160228;border-color:#ff007f;">
       <h1 style="color:#00ffff;text-shadow:3px 3px 0 #ff007f, 5px 5px 0 #000;">🌴 VOTE VICE CARD 🌴</h1>
       <p class="sub" style="color:#ff77c6;">Popular vote decides the modifier! <span id="voteTimerText" style="color:#ffe600;">(25s REMAINING)</span></p>
@@ -438,19 +451,19 @@ canvas {
             <button id="skipCutsceneBtn" style="padding:2px 8px;font-size:11px;background:#fff;color:#000;">SKIP [0/2]</button>
           </div>
           <div class="audrey-layout">
-            <div id="audreyAnchorArt" style="width:110px;height:110px;flex-shrink:0;"></div>
+            <div id="audreyAnchorArt" style="width:120px;height:120px;flex-shrink:0;"></div>
             <div class="audrey-speech">
               "This is <b>Meteorologist Audrey PoppaGee</b> reporting LIVE from Beach Action News 6!<br>
               A Category 5 Tsunami is engulfing the coast! <b>The net is gone!</b><br>
               All crabs must run <b>EAST</b> across 20,000 feet of piers to shelter at the<br>
-              <b style="color:#ffe57f;font-size:16px;">🥞 24-HOUR ALL-NIGHT WAFFLE HOUSE! 🥞</b><br>
+              <b style="color:#ffe57f;font-size:17px;">🥞 24-HOUR ALL-NIGHT WAFFLE HOUSE! 🥞</b><br>
               <span style="color:#ff5252;">WATCH YOUR JUMPS AND GET TO SAFETY!"</span>
             </div>
           </div>
           <div class="timer-bar"><div id="newsTimerFill" class="timer-fill"></div></div>
         </div>
 
-        <!-- MOVIE CREDITS -->
+        <!-- 2026 MOVIE CREDITS -->
         <div id="movieCreditsModal" class="hidden">
           <div class="credits-roll" id="creditsRollContent"></div>
           <div style="position:absolute;bottom:16px;display:flex;gap:12px;">
@@ -482,13 +495,13 @@ canvas {
 </div>
 
 <!-- GLOBAL VERSION BADGE -->
-<div id="globalVersionTag">v0.022 - PARALLAX & BIOME EVOLUTION</div>
+<div id="globalVersionTag">v1.0 - 2026 FINAL RELEASE</div>
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 
 <script>
 /* ========================================================
-   CRAB VOLLEYBALL ARCADE ENGINE v0.022
+   CRAB VOLLEYBALL ARCADE ENGINE v1.0 (2026 GOLD RELEASE)
    ======================================================== */
 
 function formatJoinCodeInput(el) {
@@ -498,30 +511,73 @@ function formatJoinCodeInput(el) {
   else el.value = "";
 }
 
-// HAT ARSENAL
+// 20+ HAT & ACCESSORY DATABASE
 const HAT_DATABASE = [
   { id: "pineapple", name: "Pineapple", locked: false, desc: "Default tropical style" },
   { id: "propeller", name: "Propeller", locked: false, desc: "Default whirly topper" },
   { id: "captain", name: "Captain", locked: false, desc: "Default seafaring skipper cap" },
+  { id: "straw", name: "Straw Beach Hat", locked: false, desc: "Casual summer beach straw" },
+  { id: "visor", name: "Sun Visor", locked: false, desc: "Retro tennis visor" },
+  { id: "backward", name: "Backward Cap", locked: false, desc: "Streetwear crab style" },
   { id: "tophat", name: "Top Hat", locked: true, unlockReq: "Score 10 Points in career" },
   { id: "fez", name: "Fez", locked: true, unlockReq: "Win 2 match sets" },
-  { id: "lighthouse", name: "Lighthouse Keeper", locked: true, unlockReq: "Survive the 20,000ft Run to Waffle House!" }
+  { id: "lighthouse", name: "Lighthouse Keeper", locked: true, unlockReq: "Survive the 20,000ft Run to Waffle House!" },
+  { id: "crown", name: "Royal Crown", locked: true, unlockReq: "Win an online match" },
+  { id: "viking", name: "Viking Battle Horns", locked: true, unlockReq: "Score 25 Total Career Points" },
+  { id: "chef", name: "Chef Toque", locked: true, unlockReq: "Reach Waffle House in under 01:30" },
+  { id: "goggles", name: "Cyberpunk Goggles", locked: true, unlockReq: "Play Vice Mode 3 times" },
+  { id: "pirate", name: "Pirate Tricorne", locked: true, unlockReq: "Score 5 claw spike points" },
+  { id: "sombrero", name: "Fiesta Sombrero", locked: true, unlockReq: "Score 15 points in career" },
+  { id: "wizard", name: "Wizard Star Hat", locked: true, unlockReq: "Win 5 match sets" },
+  { id: "party", name: "Crab Rave Cone", locked: true, unlockReq: "Experience Crab Rave card" }
 ];
+
+// EXPANDED HILARIOUS QUIP PACKS (POP CULTURE & PUNNY)
+const QUIP_PACKS = {
+  classic: [
+    "Crab Pride worldwide!", "Pinch this, don't miss!", "Feeling crabby? Good!",
+    "I didn't choose the claw life, the claw life chose me.", "Time for the old one-two pinch!",
+    "Are you feeling it now, Mr. Krabs?!", "Crab walk of shame for you!", "Butter my biscuits, what a hit!",
+    "Holy shell, did you see that?!"
+  ],
+  trash: [
+    "Sit down, you're looking shellfish!", "Free points, free real estate!", "My grandma crab jumps higher than that!",
+    "Go back to the tide pool, rookie!", "Is that your best spike? Cute.", "I'd roast you, but you're already steamed!",
+    "Uninstall your claws, bro!", "GG EZ, no claws needed.", "Call an ambulance, but not for me!"
+  ],
+  sailor: [
+    "Shiver me claws and barnacles!", "Send 'em straight to Davy Jones' diner!", "Heave ho, over the net she goes!",
+    "Batten down the hatches!", "Avast ye, landlubber crustacean!", "By Blackbeard's ghost, what a spike!",
+    "Man overboard, grab the volleyball!"
+  ],
+  zen: [
+    "Flow like high tide, relax like low tide...", "Breathe in sand, breathe out chaos...",
+    "The ball is not the target... you are.", "Serenity in every claw snap.", "The ocean provides, the ocean denies.",
+    "Inner peace, outer pinch."
+  ],
+  cyber2026: [
+    "Wake up samurai, we got a waffle to eat!", "Running at 120 FPS on fresh sand!",
+    "Error 404: Volleyball skills not found!", "My neural link predicted that spike!",
+    "Crab 2026: Fully autonomous pinching!", "Straight bussin' to the Waffle House!",
+    "Ray-traced claws hitting different!"
+  ]
+};
 
 let userProfile = {
   name: "", level: 1, points: 0, wins: 0,
   bestWaffleTime: null,
+  colorway: "classic",
   quipPack: "classic", explosion: "confetti",
-  unlockedHats: ["pineapple", "propeller", "captain"],
+  unlockedHats: ["pineapple", "propeller", "captain", "straw", "visor", "backward"],
   unlockedCharacters: ["crab", "doby", "met"]
 };
 
 function loadCareer() {
   try {
-    const saved = localStorage.getItem("crab_volleyball_profile_v22");
+    const saved = localStorage.getItem("crab_volleyball_profile_2026");
     if (saved) {
       userProfile = Object.assign(userProfile, JSON.parse(saved));
-      if (!userProfile.unlockedHats) userProfile.unlockedHats = ["pineapple", "propeller", "captain"];
+      if (!userProfile.unlockedHats) userProfile.unlockedHats = ["pineapple", "propeller", "captain", "straw", "visor", "backward"];
       if (!userProfile.unlockedCharacters) userProfile.unlockedCharacters = ["crab", "doby", "met"];
     }
     const cl = document.getElementById("careerLevel");
@@ -533,14 +589,20 @@ function loadCareer() {
 
     const qp = document.getElementById("quipPackSelect");
     const ep = document.getElementById("explosionSelect");
-    if (qp) qp.value = userProfile.quipPack;
-    if (ep) ep.value = userProfile.explosion;
+    const cwSel = document.getElementById("colorwaySelect");
+    if (qp) qp.value = userProfile.quipPack || "classic";
+    if (ep) ep.value = userProfile.explosion || "confetti";
+    if (cwSel) cwSel.value = userProfile.colorway || "classic";
 
     const nameIn = document.getElementById("initialNameInput");
     if (nameIn && userProfile.name) nameIn.value = userProfile.name;
 
+    // Check unlocks
     if (userProfile.points >= 10 && !userProfile.unlockedHats.includes("tophat")) userProfile.unlockedHats.push("tophat");
+    if (userProfile.points >= 15 && !userProfile.unlockedHats.includes("sombrero")) userProfile.unlockedHats.push("sombrero");
+    if (userProfile.points >= 25 && !userProfile.unlockedHats.includes("viking")) userProfile.unlockedHats.push("viking");
     if (userProfile.wins >= 2 && !userProfile.unlockedHats.includes("fez")) userProfile.unlockedHats.push("fez");
+    if (userProfile.wins >= 5 && !userProfile.unlockedHats.includes("wizard")) userProfile.unlockedHats.push("wizard");
 
     saveCareerSettings();
     populateHatSelect();
@@ -551,9 +613,16 @@ function loadCareer() {
 function saveCareerSettings() {
   const qp = document.getElementById("quipPackSelect");
   const ep = document.getElementById("explosionSelect");
+  const cwSel = document.getElementById("colorwaySelect");
   if (qp) userProfile.quipPack = qp.value;
   if (ep) userProfile.explosion = ep.value;
-  localStorage.setItem("crab_volleyball_profile_v22", JSON.stringify(userProfile));
+  if (cwSel) userProfile.colorway = cwSel.value;
+  localStorage.setItem("crab_volleyball_profile_2026", JSON.stringify(userProfile));
+}
+
+function updatePlayerColorway() {
+  saveCareerSettings();
+  updateCrabSprites();
 }
 
 function populateHatSelect() {
@@ -777,25 +846,35 @@ const sfx = new ArcadeAudio();
 const dobyImg = new Image();
 dobyImg.src = "./doby.png";
 
+// CUTE AUDREY POPPAGEE SVG (WITH NATURAL CARTOON SMILE & EYES)
 function makeAudreySVG() {
   return `data:image/svg+xml;utf8,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-    <rect width="200" height="200" rx="20" fill="#0f172a"/>
-    <circle cx="100" cy="100" r="70" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.3"/>
-    <path d="M 45 70 C 35 25, 165 25, 155 70 C 170 100, 160 135, 145 140 C 145 115, 135 85, 100 80 C 65 85, 55 115, 55 140 C 40 135, 30 100, 45 70 Z" fill="#ffd54f" stroke="#b45309" stroke-width="3"/>
-    <ellipse cx="100" cy="118" rx="46" ry="24" fill="#fb7185" stroke="#9f1239" stroke-width="3.5"/>
+    <rect width="200" height="200" rx="22" fill="#0f172a"/>
+    <circle cx="100" cy="100" r="72" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.25"/>
+    <circle cx="100" cy="100" r="48" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.35"/>
+    <!-- Cute soft blonde side-part bob -->
+    <path d="M 45 68 C 36 22, 164 22, 155 68 C 170 98, 162 132, 146 138 C 146 114, 136 84, 100 80 C 64 84, 54 114, 54 138 C 38 132, 30 98, 45 68 Z" fill="#ffd54f" stroke="#b45309" stroke-width="3"/>
+    <!-- Cute pink crab shell -->
+    <ellipse cx="100" cy="116" rx="46" ry="24" fill="#fb7185" stroke="#9f1239" stroke-width="3.5"/>
+    <!-- TV Reporter anchor blazer -->
     <polygon points="100,105 80,140 120,140" fill="#1e3a8a"/>
     <polygon points="100,114 94,105 106,105" fill="#ffffff"/>
     <polygon points="100,118 97,130 103,130" fill="#ef4444"/>
-    <circle cx="82" cy="95" r="14" fill="#ffffff" stroke="#000" stroke-width="2.5"/>
-    <circle cx="118" cy="95" r="14" fill="#ffffff" stroke="#000" stroke-width="2.5"/>
-    <circle cx="83" cy="95" r="7" fill="#0f172a"/><circle cx="85" cy="92" r="3" fill="#fff"/>
-    <circle cx="119" cy="95" r="7" fill="#0f172a"/><circle cx="121" cy="92" r="3" fill="#fff"/>
-    <path d="M 92 122 Q 100 130 108 122" stroke="#000" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-    <path d="M 64 90 A 40 40 0 0 1 136 90" fill="none" stroke="#475569" stroke-width="4"/>
-    <line x1="64" y1="90" x2="78" y2="126" stroke="#475569" stroke-width="3"/>
-    <circle cx="80" cy="128" r="6" fill="#ef4444" stroke="#000" stroke-width="2"/>
-    <rect x="74" y="125" width="12" height="6" fill="#fbbf24"/>
+    <!-- Cute anime crab eyes with sparkles -->
+    <circle cx="82" cy="94" r="13" fill="#ffffff" stroke="#000" stroke-width="2.5"/>
+    <circle cx="118" cy="94" r="13" fill="#ffffff" stroke="#000" stroke-width="2.5"/>
+    <circle cx="83" cy="94" r="6.5" fill="#0f172a"/><circle cx="85" cy="91" r="2.8" fill="#fff"/>
+    <circle cx="119" cy="94" r="6.5" fill="#0f172a"/><circle cx="121" cy="91" r="2.8" fill="#fff"/>
+    <!-- Cute smile and rosy cheeks -->
+    <circle cx="70" cy="114" r="6" fill="#f43f5e" opacity="0.6"/>
+    <circle cx="130" cy="114" r="6" fill="#f43f5e" opacity="0.6"/>
+    <path d="M 94 122 Q 100 129 106 122" stroke="#9f1239" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <!-- TV Broadcast headset with red light mic -->
+    <path d="M 64 88 A 40 40 0 0 1 136 88" fill="none" stroke="#475569" stroke-width="4"/>
+    <line x1="64" y1="88" x2="78" y2="124" stroke="#475569" stroke-width="3"/>
+    <circle cx="80" cy="126" r="6" fill="#ef4444" stroke="#000" stroke-width="2"/>
+    <rect x="74" y="123" width="12" height="6" fill="#fbbf24"/>
   </svg>`)}`;
 }
 
@@ -822,6 +901,20 @@ metImg.src = makeMeteorologistSVG();
 const poppaGeeImg = new Image();
 poppaGeeImg.src = makeAudreySVG();
 
+function getPlayerBodyColor(pTeam) {
+  const cw = userProfile.colorway || "classic";
+  if (cw === "rainbow") {
+    return `hsl(${(animTimer * 120) % 360}, 100%, 55%)`;
+  }
+  if (cw === "vice_cyan") return "#00ffff";
+  if (cw === "magenta") return "#ff007f";
+  if (cw === "toxic") return "#76ff03";
+  if (cw === "gold") return "#ffd700";
+  if (cw === "obsidian") return "#212121";
+  if (cw === "ghost") return "#f8fafc";
+  return pTeam === 1 ? "#8bc34a" : "#f43f5e";
+}
+
 function makeArcadeCrabSVG(bodyColor = "#8bc34a", outline = "#223b05", belly = "#c5e1a5", clawScale = 1.0) {
   return `data:image/svg+xml;utf8,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
@@ -844,14 +937,11 @@ let crabImgTeam1 = new Image();
 let crabImgTeam2 = new Image();
 
 function updateCrabSprites() {
-  if (activeGameMode === "vice") {
-    const cScale = (chosenViceCard && chosenViceCard.effect === "big_claws") ? 1.25 : 1.0;
-    crabImgTeam1.src = makeArcadeCrabSVG("#00ffff", "#005577", "#b3ffff", cScale);
-    crabImgTeam2.src = makeArcadeCrabSVG("#ff007f", "#77003b", "#ff99cc", cScale);
-  } else {
-    crabImgTeam1.src = makeArcadeCrabSVG("#8bc34a", "#223b05", "#c5e1a5", 1.0);
-    crabImgTeam2.src = makeArcadeCrabSVG("#9ccc65", "#1c3204", "#dcedc8", 1.0);
-  }
+  const cScale = (chosenViceCard && chosenViceCard.effect === "big_claws") ? 1.25 : 1.0;
+  const col1 = getPlayerBodyColor(1);
+  const col2 = getPlayerBodyColor(2);
+  crabImgTeam1.src = makeArcadeCrabSVG(col1, "#0a1c02", "#e8f5e9", cScale);
+  crabImgTeam2.src = makeArcadeCrabSVG(col2, "#3b0716", "#ffe4e6", cScale);
 }
 updateCrabSprites();
 
@@ -892,6 +982,15 @@ function drawFlushHat(ctx, type, animTime = 0) {
     ctx.fillStyle = "#ffd600"; ctx.fillRect(-12, -4, 24, 4);
     ctx.fillStyle = "#000"; ctx.beginPath(); ctx.ellipse(0, 2, 17, 4, 0, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(0, -7, 3, 0, Math.PI * 2); ctx.fill();
+  } else if (type === "crown") {
+    ctx.fillStyle = "#ffd700"; ctx.strokeStyle = "#b45309"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(-14, 0); ctx.lineTo(-14, -14); ctx.lineTo(-7, -7); ctx.lineTo(0, -16); ctx.lineTo(7, -7); ctx.lineTo(14, -14); ctx.lineTo(14, 0); ctx.closePath();
+    ctx.fill(); ctx.stroke();
+  } else if (type === "viking") {
+    ctx.fillStyle = "#64748b"; ctx.fillRect(-12, -8, 24, 8);
+    ctx.fillStyle = "#fff"; ctx.strokeStyle = "#000"; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(-12, -4); ctx.lineTo(-20, -18); ctx.lineTo(-10, -12); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(12, -4); ctx.lineTo(20, -18); ctx.lineTo(10, -12); ctx.closePath(); ctx.fill(); ctx.stroke();
   }
   ctx.restore();
 }
@@ -985,13 +1084,13 @@ function skipCutsceneImmediately() {
 function generateHorizontalPlatforms() {
   horizontalPlatforms = [];
   // Biome 1: Safe Start Beach & Sandy Boardwalk (0 - 4,000px)
-  horizontalPlatforms.push({ x: 0, y: FLOOR_Y, w: 1000, h: 40 });
-  let curX = 1100;
+  horizontalPlatforms.push({ x: 0, y: FLOOR_Y, w: 900, h: 40 });
+  let curX = 980;
   while (curX < 3800) {
-    const pw = 150 + Math.random() * 110;
-    const py = FLOOR_Y - (30 + Math.random() * 90);
+    const pw = 140 + Math.random() * 110;
+    const py = FLOOR_Y - (30 + Math.random() * 110);
     horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 1 });
-    curX += pw + (85 + Math.random() * 95);
+    curX += pw + (100 + Math.random() * 110);
   }
 
   // Broken Crumbling Highway Edge (Ends at 3,900px!)
@@ -1002,9 +1101,9 @@ function generateHorizontalPlatforms() {
   curX = 4450;
   while (curX < 8500) {
     const pw = 120 + Math.random() * 100;
-    const py = FLOOR_Y - (40 + Math.random() * 120);
+    const py = FLOOR_Y - (40 + Math.random() * 130);
     horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 2, bobbing: true });
-    curX += pw + (90 + Math.random() * 105);
+    curX += pw + (110 + Math.random() * 115);
   }
 
   // Biome 3: Coastal Highway & Abandoned Sports Cars (8,500 - 13,000px)
@@ -1012,9 +1111,9 @@ function generateHorizontalPlatforms() {
   curX = 8950;
   while (curX < 13000) {
     const pw = 160 + Math.random() * 120;
-    const py = FLOOR_Y - (50 + Math.random() * 100);
+    const py = FLOOR_Y - (50 + Math.random() * 110);
     horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 3, isHighway: true });
-    curX += pw + (95 + Math.random() * 100);
+    curX += pw + (115 + Math.random() * 110);
   }
 
   // Biome 4: Stilt Bridges & Lightning Flashes (13,000 - 17,500px)
@@ -1022,9 +1121,9 @@ function generateHorizontalPlatforms() {
   curX = 13450;
   while (curX < 17500) {
     const pw = 130 + Math.random() * 100;
-    const py = FLOOR_Y - (60 + Math.random() * 110);
+    const py = FLOOR_Y - (60 + Math.random() * 120);
     horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 4 });
-    curX += pw + (100 + Math.random() * 105);
+    curX += pw + (120 + Math.random() * 115);
   }
 
   // Biome 5: Waffle Hill & Neon Waffle House (17,500 - 20,000px)
@@ -1034,7 +1133,7 @@ function generateHorizontalPlatforms() {
     const pw = 150 + Math.random() * 100;
     const py = FLOOR_Y - (30 + Math.random() * 80);
     horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 5 });
-    curX += pw + (85 + Math.random() * 95);
+    curX += pw + (90 + Math.random() * 95);
   }
 
   horizontalPlatforms.push({ x: WAFFLE_HOUSE_X - 120, y: FLOOR_Y, w: 800, h: 60, isWaffleFloor: true });
@@ -1098,7 +1197,6 @@ function updatePlatformerMode(dt) {
     if (cameraOffsetX < 0) cameraOffsetX = 0;
   }
 
-  // Biome 4 Wind Force mid-air
   const curBiome = Math.min(5, Math.floor(cameraOffsetX / 4000) + 1);
 
   players.forEach((p, idx) => {
@@ -1110,10 +1208,9 @@ function updatePlatformerMode(dt) {
     if (playerFinishedMap[idx] === "FAILED") return;
 
     if (curBiome === 4 && !p.isGrounded) {
-      p.vx -= 40 * dt; // Gust of wind pushes crabs
+      p.vx -= 40 * dt;
     }
 
-    // ROTATED CONTACT & CLAW LIFTING COLLISION
     const dynamicHalfH = p.halfW * Math.abs(Math.sin(p.angle)) + p.halfH * Math.abs(Math.cos(p.angle));
 
     horizontalPlatforms.forEach(plat => {
@@ -1168,6 +1265,9 @@ function updatePlatformerMode(dt) {
         if (!userProfile.unlockedHats.includes("lighthouse")) {
           userProfile.unlockedHats.push("lighthouse");
         }
+        if (elapsedMs < 90000 && !userProfile.unlockedHats.includes("chef")) {
+          userProfile.unlockedHats.push("chef");
+        }
         saveCareerSettings(); populateHatSelect();
       } else {
         showToast(`${p.name} SAFELY REACHED WAFFLE HOUSE!`, 2.0);
@@ -1202,6 +1302,7 @@ function checkAllPlayersEscaped() {
   }
 }
 
+// 2026 MOVIE CREDITS ROLL
 function showDramaticMovieCredits() {
   const modal = document.getElementById("movieCreditsModal");
   const content = document.getElementById("creditsRollContent");
@@ -1210,24 +1311,24 @@ function showDramaticMovieCredits() {
   const humanPlayers = players.filter((p, i) => (i === match.myPlayerIndex || peersConnected[i]) && !p.isBot);
   let playerLines = "";
   humanPlayers.forEach(hp => {
-    const status = (playerFinishedMap[hp.id - 1] === true) ? "🥞 SURVIVOR (ENJOYING WAFFLES)" : "🌊 SWEPT INTO THE GULF";
+    const status = (playerFinishedMap[hp.id - 1] === true) ? "🥞 SURVIVOR (EATING DOUBLE HASHBROWNS)" : "🌊 SWEPT INTO THE GULF";
     playerLines += `<p style="font-size:22px;color:#ffe600;">${hp.name} &nbsp;·&nbsp; ${status}</p>`;
   });
 
   content.innerHTML = `
-    <h1 style="color:#00ffff;font-size:38px;margin-bottom:14px;">🎬 CRAB VOLLEYBALL PICTURES PRESENTS 🎬</h1>
-    <h2 style="color:#ff007f;font-size:26px;">"ESCAPE TO WAFFLE HOUSE: TSUNAMI '85"</h2>
+    <h1 style="color:#00ffff;font-size:38px;margin-bottom:14px;">🎬 CRAB VOLLEYBALL STUDIOS 🎬</h1>
+    <h2 style="color:#ff007f;font-size:26px;">"ESCAPE TO WAFFLE HOUSE: TSUNAMI 2026"</h2>
     <br>
-    <p style="font-size:16px;color:#fff;">CRUSTACEAN CAST</p>
+    <p style="font-size:16px;color:#fff;">CRUSTACEAN CAST (CLASS OF 2026)</p>
     ${playerLines}
     <br>
-    <p style="font-size:16px;color:#fff;">FIELD CORRESPONDENT</p>
+    <p style="font-size:16px;color:#fff;">SPECIAL APPEARANCE</p>
     <p style="font-size:20px;color:#00ffff;">METEOROLOGIST AUDREY POPPAGEE &nbsp;·&nbsp; Beach Action News 6</p>
     <br>
-    <p style="font-size:16px;color:#fff;">CATERING & SANCTUARY</p>
-    <p style="font-size:20px;color:#ffd54f;">24-HOUR ALL-NIGHT WAFFLE HOUSE (Smothered & Covered)</p>
+    <p style="font-size:16px;color:#fff;">SANCTUARY & SMOTHERED HASHBROWNS</p>
+    <p style="font-size:20px;color:#ffd54f;">24-HOUR ALL-NIGHT WAFFLE HOUSE (Crypto Payments Denied)</p>
     <br>
-    <p style="font-size:14px;color:#aaa;">NO REAL CRABS WERE BOILED DURING THE FILMING OF THIS ESCAPE.</p>
+    <p style="font-size:14px;color:#aaa;">COPYRIGHT MMXXVI (2026). NO CRABS WERE BOILED IN THIS ESCAPE.</p>
   `;
 
   modal.classList.remove("hidden");
@@ -1341,6 +1442,7 @@ function updatePlayer(p, input, dt) {
   p.vy += 1500 * dt;
   p.y += p.vy * dt;
 
+  // DYNAMIC ROTATED CLAW LIFTING
   const dynamicHalfH = p.halfW * Math.abs(Math.sin(p.angle)) + p.halfH * Math.abs(Math.cos(p.angle));
   if (!isPlatformerActive && (p.y + dynamicHalfH >= FLOOR_Y)) {
     p.y = FLOOR_Y - dynamicHalfH; p.vy = 0;
@@ -1534,7 +1636,7 @@ function renderStandardStyle() {
 
 function renderViceStyle() {
   const grad = ctx.createLinearGradient(0, 0, 0, FLOOR_Y - 180);
-  grad.addColorStop(0, "#00e5ff"); grad.addColorStop(0.55, "#e040fb");
+  grad.addColorStop(0, "#00e5ff"); grad.addColorStop(0.5, "#e040fb");
   grad.addColorStop(0.85, "#ff4081"); grad.addColorStop(1, "#ffe57f");
   ctx.fillStyle = grad; ctx.fillRect(0, 0, CW, CH);
 
@@ -1619,11 +1721,9 @@ function drawRetroScore(ctx, x, y, s1, s2, c1, c2) {
   ctx.restore();
 }
 
-// 5 DISTINCT TRANSFORMATIONAL BIOME BACKGROUNDS & STRUCTURAL PILINGS
 function renderHorizontalEscape() {
   const curBiome = Math.min(5, Math.floor(cameraOffsetX / 4000) + 1);
 
-  // Dynamic Seamless Biome Sky
   const grad = ctx.createLinearGradient(0, 0, 0, CH);
   if (curBiome === 1) {
     grad.addColorStop(0, "#00e5ff"); grad.addColorStop(0.5, "#e040fb"); grad.addColorStop(1, "#ffe57f");
@@ -1641,27 +1741,23 @@ function renderHorizontalEscape() {
   ctx.save();
   ctx.translate(-cameraOffsetX, 0);
 
-  // Biome-Specific Backgrounds (ROAD ENDS AT BIOME 1!)
   if (curBiome === 1) {
     if (cameraOffsetX < 3800) {
       drawInfiniteHighway(ctx, FLOOR_Y - 220, cameraOffsetX);
     }
     drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 140, 160, cameraOffsetX, 1);
   } else if (curBiome === 2) {
-    // Sinking Docks: FULL RAIN STORM, NO ROAD AT ALL!
     drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 140, 160, cameraOffsetX, 2);
     ctx.strokeStyle = "rgba(255,255,255,0.35)"; ctx.lineWidth = 1.8;
     for (let rx = cameraOffsetX - 50; rx < cameraOffsetX + CW + 100; rx += 45) {
       ctx.beginPath(); ctx.moveTo(rx, 20); ctx.lineTo(rx - 30, 160); ctx.stroke();
     }
   } else if (curBiome === 3) {
-    // Shattered Highway Overpass with Abandoned Sports Cars
     drawInfiniteHighway(ctx, FLOOR_Y - 220, cameraOffsetX);
     drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 140, 160, cameraOffsetX, 3);
     ctx.fillStyle = "#ff007f"; ctx.font = "900 20px Impact";
     ctx.fillText("⚡ SPEED TRAP: MIAMI 5 MILES ⚡", cameraOffsetX + 350, FLOOR_Y - 260);
   } else if (curBiome === 4) {
-    // Tempest Suspension Bridge: Steel Girder Towers & Aviation Beacons
     drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 140, 160, cameraOffsetX, 4);
     ctx.strokeStyle = "#52525b"; ctx.lineWidth = 8;
     for (let tx = 13200; tx <= 17000; tx += 850) {
@@ -1670,16 +1766,14 @@ function renderHorizontalEscape() {
       ctx.beginPath(); ctx.arc(tx + 60, 95, 6, 0, Math.PI * 2); ctx.fill();
     }
   } else {
-    // Waffle Hill: Golden diner sanctuary
     drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 140, 160, cameraOffsetX, 5);
   }
 
-  // 5 Biome Platforms with STRUCTURAL GROUND PILINGS (No floating stilts!)
+  // Platforms with Deep Structural Pilings
   horizontalPlatforms.forEach(p => {
     let platY = p.y;
     if (p.bobbing) platY += Math.sin(oceanTimer * 2 + p.x * 0.01) * 6;
 
-    // Solid structural pilings rooted into ocean
     if (!p.isWaffleFloor && p.w > 40) {
       ctx.fillStyle = (p.biome === 4) ? "#27272a" : "#3e2723";
       ctx.fillRect(p.x + 15, platY + p.h, 12, FLOOR_Y - platY + 20);
