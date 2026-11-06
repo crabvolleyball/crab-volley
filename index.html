@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>Crab Volleyball Arcade 2026 - Streamer Gold</title>
+<title>Crab Volleyball Arcade 2026 - Streamer Gold Edition</title>
 <style>
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body {
@@ -39,6 +39,7 @@ header {
   font-size: 13px; font-family: "Impact", sans-serif; padding: 4px 10px; cursor: pointer; box-shadow: 2px 2px 0 #000;
 }
 .twitch-status-badge { background: #9146ff; color: #fff; text-shadow: 1px 1px 0 #000; }
+.twitch-status-badge.verified { background: #00e676; color: #000; text-shadow: none; font-weight: bold; }
 
 main {
   width: 100%; flex: 1; display: flex; flex-direction: column;
@@ -46,7 +47,7 @@ main {
   overflow: hidden;
 }
 
-/* ARCADE RETRO PANELS */
+/* RETRO ARCADE PANELS */
 .panel {
   width: min(980px, 98%); background: #fffbe8; border: 5px solid #142800;
   border-radius: 18px; box-shadow: 8px 8px 0 #000;
@@ -89,13 +90,21 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 .twitch-btn { background: #9146ff; color: #fff; text-shadow: 2px 2px 0 #000; }
 .big { min-height: 48px; font-size: 16px; }
 
-/* SOCIAL PRE-LOBBY & CHAT */
+/* SOCIAL PRE-LOBBY & SPECTATOR OVERFLOW */
 .lobby-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; text-align: left;
 }
 .team-box { background: #fff; border: 3px solid #000; border-radius: 10px; padding: 8px; }
 .team-title-1 { color: #0288d1; font-size: 15px; margin-bottom: 6px; }
 .team-title-2 { color: #d50000; font-size: 15px; margin-bottom: 6px; }
+
+.spectators-box {
+  background: #fdf4ff; border: 3px dashed #c026d3; border-radius: 10px;
+  padding: 8px; margin-top: 6px; text-align: left;
+}
+.spectators-title { color: #9333ea; font-size: 14px; margin-bottom: 4px; }
+.spectator-badges { display: flex; flex-wrap: wrap; gap: 6px; font-size: 11px; font-family: sans-serif; font-weight: bold; }
+.spec-badge { background: #f3e8ff; border: 1.5px solid #a855f7; border-radius: 6px; padding: 3px 8px; display: inline-flex; align-items: center; gap: 4px; }
 
 .player-card {
   background: #f1f8e9; border: 2px solid #33691e; border-radius: 8px;
@@ -234,13 +243,13 @@ canvas {
   font-family: sans-serif; font-weight: bold; text-shadow: 1px 1px 0 #000; flex-shrink: 0;
 }
 
+/* MINIMALIST SLEEK BOLD VERSION NUMBER IN BOTTOM-RIGHT */
 #globalVersionTag {
-  position: fixed; bottom: 6px; right: 8px;
-  color: #ffe600; font-family: Impact, monospace, sans-serif;
-  font-size: 13px; font-weight: 900; background: #000;
-  padding: 4px 10px; border-radius: 6px; border: 2px solid #ffe600;
-  letter-spacing: 1px; box-shadow: 2px 2px 0 rgba(0,0,0,0.8);
-  z-index: 99999; pointer-events: none;
+  position: fixed; bottom: 4px; right: 6px;
+  color: rgba(255, 255, 255, 0.75); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 10px; font-weight: 900; background: rgba(0, 0, 0, 0.45);
+  padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.5px; z-index: 99999; pointer-events: none; backdrop-filter: blur(2px);
 }
 .hidden { display: none !important; }
 </style>
@@ -288,30 +297,38 @@ canvas {
       </div>
     </section>
 
-    <!-- TWITCH STREAMER INTEGRATION MODAL -->
+    <!-- TWITCH STREAMER INTEGRATION & OAUTH AUTHORIZATION MODAL -->
     <section id="twitchModal" class="panel hidden">
-      <h1 style="color:#9146ff;text-shadow:3px 3px 0 #000;">🟣 TWITCH STREAMER MODE 🟣</h1>
-      <p class="sub">Connect directly to your Twitch channel chat! Viewers type commands to trigger live events!</p>
+      <h1 style="color:#9146ff;text-shadow:3px 3px 0 #000;">🟣 TWITCH STREAMER ENGINE 🟣</h1>
+      <p class="sub">Chatters automatically spawn on the beach bleachers in real time and cheer on the match!</p>
 
       <div class="customizer-box">
+        <div style="background:#ede9fe;border:2px solid #7c3aed;border-radius:8px;padding:8px;margin-bottom:8px;">
+          <h4 style="margin:0 0 4px 0;color:#5b21b6;font-size:14px;">👑 OFFICIAL BROADCASTER AUTHENTICATION</h4>
+          <p style="font-size:11px;color:#4c1d95;margin:0 0 6px 0;">Authorize through Twitch to unlock the verified Streamer Gold Crown and broadcast controls.</p>
+          <button class="twitch-btn" onclick="startTwitchOAuthFlow()" style="padding:6px 14px;font-size:13px;">🔑 LOGIN & VERIFY CHANNEL (TWITCH OAUTH)</button>
+        </div>
+
         <div class="custom-row">
-          <b>TWITCH CHANNEL NAME:</b>
-          <input id="twitchChannelInput" class="custom-input" style="width:180px;" placeholder="e.g. Ninja">
-          <button class="twitch-btn" onclick="connectTwitchChat()">CONNECT STREAM</button>
+          <b>OR QUICK CONNECT CHANNEL:</b>
+          <input id="twitchChannelInput" class="custom-input" style="width:170px;" placeholder="CHANNEL NAME">
+          <button class="twitch-btn" onclick="connectTwitchChatDirect()">CONNECT CHAT</button>
         </div>
         <p id="twitchConnStatus" style="font-size:12px;font-weight:bold;color:#6b21a8;margin:2px 0;">Status: Disconnected</p>
         
         <div style="background:#f3e8ff;border:2px solid #9146ff;border-radius:8px;padding:8px;font-size:11px;font-family:sans-serif;text-align:left;line-height:1.4;">
-          <b>📺 CHAT COMMANDS FOR VIEWERS:</b><br>
-          • <code>!speed</code> : Turbo boosts the ball / players!<br>
-          • <code>!grav</code> : Toggles moon low gravity!<br>
-          • <code>!bounce</code> : Bouncy springs mode!<br>
-          • <code>!cheer</code> : Triggers beach crowd celebration!<br>
-          • <code>!waffle</code> : Spawns waffle celebration confetti!
+          <b>📺 INTERACTIVE BLEACHERS & CHAT COMMANDS:</b><br>
+          • <b>Live Bleacher Crowd:</b> Every viewer who chats in stream spawns on the sand bleachers with their own crab avatar & speech bubbles!<br>
+          • <code>!speed</code> : Turbo boosts the volleyball & players!<br>
+          • <code>!grav</code> : Toggles moon low gravity floats!<br>
+          • <code>!bounce</code> : High-bouncy spring mode!<br>
+          • <code>!cheer</code> : Bleacher crowd roar & confetti wave!<br>
+          • <code>!waffle</code> : Triggers delicious waffle storm confetti!
         </div>
       </div>
 
-      <div style="margin-top:14px;">
+      <div style="margin-top:14px;display:flex;gap:10px;justify-content:center;">
+        <button onclick="testSpawnSpectator()" style="font-size:11px;background:#e0e7ff;">🧪 TEST CHAT SPAWN</button>
         <button onclick="closeTwitchModal()" style="padding:6px 16px;">CLOSE</button>
       </div>
     </section>
@@ -338,7 +355,7 @@ canvas {
       </div>
     </section>
 
-    <!-- BEACH BAG / ARSENAL (EXPANDED ACCESSORIES) -->
+    <!-- BEACH BAG / ARSENAL WITH 12 EXPANDED CELEBRATIONS -->
     <section id="lockerModal" class="panel hidden">
       <h1>🎒 YOUR BEACH BAG 🎒</h1>
       <p class="sub">Rank: <span id="careerLevel" style="color:#d84315;">1</span> · Claws Pinched: <span id="careerPoints">0</span> · Sets Won: <span id="careerWins">0</span></p>
@@ -383,13 +400,22 @@ canvas {
             <option value="cyber2026">Cyber 2026 ("Wake up samurai!", "Error 404!")</option>
           </select>
         </div>
-        <div class="custom-row">
-          <b>POINT CELEBRATION:</b>
+
+        <div class="custom-row" style="margin-top:4px;">
+          <b>POINT SCORE CELEBRATION (12 STYLES):</b>
           <select id="explosionSelect" class="custom-input" onchange="updateArsenalCustoms()">
-            <option value="confetti">Confetti Sparkles</option>
-            <option value="firework">Arcade Fireworks</option>
-            <option value="shockwave">Tidal Shockwave (Knocks players down!)</option>
-            <option value="coins">Golden Coin Fountain</option>
+            <option value="confetti">🎉 Confetti Sparkle Storm</option>
+            <option value="firework">🎆 Retro Arcade Fireworks</option>
+            <option value="shockwave">💥 Tidal Sand Shockwave</option>
+            <option value="coins">🪙 Golden Coin Jackpot</option>
+            <option value="waffle_rain">🥞 Waffle Storm & Syrup Drops</option>
+            <option value="neon_matrix">⚡ Synthwave Cyber Laser Grid</option>
+            <option value="tidal_splash">🌊 High Tidal Fountain Spouts</option>
+            <option value="beach_balloons">🎈 Beach Party Balloon Fiesta</option>
+            <option value="crab_rave_dance">🦀 Beach Disco Crab Rave</option>
+            <option value="meteor_strike">☄️ Flaming Meteor Impact</option>
+            <option value="bubble_storm">🫧 Iridescent Bubble Deluge</option>
+            <option value="diamond_shower">💎 Diamonds & Cash Shower</option>
           </select>
         </div>
       </div>
@@ -398,10 +424,10 @@ canvas {
       </div>
     </section>
 
-    <!-- PRE-LOBBY -->
+    <!-- PRE-LOBBY WITH SPECTATOR OVERFLOW SECTION -->
     <section id="socialLobbyModal" class="panel hidden">
       <h1>🦀 BEACH PRE-LOBBY 🦀</h1>
-      <p class="sub">Pick your team (max 2 per side), customize your style, or kick chill bots!</p>
+      <p class="sub">Pick your team (max 2 per side). Extra joined players cheer on the bleachers!</p>
 
       <div style="margin:2px 0;">
         <span style="font-family:sans-serif;font-size:12px;font-weight:bold;">Room Code: </span>
@@ -422,11 +448,19 @@ canvas {
         </div>
       </div>
 
+      <!-- SPECTATOR OVERFLOW LIST (>4 PLAYERS) -->
+      <div class="spectators-box">
+        <div class="spectators-title">🏖️ BLEACHER SPECTATORS (<span id="spectatorCount">0</span>)</div>
+        <div id="spectatorBadgeContainer" class="spectator-badges">
+          <span style="color:#718096;font-size:11px;">Join room after 4 players to watch from the beach bleachers!</span>
+        </div>
+      </div>
+
       <div class="customizer-box">
         <div class="custom-row" id="botOptionRow">
           <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:900;color:#1b5e20;">
             <input type="checkbox" id="fillBotsCheck" checked>
-            🤖 AUTO-FILL EMPTY SLOTS WITH CHILL BOTS
+            🤖 AUTO-FILL EMPTY COURT SLOTS WITH CHILL BOTS
           </label>
         </div>
 
@@ -541,15 +575,19 @@ canvas {
   </main>
 </div>
 
-<!-- GLOBAL VERSION BADGE -->
-<div id="globalVersionTag">v1.0 - STREAMER & RETRO ARCADE GOLD</div>
+<!-- MINIMALIST SLEEK BOLD VERSION BADGE IN BOTTOM-RIGHT -->
+<div id="globalVersionTag">v1.2 GOLD</div>
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 
 <script>
 /* ========================================================
-   CRAB VOLLEYBALL ARCADE ENGINE v1.0 GOLD (2026 EDITION)
+   CRAB VOLLEYBALL ARCADE ENGINE v1.2 GOLD (2026 EDITION)
    ======================================================== */
+
+const TWITCH_CLIENT_ID = "0nazprjd83x4774jrwif7clmlwlio9";
+let isStreamerVerified = false;
+let verifiedBroadcasterName = "";
 
 function formatJoinCodeInput(el) {
   let val = el.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
@@ -577,7 +615,6 @@ const HAT_DATABASE = [
   { id: "wizard", name: "Wizard Star Hat", locked: true, unlockReq: "Win 5 match sets" }
 ];
 
-// EXPANDED HILARIOUS QUIP PACKS
 const QUIP_PACKS = {
   classic: [
     "Crab Pride worldwide!", "Pinch this, don't miss!", "Feeling crabby? Good!",
@@ -604,6 +641,13 @@ const QUIP_PACKS = {
     "Crab 2026: Fully autonomous pinching!", "Straight bussin' to the Waffle House!"
   ]
 };
+
+const BLEACHER_FAN_QUIPS = [
+  "SPIKE IT! 🦀", "BLOCK THAT! 🔥", "GO BLUE! 💙", "GO RED! ❤️",
+  "NICE RECEPTION!", "MORE BUTTER PLEASE! 🧈", "WAFFLES OVER TSUNAMI!",
+  "LET'S GOOOOO!", "DEFENSE! 👏", "PINCH 'EM!", "WHAT A RALLY!",
+  "POPPAGEE APPROVED! 🎙️", "10/10 SPIKE!", "SAND IN MY CLAWS!"
+];
 
 let userProfile = {
   name: "", level: 1, points: 0, wins: 0,
@@ -690,9 +734,67 @@ function populateHatSelect() {
   });
 }
 
-// TWITCH INTEGRATION (DIRECT WEBSOCKET IRC)
+/* ========================================================
+   TWITCH OAUTH & REAL-TIME WEBSOCKET STREAM ENGINE
+   ======================================================== */
 let twitchSocket = null;
 let twitchChannel = "";
+
+function checkTwitchOAuthHash() {
+  const hash = window.location.hash;
+  if (hash && hash.includes("access_token=")) {
+    const params = new URLSearchParams(hash.substring(1));
+    const token = params.get("access_token");
+    if (token) {
+      window.history.replaceState(null, null, window.location.pathname);
+      verifyTwitchToken(token);
+    }
+  }
+}
+
+function startTwitchOAuthFlow() {
+  const redirectUri = window.location.href.split('#')[0];
+  const url = `https://id.twitch.tv/oauth2/authorize?client_id=${TWITCH_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=chat:read+chat:edit`;
+  window.location.href = url;
+}
+
+function verifyTwitchToken(token) {
+  fetch("https://api.twitch.tv/helix/users", {
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Client-Id": TWITCH_CLIENT_ID
+    }
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.data && data.data.length > 0) {
+      const user = data.data[0];
+      isStreamerVerified = true;
+      verifiedBroadcasterName = user.display_name || user.login;
+      twitchChannel = user.login;
+
+      const badge = document.getElementById("twitchBadgeBtn");
+      badge.innerText = `👑 #${verifiedBroadcasterName.toUpperCase()}`;
+      badge.classList.add("verified");
+
+      const status = document.getElementById("twitchConnStatus");
+      if (status) {
+        status.innerHTML = `✅ <b>VERIFIED BROADCASTER:</b> ${verifiedBroadcasterName}! Connected to Twitch.`;
+        status.style.color = "#16a34a";
+      }
+
+      if (!userProfile.unlockedHats.includes("crown")) {
+        userProfile.unlockedHats.push("crown");
+        saveCareerSettings();
+        populateHatSelect();
+      }
+      connectTwitchChatDirect(twitchChannel, token, user.login);
+    }
+  })
+  .catch(() => {
+    connectTwitchChatDirect(twitchChannel);
+  });
+}
 
 function openTwitchModal() {
   document.getElementById("menuPanel").classList.add("hidden");
@@ -704,27 +806,41 @@ function closeTwitchModal() {
   document.getElementById("menuPanel").classList.remove("hidden");
 }
 
-function connectTwitchChat() {
+function connectTwitchChatDirect(overrideChan = "", oauthToken = "", oauthNick = "") {
   const inp = document.getElementById("twitchChannelInput");
-  const ch = inp.value.trim().toLowerCase().replace('#', '');
+  let ch = overrideChan || (inp ? inp.value.trim().toLowerCase().replace('#', '') : "");
+  if (!ch && verifiedBroadcasterName) ch = verifiedBroadcasterName.toLowerCase();
   if (!ch) return;
   twitchChannel = ch;
 
   if (twitchSocket) { try { twitchSocket.close(); } catch(e){} }
 
   const status = document.getElementById("twitchConnStatus");
-  status.innerText = `Connecting to #${twitchChannel}...`;
-  status.style.color = "#9146ff";
+  if (status) {
+    status.innerText = `Connecting to #${twitchChannel}...`;
+    status.style.color = "#9146ff";
+  }
 
   try {
     twitchSocket = new WebSocket("wss://irc-ws.chat.twitch.tv:443");
     twitchSocket.onopen = () => {
-      twitchSocket.send("PASS oauth:SCHMOOPIIE");
-      twitchSocket.send(`NICK justinfan${Math.floor(10000 + Math.random() * 90000)}`);
+      if (oauthToken && oauthNick) {
+        twitchSocket.send(`PASS oauth:${oauthToken}`);
+        twitchSocket.send(`NICK ${oauthNick}`);
+      } else {
+        twitchSocket.send("PASS oauth:SCHMOOPIIE");
+        twitchSocket.send(`NICK justinfan${Math.floor(10000 + Math.random() * 90000)}`);
+      }
       twitchSocket.send(`JOIN #${twitchChannel}`);
-      status.innerText = `Connected to #${twitchChannel}! 🎉 Viewers can type commands!`;
-      status.style.color = "#16a34a";
-      document.getElementById("twitchBadgeBtn").innerText = `🟣 #${twitchChannel.toUpperCase()}`;
+
+      if (status) {
+        status.innerText = `Connected to #${twitchChannel}! 🎉 Chatters spawn on bleachers!`;
+        status.style.color = "#16a34a";
+      }
+      const badge = document.getElementById("twitchBadgeBtn");
+      if (badge && !isStreamerVerified) {
+        badge.innerText = `🟣 #${twitchChannel.toUpperCase()}`;
+      }
     };
 
     twitchSocket.onmessage = (event) => {
@@ -742,8 +858,10 @@ function connectTwitchChat() {
     };
 
     twitchSocket.onerror = () => {
-      status.innerText = "Error connecting to Twitch IRC.";
-      status.style.color = "#dc2626";
+      if (status) {
+        status.innerText = "Error connecting to Twitch IRC.";
+        status.style.color = "#dc2626";
+      }
     };
   } catch(e) {}
 }
@@ -752,23 +870,522 @@ function handleTwitchMessage(user, msg) {
   const clean = filterProfanity(msg);
   addChatEntry(`🟣 [TWITCH] ${user}`, clean);
 
+  // Spawn or update spectator crab on the bleachers!
+  spawnOrUpdateBleacherSpectator(user, clean, true);
+
   const lower = clean.toLowerCase();
   if (lower.includes("!speed")) {
     BALL_GRAV = 750; ball.vx *= 1.4;
     showToast(`TWITCH: !SPEED TRIGGERED! ⚡`, 1.5); sfx.clawSpike();
+    triggerBleacherCrowdCheer();
   } else if (lower.includes("!grav")) {
     BALL_GRAV = 320;
     showToast(`TWITCH: !LOWGRAV TRIGGERED! 🌙`, 1.5); sfx.superJump();
+    triggerBleacherCrowdCheer();
   } else if (lower.includes("!bounce")) {
     showToast(`TWITCH: !BOUNCE TRIGGERED! 🦘`, 1.5); sfx.jump();
+    triggerBleacherCrowdCheer();
   } else if (lower.includes("!cheer")) {
     sfx.cheer(); showToast(`TWITCH CHAT IS CHEERING! 🎉`, 1.5);
+    triggerBleacherCrowdCheer();
   } else if (lower.includes("!waffle")) {
-    triggerWaffleCelebration();
+    triggerCelebration("waffle_rain");
+    showToast(`TWITCH: !WAFFLE STORM! 🥞`, 1.5);
+    triggerBleacherCrowdCheer();
   }
 }
 
-// LEADERBOARD
+function testSpawnSpectator() {
+  const testUsers = ["TwitchGamer", "SandClaw99", "BeachBum", "PoppaGeeFan", "WaffleKnight", "VibingCrab"];
+  const randomUser = testUsers[Math.floor(Math.random() * testUsers.length)];
+  const randomMsg = BLEACHER_FAN_QUIPS[Math.floor(Math.random() * BLEACHER_FAN_QUIPS.length)];
+  handleTwitchMessage(randomUser, randomMsg);
+}
+
+/* ========================================================
+   BLEACHERS SPECTATOR CROWD SYSTEM
+   ======================================================== */
+const BLEACHER_SEATS = [];
+const BLEACHER_SPECTATORS = [];
+const TOTAL_BLEACHER_SEATS = 20;
+
+function initBleacherSeats() {
+  BLEACHER_SEATS.length = 0;
+  // Left Bleachers (behind Team 1)
+  for (let tier = 0; tier < 2; tier++) {
+    const tierY = 585 + tier * 32;
+    for (let s = 0; s < 5; s++) {
+      BLEACHER_SEATS.push({ x: 140 + s * 95, y: tierY, tier: tier, side: 1 });
+    }
+  }
+  // Right Bleachers (behind Team 2)
+  for (let tier = 0; tier < 2; tier++) {
+    const tierY = 585 + tier * 32;
+    for (let s = 0; s < 5; s++) {
+      BLEACHER_SEATS.push({ x: 990 + s * 95, y: tierY, tier: tier, side: 2 });
+    }
+  }
+
+  // Pre-seed default beach spectators
+  const defaultFans = [
+    { name: "SaltySam", hat: "straw", color: "#f59e0b", acc: "foam" },
+    { name: "Clawdia", hat: "visor", color: "#ec4899", acc: "drink" },
+    { name: "SandyCheeks", hat: "captain", color: "#10b981", acc: "flag" },
+    { name: "Barnaby", hat: "propeller", color: "#3b82f6", acc: "clapping" },
+    { name: "ButterDip", hat: "pineapple", color: "#eab308", acc: "glow" },
+    { name: "SurfClaw", hat: "backward", color: "#06b6d4", acc: "foam" },
+    { name: "NeonPinch", hat: "goggles", color: "#8b5cf6", acc: "glow" },
+    { name: "TideWatcher", hat: "straw", color: "#14b8a6", acc: "drink" }
+  ];
+
+  BLEACHER_SPECTATORS.length = 0;
+  defaultFans.forEach((f, i) => {
+    const seat = BLEACHER_SEATS[i];
+    BLEACHER_SPECTATORS.push({
+      name: f.name,
+      x: seat.x, y: seat.y, tier: seat.tier,
+      hat: f.hat, color: f.color, accessory: f.acc,
+      facing: seat.side === 1 ? 1 : -1,
+      speechText: "", speechTimer: 0,
+      bounceOffset: 0, bounceSpeed: 2 + Math.random() * 2,
+      isTwitchViewer: false, isLobbyGuest: false
+    });
+  });
+}
+initBleacherSeats();
+
+function spawnOrUpdateBleacherSpectator(username, message, isTwitch = false, isLobby = false, customHat = null, customColor = null) {
+  let existing = BLEACHER_SPECTATORS.find(s => s.name.toLowerCase() === username.toLowerCase());
+  if (existing) {
+    existing.speechText = message;
+    existing.speechTimer = 5.0;
+    existing.bounceOffset = -18;
+    return existing;
+  }
+
+  const assignedIndex = BLEACHER_SPECTATORS.length < BLEACHER_SEATS.length
+    ? BLEACHER_SPECTATORS.length
+    : Math.floor(Math.random() * BLEACHER_SPECTATORS.length);
+
+  const seat = BLEACHER_SEATS[assignedIndex];
+  const hats = ["pineapple", "propeller", "captain", "straw", "visor", "backward", "sombrero", "crown"];
+  const colors = ["#ef4444", "#f97316", "#eab308", "#10b981", "#06b6d4", "#3b82f6", "#8b5cf6", "#ec4899", "#00ffff", "#ffd700"];
+  const accessories = ["foam", "glow", "flag", "drink", "clapping"];
+
+  const newSpectator = {
+    name: username.substring(0, 14),
+    x: seat.x + (Math.random() * 10 - 5),
+    y: seat.y,
+    tier: seat.tier,
+    hat: customHat || hats[Math.floor(Math.random() * hats.length)],
+    color: customColor || colors[Math.floor(Math.random() * colors.length)],
+    accessory: accessories[Math.floor(Math.random() * accessories.length)],
+    facing: seat.side === 1 ? 1 : -1,
+    speechText: message,
+    speechTimer: 5.5,
+    bounceOffset: -24,
+    bounceSpeed: 2.5 + Math.random() * 2,
+    isTwitchViewer: isTwitch,
+    isLobbyGuest: isLobby
+  };
+
+  BLEACHER_SPECTATORS[assignedIndex] = newSpectator;
+  return newSpectator;
+}
+
+function triggerBleacherCrowdCheer() {
+  BLEACHER_SPECTATORS.forEach(spec => {
+    spec.bounceOffset = -(14 + Math.random() * 18);
+    if (Math.random() < 0.4) {
+      spec.speechText = BLEACHER_FAN_QUIPS[Math.floor(Math.random() * BLEACHER_FAN_QUIPS.length)];
+      spec.speechTimer = 3.5;
+    }
+  });
+}
+
+function updateBleacherSpectators(dt) {
+  BLEACHER_SPECTATORS.forEach(spec => {
+    if (spec.bounceOffset < 0) {
+      spec.bounceOffset += 45 * dt;
+      if (spec.bounceOffset > 0) spec.bounceOffset = 0;
+    }
+    if (spec.speechTimer > 0) {
+      spec.speechTimer -= dt;
+      if (spec.speechTimer <= 0) spec.speechText = "";
+    }
+  });
+
+  if (Math.random() < 0.008 && BLEACHER_SPECTATORS.length > 0) {
+    const s = BLEACHER_SPECTATORS[Math.floor(Math.random() * BLEACHER_SPECTATORS.length)];
+    if (!s.speechText) {
+      s.speechText = BLEACHER_FAN_QUIPS[Math.floor(Math.random() * BLEACHER_FAN_QUIPS.length)];
+      s.speechTimer = 3.0;
+      s.bounceOffset = -12;
+    }
+  }
+}
+
+function drawBleachers(ctx) {
+  const isVice = (activeGameMode === "vice");
+  ctx.save();
+
+  const stands = [
+    { x: 90, w: 520, side: 1 },
+    { x: 940, w: 520, side: 2 }
+  ];
+
+  stands.forEach(stand => {
+    ctx.fillStyle = isVice ? "#2d004b" : "#4e342e";
+    ctx.fillRect(stand.x + 20, 600, 16, 95);
+    ctx.fillRect(stand.x + stand.w / 2 - 8, 600, 16, 95);
+    ctx.fillRect(stand.x + stand.w - 36, 600, 16, 95);
+
+    ctx.fillStyle = isVice ? "#ff007f" : "#d7ccc8";
+    ctx.strokeStyle = isVice ? "#00ffff" : "#3e2723";
+    ctx.lineWidth = 3;
+    ctx.fillRect(stand.x, 595, stand.w, 14);
+    ctx.strokeRect(stand.x, 595, stand.w, 14);
+
+    ctx.fillStyle = isVice ? "#9146ff" : "#bcaaa4";
+    ctx.fillRect(stand.x, 627, stand.w, 14);
+    ctx.strokeRect(stand.x, 627, stand.w, 14);
+
+    if (isVice) {
+      ctx.fillStyle = "#00ffff";
+      ctx.font = "900 13px Impact";
+      ctx.fillText(stand.side === 1 ? "🌴 VICE BLEACHERS - VIP 🌴" : "⚡ CRAB ARENA SECTOR 2 ⚡", stand.x + 130, 655);
+    } else {
+      ctx.fillStyle = "#ef4444";
+      for (let bx = stand.x + 12; bx < stand.x + stand.w - 20; bx += 32) {
+        ctx.beginPath();
+        ctx.moveTo(bx, 642); ctx.lineTo(bx + 16, 652); ctx.lineTo(bx + 32, 642);
+        ctx.fillStyle = (bx % 64 === 0) ? "#ef4444" : "#ffeb3b";
+        ctx.fill();
+      }
+    }
+  });
+
+  BLEACHER_SPECTATORS.forEach(spec => {
+    const idleBob = Math.sin(animTimer * spec.bounceSpeed + spec.x * 0.05) * 3;
+    const drawY = spec.y + idleBob + spec.bounceOffset;
+
+    ctx.save();
+    ctx.translate(spec.x, drawY);
+    ctx.scale(0.62 * spec.facing, 0.62);
+
+    ctx.fillStyle = spec.color;
+    ctx.strokeStyle = "#000";
+    ctx.lineWidth = 3;
+
+    ctx.beginPath();
+    ctx.moveTo(-25, 10); ctx.lineTo(-38, 22);
+    ctx.moveTo(25, 10); ctx.lineTo(38, 22);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 36, 14, 0, 0, Math.PI * 2);
+    ctx.fill(); ctx.stroke();
+
+    ctx.fillStyle = "#fff";
+    ctx.beginPath();
+    ctx.arc(-14, -14, 6, 0, Math.PI * 2);
+    ctx.arc(14, -14, 6, 0, Math.PI * 2);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#000";
+    ctx.beginPath();
+    ctx.arc(-14 + spec.facing * 2, -14, 3, 0, Math.PI * 2);
+    ctx.arc(14 + spec.facing * 2, -14, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = spec.color;
+    ctx.beginPath();
+    ctx.arc(-32, -6, 10, 0, Math.PI * 2);
+    ctx.arc(32, -6, 10, 0, Math.PI * 2);
+    ctx.fill(); ctx.stroke();
+
+    if (spec.accessory === "foam") {
+      ctx.fillStyle = "#2563eb";
+      ctx.fillRect(28, -26, 14, 20);
+      ctx.fillStyle = "#fff"; ctx.font = "bold 9px sans-serif";
+      ctx.fillText("#1", 31, -12);
+    } else if (spec.accessory === "glow") {
+      ctx.fillStyle = isVice ? "#00ffff" : "#a855f7";
+      ctx.fillRect(-36, -24, 6, 18);
+      ctx.fillStyle = "#ff007f";
+      ctx.fillRect(30, -24, 6, 18);
+    } else if (spec.accessory === "flag") {
+      ctx.fillStyle = "#ffd600";
+      ctx.fillRect(28, -22, 16, 11);
+      ctx.strokeStyle = "#000"; ctx.strokeRect(28, -22, 16, 11);
+    } else if (spec.accessory === "drink") {
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(-34, -20, 8, 12);
+      ctx.fillStyle = "#ef4444";
+      ctx.fillRect(-32, -26, 3, 6);
+    }
+
+    drawFlushHat(ctx, spec.hat, animTimer);
+    ctx.restore();
+
+    ctx.save();
+    ctx.font = "900 10px sans-serif";
+    const nameStr = (spec.isTwitchViewer ? "🟣 " : "") + spec.name;
+    const tw = ctx.measureText(nameStr).width;
+    ctx.fillStyle = "rgba(0,0,0,0.7)";
+    ctx.fillRect(spec.x - tw / 2 - 4, drawY - 32, tw + 8, 13);
+    ctx.fillStyle = spec.isTwitchViewer ? "#c084fc" : "#ffe600";
+    ctx.textAlign = "center";
+    ctx.fillText(nameStr, spec.x, drawY - 22);
+    ctx.restore();
+
+    if (spec.speechText) {
+      drawArcadeSpeechBubble(ctx, spec.x, drawY - 38, spec.speechText, spec.isTwitchViewer);
+    }
+  });
+
+  ctx.restore();
+}
+
+function drawArcadeSpeechBubble(ctx, x, y, text, isTwitch = false) {
+  ctx.save();
+  ctx.font = "bold 11px sans-serif";
+  const maxW = 160;
+  const metrics = ctx.measureText(text);
+  const bw = Math.min(maxW, Math.max(50, metrics.width + 16));
+  const bh = 22;
+
+  ctx.fillStyle = isTwitch ? "#f5f3ff" : "#ffffff";
+  ctx.strokeStyle = isTwitch ? "#9146ff" : "#000";
+  ctx.lineWidth = 2;
+
+  ctx.beginPath();
+  ctx.roundRect(x - bw / 2, y - bh, bw, bh, 6);
+  ctx.fill(); ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(x - 4, y); ctx.lineTo(x, y + 5); ctx.lineTo(x + 4, y);
+  ctx.fill(); ctx.stroke();
+
+  ctx.fillStyle = isTwitch ? "#5b21b6" : "#0f172a";
+  ctx.textAlign = "center";
+  ctx.fillText(text.length > 22 ? text.substring(0, 20) + "…" : text, x, y - 8);
+  ctx.restore();
+}
+
+/* ========================================================
+   12 EXPANDED CELEBRATIONS & GOAL PARTICLES
+   ======================================================== */
+const CELEBRATION_PARTICLES = [];
+let screenShake = 0;
+
+function triggerCelebration(type = null) {
+  const chosenType = type || userProfile.explosion || "confetti";
+  CELEBRATION_PARTICLES.length = 0;
+  const cx = CW / 2;
+  const cy = FLOOR_Y - 40;
+
+  triggerBleacherCrowdCheer();
+
+  if (chosenType === "confetti") {
+    for (let i = 0; i < 90; i++) {
+      CELEBRATION_PARTICLES.push({
+        type: "confetti", x: cx + (Math.random() * 400 - 200), y: cy,
+        vx: (Math.random() - 0.5) * 650, vy: -500 - Math.random() * 450,
+        color: ["#ff007f", "#00ffff", "#ffe600", "#10b981", "#8b5cf6"][Math.floor(Math.random() * 5)],
+        size: 7 + Math.random() * 6, rot: Math.random() * 6, vRot: (Math.random() - 0.5) * 12,
+        life: 2.2, maxLife: 2.2
+      });
+    }
+  } else if (chosenType === "firework") {
+    screenShake = 0.35;
+    for (let f = 0; f < 4; f++) {
+      const fx = cx + (f - 1.5) * 260;
+      const fy = 260 + Math.random() * 120;
+      const hue = Math.floor(Math.random() * 360);
+      for (let i = 0; i < 35; i++) {
+        const ang = (Math.PI * 2 / 35) * i;
+        const spd = 120 + Math.random() * 220;
+        CELEBRATION_PARTICLES.push({
+          type: "spark", x: fx, y: fy,
+          vx: Math.cos(ang) * spd, vy: Math.sin(ang) * spd,
+          color: `hsl(${hue}, 100%, 65%)`, size: 4 + Math.random() * 3,
+          life: 1.8, maxLife: 1.8
+        });
+      }
+    }
+  } else if (chosenType === "shockwave") {
+    screenShake = 0.5;
+    sfx.crushDown();
+    CELEBRATION_PARTICLES.push({
+      type: "ring", x: cx, y: FLOOR_Y, r: 10, maxR: 540,
+      color: "#00ffff", lineWidth: 16, life: 1.2, maxLife: 1.2
+    });
+  } else if (chosenType === "coins") {
+    for (let i = 0; i < 60; i++) {
+      CELEBRATION_PARTICLES.push({
+        type: "coin", x: cx + (Math.random() * 200 - 100), y: cy,
+        vx: (Math.random() - 0.5) * 550, vy: -450 - Math.random() * 400,
+        size: 10, rot: Math.random() * 6, vRot: (Math.random() - 0.5) * 16,
+        life: 2.5, maxLife: 2.5
+      });
+    }
+  } else if (chosenType === "waffle_rain") {
+    for (let i = 0; i < 40; i++) {
+      CELEBRATION_PARTICLES.push({
+        type: "waffle", x: Math.random() * CW, y: -40 - Math.random() * 200,
+        vx: (Math.random() - 0.5) * 100, vy: 180 + Math.random() * 180,
+        size: 16, rot: Math.random() * 6, vRot: (Math.random() - 0.5) * 4,
+        life: 3.5, maxLife: 3.5
+      });
+    }
+  } else if (chosenType === "neon_matrix") {
+    screenShake = 0.3;
+    for (let i = 0; i < 70; i++) {
+      CELEBRATION_PARTICLES.push({
+        type: "matrix", x: Math.random() * CW, y: Math.random() * (FLOOR_Y - 100),
+        vx: (Math.random() - 0.5) * 50, vy: -120 - Math.random() * 200,
+        color: (i % 2 === 0) ? "#00ffff" : "#ff007f", size: 5,
+        life: 2.0, maxLife: 2.0
+      });
+    }
+  } else if (chosenType === "tidal_splash") {
+    for (let i = 0; i < 110; i++) {
+      CELEBRATION_PARTICLES.push({
+        type: "water", x: cx + (Math.random() * 240 - 120), y: FLOOR_Y,
+        vx: (Math.random() - 0.5) * 580, vy: -600 - Math.random() * 450,
+        size: 5 + Math.random() * 5, life: 2.0, maxLife: 2.0
+      });
+    }
+  } else if (chosenType === "beach_balloons") {
+    for (let i = 0; i < 30; i++) {
+      CELEBRATION_PARTICLES.push({
+        type: "balloon", x: cx + (Math.random() * 500 - 250), y: FLOOR_Y + 20,
+        vx: (Math.random() - 0.5) * 120, vy: -180 - Math.random() * 120,
+        color: ["#ef4444", "#3b82f6", "#eab308", "#10b981", "#ec4899", "#8b5cf6"][i % 6],
+        size: 18, life: 3.8, maxLife: 3.8
+      });
+    }
+  } else if (chosenType === "crab_rave_dance") {
+    for (let i = 0; i < 60; i++) {
+      CELEBRATION_PARTICLES.push({
+        type: "rave", x: cx + (Math.random() * 400 - 200), y: cy,
+        vx: (Math.random() - 0.5) * 600, vy: -400 - Math.random() * 400,
+        color: `hsl(${(i * 20) % 360}, 100%, 60%)`, size: 10,
+        life: 2.4, maxLife: 2.4
+      });
+    }
+  } else if (chosenType === "meteor_strike") {
+    screenShake = 0.65;
+    sfx.crushDown();
+    for (let i = 0; i < 80; i++) {
+      CELEBRATION_PARTICLES.push({
+        type: "fire", x: cx, y: FLOOR_Y - 20,
+        vx: (Math.random() - 0.5) * 750, vy: -500 - Math.random() * 500,
+        color: ["#ff4500", "#ff8c00", "#ffd700", "#ffffff"][Math.floor(Math.random() * 4)],
+        size: 6 + Math.random() * 8, life: 2.0, maxLife: 2.0
+      });
+    }
+  } else if (chosenType === "bubble_storm") {
+    for (let i = 0; i < 70; i++) {
+      CELEBRATION_PARTICLES.push({
+        type: "bubble", x: Math.random() * CW, y: FLOOR_Y - 20,
+        vx: (Math.random() - 0.5) * 140, vy: -120 - Math.random() * 180,
+        size: 10 + Math.random() * 14, life: 3.2, maxLife: 3.2
+      });
+    }
+  } else if (chosenType === "diamond_shower") {
+    for (let i = 0; i < 50; i++) {
+      CELEBRATION_PARTICLES.push({
+        type: "diamond", x: Math.random() * CW, y: -20 - Math.random() * 150,
+        vx: (Math.random() - 0.5) * 80, vy: 200 + Math.random() * 180,
+        size: 12, rot: Math.random() * 6, vRot: (Math.random() - 0.5) * 6,
+        life: 3.2, maxLife: 3.2
+      });
+    }
+  }
+}
+
+function updateAndDrawCelebrations(ctx, dt) {
+  if (screenShake > 0) {
+    screenShake -= dt;
+    ctx.translate((Math.random() - 0.5) * 12, (Math.random() - 0.5) * 12);
+  }
+
+  for (let i = CELEBRATION_PARTICLES.length - 1; i >= 0; i--) {
+    const p = CELEBRATION_PARTICLES[i];
+    p.life -= dt;
+    if (p.life <= 0) {
+      CELEBRATION_PARTICLES.splice(i, 1);
+      continue;
+    }
+
+    const alpha = Math.max(0, p.life / p.maxLife);
+    ctx.save();
+    ctx.globalAlpha = alpha;
+
+    if (p.type === "confetti") {
+      p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 450 * dt; p.rot += p.vRot * dt;
+      ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+    } else if (p.type === "spark" || p.type === "fire") {
+      p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 320 * dt;
+      ctx.fillStyle = p.color;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+    } else if (p.type === "ring") {
+      p.r += (p.maxR - p.r) * 6 * dt;
+      ctx.strokeStyle = p.color; ctx.lineWidth = p.lineWidth * alpha;
+      ctx.beginPath(); ctx.ellipse(p.x, p.y, p.r, p.r * 0.35, 0, 0, Math.PI * 2); ctx.stroke();
+    } else if (p.type === "coin") {
+      p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 500 * dt; p.rot += p.vRot * dt;
+      ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = "#ffd700"; ctx.strokeStyle = "#b45309"; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(0, 0, p.size, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = "#fff"; ctx.font = "bold 9px sans-serif"; ctx.fillText("$", -3, 3);
+    } else if (p.type === "waffle") {
+      p.x += p.vx * dt; p.y += p.vy * dt; p.rot += p.vRot * dt;
+      ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = "#f59e0b"; ctx.strokeStyle = "#78350f"; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(0, 0, p.size, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.strokeStyle = "#92400e"; ctx.strokeRect(-8, -8, 16, 16);
+      ctx.fillStyle = "#fef08a"; ctx.fillRect(-3, -3, 6, 6);
+    } else if (p.type === "matrix") {
+      p.y += p.vy * dt;
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x, p.y, p.size, p.size * 3);
+    } else if (p.type === "water") {
+      p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 650 * dt;
+      ctx.fillStyle = "#38bdf8";
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+    } else if (p.type === "balloon") {
+      p.x += p.vx * dt + Math.sin(p.life * 4) * 0.8; p.y += p.vy * dt;
+      ctx.fillStyle = p.color;
+      ctx.beginPath(); ctx.ellipse(p.x, p.y, p.size, p.size * 1.25, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = "#fff"; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(p.x, p.y + p.size * 1.25); ctx.lineTo(p.x, p.y + p.size * 1.25 + 18); ctx.stroke();
+    } else if (p.type === "rave") {
+      p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 400 * dt;
+      ctx.fillStyle = p.color;
+      ctx.font = "16px sans-serif"; ctx.fillText("🦀", p.x, p.y);
+    } else if (p.type === "bubble") {
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      ctx.strokeStyle = "rgba(255,255,255,0.85)"; ctx.fillStyle = "rgba(147,197,253,0.3)"; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    } else if (p.type === "diamond") {
+      p.x += p.vx * dt; p.y += p.vy * dt; p.rot += p.vRot * dt;
+      ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = "#67e8f9"; ctx.strokeStyle = "#0891b2"; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(0, -p.size); ctx.lineTo(p.size, 0); ctx.lineTo(0, p.size); ctx.lineTo(-p.size, 0); ctx.closePath();
+      ctx.fill(); ctx.stroke();
+    }
+
+    ctx.restore();
+  }
+}
+
+/* ========================================================
+   LEADERBOARDS & MULTIPLAYER SOCIAL ENGINE
+   ======================================================== */
 const DEFAULT_LEADERBOARD = [
   { rank: 1, name: "POPPAGEE", time: "01:14.2", points: 84 },
   { rank: 2, name: "CRAB-CHAMP", time: "01:28.6", points: 62 },
@@ -960,25 +1577,18 @@ const sfx = new ArcadeAudio();
 const dobyImg = new Image();
 dobyImg.src = "./doby.png";
 
-// CLEAN AUDREY POPPAGEE SPRITE (NO BLACK BOX - PURE CLEAN CRAB BODY)
 function makeAudreyCrabSVG() {
   return `data:image/svg+xml;utf8,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
-    <!-- Blonde anchor bob hair behind eyes -->
     <path d="M 68 30 C 58 6, 138 6, 128 30 C 142 52, 134 76, 124 80 C 124 58, 116 40, 98 36 C 80 40, 72 58, 72 80 C 62 76, 54 52, 68 30 Z" fill="#ffd54f" stroke="#b45309" stroke-width="2.5"/>
-    <!-- Cute pink shell -->
     <ellipse cx="98" cy="54" rx="58" ry="19" fill="#fb7185" stroke="#9f1239" stroke-width="4"/>
     <path d="M 64 48 Q 98 40 132 48 Q 98 70 64 48 Z" fill="#ffe4e6" opacity="0.8"/>
-    <!-- Cute Eyes -->
     <circle cx="62" cy="18" r="8.5" fill="#111" stroke="#9f1239" stroke-width="2.5"/><circle cx="64" cy="15.5" r="3" fill="#fff"/>
     <circle cx="134" cy="18" r="8.5" fill="#111" stroke="#9f1239" stroke-width="2.5"/><circle cx="136" cy="15.5" r="3" fill="#fff"/>
-    <!-- Legs -->
     <path d="M 52 60 Q 28 68 20 80" stroke="#9f1239" stroke-width="6" fill="none"/>
     <path d="M 144 60 Q 168 68 176 80" stroke="#9f1239" stroke-width="6" fill="none"/>
-    <!-- Claws holding microphone -->
     <path d="M 52 42 C 34 26 18 10 2 24 C 14 36 28 42 50 48 Z" fill="#fb7185" stroke="#9f1239" stroke-width="3.5"/>
     <path d="M 144 42 C 162 26 178 10 194 24 C 182 36 168 42 146 48 Z" fill="#fb7185" stroke="#9f1239" stroke-width="3.5"/>
-    <!-- News Microphone in Left Claw -->
     <rect x="18" y="22" width="6" height="18" rx="2" fill="#334155" stroke="#000" stroke-width="1.5"/>
     <circle cx="21" cy="19" r="5.5" fill="#ef4444" stroke="#000" stroke-width="1.5"/>
     <rect x="16" y="16" width="10" height="4" fill="#fbbf24"/>
@@ -1120,7 +1730,9 @@ function drawFlushHat(ctx, type, animTime = 0) {
   ctx.restore();
 }
 
-// 20,000 FT HARDCORE HORIZONTAL TSUNAMI RUN
+/* ========================================================
+   20,000 FT HARDCORE HORIZONTAL TSUNAMI RUN
+   ======================================================== */
 let isTsunamiTriggered = false;
 let tsunamiCutsceneTimer = 0;
 const TSUNAMI_CUTSCENE_TOTAL = 20.0;
@@ -1208,7 +1820,6 @@ function skipCutsceneImmediately() {
 
 function generateHorizontalPlatforms() {
   horizontalPlatforms = [];
-  // Start safe area
   horizontalPlatforms.push({ x: 0, y: FLOOR_Y, w: 750, h: 40 });
 
   let curX = 850;
@@ -1219,7 +1830,6 @@ function generateHorizontalPlatforms() {
     curX += pw + (110 + Math.random() * 120);
   }
 
-  // Broken crumbly highway edge
   horizontalPlatforms.push({ x: 3750, y: FLOOR_Y - 20, w: 160, h: 24, biome: 1 });
 
   // Biome 2: Sinking Docks
@@ -1349,7 +1959,6 @@ function updatePlatformerMode(dt) {
         if (p.y + dynamicHalfH >= platY && p.y + dynamicHalfH <= platY + 24 && p.vy >= 0) {
           p.y = platY - dynamicHalfH; p.vy = 0; p.isGrounded = true; p.canJump = true;
 
-          // Traffic cone trip
           if (plat.hasCone && Math.abs(p.x - (plat.x + plat.w/2)) < 18) {
             p.vx *= -0.5; p.vy = -220; sfx.crushDown();
           }
@@ -1513,12 +2122,6 @@ function hideToast() {
   const t = document.getElementById("toast");
   if (t) t.classList.add("hidden");
   match.toastTimer = 0;
-}
-
-function triggerWaffleCelebration() {
-  for (let i = 0; i < 35; i++) {
-    showToast("🥞 WAFFLES! 🥞", 1.5); sfx.cheer();
-  }
 }
 
 function updatePlayer(p, input, dt) {
@@ -1687,6 +2290,8 @@ function scorePoint(winnerTeam) {
   if (userProfile.points % 10 === 0) userProfile.level++;
   saveCareerSettings();
 
+  triggerCelebration();
+
   if (match.scores[winnerTeam - 1] >= 5) {
     match.sets[winnerTeam - 1]++;
     sfx.cheer();
@@ -1757,11 +2362,15 @@ function renderStandardStyle() {
   ctx.fillStyle = "#00aced"; ctx.fillRect(0, 0, CW, CH);
   drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 200, 145, 0, 1);
 
+  // Bleachers in Sand Background
+  drawBleachers(ctx);
+
   ctx.fillStyle = "#f5d799"; ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
   ctx.fillStyle = "#e2be73"; ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
 
   drawNet(ctx, NET.y, "#ffffff", "#ff1744");
   drawPlayersAndBall(ctx);
+  updateAndDrawCelebrations(ctx, 0.016);
   drawRetroScore(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], "#0288d1", "#d50000");
 }
 
@@ -1774,11 +2383,15 @@ function renderViceStyle() {
   drawInfiniteHighway(ctx, FLOOR_Y - 225, 0);
   drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 198, 143, 0, 1);
 
+  // Vice Neon Bleachers in Background
+  drawBleachers(ctx);
+
   ctx.fillStyle = "#311b92"; ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
   ctx.fillStyle = "#1a0033"; ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
 
   drawNet(ctx, NET.y, "#00ffff", "#ff007f");
   drawPlayersAndBall(ctx);
+  updateAndDrawCelebrations(ctx, 0.016);
   drawRetroScore(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], "#00ffff", "#ff007f");
 }
 
@@ -1901,7 +2514,6 @@ function renderHorizontalEscape() {
     drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 140, 160, cameraOffsetX, 5);
   }
 
-  // Platforms with Deep Structural Pilings
   horizontalPlatforms.forEach(p => {
     let platY = p.y;
     if (p.bobbing) platY += Math.sin(oceanTimer * 2 + p.x * 0.01) * 8;
@@ -1932,7 +2544,6 @@ function renderHorizontalEscape() {
     }
   });
 
-  // Checkpoints
   checkpoints.forEach(cp => {
     ctx.fillStyle = cp.reached ? "#4caf50" : "#ffd600";
     ctx.fillRect(cp.x - 10, cp.y - 70, 20, 70);
@@ -1940,7 +2551,7 @@ function renderHorizontalEscape() {
     ctx.fillText(cp.reached ? "🚩 CHECKPOINT OK" : `🚩 ${cp.name}`, cp.x - 40, cp.y - 80);
   });
 
-  // GLOWING ALL-NIGHT WAFFLE HOUSE
+  // Glowing All-Night Waffle House
   ctx.save();
   ctx.translate(WAFFLE_HOUSE_X, FLOOR_Y - 170);
   ctx.fillStyle = "#ffd54f"; ctx.strokeStyle = "#000"; ctx.lineWidth = 5;
@@ -1994,11 +2605,14 @@ function gameLoop(now) {
       rotLeft: keys["ArrowLeft"] || false, rotRight: keys["ArrowRight"] || false,
       jump: keys["Space"] || false
     };
-    updatePlayer(players[match.myPlayerIndex], myInput, dt);
 
-    if (match.isOnline && !isHost) {
-      if (peerConnections[0] && peerConnections[0].open) {
-        peerConnections[0].send({ type: "INPUT", input: myInput });
+    if (match.myPlayerIndex < 4) {
+      updatePlayer(players[match.myPlayerIndex], myInput, dt);
+
+      if (match.isOnline && !isHost) {
+        if (peerConnections[0] && peerConnections[0].open) {
+          peerConnections[0].send({ type: "INPUT", input: myInput });
+        }
       }
     }
 
@@ -2019,11 +2633,20 @@ function gameLoop(now) {
     }
   }
 
+  if (!isPlatformerActive) {
+    updateBleacherSpectators(dt);
+  }
+
   checkTsunamiCutscene(dt);
   render();
   requestAnimationFrame(gameLoop);
 }
 requestAnimationFrame(gameLoop);
+
+/* ========================================================
+   LOBBY UI & MULTIPLAYER SPECTATOR OVERFLOW
+   ======================================================== */
+const lobbySpectators = [];
 
 function refreshLobbyUI() {
   const t1 = document.getElementById("team1Players");
@@ -2061,6 +2684,24 @@ function refreshLobbyUI() {
 
   document.getElementById("team1Count").innerText = count1;
   document.getElementById("team2Count").innerText = count2;
+
+  // Refresh Spectator Badges
+  const specCont = document.getElementById("spectatorBadgeContainer");
+  const specCountEl = document.getElementById("spectatorCount");
+  if (specCont && specCountEl) {
+    specCountEl.innerText = lobbySpectators.length;
+    if (lobbySpectators.length === 0) {
+      specCont.innerHTML = `<span style="color:#718096;font-size:11px;">Join room after 4 players to watch from the beach bleachers!</span>`;
+    } else {
+      specCont.innerHTML = "";
+      lobbySpectators.forEach(s => {
+        const badge = document.createElement("span");
+        badge.className = "spec-badge";
+        badge.innerHTML = `🏖️ <b>${s.name}</b> (${s.hat})`;
+        specCont.appendChild(badge);
+      });
+    }
+  }
 }
 
 function kickPlayerSlot(idx) {
@@ -2078,18 +2719,23 @@ function kickPlayerSlot(idx) {
 
 function switchTeam(teamNum) {
   sfx.bodyBump();
-  players[match.myPlayerIndex].team = teamNum;
-  refreshLobbyUI();
-  if (match.isOnline) broadcastPlayerCustoms();
+  if (match.myPlayerIndex < 4) {
+    players[match.myPlayerIndex].team = teamNum;
+    refreshLobbyUI();
+    if (match.isOnline) broadcastPlayerCustoms();
+  }
 }
 
 function updateMyCustoms() {
   const nameInput = document.getElementById("playerNameInput");
   const hatSelect = document.getElementById("hatSelect");
   const cleaned = nameInput.value.trim().toUpperCase() || "CRAB";
-  players[match.myPlayerIndex].name = cleaned;
   userProfile.name = cleaned;
-  players[match.myPlayerIndex].hat = hatSelect.value;
+
+  if (match.myPlayerIndex < 4) {
+    players[match.myPlayerIndex].name = cleaned;
+    players[match.myPlayerIndex].hat = hatSelect.value;
+  }
   saveCareerSettings();
   refreshLobbyUI();
   if (match.isOnline) broadcastPlayerCustoms();
@@ -2135,8 +2781,10 @@ function sendChatMessage() {
   if (!txt) return;
   inp.value = "";
   const clean = filterProfanity(txt);
-  const myName = players[match.myPlayerIndex].name || "ME";
+  const myName = (match.myPlayerIndex < 4) ? players[match.myPlayerIndex].name : (userProfile.name || "SPECTATOR");
   addChatEntry(myName, clean);
+
+  spawnOrUpdateBleacherSpectator(myName, clean, false, true, userProfile.unlockedHats[0], userProfile.colorway);
 
   if (match.isOnline) {
     const msg = { type: "CHAT", sender: myName, text: clean };
@@ -2396,7 +3044,9 @@ function startHostGameSetup() {
   showSubmodeSelect('online');
 }
 
-// MULTIPLAYER WEBRTC
+/* ========================================================
+   WEBRTC MULTIPLAYER & SPECTATOR SYNC
+   ======================================================== */
 let peer = null;
 let isHost = false;
 const peerConnections = [];
@@ -2427,29 +3077,26 @@ function hostRoom() {
     });
 
     peer.on("connection", (conn) => {
-      let existingSlot = -1;
+      let slot = -1;
       for (let i = 1; i < 4; i++) {
-        if (peerConnections[i] && peerConnections[i].peer === conn.peer) {
-          existingSlot = i; break;
-        }
+        if (!peersConnected[i]) { slot = i; break; }
       }
 
-      let slot = (existingSlot !== -1) ? existingSlot : -1;
-      if (slot === -1) {
-        for (let i = 1; i < 4; i++) {
-          if (!peersConnected[i]) { slot = i; break; }
-        }
-      }
-      if (slot === -1) { conn.close(); return; }
+      const isSpectatorPeer = (slot === -1);
+      const assignedSlot = isSpectatorPeer ? (4 + lobbySpectators.length) : slot;
 
-      peersConnected[slot] = true;
-      peerConnections[slot] = conn;
-      players[slot].team = (slot % 2 === 0) ? 1 : 2;
-      players[slot].isBot = false;
+      if (!isSpectatorPeer) {
+        peersConnected[slot] = true;
+        peerConnections[slot] = conn;
+        players[slot].team = (slot % 2 === 0) ? 1 : 2;
+        players[slot].isBot = false;
+      } else {
+        peerConnections[assignedSlot] = conn;
+      }
 
       conn.on("open", () => {
         conn.send({
-          type: "WELCOME", assignedSlot: slot,
+          type: "WELCOME", assignedSlot: assignedSlot, isSpectator: isSpectatorPeer,
           playersData: players.map(p => ({ name: p.name, hat: p.hat, team: p.team, spriteType: p.spriteType, isBot: p.isBot }))
         });
         refreshLobbyUI();
@@ -2458,13 +3105,19 @@ function hostRoom() {
 
       conn.on("data", (data) => {
         if (data.type === "UPDATE_CUSTOMS") {
-          players[slot].name = data.name; players[slot].hat = data.hat;
-          players[slot].team = data.team; players[slot].spriteType = data.spriteType;
-          players[slot].isBot = false;
+          if (!data.isSpectator && slot !== -1) {
+            players[slot].name = data.name; players[slot].hat = data.hat;
+            players[slot].team = data.team; players[slot].spriteType = data.spriteType;
+            players[slot].isBot = false;
+          } else {
+            lobbySpectators.push({ name: data.name, hat: data.hat });
+            spawnOrUpdateBleacherSpectator(data.name, "HYPED FOR THE MATCH!", false, true, data.hat);
+          }
           refreshLobbyUI(); broadcastPlayerCustoms();
         }
         if (data.type === "CHAT") {
           addChatEntry(data.sender, data.text);
+          spawnOrUpdateBleacherSpectator(data.sender, data.text, false, true);
           peerConnections.forEach(c => { if (c && c.open) c.send(data); });
         }
         if (data.type === "VOTE_SUBMODE") {
@@ -2481,14 +3134,20 @@ function hostRoom() {
         if (data.type === "VOTE_SKIP") {
           skipVotes[data.slot] = true; updateSkipButtonUI(); checkAllHumansSkipped();
         }
-        if (data.type === "INPUT") updatePlayer(players[slot], data.input, 0.03);
+        if (data.type === "INPUT" && slot !== -1) {
+          updatePlayer(players[slot], data.input, 0.03);
+        }
       });
 
       conn.on("close", () => {
-        peersConnected[slot] = false;
-        peerConnections[slot] = null;
-        players[slot].isBot = false;
-        players[slot].activeInGame = false;
+        if (!isSpectatorPeer) {
+          peersConnected[slot] = false;
+          peerConnections[slot] = null;
+          players[slot].isBot = false;
+          players[slot].activeInGame = false;
+        } else {
+          peerConnections[assignedSlot] = null;
+        }
         refreshLobbyUI(); broadcastPlayerCustoms();
       });
     });
@@ -2527,6 +3186,9 @@ function joinRoom() {
         if (data.type === "WELCOME") {
           match.myPlayerIndex = data.assignedSlot;
           document.getElementById("myCodeText").innerText = code;
+          if (data.isSpectator) {
+            showToast("Joined as Bleacher Spectator! Enjoy the beach view!", 3.0);
+          }
           data.playersData.forEach((pd, i) => {
             players[i].name = pd.name; players[i].hat = pd.hat;
             players[i].team = pd.team; players[i].spriteType = pd.spriteType;
@@ -2542,7 +3204,10 @@ function joinRoom() {
           });
           refreshLobbyUI();
         }
-        if (data.type === "CHAT") addChatEntry(data.sender, data.text);
+        if (data.type === "CHAT") {
+          addChatEntry(data.sender, data.text);
+          spawnOrUpdateBleacherSpectator(data.sender, data.text, false, true);
+        }
         if (data.type === "OPEN_SUBMODE_VOTE") {
           document.getElementById("socialLobbyModal").classList.add("hidden");
           document.getElementById("submodeModal").classList.remove("hidden");
@@ -2602,8 +3267,11 @@ function broadcastPlayerCustoms() {
   const msg = {
     type: isHost ? "SYNC_CUSTOMS" : "UPDATE_CUSTOMS",
     playersData: players.map(p => ({ name: p.name, hat: p.hat, team: p.team, spriteType: p.spriteType, isBot: p.isBot })),
-    name: players[match.myPlayerIndex].name, hat: players[match.myPlayerIndex].hat,
-    team: players[match.myPlayerIndex].team, spriteType: players[match.myPlayerIndex].spriteType
+    name: (match.myPlayerIndex < 4) ? players[match.myPlayerIndex].name : userProfile.name,
+    hat: (match.myPlayerIndex < 4) ? players[match.myPlayerIndex].hat : userProfile.unlockedHats[0],
+    team: (match.myPlayerIndex < 4) ? players[match.myPlayerIndex].team : 1,
+    spriteType: (match.myPlayerIndex < 4) ? players[match.myPlayerIndex].spriteType : "crab",
+    isSpectator: (match.myPlayerIndex >= 4)
   };
   peerConnections.forEach(c => { if (c && c.open) c.send(msg); });
 }
@@ -2668,6 +3336,7 @@ window.addEventListener("DOMContentLoaded", () => {
   bindUIEvents();
   loadCareer();
   pickRandomSassyQuote();
+  checkTwitchOAuthHash();
 
   const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent));
   const pad = document.getElementById("mobileControls");
