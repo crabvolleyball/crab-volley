@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>Crab Volleyball Arcade 2026</title>
+<title>Crab Volleyball Arcade 2026 - Streamer Gold</title>
 <style>
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body {
@@ -34,10 +34,11 @@ header {
 }
 .brand span { color: #fff; }
 .header-actions { display: flex; gap: 8px; align-items: center; }
-.audio-btn, .ctrl-toggle-btn {
+.audio-btn, .ctrl-toggle-btn, .twitch-status-badge {
   background: #ffcc00; border: 3px solid #000; border-radius: 8px;
   font-size: 13px; font-family: "Impact", sans-serif; padding: 4px 10px; cursor: pointer; box-shadow: 2px 2px 0 #000;
 }
+.twitch-status-badge { background: #9146ff; color: #fff; text-shadow: 1px 1px 0 #000; }
 
 main {
   width: 100%; flex: 1; display: flex; flex-direction: column;
@@ -45,12 +46,12 @@ main {
   overflow: hidden;
 }
 
-/* ARCADE PANELS */
+/* ARCADE RETRO PANELS */
 .panel {
   width: min(980px, 98%); background: #fffbe8; border: 5px solid #142800;
   border-radius: 18px; box-shadow: 8px 8px 0 #000;
   padding: clamp(10px, 2.5vw, 20px); text-align: center; margin: auto;
-  position: relative; max-height: 90vh; overflow-y: auto;
+  position: relative; max-height: 88vh; overflow-y: auto;
 }
 h1 {
   margin: 0 0 2px; font-size: clamp(26px, 4.2vw, 42px); color: #e63900;
@@ -85,6 +86,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 .primary { background: #ff3b00; color: #fff; text-shadow: 2px 2px 0 #000; }
 .vice-btn { background: #ff007f; color: #00ffff; text-shadow: 2px 2px 0 #7b00ff; }
 .bag-btn { background: #26a69a; color: #fff; text-shadow: 2px 2px 0 #004d40; }
+.twitch-btn { background: #9146ff; color: #fff; text-shadow: 2px 2px 0 #000; }
 .big { min-height: 48px; font-size: 16px; }
 
 /* SOCIAL PRE-LOBBY & CHAT */
@@ -249,6 +251,7 @@ canvas {
   <header>
     <div class="brand">🦀 CRAB <span>VOLLEYBALL</span></div>
     <div class="header-actions">
+      <button id="twitchBadgeBtn" class="twitch-status-badge" onclick="openTwitchModal()">🟣 STREAMER MODE</button>
       <button id="ctrlToggleBtn" class="ctrl-toggle-btn" onclick="toggleControlMode()">🕹️ BUTTONS</button>
       <button id="muteAudioBtn" class="audio-btn" onclick="toggleMuteAudio()">🔊</button>
     </div>
@@ -268,7 +271,8 @@ canvas {
 
       <div style="margin-top:12px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
         <button id="openBagBtn" class="bag-btn" style="font-size:14px;padding:8px 16px;">🎒 BEACH BAG</button>
-        <button id="openLeaderboardBtn" class="vice-btn" onclick="openLeaderboard()" style="font-size:14px;padding:8px 16px;">🏆 LEADERBOARD</button>
+        <button id="openLeaderboardBtn" class="vice-btn" onclick="openLeaderboard()" style="font-size:14px;padding:8px 16px;">🏆 LEADERBOARDS</button>
+        <button class="twitch-btn" onclick="openTwitchModal()" style="font-size:14px;padding:8px 16px;">🟣 TWITCH STREAM</button>
       </div>
 
       <div id="onlineBox" class="online-box hidden" style="margin-top:12px;">
@@ -284,9 +288,37 @@ canvas {
       </div>
     </section>
 
-    <!-- WORLDWIDE LEADERBOARD -->
+    <!-- TWITCH STREAMER INTEGRATION MODAL -->
+    <section id="twitchModal" class="panel hidden">
+      <h1 style="color:#9146ff;text-shadow:3px 3px 0 #000;">🟣 TWITCH STREAMER MODE 🟣</h1>
+      <p class="sub">Connect directly to your Twitch channel chat! Viewers type commands to trigger live events!</p>
+
+      <div class="customizer-box">
+        <div class="custom-row">
+          <b>TWITCH CHANNEL NAME:</b>
+          <input id="twitchChannelInput" class="custom-input" style="width:180px;" placeholder="e.g. Ninja">
+          <button class="twitch-btn" onclick="connectTwitchChat()">CONNECT STREAM</button>
+        </div>
+        <p id="twitchConnStatus" style="font-size:12px;font-weight:bold;color:#6b21a8;margin:2px 0;">Status: Disconnected</p>
+        
+        <div style="background:#f3e8ff;border:2px solid #9146ff;border-radius:8px;padding:8px;font-size:11px;font-family:sans-serif;text-align:left;line-height:1.4;">
+          <b>📺 CHAT COMMANDS FOR VIEWERS:</b><br>
+          • <code>!speed</code> : Turbo boosts the ball / players!<br>
+          • <code>!grav</code> : Toggles moon low gravity!<br>
+          • <code>!bounce</code> : Bouncy springs mode!<br>
+          • <code>!cheer</code> : Triggers beach crowd celebration!<br>
+          • <code>!waffle</code> : Spawns waffle celebration confetti!
+        </div>
+      </div>
+
+      <div style="margin-top:14px;">
+        <button onclick="closeTwitchModal()" style="padding:6px 16px;">CLOSE</button>
+      </div>
+    </section>
+
+    <!-- WORLDWIDE LEADERBOARDS -->
     <section id="leaderboardModal" class="panel hidden">
-      <h1>🏆 WORLDWIDE LEADERBOARD 🏆</h1>
+      <h1>🏆 WORLDWIDE LEADERBOARDS 🏆</h1>
       <p class="sub">Fastest Escapes to Waffle House & Top Beach Competitors</p>
 
       <table class="leader-table">
@@ -306,18 +338,32 @@ canvas {
       </div>
     </section>
 
-    <!-- BEACH BAG / ARSENAL (20+ CUSTOMIZATIONS) -->
+    <!-- BEACH BAG / ARSENAL (EXPANDED ACCESSORIES) -->
     <section id="lockerModal" class="panel hidden">
       <h1>🎒 YOUR BEACH BAG 🎒</h1>
       <p class="sub">Rank: <span id="careerLevel" style="color:#d84315;">1</span> · Claws Pinched: <span id="careerPoints">0</span> · Sets Won: <span id="careerWins">0</span></p>
 
       <div class="customizer-box">
-        <div style="font-size:13px;font-weight:bold;color:#004d40;">🏆 20+ UNLOCKABLE HATS & ACCESSORIES:</div>
-        <div id="hatUnlockList" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:4px 0;"></div>
+        <div class="custom-row">
+          <b>HAT / ACCESSORY:</b>
+          <select id="arsenalHatSelect" class="custom-input" onchange="updateArsenalCustoms()"></select>
+          
+          <b>CLAW ACCESSORY:</b>
+          <select id="clawAccessorySelect" class="custom-input" onchange="updateArsenalCustoms()">
+            <option value="none">Bare Claws</option>
+            <option value="boxing">Boxing Gloves 🥊</option>
+            <option value="gold">Golden Pinchers 🪙</option>
+            <option value="glow">Rave Glowsticks 🌟</option>
+            <option value="foam">#1 Foam Finger ☝️</option>
+            <option value="mic">News Reporter Mic 🎙️</option>
+            <option value="wand">Magic Star Wand 🪄</option>
+            <option value="spiked">Spiked Gauntlets ⚔️</option>
+          </select>
+        </div>
 
         <div class="custom-row" style="margin-top:4px;">
           <b>CRAB COLORWAY:</b>
-          <select id="colorwaySelect" class="custom-input" onchange="updatePlayerColorway()">
+          <select id="colorwaySelect" class="custom-input" onchange="updateArsenalCustoms()">
             <option value="classic">Coral Crab (Classic)</option>
             <option value="vice_cyan">Vice Cyan Neon</option>
             <option value="magenta">Synthwave Magenta</option>
@@ -329,7 +375,7 @@ canvas {
           </select>
 
           <b>TRASH-TALK QUIP PACK:</b>
-          <select id="quipPackSelect" class="custom-input">
+          <select id="quipPackSelect" class="custom-input" onchange="updateArsenalCustoms()">
             <option value="classic">Classic ("Crab Pride!", "Pinch this!")</option>
             <option value="trash">Trash Talker ("Sit down!", "Free real estate!")</option>
             <option value="sailor">Salty Sailor ("Shiver me claws!", "Overboard!")</option>
@@ -338,11 +384,12 @@ canvas {
           </select>
         </div>
         <div class="custom-row">
-          <b>POINT EXPLOSION EFFECT:</b>
-          <select id="explosionSelect" class="custom-input">
+          <b>POINT CELEBRATION:</b>
+          <select id="explosionSelect" class="custom-input" onchange="updateArsenalCustoms()">
             <option value="confetti">Confetti Sparkles</option>
             <option value="firework">Arcade Fireworks</option>
             <option value="shockwave">Tidal Shockwave (Knocks players down!)</option>
+            <option value="coins">Golden Coin Fountain</option>
           </select>
         </div>
       </div>
@@ -411,7 +458,7 @@ canvas {
       </div>
     </section>
 
-    <!-- DEMOCRATIC SUB-MODE SELECTION (25s TIMER + INSTANT ADVANCE) -->
+    <!-- DEMOCRATIC SUB-MODE SELECTION -->
     <section id="submodeModal" class="panel hidden">
       <h1 id="submodeTitle">CHOOSE MATCH STYLE</h1>
       <p class="sub" id="submodeSubtitle">Select your game environment! <span id="submodeTimerText" style="color:#d50000;">(25s REMAINING)</span></p>
@@ -425,7 +472,7 @@ canvas {
       </div>
     </section>
 
-    <!-- DEMOCRATIC VICE CARD VOTING (25s TIMER + INSTANT ADVANCE) -->
+    <!-- DEMOCRATIC VICE CARD VOTING -->
     <section id="viceVoteModal" class="panel hidden" style="background:#160228;border-color:#ff007f;">
       <h1 style="color:#00ffff;text-shadow:3px 3px 0 #ff007f, 5px 5px 0 #000;">🌴 VOTE VICE CARD 🌴</h1>
       <p class="sub" style="color:#ff77c6;">Popular vote decides the modifier! <span id="voteTimerText" style="color:#ffe600;">(25s REMAINING)</span></p>
@@ -451,7 +498,7 @@ canvas {
             <button id="skipCutsceneBtn" style="padding:2px 8px;font-size:11px;background:#fff;color:#000;">SKIP [0/2]</button>
           </div>
           <div class="audrey-layout">
-            <div id="audreyAnchorArt" style="width:120px;height:120px;flex-shrink:0;"></div>
+            <div id="audreyAnchorArt" style="width:130px;height:100px;flex-shrink:0;"></div>
             <div class="audrey-speech">
               "This is <b>Meteorologist Audrey PoppaGee</b> reporting LIVE from Beach Action News 6!<br>
               A Category 5 Tsunami is engulfing the coast! <b>The net is gone!</b><br>
@@ -495,13 +542,13 @@ canvas {
 </div>
 
 <!-- GLOBAL VERSION BADGE -->
-<div id="globalVersionTag">v1.0 - 2026 FINAL RELEASE</div>
+<div id="globalVersionTag">v1.0 - STREAMER & RETRO ARCADE GOLD</div>
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 
 <script>
 /* ========================================================
-   CRAB VOLLEYBALL ARCADE ENGINE v1.0 (2026 GOLD RELEASE)
+   CRAB VOLLEYBALL ARCADE ENGINE v1.0 GOLD (2026 EDITION)
    ======================================================== */
 
 function formatJoinCodeInput(el) {
@@ -511,14 +558,14 @@ function formatJoinCodeInput(el) {
   else el.value = "";
 }
 
-// 20+ HAT & ACCESSORY DATABASE
+// 20+ HATS & ACCESSORIES
 const HAT_DATABASE = [
-  { id: "pineapple", name: "Pineapple", locked: false, desc: "Default tropical style" },
-  { id: "propeller", name: "Propeller", locked: false, desc: "Default whirly topper" },
-  { id: "captain", name: "Captain", locked: false, desc: "Default seafaring skipper cap" },
-  { id: "straw", name: "Straw Beach Hat", locked: false, desc: "Casual summer beach straw" },
-  { id: "visor", name: "Sun Visor", locked: false, desc: "Retro tennis visor" },
-  { id: "backward", name: "Backward Cap", locked: false, desc: "Streetwear crab style" },
+  { id: "pineapple", name: "Pineapple", locked: false },
+  { id: "propeller", name: "Propeller", locked: false },
+  { id: "captain", name: "Captain", locked: false },
+  { id: "straw", name: "Straw Beach Hat", locked: false },
+  { id: "visor", name: "Sun Visor", locked: false },
+  { id: "backward", name: "Backward Cap", locked: false },
   { id: "tophat", name: "Top Hat", locked: true, unlockReq: "Score 10 Points in career" },
   { id: "fez", name: "Fez", locked: true, unlockReq: "Win 2 match sets" },
   { id: "lighthouse", name: "Lighthouse Keeper", locked: true, unlockReq: "Survive the 20,000ft Run to Waffle House!" },
@@ -526,13 +573,11 @@ const HAT_DATABASE = [
   { id: "viking", name: "Viking Battle Horns", locked: true, unlockReq: "Score 25 Total Career Points" },
   { id: "chef", name: "Chef Toque", locked: true, unlockReq: "Reach Waffle House in under 01:30" },
   { id: "goggles", name: "Cyberpunk Goggles", locked: true, unlockReq: "Play Vice Mode 3 times" },
-  { id: "pirate", name: "Pirate Tricorne", locked: true, unlockReq: "Score 5 claw spike points" },
   { id: "sombrero", name: "Fiesta Sombrero", locked: true, unlockReq: "Score 15 points in career" },
-  { id: "wizard", name: "Wizard Star Hat", locked: true, unlockReq: "Win 5 match sets" },
-  { id: "party", name: "Crab Rave Cone", locked: true, unlockReq: "Experience Crab Rave card" }
+  { id: "wizard", name: "Wizard Star Hat", locked: true, unlockReq: "Win 5 match sets" }
 ];
 
-// EXPANDED HILARIOUS QUIP PACKS (POP CULTURE & PUNNY)
+// EXPANDED HILARIOUS QUIP PACKS
 const QUIP_PACKS = {
   classic: [
     "Crab Pride worldwide!", "Pinch this, don't miss!", "Feeling crabby? Good!",
@@ -543,30 +588,27 @@ const QUIP_PACKS = {
   trash: [
     "Sit down, you're looking shellfish!", "Free points, free real estate!", "My grandma crab jumps higher than that!",
     "Go back to the tide pool, rookie!", "Is that your best spike? Cute.", "I'd roast you, but you're already steamed!",
-    "Uninstall your claws, bro!", "GG EZ, no claws needed.", "Call an ambulance, but not for me!"
+    "Uninstall your claws, bro!", "GG EZ, no claws needed."
   ],
   sailor: [
     "Shiver me claws and barnacles!", "Send 'em straight to Davy Jones' diner!", "Heave ho, over the net she goes!",
-    "Batten down the hatches!", "Avast ye, landlubber crustacean!", "By Blackbeard's ghost, what a spike!",
-    "Man overboard, grab the volleyball!"
+    "Batten down the hatches!", "Avast ye, landlubber crustacean!", "By Blackbeard's ghost, what a spike!"
   ],
   zen: [
     "Flow like high tide, relax like low tide...", "Breathe in sand, breathe out chaos...",
-    "The ball is not the target... you are.", "Serenity in every claw snap.", "The ocean provides, the ocean denies.",
-    "Inner peace, outer pinch."
+    "The ball is not the target... you are.", "Serenity in every claw snap.", "Inner peace, outer pinch."
   ],
   cyber2026: [
     "Wake up samurai, we got a waffle to eat!", "Running at 120 FPS on fresh sand!",
     "Error 404: Volleyball skills not found!", "My neural link predicted that spike!",
-    "Crab 2026: Fully autonomous pinching!", "Straight bussin' to the Waffle House!",
-    "Ray-traced claws hitting different!"
+    "Crab 2026: Fully autonomous pinching!", "Straight bussin' to the Waffle House!"
   ]
 };
 
 let userProfile = {
   name: "", level: 1, points: 0, wins: 0,
   bestWaffleTime: null,
-  colorway: "classic",
+  colorway: "classic", clawAccessory: "none",
   quipPack: "classic", explosion: "confetti",
   unlockedHats: ["pineapple", "propeller", "captain", "straw", "visor", "backward"],
   unlockedCharacters: ["crab", "doby", "met"]
@@ -574,7 +616,7 @@ let userProfile = {
 
 function loadCareer() {
   try {
-    const saved = localStorage.getItem("crab_volleyball_profile_2026");
+    const saved = localStorage.getItem("crab_volleyball_profile_gold");
     if (saved) {
       userProfile = Object.assign(userProfile, JSON.parse(saved));
       if (!userProfile.unlockedHats) userProfile.unlockedHats = ["pineapple", "propeller", "captain", "straw", "visor", "backward"];
@@ -590,68 +632,140 @@ function loadCareer() {
     const qp = document.getElementById("quipPackSelect");
     const ep = document.getElementById("explosionSelect");
     const cwSel = document.getElementById("colorwaySelect");
+    const clwSel = document.getElementById("clawAccessorySelect");
     if (qp) qp.value = userProfile.quipPack || "classic";
     if (ep) ep.value = userProfile.explosion || "confetti";
     if (cwSel) cwSel.value = userProfile.colorway || "classic";
+    if (clwSel) clwSel.value = userProfile.clawAccessory || "none";
 
     const nameIn = document.getElementById("initialNameInput");
     if (nameIn && userProfile.name) nameIn.value = userProfile.name;
 
-    // Check unlocks
     if (userProfile.points >= 10 && !userProfile.unlockedHats.includes("tophat")) userProfile.unlockedHats.push("tophat");
     if (userProfile.points >= 15 && !userProfile.unlockedHats.includes("sombrero")) userProfile.unlockedHats.push("sombrero");
     if (userProfile.points >= 25 && !userProfile.unlockedHats.includes("viking")) userProfile.unlockedHats.push("viking");
     if (userProfile.wins >= 2 && !userProfile.unlockedHats.includes("fez")) userProfile.unlockedHats.push("fez");
-    if (userProfile.wins >= 5 && !userProfile.unlockedHats.includes("wizard")) userProfile.unlockedHats.push("wizard");
 
     saveCareerSettings();
     populateHatSelect();
-    renderArsenalList();
   } catch(e) {}
 }
 
 function saveCareerSettings() {
+  localStorage.setItem("crab_volleyball_profile_gold", JSON.stringify(userProfile));
+}
+
+function updateArsenalCustoms() {
   const qp = document.getElementById("quipPackSelect");
   const ep = document.getElementById("explosionSelect");
   const cwSel = document.getElementById("colorwaySelect");
+  const clwSel = document.getElementById("clawAccessorySelect");
+  const hatSel = document.getElementById("arsenalHatSelect");
   if (qp) userProfile.quipPack = qp.value;
   if (ep) userProfile.explosion = ep.value;
   if (cwSel) userProfile.colorway = cwSel.value;
-  localStorage.setItem("crab_volleyball_profile_2026", JSON.stringify(userProfile));
-}
-
-function updatePlayerColorway() {
+  if (clwSel) userProfile.clawAccessory = clwSel.value;
+  if (hatSel && userProfile.unlockedHats.includes(hatSel.value)) {
+    players[match.myPlayerIndex].hat = hatSel.value;
+  }
   saveCareerSettings();
   updateCrabSprites();
 }
 
 function populateHatSelect() {
-  const select = document.getElementById("hatSelect");
-  if (!select) return;
-  const curr = select.value || "pineapple";
-  select.innerHTML = "";
-  HAT_DATABASE.forEach(hat => {
-    const isUnlocked = userProfile.unlockedHats.includes(hat.id);
-    const opt = document.createElement("option");
-    opt.value = hat.id;
-    opt.disabled = !isUnlocked;
-    opt.innerText = isUnlocked ? hat.name : `🔒 ${hat.name} (LOCKED)`;
-    select.appendChild(opt);
+  const selects = [document.getElementById("hatSelect"), document.getElementById("arsenalHatSelect")];
+  selects.forEach(select => {
+    if (!select) return;
+    const curr = select.value || "pineapple";
+    select.innerHTML = "";
+    HAT_DATABASE.forEach(hat => {
+      const isUnlocked = userProfile.unlockedHats.includes(hat.id);
+      const opt = document.createElement("option");
+      opt.value = hat.id;
+      opt.disabled = !isUnlocked;
+      opt.innerText = isUnlocked ? hat.name : `🔒 ${hat.name} (LOCKED)`;
+      select.appendChild(opt);
+    });
+    if (userProfile.unlockedHats.includes(curr)) select.value = curr;
   });
-  if (userProfile.unlockedHats.includes(curr)) select.value = curr;
 }
 
-function renderArsenalList() {
-  const container = document.getElementById("hatUnlockList");
-  if (!container) return;
-  container.innerHTML = "";
-  HAT_DATABASE.forEach(hat => {
-    const isUnlocked = userProfile.unlockedHats.includes(hat.id);
-    const div = document.createElement("div");
-    div.style.cssText = `border:2px solid ${isUnlocked ? '#2e7d32' : '#9e9e9e'};background:${isUnlocked ? '#e8f5e9' : '#eeeeee'};border-radius:6px;padding:3px 6px;font-size:10px;font-weight:bold;`;
-    div.innerHTML = `${isUnlocked ? '✅' : '🔒'} <b>${hat.name}</b>: <span style="font-size:9px;color:#555;">${isUnlocked ? 'UNLOCKED' : hat.unlockReq}</span>`;
-    container.appendChild(div);
-  });
+// TWITCH INTEGRATION (DIRECT WEBSOCKET IRC)
+let twitchSocket = null;
+let twitchChannel = "";
+
+function openTwitchModal() {
+  document.getElementById("menuPanel").classList.add("hidden");
+  document.getElementById("twitchModal").classList.remove("hidden");
+}
+
+function closeTwitchModal() {
+  document.getElementById("twitchModal").classList.add("hidden");
+  document.getElementById("menuPanel").classList.remove("hidden");
+}
+
+function connectTwitchChat() {
+  const inp = document.getElementById("twitchChannelInput");
+  const ch = inp.value.trim().toLowerCase().replace('#', '');
+  if (!ch) return;
+  twitchChannel = ch;
+
+  if (twitchSocket) { try { twitchSocket.close(); } catch(e){} }
+
+  const status = document.getElementById("twitchConnStatus");
+  status.innerText = `Connecting to #${twitchChannel}...`;
+  status.style.color = "#9146ff";
+
+  try {
+    twitchSocket = new WebSocket("wss://irc-ws.chat.twitch.tv:443");
+    twitchSocket.onopen = () => {
+      twitchSocket.send("PASS oauth:SCHMOOPIIE");
+      twitchSocket.send(`NICK justinfan${Math.floor(10000 + Math.random() * 90000)}`);
+      twitchSocket.send(`JOIN #${twitchChannel}`);
+      status.innerText = `Connected to #${twitchChannel}! 🎉 Viewers can type commands!`;
+      status.style.color = "#16a34a";
+      document.getElementById("twitchBadgeBtn").innerText = `🟣 #${twitchChannel.toUpperCase()}`;
+    };
+
+    twitchSocket.onmessage = (event) => {
+      const data = event.data;
+      if (data.startsWith("PING")) {
+        twitchSocket.send("PONG :tmi.twitch.tv");
+        return;
+      }
+      if (data.includes("PRIVMSG")) {
+        const parts = data.split(":");
+        const user = parts[1].split("!")[0];
+        const msg = parts.slice(2).join(":").trim();
+        handleTwitchMessage(user, msg);
+      }
+    };
+
+    twitchSocket.onerror = () => {
+      status.innerText = "Error connecting to Twitch IRC.";
+      status.style.color = "#dc2626";
+    };
+  } catch(e) {}
+}
+
+function handleTwitchMessage(user, msg) {
+  const clean = filterProfanity(msg);
+  addChatEntry(`🟣 [TWITCH] ${user}`, clean);
+
+  const lower = clean.toLowerCase();
+  if (lower.includes("!speed")) {
+    BALL_GRAV = 750; ball.vx *= 1.4;
+    showToast(`TWITCH: !SPEED TRIGGERED! ⚡`, 1.5); sfx.clawSpike();
+  } else if (lower.includes("!grav")) {
+    BALL_GRAV = 320;
+    showToast(`TWITCH: !LOWGRAV TRIGGERED! 🌙`, 1.5); sfx.superJump();
+  } else if (lower.includes("!bounce")) {
+    showToast(`TWITCH: !BOUNCE TRIGGERED! 🦘`, 1.5); sfx.jump();
+  } else if (lower.includes("!cheer")) {
+    sfx.cheer(); showToast(`TWITCH CHAT IS CHEERING! 🎉`, 1.5);
+  } else if (lower.includes("!waffle")) {
+    triggerWaffleCelebration();
+  }
 }
 
 // LEADERBOARD
@@ -846,42 +960,38 @@ const sfx = new ArcadeAudio();
 const dobyImg = new Image();
 dobyImg.src = "./doby.png";
 
-// CUTE AUDREY POPPAGEE SVG (WITH NATURAL CARTOON SMILE & EYES)
-function makeAudreySVG() {
+// CLEAN AUDREY POPPAGEE SPRITE (NO BLACK BOX - PURE CLEAN CRAB BODY)
+function makeAudreyCrabSVG() {
   return `data:image/svg+xml;utf8,${encodeURIComponent(`
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-    <rect width="200" height="200" rx="22" fill="#0f172a"/>
-    <circle cx="100" cy="100" r="72" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.25"/>
-    <circle cx="100" cy="100" r="48" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.35"/>
-    <!-- Cute soft blonde side-part bob -->
-    <path d="M 45 68 C 36 22, 164 22, 155 68 C 170 98, 162 132, 146 138 C 146 114, 136 84, 100 80 C 64 84, 54 114, 54 138 C 38 132, 30 98, 45 68 Z" fill="#ffd54f" stroke="#b45309" stroke-width="3"/>
-    <!-- Cute pink crab shell -->
-    <ellipse cx="100" cy="116" rx="46" ry="24" fill="#fb7185" stroke="#9f1239" stroke-width="3.5"/>
-    <!-- TV Reporter anchor blazer -->
-    <polygon points="100,105 80,140 120,140" fill="#1e3a8a"/>
-    <polygon points="100,114 94,105 106,105" fill="#ffffff"/>
-    <polygon points="100,118 97,130 103,130" fill="#ef4444"/>
-    <!-- Cute anime crab eyes with sparkles -->
-    <circle cx="82" cy="94" r="13" fill="#ffffff" stroke="#000" stroke-width="2.5"/>
-    <circle cx="118" cy="94" r="13" fill="#ffffff" stroke="#000" stroke-width="2.5"/>
-    <circle cx="83" cy="94" r="6.5" fill="#0f172a"/><circle cx="85" cy="91" r="2.8" fill="#fff"/>
-    <circle cx="119" cy="94" r="6.5" fill="#0f172a"/><circle cx="121" cy="91" r="2.8" fill="#fff"/>
-    <!-- Cute smile and rosy cheeks -->
-    <circle cx="70" cy="114" r="6" fill="#f43f5e" opacity="0.6"/>
-    <circle cx="130" cy="114" r="6" fill="#f43f5e" opacity="0.6"/>
-    <path d="M 94 122 Q 100 129 106 122" stroke="#9f1239" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-    <!-- TV Broadcast headset with red light mic -->
-    <path d="M 64 88 A 40 40 0 0 1 136 88" fill="none" stroke="#475569" stroke-width="4"/>
-    <line x1="64" y1="88" x2="78" y2="124" stroke="#475569" stroke-width="3"/>
-    <circle cx="80" cy="126" r="6" fill="#ef4444" stroke="#000" stroke-width="2"/>
-    <rect x="74" y="123" width="12" height="6" fill="#fbbf24"/>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
+    <!-- Blonde anchor bob hair behind eyes -->
+    <path d="M 68 30 C 58 6, 138 6, 128 30 C 142 52, 134 76, 124 80 C 124 58, 116 40, 98 36 C 80 40, 72 58, 72 80 C 62 76, 54 52, 68 30 Z" fill="#ffd54f" stroke="#b45309" stroke-width="2.5"/>
+    <!-- Cute pink shell -->
+    <ellipse cx="98" cy="54" rx="58" ry="19" fill="#fb7185" stroke="#9f1239" stroke-width="4"/>
+    <path d="M 64 48 Q 98 40 132 48 Q 98 70 64 48 Z" fill="#ffe4e6" opacity="0.8"/>
+    <!-- Cute Eyes -->
+    <circle cx="62" cy="18" r="8.5" fill="#111" stroke="#9f1239" stroke-width="2.5"/><circle cx="64" cy="15.5" r="3" fill="#fff"/>
+    <circle cx="134" cy="18" r="8.5" fill="#111" stroke="#9f1239" stroke-width="2.5"/><circle cx="136" cy="15.5" r="3" fill="#fff"/>
+    <!-- Legs -->
+    <path d="M 52 60 Q 28 68 20 80" stroke="#9f1239" stroke-width="6" fill="none"/>
+    <path d="M 144 60 Q 168 68 176 80" stroke="#9f1239" stroke-width="6" fill="none"/>
+    <!-- Claws holding microphone -->
+    <path d="M 52 42 C 34 26 18 10 2 24 C 14 36 28 42 50 48 Z" fill="#fb7185" stroke="#9f1239" stroke-width="3.5"/>
+    <path d="M 144 42 C 162 26 178 10 194 24 C 182 36 168 42 146 48 Z" fill="#fb7185" stroke="#9f1239" stroke-width="3.5"/>
+    <!-- News Microphone in Left Claw -->
+    <rect x="18" y="22" width="6" height="18" rx="2" fill="#334155" stroke="#000" stroke-width="1.5"/>
+    <circle cx="21" cy="19" r="5.5" fill="#ef4444" stroke="#000" stroke-width="1.5"/>
+    <rect x="16" y="16" width="10" height="4" fill="#fbbf24"/>
   </svg>`)}`;
 }
+
+const poppaGeeImg = new Image();
+poppaGeeImg.src = makeAudreyCrabSVG();
 
 function renderAudreyArt() {
   const holder = document.getElementById("audreyAnchorArt");
   if (!holder) return;
-  holder.innerHTML = `<img src="${makeAudreySVG()}" style="width:100%;height:100%;border-radius:10px;border:2px solid #ff007f;">`;
+  holder.innerHTML = `<img src="${makeAudreyCrabSVG()}" style="width:100%;height:auto;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.5));">`;
 }
 
 function makeMeteorologistSVG() {
@@ -889,7 +999,6 @@ function makeMeteorologistSVG() {
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
     <ellipse cx="98" cy="54" rx="58" ry="19" fill="#1e293b" stroke="#000" stroke-width="4"/>
     <polygon points="98,40 90,52 98,64 106,52" fill="#ef4444"/>
-    <polygon points="92,40 104,40 98,48" fill="#ffffff"/>
     <circle cx="62" cy="16" r="8" fill="#111" stroke="#000" stroke-width="2"/><circle cx="64" cy="14" r="2.8" fill="#fff"/>
     <circle cx="134" cy="16" r="8" fill="#111" stroke="#000" stroke-width="2"/><circle cx="136" cy="14" r="2.8" fill="#fff"/>
     <path d="M 22 26 C 2 34 0 54 22 52 Z" fill="#38bdf8" stroke="#000" stroke-width="3"/>
@@ -898,14 +1007,9 @@ function makeMeteorologistSVG() {
 const metImg = new Image();
 metImg.src = makeMeteorologistSVG();
 
-const poppaGeeImg = new Image();
-poppaGeeImg.src = makeAudreySVG();
-
 function getPlayerBodyColor(pTeam) {
   const cw = userProfile.colorway || "classic";
-  if (cw === "rainbow") {
-    return `hsl(${(animTimer * 120) % 360}, 100%, 55%)`;
-  }
+  if (cw === "rainbow") return `hsl(${(animTimer * 120) % 360}, 100%, 55%)`;
   if (cw === "vice_cyan") return "#00ffff";
   if (cw === "magenta") return "#ff007f";
   if (cw === "toxic") return "#76ff03";
@@ -944,6 +1048,27 @@ function updateCrabSprites() {
   crabImgTeam2.src = makeArcadeCrabSVG(col2, "#3b0716", "#ffe4e6", cScale);
 }
 updateCrabSprites();
+
+function drawClawAccessories(ctx) {
+  const acc = userProfile.clawAccessory || "none";
+  if (acc === "none") return;
+
+  ctx.save();
+  if (acc === "boxing") {
+    ctx.fillStyle = "#ef4444"; ctx.strokeStyle = "#991b1b"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(-60, 4, 14, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.arc(60, 4, 14, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+  } else if (acc === "glow") {
+    ctx.fillStyle = "#00e5ff"; ctx.fillRect(-68, -4, 20, 6);
+    ctx.fillStyle = "#ff007f"; ctx.fillRect(48, -4, 20, 6);
+  } else if (acc === "gold") {
+    ctx.fillStyle = "#ffd700"; ctx.fillRect(-64, -2, 16, 12); ctx.fillRect(48, -2, 16, 12);
+  } else if (acc === "foam") {
+    ctx.fillStyle = "#2563eb"; ctx.fillRect(52, -18, 16, 26);
+    ctx.fillStyle = "#fff"; ctx.font = "bold 11px sans-serif"; ctx.fillText("#1", 55, -4);
+  }
+  ctx.restore();
+}
 
 function drawFlushHat(ctx, type, animTime = 0) {
   ctx.save();
@@ -995,7 +1120,7 @@ function drawFlushHat(ctx, type, animTime = 0) {
   ctx.restore();
 }
 
-// 20,000 FT EPIC HORIZONTAL TSUNAMI RUN (5 BIOMES)
+// 20,000 FT HARDCORE HORIZONTAL TSUNAMI RUN
 let isTsunamiTriggered = false;
 let tsunamiCutsceneTimer = 0;
 const TSUNAMI_CUTSCENE_TOTAL = 20.0;
@@ -1083,57 +1208,58 @@ function skipCutsceneImmediately() {
 
 function generateHorizontalPlatforms() {
   horizontalPlatforms = [];
-  // Biome 1: Safe Start Beach & Sandy Boardwalk (0 - 4,000px)
-  horizontalPlatforms.push({ x: 0, y: FLOOR_Y, w: 900, h: 40 });
-  let curX = 980;
+  // Start safe area
+  horizontalPlatforms.push({ x: 0, y: FLOOR_Y, w: 750, h: 40 });
+
+  let curX = 850;
   while (curX < 3800) {
-    const pw = 140 + Math.random() * 110;
-    const py = FLOOR_Y - (30 + Math.random() * 110);
-    horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 1 });
-    curX += pw + (100 + Math.random() * 110);
+    const pw = 120 + Math.random() * 110;
+    const elev = [FLOOR_Y - 20, FLOOR_Y - 90, FLOOR_Y - 160][Math.floor(Math.random() * 3)];
+    horizontalPlatforms.push({ x: curX, y: elev, w: pw, h: 22, biome: 1 });
+    curX += pw + (110 + Math.random() * 120);
   }
 
-  // Broken Crumbling Highway Edge (Ends at 3,900px!)
-  horizontalPlatforms.push({ x: 3750, y: FLOOR_Y - 20, w: 160, h: 24, biome: 1, isBrokenHighwayEdge: true });
+  // Broken crumbly highway edge
+  horizontalPlatforms.push({ x: 3750, y: FLOOR_Y - 20, w: 160, h: 24, biome: 1 });
 
-  // Biome 2: Sinking Docks & Floating Rafts (4,000 - 8,500px)
-  horizontalPlatforms.push({ x: 3950, y: FLOOR_Y, w: 450, h: 40, isCP: true });
-  curX = 4450;
+  // Biome 2: Sinking Docks
+  horizontalPlatforms.push({ x: 3950, y: FLOOR_Y - 30, w: 450, h: 40, isCP: true });
+  curX = 4500;
   while (curX < 8500) {
-    const pw = 120 + Math.random() * 100;
-    const py = FLOOR_Y - (40 + Math.random() * 130);
-    horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 2, bobbing: true });
-    curX += pw + (110 + Math.random() * 115);
+    const pw = 110 + Math.random() * 90;
+    const elev = [FLOOR_Y - 30, FLOOR_Y - 110, FLOOR_Y - 180][Math.floor(Math.random() * 3)];
+    horizontalPlatforms.push({ x: curX, y: elev, w: pw, h: 22, biome: 2, bobbing: true });
+    curX += pw + (120 + Math.random() * 130);
   }
 
-  // Biome 3: Coastal Highway & Abandoned Sports Cars (8,500 - 13,000px)
-  horizontalPlatforms.push({ x: 8450, y: FLOOR_Y, w: 450, h: 40, isCP: true });
-  curX = 8950;
+  // Biome 3: Highway Ruins
+  horizontalPlatforms.push({ x: 8450, y: FLOOR_Y - 30, w: 450, h: 40, isCP: true });
+  curX = 9000;
   while (curX < 13000) {
-    const pw = 160 + Math.random() * 120;
-    const py = FLOOR_Y - (50 + Math.random() * 110);
-    horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 3, isHighway: true });
-    curX += pw + (115 + Math.random() * 110);
+    const pw = 140 + Math.random() * 110;
+    const elev = [FLOOR_Y - 40, FLOOR_Y - 120, FLOOR_Y - 190][Math.floor(Math.random() * 3)];
+    horizontalPlatforms.push({ x: curX, y: elev, w: pw, h: 22, biome: 3, isHighway: true, hasCone: Math.random() > 0.5 });
+    curX += pw + (125 + Math.random() * 125);
   }
 
-  // Biome 4: Stilt Bridges & Lightning Flashes (13,000 - 17,500px)
-  horizontalPlatforms.push({ x: 12950, y: FLOOR_Y, w: 450, h: 40, isCP: true });
-  curX = 13450;
+  // Biome 4: Suspension Bridge
+  horizontalPlatforms.push({ x: 12950, y: FLOOR_Y - 30, w: 450, h: 40, isCP: true });
+  curX = 13500;
   while (curX < 17500) {
-    const pw = 130 + Math.random() * 100;
-    const py = FLOOR_Y - (60 + Math.random() * 120);
-    horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 4 });
-    curX += pw + (120 + Math.random() * 115);
+    const pw = 120 + Math.random() * 90;
+    const elev = [FLOOR_Y - 60, FLOOR_Y - 140, FLOOR_Y - 220][Math.floor(Math.random() * 3)];
+    horizontalPlatforms.push({ x: curX, y: elev, w: pw, h: 22, biome: 4 });
+    curX += pw + (130 + Math.random() * 130);
   }
 
-  // Biome 5: Waffle Hill & Neon Waffle House (17,500 - 20,000px)
-  horizontalPlatforms.push({ x: 17450, y: FLOOR_Y, w: 450, h: 40, isCP: true });
-  curX = 17950;
+  // Biome 5: Waffle Hill
+  horizontalPlatforms.push({ x: 17450, y: FLOOR_Y - 30, w: 450, h: 40, isCP: true });
+  curX = 18000;
   while (curX < WAFFLE_HOUSE_X - 100) {
-    const pw = 150 + Math.random() * 100;
-    const py = FLOOR_Y - (30 + Math.random() * 80);
-    horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 5 });
-    curX += pw + (90 + Math.random() * 95);
+    const pw = 130 + Math.random() * 100;
+    const elev = [FLOOR_Y - 40, FLOOR_Y - 90][Math.floor(Math.random() * 2)];
+    horizontalPlatforms.push({ x: curX, y: elev, w: pw, h: 22, biome: 5 });
+    curX += pw + (100 + Math.random() * 110);
   }
 
   horizontalPlatforms.push({ x: WAFFLE_HOUSE_X - 120, y: FLOOR_Y, w: 800, h: 60, isWaffleFloor: true });
@@ -1216,12 +1342,17 @@ function updatePlatformerMode(dt) {
     horizontalPlatforms.forEach(plat => {
       let platY = plat.y;
       if (plat.bobbing) {
-        platY += Math.sin(oceanTimer * 2 + plat.x * 0.01) * 6;
+        platY += Math.sin(oceanTimer * 2 + plat.x * 0.01) * 8;
       }
 
       if (p.x + p.halfW > plat.x && p.x - p.halfW < plat.x + plat.w) {
         if (p.y + dynamicHalfH >= platY && p.y + dynamicHalfH <= platY + 24 && p.vy >= 0) {
           p.y = platY - dynamicHalfH; p.vy = 0; p.isGrounded = true; p.canJump = true;
+
+          // Traffic cone trip
+          if (plat.hasCone && Math.abs(p.x - (plat.x + plat.w/2)) < 18) {
+            p.vx *= -0.5; p.vy = -220; sfx.crushDown();
+          }
         }
       }
     });
@@ -1262,12 +1393,8 @@ function updatePlatformerMode(dt) {
         userProfile.bestWaffleTime = timeStr;
 
         showToast("☕ YOU MADE IT! Chilling in a booth with hashbrowns...", 3.5);
-        if (!userProfile.unlockedHats.includes("lighthouse")) {
-          userProfile.unlockedHats.push("lighthouse");
-        }
-        if (elapsedMs < 90000 && !userProfile.unlockedHats.includes("chef")) {
-          userProfile.unlockedHats.push("chef");
-        }
+        if (!userProfile.unlockedHats.includes("lighthouse")) userProfile.unlockedHats.push("lighthouse");
+        if (elapsedMs < 90000 && !userProfile.unlockedHats.includes("chef")) userProfile.unlockedHats.push("chef");
         saveCareerSettings(); populateHatSelect();
       } else {
         showToast(`${p.name} SAFELY REACHED WAFFLE HOUSE!`, 2.0);
@@ -1302,7 +1429,6 @@ function checkAllPlayersEscaped() {
   }
 }
 
-// 2026 MOVIE CREDITS ROLL
 function showDramaticMovieCredits() {
   const modal = document.getElementById("movieCreditsModal");
   const content = document.getElementById("creditsRollContent");
@@ -1389,6 +1515,12 @@ function hideToast() {
   match.toastTimer = 0;
 }
 
+function triggerWaffleCelebration() {
+  for (let i = 0; i < 35; i++) {
+    showToast("🥞 WAFFLES! 🥞", 1.5); sfx.cheer();
+  }
+}
+
 function updatePlayer(p, input, dt) {
   let speedMultiplier = 1.0;
   if (chosenViceCard && chosenViceCard.effect === "turbo_speed") speedMultiplier = 1.35;
@@ -1442,7 +1574,6 @@ function updatePlayer(p, input, dt) {
   p.vy += 1500 * dt;
   p.y += p.vy * dt;
 
-  // DYNAMIC ROTATED CLAW LIFTING
   const dynamicHalfH = p.halfW * Math.abs(Math.sin(p.angle)) + p.halfH * Math.abs(Math.cos(p.angle));
   if (!isPlatformerActive && (p.y + dynamicHalfH >= FLOOR_Y)) {
     p.y = FLOOR_Y - dynamicHalfH; p.vy = 0;
@@ -1636,7 +1767,7 @@ function renderStandardStyle() {
 
 function renderViceStyle() {
   const grad = ctx.createLinearGradient(0, 0, 0, FLOOR_Y - 180);
-  grad.addColorStop(0, "#00e5ff"); grad.addColorStop(0.5, "#e040fb");
+  grad.addColorStop(0, "#00e5ff"); grad.addColorStop(0.55, "#e040fb");
   grad.addColorStop(0.85, "#ff4081"); grad.addColorStop(1, "#ffe57f");
   ctx.fillStyle = grad; ctx.fillRect(0, 0, CW, CH);
 
@@ -1689,6 +1820,7 @@ function drawPlayersAndBall(ctx, offsetX = 0) {
     else ctx.drawImage(p.team === 1 ? crabImgTeam1 : crabImgTeam2, -p.width / 2, -p.height / 2, p.width, p.height);
 
     drawFlushHat(ctx, p.hat, animTimer);
+    drawClawAccessories(ctx);
 
     ctx.font = "900 13px sans-serif";
     const nw = ctx.measureText(p.name).width;
@@ -1772,7 +1904,7 @@ function renderHorizontalEscape() {
   // Platforms with Deep Structural Pilings
   horizontalPlatforms.forEach(p => {
     let platY = p.y;
-    if (p.bobbing) platY += Math.sin(oceanTimer * 2 + p.x * 0.01) * 6;
+    if (p.bobbing) platY += Math.sin(oceanTimer * 2 + p.x * 0.01) * 8;
 
     if (!p.isWaffleFloor && p.w > 40) {
       ctx.fillStyle = (p.biome === 4) ? "#27272a" : "#3e2723";
@@ -1788,6 +1920,11 @@ function renderHorizontalEscape() {
 
     ctx.strokeStyle = "#000"; ctx.lineWidth = 3;
     ctx.fillRect(p.x, platY, p.w, p.h); ctx.strokeRect(p.x, platY, p.w, p.h);
+
+    if (p.hasCone) {
+      ctx.fillStyle = "#f97316";
+      ctx.beginPath(); ctx.moveTo(p.x + p.w/2, platY - 16); ctx.lineTo(p.x + p.w/2 - 8, platY); ctx.lineTo(p.x + p.w/2 + 8, platY); ctx.closePath(); ctx.fill();
+    }
 
     if (p.isHighway) {
       ctx.fillStyle = "#ffd54f";
@@ -2018,7 +2155,6 @@ function addChatEntry(sender, txt) {
   logs.scrollTop = logs.scrollHeight;
 }
 
-// SYNCHRONIZED DEMOCRATIC SUB-MODE VOTING (INSTANT PROCEED)
 function showSubmodeSelect(context) {
   sfx.init();
   pendingModeContext = context;
@@ -2103,7 +2239,6 @@ function executeSubmodeSelect(mode) {
   }
 }
 
-// SYNCHRONIZED VICE CARD VOTING (INSTANT PROCEED)
 function openViceCardVoteUI() {
   document.getElementById("submodeModal").classList.add("hidden");
   document.getElementById("socialLobbyModal").classList.add("hidden");
@@ -2209,7 +2344,7 @@ function launchGame() {
 }
 
 function hideAllModals() {
-  ['menuPanel', 'socialLobbyModal', 'submodeModal', 'viceVoteModal', 'lockerModal', 'leaderboardModal', 'newsCutsceneModal', 'movieCreditsModal'].forEach(id => {
+  ['menuPanel', 'socialLobbyModal', 'submodeModal', 'viceVoteModal', 'lockerModal', 'leaderboardModal', 'twitchModal', 'newsCutsceneModal', 'movieCreditsModal'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add("hidden");
   });
