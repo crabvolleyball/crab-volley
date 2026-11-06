@@ -45,7 +45,7 @@ main {
   overflow: hidden;
 }
 
-/* ARCADE PANELS */
+/* ARCADE RETRO PANELS */
 .panel {
   width: min(960px, 98%); background: #fffbe8; border: 5px solid #142800;
   border-radius: 18px; box-shadow: 8px 8px 0 #000;
@@ -204,7 +204,7 @@ canvas {
   100% { transform: translateY(-60%); }
 }
 
-/* TOUCH CONTROLS (ALWAYS RESPONSIVE) */
+/* TOUCH CONTROLS */
 .touchpad-bar {
   width: 100%; max-width: 1600px; display: flex; justify-content: space-between;
   align-items: center; padding: 4px 8px; touch-action: none; flex-shrink: 0;
@@ -368,24 +368,24 @@ canvas {
       </div>
     </section>
 
-    <!-- SUB-MODE SELECTION -->
+    <!-- DEMOCRATIC SUB-MODE SELECTION WITH 25s TIMER -->
     <section id="submodeModal" class="panel hidden">
       <h1 id="submodeTitle">CHOOSE MATCH STYLE</h1>
-      <p class="sub" id="submodeSubtitle">Select your game environment and ruleset</p>
+      <p class="sub" id="submodeSubtitle">Select your game environment! <span id="submodeTimerText" style="color:#d50000;">(25s REMAINING)</span></p>
 
       <div class="btn-grid">
-        <button class="big primary" id="standardModeBtn">☀️ STANDARD BEACH</button>
-        <button class="big vice-btn" id="viceModeBtn">🌴 VICE MODE</button>
+        <button class="big primary" id="standardModeBtn" onclick="voteSubmode('standard')">☀️ STANDARD BEACH <br><span id="stdVoteCount" style="font-size:12px;">[0 VOTES]</span></button>
+        <button class="big vice-btn" id="viceModeBtn" onclick="voteSubmode('vice')">🌴 VICE MODE <br><span id="viceVoteCount" style="font-size:12px;">[0 VOTES]</span></button>
       </div>
       <div style="margin-top:12px;">
         <button id="backFromSubmodeBtn" style="padding:4px 12px;font-size:12px;">BACK</button>
       </div>
     </section>
 
-    <!-- VICE CARD VOTING -->
+    <!-- DEMOCRATIC VICE CARD VOTING WITH 25s TIMER -->
     <section id="viceVoteModal" class="panel hidden" style="background:#160228;border-color:#ff007f;">
       <h1 style="color:#00ffff;text-shadow:3px 3px 0 #ff007f, 5px 5px 0 #000;">🌴 VOTE VICE CARD 🌴</h1>
-      <p class="sub" style="color:#ff77c6;">Popular vote decides the modifier! <span id="voteTimerText" style="color:#ffe600;">(8s REMAINING)</span></p>
+      <p class="sub" style="color:#ff77c6;">Popular vote decides the modifier! <span id="voteTimerText" style="color:#ffe600;">(25s REMAINING)</span></p>
 
       <div id="viceCardsContainer" class="vice-cards-grid"></div>
 
@@ -430,7 +430,7 @@ canvas {
         </div>
       </div>
 
-      <!-- ON-SCREEN TOUCH CONTROLS -->
+      <!-- TOUCH CONTROLS -->
       <div class="touchpad-bar" id="mobileControls">
         <div class="touch-cluster">
           <button id="btnLeft">◀<span>RUN</span></button>
@@ -452,13 +452,13 @@ canvas {
 </div>
 
 <!-- GLOBAL VERSION BADGE -->
-<div id="globalVersionTag">v0.019 - MULTIPLAYER OVERHAUL</div>
+<div id="globalVersionTag">v0.020 - PARALLAX & VOTING OVERHAUL</div>
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 
 <script>
 /* ========================================================
-   CRAB VOLLEYBALL ARCADE ENGINE v0.019
+   CRAB VOLLEYBALL ARCADE ENGINE v0.020
    ======================================================== */
 
 // HAT ARSENAL
@@ -479,7 +479,7 @@ let userProfile = {
 
 function loadCareer() {
   try {
-    const saved = localStorage.getItem("crab_volleyball_profile_v6");
+    const saved = localStorage.getItem("crab_volleyball_profile_v20");
     if (saved) {
       userProfile = Object.assign(userProfile, JSON.parse(saved));
       if (!userProfile.unlockedHats) userProfile.unlockedHats = ["pineapple", "propeller", "captain"];
@@ -496,6 +496,9 @@ function loadCareer() {
     if (qp) qp.value = userProfile.quipPack;
     if (ep) ep.value = userProfile.explosion;
 
+    const nameIn = document.getElementById("initialNameInput");
+    if (nameIn && userProfile.name) nameIn.value = userProfile.name;
+
     if (userProfile.points >= 10 && !userProfile.unlockedHats.includes("tophat")) userProfile.unlockedHats.push("tophat");
     if (userProfile.wins >= 2 && !userProfile.unlockedHats.includes("fez")) userProfile.unlockedHats.push("fez");
 
@@ -510,7 +513,7 @@ function saveCareerSettings() {
   const ep = document.getElementById("explosionSelect");
   if (qp) userProfile.quipPack = qp.value;
   if (ep) userProfile.explosion = ep.value;
-  localStorage.setItem("crab_volleyball_profile_v6", JSON.stringify(userProfile));
+  localStorage.setItem("crab_volleyball_profile_v20", JSON.stringify(userProfile));
 }
 
 function populateHatSelect() {
@@ -573,7 +576,13 @@ let oceanTimer = 0;
 let currentDrawnCards = [];
 let cardVotes = [0, 0, 0];
 let myCardVoteIndex = 0;
-let voteTimerCountdown = 8;
+
+// DEMOCRATIC VOTING TIMERS (25 SECONDS)
+let submodeVotes = { standard: 0, vice: 0 };
+let submodeTimerCountdown = 25;
+let submodeInterval = null;
+
+let voteTimerCountdown = 25;
 let voteInterval = null;
 
 const ALL_VICE_CARDS = [
@@ -698,30 +707,23 @@ const sfx = new ArcadeAudio();
 const dobyImg = new Image();
 dobyImg.src = "./doby.png";
 
-// CUTE CHIBI AUDREY SVG
+// CUTE AUDREY STENCILED SMILE SVG
 function makeAudreySVG() {
   return `data:image/svg+xml;utf8,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
     <rect width="200" height="200" rx="20" fill="#0f172a"/>
     <circle cx="100" cy="100" r="70" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.3"/>
-    <!-- Cute blonde bob hairstyle -->
     <path d="M 45 70 C 35 25, 165 25, 155 70 C 170 100, 160 135, 145 140 C 145 115, 135 85, 100 80 C 65 85, 55 115, 55 140 C 40 135, 30 100, 45 70 Z" fill="#ffd54f" stroke="#b45309" stroke-width="3"/>
-    <!-- Soft Pink Crab Shell -->
     <ellipse cx="100" cy="118" rx="46" ry="24" fill="#fb7185" stroke="#9f1239" stroke-width="3.5"/>
-    <!-- Professional blue anchor vest -->
     <polygon points="100,105 80,140 120,140" fill="#1e3a8a"/>
     <polygon points="100,114 94,105 106,105" fill="#ffffff"/>
     <polygon points="100,118 97,130 103,130" fill="#ef4444"/>
-    <!-- Big cute anime cartoon eyes with eyelashes -->
     <circle cx="82" cy="95" r="14" fill="#ffffff" stroke="#000" stroke-width="2.5"/>
     <circle cx="118" cy="95" r="14" fill="#ffffff" stroke="#000" stroke-width="2.5"/>
     <circle cx="83" cy="95" r="7" fill="#0f172a"/><circle cx="85" cy="92" r="3" fill="#fff"/>
     <circle cx="119" cy="95" r="7" fill="#0f172a"/><circle cx="121" cy="92" r="3" fill="#fff"/>
-    <path d="M 72 82 Q 82 78 88 82" stroke="#000" stroke-width="2.5" fill="none"/>
-    <path d="M 112 82 Q 118 78 128 82" stroke="#000" stroke-width="2.5" fill="none"/>
-    <!-- Cute smile -->
-    <path d="M 94 122 Q 100 128 106 122" stroke="#9f1239" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <!-- Broadcast headset with glowing mic -->
+    <!-- Cute Stenciled Smile :) -->
+    <path d="M 92 122 Q 100 130 108 122" stroke="#000" stroke-width="3.5" fill="none" stroke-linecap="round"/>
     <path d="M 64 90 A 40 40 0 0 1 136 90" fill="none" stroke="#475569" stroke-width="4"/>
     <line x1="64" y1="90" x2="78" y2="126" stroke="#475569" stroke-width="3"/>
     <circle cx="80" cy="128" r="6" fill="#ef4444" stroke="#000" stroke-width="2"/>
@@ -840,7 +842,7 @@ let checkpoints = [
 const WAFFLE_HOUSE_X = 19500;
 let cameraOffsetX = 0;
 let playerFinishedMap = {};
-let waffleDoorsClosingTimer = null; // 60s countdown once first player arrives
+let waffleDoorsClosingTimer = null;
 
 function triggerTsunamiWarning() {
   isTsunamiTriggered = true;
@@ -910,53 +912,53 @@ function skipCutsceneImmediately() {
 function generateHorizontalPlatforms() {
   horizontalPlatforms = [];
   // Biome 1: Safe Start Beach & Sandy Boardwalk (0 - 4,000px)
-  horizontalPlatforms.push({ x: 0, y: FLOOR_Y, w: 1200, h: 40 });
-  let curX = 1250;
+  horizontalPlatforms.push({ x: 0, y: FLOOR_Y, w: 1000, h: 40 });
+  let curX = 1100;
   while (curX < 4000) {
-    const pw = 160 + Math.random() * 140;
-    const py = FLOOR_Y - (20 + Math.random() * 80);
+    const pw = 140 + Math.random() * 110;
+    const py = FLOOR_Y - (30 + Math.random() * 90);
     horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 1 });
-    curX += pw + (55 + Math.random() * 80);
+    curX += pw + (80 + Math.random() * 95); // Wide, real challenge gaps!
   }
 
   // Biome 2: Sinking Docks & Floating Rafts (4,000 - 8,500px)
   horizontalPlatforms.push({ x: 3950, y: FLOOR_Y, w: 450, h: 40, isCP: true });
   curX = 4450;
   while (curX < 8500) {
-    const pw = 140 + Math.random() * 120;
-    const py = FLOOR_Y - (40 + Math.random() * 100);
+    const pw = 120 + Math.random() * 100;
+    const py = FLOOR_Y - (40 + Math.random() * 120);
     horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 2 });
-    curX += pw + (65 + Math.random() * 90);
+    curX += pw + (90 + Math.random() * 105);
   }
 
   // Biome 3: Coastal Highway & Abandoned Sports Cars (8,500 - 13,000px)
   horizontalPlatforms.push({ x: 8450, y: FLOOR_Y, w: 450, h: 40, isCP: true });
   curX = 8950;
   while (curX < 13000) {
-    const pw = 180 + Math.random() * 140;
-    const py = FLOOR_Y - (50 + Math.random() * 90);
+    const pw = 160 + Math.random() * 120;
+    const py = FLOOR_Y - (50 + Math.random() * 100);
     horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 3, isHighway: true });
-    curX += pw + (70 + Math.random() * 85);
+    curX += pw + (95 + Math.random() * 100);
   }
 
   // Biome 4: Stilt Bridges & Lightning Flashes (13,000 - 17,500px)
   horizontalPlatforms.push({ x: 12950, y: FLOOR_Y, w: 450, h: 40, isCP: true });
   curX = 13450;
   while (curX < 17500) {
-    const pw = 140 + Math.random() * 110;
-    const py = FLOOR_Y - (60 + Math.random() * 90);
+    const pw = 130 + Math.random() * 100;
+    const py = FLOOR_Y - (60 + Math.random() * 110);
     horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 4 });
-    curX += pw + (75 + Math.random() * 85);
+    curX += pw + (100 + Math.random() * 105);
   }
 
   // Biome 5: Waffle Hill & Neon Waffle House (17,500 - 20,000px)
   horizontalPlatforms.push({ x: 17450, y: FLOOR_Y, w: 450, h: 40, isCP: true });
   curX = 17950;
   while (curX < WAFFLE_HOUSE_X - 100) {
-    const pw = 160 + Math.random() * 120;
-    const py = FLOOR_Y - (30 + Math.random() * 70);
+    const pw = 150 + Math.random() * 100;
+    const py = FLOOR_Y - (30 + Math.random() * 80);
     horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 5 });
-    curX += pw + (60 + Math.random() * 75);
+    curX += pw + (85 + Math.random() * 95);
   }
 
   horizontalPlatforms.push({ x: WAFFLE_HOUSE_X - 120, y: FLOOR_Y, w: 800, h: 60, isWaffleFloor: true });
@@ -996,12 +998,10 @@ function updatePlatformerMode(dt) {
     else showToast(`${Math.ceil(platformerCountdown - 1)}...`, 0.9);
   }
 
-  // 60-Second Doors Closing Countdown once 1st crab makes it!
   if (waffleDoorsClosingTimer !== null) {
     waffleDoorsClosingTimer -= dt;
     if (waffleDoorsClosingTimer <= 0) {
       waffleDoorsClosingTimer = 0;
-      // Anyone who hasn't reached it didn't make it!
       players.forEach((p, idx) => {
         if (p.activeInGame && !playerFinishedMap[idx]) {
           playerFinishedMap[idx] = "FAILED";
@@ -1029,10 +1029,13 @@ function updatePlatformerMode(dt) {
     }
     if (playerFinishedMap[idx] === "FAILED") return;
 
+    // ROTATED CONTACT & CLAW LIFTING COLLISION
+    const dynamicHalfH = p.halfW * Math.abs(Math.sin(p.angle)) + p.halfH * Math.abs(Math.cos(p.angle));
+
     horizontalPlatforms.forEach(plat => {
       if (p.x + p.halfW > plat.x && p.x - p.halfW < plat.x + plat.w) {
-        if (p.y + p.halfH >= plat.y && p.y + p.halfH <= plat.y + 22 && p.vy >= 0) {
-          p.y = plat.y - p.halfH; p.vy = 0; p.isGrounded = true; p.canJump = true;
+        if (p.y + dynamicHalfH >= plat.y && p.y + dynamicHalfH <= plat.y + 24 && p.vy >= 0) {
+          p.y = plat.y - dynamicHalfH; p.vy = 0; p.isGrounded = true; p.canJump = true;
         }
       }
     });
@@ -1065,7 +1068,7 @@ function updatePlatformerMode(dt) {
       sfx.cheer();
 
       if (waffleDoorsClosingTimer === null) {
-        waffleDoorsClosingTimer = 60.0; // Start 1-minute timer for everyone else!
+        waffleDoorsClosingTimer = 60.0;
       }
 
       if (idx === match.myPlayerIndex) {
@@ -1080,7 +1083,7 @@ function updatePlatformerMode(dt) {
       checkAllPlayersEscaped();
     }
 
-    // Swept by the raging ocean below!
+    // Pitfall into raging ocean below!
     if (p.y > FLOOR_Y + 70) {
       p.x = p.respawnX || 150; p.y = FLOOR_Y - 50; p.vy = -180;
       sfx.crushDown(); showToast("WASHED BACK TO CHECKPOINT! 🌊", 1.0);
@@ -1189,7 +1192,7 @@ function showToast(text, dur = 1.2) {
   match.toastTimer = dur;
 }
 
-// PHYSICS & BALL
+// PHYSICS & CLAW LIFTING
 function updatePlayer(p, input, dt) {
   let speedMultiplier = 1.0;
   if (chosenViceCard && chosenViceCard.effect === "turbo_speed") speedMultiplier = 1.35;
@@ -1243,6 +1246,7 @@ function updatePlayer(p, input, dt) {
   p.vy += 1500 * dt;
   p.y += p.vy * dt;
 
+  // DYNAMIC ROTATED CLAW-LIFTING HEIGHT
   const dynamicHalfH = p.halfW * Math.abs(Math.sin(p.angle)) + p.halfH * Math.abs(Math.cos(p.angle));
   if (!isPlatformerActive && (p.y + dynamicHalfH >= FLOOR_Y)) {
     p.y = FLOOR_Y - dynamicHalfH; p.vy = 0;
@@ -1396,10 +1400,10 @@ function render() {
   }
 }
 
-function drawAnimatedOceanWaves(ctx, y, h) {
+function drawInfiniteAnimatedOcean(ctx, y, h, camX = 0) {
   ctx.save();
   ctx.fillStyle = (activeGameMode === "vice") ? "#1a0b38" : "#005b96";
-  ctx.fillRect(0, y, CW, h);
+  ctx.fillRect(camX - 100, y, CW + 200, h);
 
   for (let layer = 0; layer < 3; layer++) {
     ctx.beginPath();
@@ -1408,12 +1412,12 @@ function drawAnimatedOceanWaves(ctx, y, h) {
       ? (layer === 0 ? "rgba(255, 0, 127, 0.4)" : "rgba(0, 255, 255, 0.35)")
       : (layer === 0 ? "rgba(255, 255, 255, 0.4)" : "rgba(1, 144, 212, 0.5)");
     ctx.fillStyle = waveColor;
-    ctx.moveTo(0, y + h);
-    for (let x = 0; x <= CW; x += 20) {
+    ctx.moveTo(camX - 100, y + h);
+    for (let x = camX - 100; x <= camX + CW + 100; x += 25) {
       const waveY = y + layerOffset + Math.sin(x * 0.015 + oceanTimer * (layer + 1.2)) * 6;
       ctx.lineTo(x, waveY);
     }
-    ctx.lineTo(CW, y + h);
+    ctx.lineTo(camX + CW + 100, y + h);
     ctx.closePath();
     ctx.fill();
   }
@@ -1422,7 +1426,7 @@ function drawAnimatedOceanWaves(ctx, y, h) {
 
 function renderStandardStyle() {
   ctx.fillStyle = "#00aced"; ctx.fillRect(0, 0, CW, CH);
-  drawAnimatedOceanWaves(ctx, FLOOR_Y - 200, 145);
+  drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 200, 145, 0);
 
   ctx.fillStyle = "#f5d799"; ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
   ctx.fillStyle = "#e2be73"; ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
@@ -1438,9 +1442,8 @@ function renderViceStyle() {
   grad.addColorStop(0.85, "#ff4081"); grad.addColorStop(1, "#ffe57f");
   ctx.fillStyle = grad; ctx.fillRect(0, 0, CW, CH);
 
-  // Highway with arcade sports cars
-  drawViceHighwayAndCars(ctx, FLOOR_Y - 225);
-  drawAnimatedOceanWaves(ctx, FLOOR_Y - 198, 143);
+  drawInfiniteHighway(ctx, FLOOR_Y - 225, 0);
+  drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 198, 143, 0);
 
   ctx.fillStyle = "#311b92"; ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
   ctx.fillStyle = "#1a0033"; ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
@@ -1450,25 +1453,21 @@ function renderViceStyle() {
   drawRetroScore(ctx, CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], "#00ffff", "#ff007f");
 }
 
-function drawViceHighwayAndCars(ctx, y) {
-  ctx.fillStyle = "#1e1035"; ctx.fillRect(0, y, CW, 26);
+function drawInfiniteHighway(ctx, y, camX = 0) {
+  ctx.fillStyle = "#1e1035"; ctx.fillRect(camX - 100, y, CW + 200, 26);
   ctx.strokeStyle = "#ff007f"; ctx.lineWidth = 2;
-  ctx.strokeRect(0, y, CW, 26);
+  ctx.strokeRect(camX - 100, y, CW + 200, 26);
 
-  // Dashed highway lines
   ctx.strokeStyle = "#ffe57f"; ctx.lineWidth = 2; ctx.setLineDash([12, 12]);
-  ctx.beginPath(); ctx.moveTo(0, y + 13); ctx.lineTo(CW, y + 13); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(camX - 100, y + 13); ctx.lineTo(camX + CW + 100, y + 13); ctx.stroke();
   ctx.setLineDash([]);
 
-  VICE_CARS.forEach(car => {
+  VICE_CARS.forEach((car, i) => {
     car.x += car.spd * 0.016;
-    if (car.x > CW + 80) car.x = -80;
+    if (car.x > camX + CW + 150) car.x = camX - 150;
     ctx.save(); ctx.translate(car.x, y + 4); ctx.fillStyle = car.color;
-    // Slick sports car wedge
     ctx.beginPath(); ctx.moveTo(0, 14); ctx.lineTo(10, 8); ctx.lineTo(24, 6); ctx.lineTo(38, 14); ctx.closePath(); ctx.fill();
-    // Headlights
     ctx.fillStyle = "#fff"; ctx.fillRect(36, 10, 3, 3);
-    // Wheels
     ctx.fillStyle = "#000"; ctx.beginPath(); ctx.arc(8, 14, 3, 0, Math.PI*2); ctx.arc(28, 14, 3, 0, Math.PI*2); ctx.fill();
     ctx.restore();
   });
@@ -1492,7 +1491,6 @@ function drawPlayersAndBall(ctx, offsetX = 0) {
 
     drawFlushHat(ctx, p.hat, animTimer);
 
-    // Overhead tag
     ctx.font = "900 13px sans-serif";
     const nw = ctx.measureText(p.name).width;
     ctx.fillStyle = "rgba(0,0,0,0.75)"; ctx.fillRect(-nw / 2 - 4, -p.height / 2 - 28, nw + 8, 16);
@@ -1532,9 +1530,9 @@ function renderHorizontalEscape() {
   ctx.save();
   ctx.translate(-cameraOffsetX, 0);
 
-  // Background coastal highway with moving cars (Always in Vice Escape!)
-  drawViceHighwayAndCars(ctx, FLOOR_Y - 220);
-  drawAnimatedOceanWaves(ctx, FLOOR_Y - 140, 160);
+  // INFINITE RUNNING HIGHWAY & OCEAN SPANNING CURRENT CAMERA VIEW
+  drawInfiniteHighway(ctx, FLOOR_Y - 220, cameraOffsetX);
+  drawInfiniteAnimatedOcean(ctx, FLOOR_Y - 140, 160, cameraOffsetX);
 
   // 5 Biome Platforms
   horizontalPlatforms.forEach(p => {
@@ -1580,7 +1578,7 @@ function renderHorizontalEscape() {
   ctx.restore();
 }
 
-// TOUCH & KEYBOARD CONTROLS
+// CONTROLS
 const keys = {};
 window.addEventListener("keydown", (e) => {
   sfx.init();
@@ -1647,7 +1645,7 @@ function gameLoop(now) {
 }
 requestAnimationFrame(gameLoop);
 
-// PRE-LOBBY UI WITH REAL-TIME SYNC & KICK FEATURE
+// PRE-LOBBY UI
 function refreshLobbyUI() {
   const t1 = document.getElementById("team1Players");
   const t2 = document.getElementById("team2Players");
@@ -1710,6 +1708,7 @@ function updateMyCustoms() {
   const hatSelect = document.getElementById("hatSelect");
   const cleaned = nameInput.value.trim().toUpperCase() || "CRAB";
   players[match.myPlayerIndex].name = cleaned;
+  userProfile.name = cleaned;
   players[match.myPlayerIndex].hat = hatSelect.value;
   saveCareerSettings();
   refreshLobbyUI();
@@ -1772,18 +1771,56 @@ function addChatEntry(sender, txt) {
   logs.scrollTop = logs.scrollHeight;
 }
 
-// SUBMODES & EQUAL-WEIGHT VICE VOTING
+// DEMOCRATIC SUB-MODE VOTING (25 SECONDS)
 function showSubmodeSelect(context) {
   sfx.init();
   pendingModeContext = context;
   document.getElementById("menuPanel").classList.add("hidden");
   document.getElementById("socialLobbyModal").classList.add("hidden");
   document.getElementById("submodeModal").classList.remove("hidden");
+
+  submodeVotes = { standard: 0, vice: 0 };
+  submodeTimerCountdown = 25;
+  updateSubmodeVoteCounts();
+
+  if (submodeInterval) clearInterval(submodeInterval);
+  submodeInterval = setInterval(() => {
+    submodeTimerCountdown--;
+    const tEl = document.getElementById("submodeTimerText");
+    if (tEl) tEl.innerText = `(${submodeTimerCountdown}s REMAINING)`;
+    if (submodeTimerCountdown <= 0) {
+      clearInterval(submodeInterval);
+      if (!match.isOnline || isHost) tallySubmodeVotes();
+    }
+  }, 1000);
 }
 
-function voteOrSelectSubmode(mode) {
-  sfx.init();
-  executeSubmodeSelect(mode);
+function voteSubmode(mode) {
+  sfx.bodyBump();
+  submodeVotes[mode]++;
+  updateSubmodeVoteCounts();
+
+  if (match.isOnline) {
+    if (!isHost) peerConnections[0].send({ type: "VOTE_SUBMODE", mode: mode });
+    else broadcastSubmodeVotes();
+  }
+}
+
+function updateSubmodeVoteCounts() {
+  const sEl = document.getElementById("stdVoteCount");
+  const vEl = document.getElementById("viceVoteCount");
+  if (sEl) sEl.innerText = `[${submodeVotes.standard} VOTES]`;
+  if (vEl) vEl.innerText = `[${submodeVotes.vice} VOTES]`;
+}
+
+function broadcastSubmodeVotes() {
+  peerConnections.forEach(c => { if (c && c.open) c.send({ type: "SYNC_SUBMODE_VOTES", votes: submodeVotes }); });
+}
+
+function tallySubmodeVotes() {
+  if (submodeInterval) clearInterval(submodeInterval);
+  const winMode = (submodeVotes.vice >= submodeVotes.standard) ? "vice" : "standard";
+  executeSubmodeSelect(winMode);
 }
 
 function executeSubmodeSelect(mode) {
@@ -1802,6 +1839,7 @@ function executeSubmodeSelect(mode) {
   }
 }
 
+// DEMOCRATIC VICE CARD VOTING (25 SECONDS)
 function openViceCardVoteUI() {
   document.getElementById("submodeModal").classList.add("hidden");
   document.getElementById("socialLobbyModal").classList.add("hidden");
@@ -1829,9 +1867,8 @@ function openViceCardVoteUI() {
   });
   myCardVoteIndex = 0;
 
-  // Shared 8s voting timer
   if (voteInterval) clearInterval(voteInterval);
-  voteTimerCountdown = 8;
+  voteTimerCountdown = 25;
   const timeText = document.getElementById("voteTimerText");
   if (timeText) timeText.innerText = `(${voteTimerCountdown}s REMAINING)`;
 
@@ -1945,9 +1982,12 @@ function openOnlineLobby() {
 
 function startHostGameSetup() {
   showSubmodeSelect('online');
+  if (isHost) {
+    peerConnections.forEach(c => { if (c && c.open) c.send({ type: "SCREEN_CHANGE", screen: "submode" }); });
+  }
 }
 
-// MULTIPLAYER WEBRTC WITH CLEAN UNIQUE PEER ASSIGNMENT
+// MULTIPLAYER WEBRTC
 let peer = null;
 let isHost = false;
 const peerConnections = [];
@@ -1978,7 +2018,6 @@ function hostRoom() {
     });
 
     peer.on("connection", (conn) => {
-      // Check if peer is already connected (prevent duplicate Jeffs!)
       let existingSlot = -1;
       for (let i = 1; i < 4; i++) {
         if (peerConnections[i] && peerConnections[i].peer === conn.peer) {
@@ -2018,6 +2057,11 @@ function hostRoom() {
         if (data.type === "CHAT") {
           addChatEntry(data.sender, data.text);
           peerConnections.forEach(c => { if (c && c.open) c.send(data); });
+        }
+        if (data.type === "VOTE_SUBMODE") {
+          submodeVotes[data.mode]++;
+          updateSubmodeVoteCounts();
+          broadcastSubmodeVotes();
         }
         if (data.type === "CAST_VOTE") {
           cardVotes[data.cardIdx]++;
@@ -2088,6 +2132,11 @@ function joinRoom() {
           refreshLobbyUI();
         }
         if (data.type === "CHAT") addChatEntry(data.sender, data.text);
+        if (data.type === "SCREEN_CHANGE" && data.screen === "submode") showSubmodeSelect('online');
+        if (data.type === "SYNC_SUBMODE_VOTES") {
+          submodeVotes = data.votes;
+          updateSubmodeVoteCounts();
+        }
         if (data.type === "SHUFFLE_VICE_CARDS") {
           currentDrawnCards = data.cards; cardVotes = [0, 0, 0];
           openViceCardVoteUI();
@@ -2193,8 +2242,6 @@ function bindUIEvents() {
   if (get("unlockSecretBtn")) get("unlockSecretBtn").onclick = () => applySecretCode();
   if (get("leaveLobbyBtn")) get("leaveLobbyBtn").onclick = () => quitToMenu();
   if (get("hostStartMatchBtn")) get("hostStartMatchBtn").onclick = () => startHostGameSetup();
-  if (get("standardModeBtn")) get("standardModeBtn").onclick = () => voteOrSelectSubmode('standard');
-  if (get("viceModeBtn")) get("viceModeBtn").onclick = () => voteOrSelectSubmode('vice');
   if (get("backFromSubmodeBtn")) get("backFromSubmodeBtn").onclick = () => { get("submodeModal").classList.add("hidden"); get("menuPanel").classList.remove("hidden"); };
   if (get("reshuffleBtn")) get("reshuffleBtn").onclick = () => requestCardReshuffle();
   if (get("confirmCardBtn")) get("confirmCardBtn").onclick = () => confirmMyCardVote();
@@ -2204,7 +2251,7 @@ function bindUIEvents() {
   if (get("chatInput")) get("chatInput").onkeydown = (e) => { if (e.key === "Enter") sendChatMessage(); };
 }
 
-// DETECT TOUCH / MOBILE DEVICES AUTOMATICALLY
+// INITIALIZATION
 window.addEventListener("DOMContentLoaded", () => {
   bindUIEvents();
   loadCareer();
