@@ -17,25 +17,26 @@ html, body {
 body {
   background: radial-gradient(circle at 50% 30%, #0099cc 0%, #006699 100%);
   display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  min-height: 100dvh;
 }
 #app {
   width: 100%; height: 100%; max-width: 1600px;
   display: flex; flex-direction: column; align-items: center; justify-content: space-between;
-  padding: 4px;
+  padding: 2px 4px;
 }
 header {
   width: 100%; display: flex; justify-content: space-between; align-items: center;
-  padding: 4px 14px; color: #fff; text-shadow: 2px 2px 0 #000; flex-shrink: 0;
+  padding: 4px 12px; color: #fff; text-shadow: 2px 2px 0 #000; flex-shrink: 0;
 }
 .brand {
-  font-size: clamp(20px, 3.2vw, 36px); color: #ffe600;
+  font-size: clamp(18px, 3.2vw, 32px); color: #ffe600;
   text-shadow: 3px 3px 0 #d83a00, 4px 4px 0 #000; letter-spacing: 1.5px;
 }
 .brand span { color: #fff; }
 .header-actions { display: flex; gap: 8px; align-items: center; }
-.audio-btn {
+.audio-btn, .ctrl-toggle-btn {
   background: #ffcc00; border: 3px solid #000; border-radius: 8px;
-  font-size: 16px; padding: 4px 12px; cursor: pointer; box-shadow: 2px 2px 0 #000;
+  font-size: 13px; font-family: "Impact", sans-serif; padding: 4px 10px; cursor: pointer; box-shadow: 2px 2px 0 #000;
 }
 
 main {
@@ -46,59 +47,53 @@ main {
 
 /* ARCADE PANELS */
 .panel {
-  width: min(960px, 96%); background: #fffbe8; border: 6px solid #142800;
-  border-radius: 20px; box-shadow: 10px 10px 0 #000;
-  padding: clamp(12px, 2.5vw, 22px); text-align: center; margin: auto;
-  position: relative; max-height: 90vh; overflow-y: auto;
+  width: min(960px, 98%); background: #fffbe8; border: 5px solid #142800;
+  border-radius: 18px; box-shadow: 8px 8px 0 #000;
+  padding: clamp(10px, 2.5vw, 20px); text-align: center; margin: auto;
+  position: relative; max-height: 88vh; overflow-y: auto;
 }
 h1 {
-  margin: 0 0 4px; font-size: clamp(28px, 4.4vw, 46px); color: #e63900;
-  text-shadow: 3px 3px 0 #ffd54f, 5px 5px 0 #000; letter-spacing: 1.5px;
+  margin: 0 0 2px; font-size: clamp(26px, 4.2vw, 42px); color: #e63900;
+  text-shadow: 3px 3px 0 #ffd54f, 4px 4px 0 #000; letter-spacing: 1.5px;
 }
 
 .sassy-ticker {
-  display: inline-block;
-  font-size: clamp(14px, 2vw, 18px);
-  color: #ff007f;
-  text-shadow: 2px 2px 0 #00ffff, 4px 4px 0 #000;
-  letter-spacing: 1.5px;
-  margin-bottom: 10px;
+  display: inline-block; font-size: clamp(13px, 1.8vw, 16px); color: #ff007f;
+  text-shadow: 2px 2px 0 #00ffff, 3px 3px 0 #000; letter-spacing: 1.5px; margin-bottom: 8px;
   animation: arcadePulse 1.1s ease-in-out infinite alternate;
 }
 @keyframes arcadePulse {
-  0% { transform: scale(1) rotate(-1deg); filter: drop-shadow(0 0 2px #ff007f); }
-  100% { transform: scale(1.05) rotate(1deg); filter: drop-shadow(0 0 8px #00ffff); }
+  0% { transform: scale(1) rotate(-1deg); }
+  100% { transform: scale(1.04) rotate(1deg); }
 }
 
 .sub {
   font-size: 13px; color: #2e530b; font-family: sans-serif; font-weight: 900;
-  margin-bottom: 14px; letter-spacing: 0.5px;
+  margin-bottom: 12px; letter-spacing: 0.5px;
 }
 
-.btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 620px; margin: auto; }
+.btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 620px; margin: auto; }
 button {
-  background: #ffcc00; color: #000; border: 4px solid #000;
-  border-radius: 14px; padding: 10px 16px; font-size: 16px; font-family: "Impact", sans-serif;
-  letter-spacing: 1px; box-shadow: 4px 4px 0 #000; cursor: pointer;
-  transition: transform 0.05s ease, box-shadow 0.05s ease; touch-action: manipulation;
+  background: #ffcc00; color: #000; border: 3px solid #000;
+  border-radius: 12px; padding: 10px 14px; font-size: 15px; font-family: "Impact", sans-serif;
+  letter-spacing: 1px; box-shadow: 3px 3px 0 #000; cursor: pointer;
+  transition: transform 0.05s ease; touch-action: manipulation;
 }
-button:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 #000; }
-button:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #000; }
-button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: 2px 2px 0 #000; }
+button:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 #000; }
+button:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #000; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
 .primary { background: #ff3b00; color: #fff; text-shadow: 2px 2px 0 #000; }
-.vice-btn { background: #ff007f; color: #00ffff; text-shadow: 2px 2px 0 #7b00ff; border-color: #000; }
+.vice-btn { background: #ff007f; color: #00ffff; text-shadow: 2px 2px 0 #7b00ff; }
 .bag-btn { background: #26a69a; color: #fff; text-shadow: 2px 2px 0 #004d40; }
-.big { min-height: 52px; font-size: 17px; }
+.big { min-height: 48px; font-size: 16px; }
 
 /* SOCIAL PRE-LOBBY & CHAT */
 .lobby-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0; text-align: left;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; text-align: left;
 }
-.team-box {
-  background: #fff; border: 3px solid #000; border-radius: 12px; padding: 8px;
-}
-.team-title-1 { color: #0288d1; font-size: 16px; margin-bottom: 6px; }
-.team-title-2 { color: #d50000; font-size: 16px; margin-bottom: 6px; }
+.team-box { background: #fff; border: 3px solid #000; border-radius: 10px; padding: 8px; }
+.team-title-1 { color: #0288d1; font-size: 15px; margin-bottom: 6px; }
+.team-title-2 { color: #d50000; font-size: 15px; margin-bottom: 6px; }
 
 .player-card {
   background: #f1f8e9; border: 2px solid #33691e; border-radius: 8px;
@@ -109,141 +104,131 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow
 .player-card.is-bot { border: 2px dashed #78909c; background: #eceff1; }
 
 .customizer-box {
-  background: #fff; border: 3px solid #000; border-radius: 12px; padding: 10px;
-  margin-top: 8px; display: flex; flex-direction: column; gap: 8px; font-family: sans-serif;
+  background: #fff; border: 3px solid #000; border-radius: 10px; padding: 8px;
+  margin-top: 6px; display: flex; flex-direction: column; gap: 6px; font-family: sans-serif;
 }
 .custom-row {
-  display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; font-size: 13px;
+  display: flex; gap: 6px; align-items: center; justify-content: center; flex-wrap: wrap; font-size: 12px;
 }
 .custom-input {
-  padding: 6px 10px; font-size: 14px; font-weight: bold; border: 3px solid #000;
-  border-radius: 8px; font-family: monospace; text-transform: uppercase;
+  padding: 6px 8px; font-size: 13px; font-weight: bold; border: 2px solid #000;
+  border-radius: 6px; font-family: monospace; text-transform: uppercase;
 }
 
 /* LOBBY CHAT */
 .chat-box {
-  background: #f8fafc; border: 3px solid #000; border-radius: 10px;
-  display: flex; flex-direction: column; height: 110px; margin-top: 6px;
+  background: #f8fafc; border: 2px solid #000; border-radius: 8px;
+  display: flex; flex-direction: column; height: 95px; margin-top: 4px;
 }
 .chat-logs {
-  flex: 1; overflow-y: auto; padding: 6px; font-family: sans-serif;
-  font-size: 11px; text-align: left; display: flex; flex-direction: column; gap: 3px;
+  flex: 1; overflow-y: auto; padding: 4px; font-family: sans-serif;
+  font-size: 11px; text-align: left; display: flex; flex-direction: column; gap: 2px;
 }
 .chat-entry { background: #fff; padding: 2px 6px; border-radius: 4px; border: 1px solid #cbd5e1; }
 .chat-entry b { color: #0288d1; }
 .chat-bar { display: flex; border-top: 2px solid #000; }
-.chat-bar input { flex: 1; border: none; padding: 6px 8px; font-family: sans-serif; font-size: 12px; outline: none; }
-.chat-bar button { border: none; border-left: 2px solid #000; border-radius: 0; padding: 4px 12px; font-size: 12px; }
+.chat-bar input { flex: 1; border: none; padding: 4px 6px; font-family: sans-serif; font-size: 11px; outline: none; }
+.chat-bar button { border: none; border-left: 2px solid #000; border-radius: 0; padding: 4px 10px; font-size: 11px; }
 
 /* VICE CARD VOTING */
-.vice-cards-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0;
-}
+.vice-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0; }
 .card-item {
-  background: #2b084b; border: 4px solid #ff007f; border-radius: 14px;
-  color: #fff; padding: 12px 8px; cursor: pointer;
-  box-shadow: 0 0 14px rgba(255, 0, 127, 0.4), 4px 4px 0 #000;
+  background: #2b084b; border: 3px solid #ff007f; border-radius: 12px;
+  color: #fff; padding: 10px 6px; cursor: pointer; box-shadow: 3px 3px 0 #000;
   display: flex; flex-direction: column; justify-content: space-between;
-  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.card-item.selected {
-  border-color: #00ffff; box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 4px 4px 0 #000;
-  transform: translateY(-5px) scale(1.03);
-}
-.card-icon { font-size: 30px; margin-bottom: 4px; }
-.card-title { font-size: 16px; color: #ff007f; margin-bottom: 4px; }
-.card-desc { font-size: 11px; font-family: sans-serif; font-weight: bold; color: #e0e7ff; line-height: 1.2; }
-.vote-count { font-size: 12px; color: #00ffff; font-family: monospace; font-weight: 900; margin-top: 6px; }
+.card-item.selected { border-color: #00ffff; transform: scale(1.02); }
+.card-icon { font-size: 26px; }
+.card-title { font-size: 15px; color: #ff007f; }
+.card-desc { font-size: 10px; font-family: sans-serif; font-weight: bold; color: #e0e7ff; line-height: 1.2; }
+.vote-count { font-size: 11px; color: #00ffff; font-family: monospace; font-weight: 900; margin-top: 4px; }
 
-/* IN-GAME VIEW */
+/* IN-GAME VIEW & RESPONSIVE CANVAS */
 #game-section {
   width: 100%; height: 100%; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; position: relative;
-  padding-bottom: 4px;
+  align-items: center; justify-content: space-between; position: relative;
 }
 .canvas-holder {
-  position: relative; width: 100%; height: 100%;
+  position: relative; width: 100%; flex: 1;
   display: flex; align-items: center; justify-content: center;
-  max-height: 78vh;
+  max-height: calc(100dvh - 120px);
 }
 canvas {
-  max-width: 100%; max-height: 100%; aspect-ratio: 1600 / 850;
-  object-fit: contain; border: 5px solid #0a1c02; border-radius: 14px;
-  background: #00aced; box-shadow: 0 10px 28px rgba(0,0,0,0.6);
+  width: 100%; height: auto; max-height: 100%; aspect-ratio: 1600 / 850;
+  object-fit: contain; border: 4px solid #0a1c02; border-radius: 12px;
+  background: #00aced; box-shadow: 0 8px 24px rgba(0,0,0,0.6);
   touch-action: none;
 }
 .toast {
-  position: absolute; top: 22%; left: 50%; transform: translate(-50%, -50%);
-  font-size: clamp(24px, 4.5vw, 50px); font-family: "Impact", sans-serif;
-  color: #ffeb3b; text-shadow: 4px 4px 0 #d50000, -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000;
-  text-align: center; pointer-events: none; z-index: 25;
+  position: absolute; top: 18%; left: 50%; transform: translate(-50%, -50%);
+  font-size: clamp(20px, 4.2vw, 46px); font-family: "Impact", sans-serif;
+  color: #ffeb3b; text-shadow: 3px 3px 0 #d50000, -2px -2px 0 #000, 2px -2px 0 #000;
+  text-align: center; pointer-events: none; z-index: 25; width: 90%;
 }
 
-/* 20-SECOND AUDREY NEWS CUTSCENE */
+/* 20-SECOND AUDREY CUTSCENE */
 #newsCutsceneModal {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: min(860px, 94%); background: #1a0026; border: 6px solid #ff007f;
-  border-radius: 20px; box-shadow: 12px 12px 0 #000; padding: 18px;
+  width: min(840px, 94%); background: #1a0026; border: 5px solid #ff007f;
+  border-radius: 18px; box-shadow: 10px 10px 0 #000; padding: 14px;
   z-index: 50; text-align: center; color: #fff;
 }
 .news-topbar {
-  background: #d50000; color: #fff; padding: 6px 14px; font-size: 19px;
-  letter-spacing: 2px; border-radius: 8px; margin-bottom: 12px; display: flex;
+  background: #d50000; color: #fff; padding: 4px 10px; font-size: 16px;
+  letter-spacing: 1.5px; border-radius: 6px; margin-bottom: 8px; display: flex;
   justify-content: space-between; align-items: center;
 }
-.audrey-layout { display: flex; gap: 16px; align-items: center; justify-content: center; }
+.audrey-layout { display: flex; gap: 12px; align-items: center; justify-content: center; }
 .audrey-speech {
-  font-family: sans-serif; font-size: 14px; font-weight: 900; color: #e0f2fe;
+  font-family: sans-serif; font-size: 13px; font-weight: 900; color: #e0f2fe;
   text-align: left; line-height: 1.4;
 }
 .timer-bar {
-  width: 100%; height: 10px; background: #333; border-radius: 5px;
-  overflow: hidden; margin-top: 14px; border: 2px solid #000;
+  width: 100%; height: 8px; background: #333; border-radius: 4px;
+  overflow: hidden; margin-top: 10px; border: 1px solid #000;
 }
-.timer-fill {
-  width: 100%; height: 100%; background: #00ffff; transition: width 0.1s linear;
-}
+.timer-fill { width: 100%; height: 100%; background: #00ffff; transition: width 0.1s linear; }
 
-/* CINEMATIC MOVIE CREDITS */
+/* MOVIE CREDITS */
 #movieCreditsModal {
   position: absolute; inset: 0; background: #000; z-index: 90;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  color: #ffe600; text-align: center; padding: 20px;
+  color: #ffe600; text-align: center; padding: 14px;
 }
 .credits-roll {
-  animation: rollUp 18s linear infinite; font-family: "Impact", sans-serif;
-  letter-spacing: 2px;
+  animation: rollUp 16s linear infinite; font-family: "Impact", sans-serif;
+  letter-spacing: 1.5px;
 }
 @keyframes rollUp {
   0% { transform: translateY(60%); }
   100% { transform: translateY(-60%); }
 }
 
-/* TOUCHPAD */
+/* TOUCH CONTROLS (ALWAYS RESPONSIVE) */
 .touchpad-bar {
-  width: 100%; max-width: 1600px; display: none; justify-content: space-between;
-  align-items: center; padding: 4px; touch-action: none; flex-shrink: 0;
+  width: 100%; max-width: 1600px; display: flex; justify-content: space-between;
+  align-items: center; padding: 4px 8px; touch-action: none; flex-shrink: 0;
 }
 .touch-cluster { display: flex; gap: 8px; align-items: center; }
 .touchpad-bar button {
-  width: 70px; height: 50px; padding: 0; font-size: 12px; font-family: "Impact", sans-serif;
+  width: 64px; height: 48px; padding: 0; font-size: 11px; font-family: "Impact", sans-serif;
   border: 3px solid #000; border-radius: 10px; background: #ffe082;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
-.touchpad-bar button.jump { width: 90px; background: #e53935; color: #fff; font-size: 14px; }
+.touchpad-bar button.jump { width: 84px; background: #e53935; color: #fff; font-size: 13px; }
 .touchpad-bar button.rotate { background: #ffb74d; }
 
 .bottom-bar {
   width: 100%; max-width: 1600px; display: flex; justify-content: space-between;
-  align-items: center; padding: 4px 8px; font-size: 12px; color: #fff;
+  align-items: center; padding: 2px 6px; font-size: 11px; color: #fff;
   font-family: sans-serif; font-weight: bold; text-shadow: 1px 1px 0 #000; flex-shrink: 0;
 }
 
 #globalVersionTag {
-  position: fixed; bottom: 10px; right: 12px;
+  position: fixed; bottom: 6px; right: 8px;
   color: #ffe600; font-family: Impact, monospace, sans-serif;
-  font-size: 14px; font-weight: 900; background: #000;
-  padding: 5px 12px; border-radius: 8px; border: 2px solid #ffe600;
+  font-size: 13px; font-weight: 900; background: #000;
+  padding: 4px 10px; border-radius: 6px; border: 2px solid #ffe600;
   letter-spacing: 1px; box-shadow: 2px 2px 0 rgba(0,0,0,0.8);
   z-index: 99999; pointer-events: none;
 }
@@ -256,7 +241,8 @@ canvas {
   <header>
     <div class="brand">🦀 CRAB <span>VOLLEYBALL</span></div>
     <div class="header-actions">
-      <button id="muteAudioBtn" class="audio-btn">🔊</button>
+      <button id="ctrlToggleBtn" class="ctrl-toggle-btn" onclick="toggleControlMode()">🕹️ BUTTONS</button>
+      <button id="muteAudioBtn" class="audio-btn" onclick="toggleMuteAudio()">🔊</button>
     </div>
   </header>
 
@@ -272,17 +258,17 @@ canvas {
         <button class="big" id="onlineLobbyBtn">4-PLAYER ONLINE MATCH</button>
       </div>
 
-      <div style="margin-top:14px;">
-        <button id="openBagBtn" class="bag-btn" style="font-size:16px;padding:10px 22px;">🎒 BEACH BAG (ARSENAL)</button>
+      <div style="margin-top:12px;">
+        <button id="openBagBtn" class="bag-btn" style="font-size:15px;padding:8px 18px;">🎒 BEACH BAG (ARSENAL)</button>
       </div>
 
-      <div id="onlineBox" class="online-box hidden" style="margin-top:14px;">
-        <h3 style="margin:0 0 6px 0;font-size:18px;">Beach Connection</h3>
+      <div id="onlineBox" class="online-box hidden" style="margin-top:12px;">
+        <h3 style="margin:0 0 6px 0;font-size:17px;">Beach Connection</h3>
         <div class="custom-row">
           <b>YOUR NAME:</b>
-          <input id="initialNameInput" class="custom-input" style="width:140px;" maxlength="12" placeholder="NAME">
+          <input id="initialNameInput" class="custom-input" style="width:120px;" maxlength="12" placeholder="NAME">
           <button id="hostBtn">CREATE ROOM (HOST)</button>
-          <input id="joinCodeInput" class="custom-input" style="width:140px;" placeholder="ROOM CODE">
+          <input id="joinCodeInput" class="custom-input" style="width:120px;" placeholder="ROOM CODE">
           <button id="joinBtn">JOIN ROOM</button>
         </div>
         <p id="netStatus" style="font-size:12px;font-family:sans-serif;font-weight:bold;color:#2e7d32;margin:4px 0;">Ready to pinch.</p>
@@ -296,7 +282,7 @@ canvas {
 
       <div class="customizer-box">
         <div style="font-size:13px;font-weight:bold;color:#004d40;">🏆 HAT ARSENAL (UNLOCK VIA PLAY):</div>
-        <div id="hatUnlockList" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:4px 0;"></div>
+        <div id="hatUnlockList" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:4px 0;"></div>
 
         <div class="custom-row" style="margin-top:4px;">
           <b>TRASH-TALK QUIP PACK:</b>
@@ -316,32 +302,32 @@ canvas {
           </select>
         </div>
       </div>
-      <div style="margin-top:14px;">
-        <button id="closeBagBtn" style="padding:8px 18px;">BACK TO BEACH</button>
+      <div style="margin-top:12px;">
+        <button id="closeBagBtn" style="padding:6px 16px;">BACK TO BEACH</button>
       </div>
     </section>
 
-    <!-- SOCIAL PRE-LOBBY ROOM -->
+    <!-- PRE-LOBBY -->
     <section id="socialLobbyModal" class="panel hidden">
       <h1>🦀 BEACH PRE-LOBBY 🦀</h1>
       <p class="sub">Pick your team (max 2 per side), customize your style, or kick chill bots!</p>
 
-      <div style="margin:4px 0;">
-        <span style="font-family:sans-serif;font-size:13px;font-weight:bold;">Room Code: </span>
-        <code id="myCodeText" style="font-size:15px;color:#d50000;font-weight:bold;">----</code>
-        <button id="copyBtn" style="padding:3px 8px;font-size:12px;margin-left:6px;">COPY</button>
+      <div style="margin:2px 0;">
+        <span style="font-family:sans-serif;font-size:12px;font-weight:bold;">Room Code: </span>
+        <code id="myCodeText" style="font-size:14px;color:#d50000;font-weight:bold;">----</code>
+        <button id="copyBtn" style="padding:2px 6px;font-size:11px;margin-left:4px;">COPY</button>
       </div>
 
       <div class="lobby-grid">
         <div class="team-box">
           <div class="team-title-1">TEAM 1 (BLUE SIDE) - <span id="team1Count">0</span>/2</div>
           <div id="team1Players"></div>
-          <button id="joinTeam1Btn" style="font-size:12px;padding:6px 10px;margin-top:6px;">JOIN TEAM 1</button>
+          <button id="joinTeam1Btn" style="font-size:11px;padding:4px 8px;margin-top:4px;">JOIN TEAM 1</button>
         </div>
         <div class="team-box">
           <div class="team-title-2">TEAM 2 (RED SIDE) - <span id="team2Count">0</span>/2</div>
           <div id="team2Players"></div>
-          <button id="joinTeam2Btn" style="font-size:12px;padding:6px 10px;margin-top:6px;">JOIN TEAM 2</button>
+          <button id="joinTeam2Btn" style="font-size:11px;padding:4px 8px;margin-top:4px;">JOIN TEAM 2</button>
         </div>
       </div>
 
@@ -359,11 +345,11 @@ canvas {
           <b>HAT:</b>
           <select id="hatSelect" class="custom-input"></select>
           <b>SECRET:</b>
-          <input id="secretCodeInput" class="custom-input" style="width:110px;" placeholder="CODE">
-          <button id="unlockSecretBtn" style="font-size:11px;padding:5px 8px;background:#ffd54f;">UNLOCK</button>
+          <input id="secretCodeInput" class="custom-input" style="width:90px;" placeholder="CODE">
+          <button id="unlockSecretBtn" style="font-size:11px;padding:4px 6px;background:#ffd54f;">UNLOCK</button>
         </div>
 
-        <!-- BEACH CHAT BOX -->
+        <!-- BEACH RADIO CHAT -->
         <div class="chat-box">
           <div id="chatLogs" class="chat-logs">
             <div class="chat-entry"><b>BEACH RADIO:</b> Welcome to Crab Volleyball pre-lobby! Keep it chill.</div>
@@ -375,9 +361,9 @@ canvas {
         </div>
       </div>
 
-      <div style="margin-top:10px;display:flex;justify-content:center;gap:12px;">
-        <button id="leaveLobbyBtn" style="font-size:13px;padding:8px 16px;">LEAVE LOBBY</button>
-        <button id="hostStartMatchBtn" class="primary big hidden" style="width:230px;">NEXT: MATCH MODE ➔</button>
+      <div style="margin-top:8px;display:flex;justify-content:center;gap:10px;">
+        <button id="leaveLobbyBtn" style="font-size:12px;padding:6px 12px;">LEAVE LOBBY</button>
+        <button id="hostStartMatchBtn" class="primary big hidden" style="width:210px;">NEXT: MATCH MODE ➔</button>
       </div>
     </section>
 
@@ -390,21 +376,21 @@ canvas {
         <button class="big primary" id="standardModeBtn">☀️ STANDARD BEACH</button>
         <button class="big vice-btn" id="viceModeBtn">🌴 VICE MODE</button>
       </div>
-      <div style="margin-top:16px;">
-        <button id="backFromSubmodeBtn" style="padding:6px 14px;font-size:13px;">BACK</button>
+      <div style="margin-top:12px;">
+        <button id="backFromSubmodeBtn" style="padding:4px 12px;font-size:12px;">BACK</button>
       </div>
     </section>
 
     <!-- VICE CARD VOTING -->
     <section id="viceVoteModal" class="panel hidden" style="background:#160228;border-color:#ff007f;">
-      <h1 style="color:#00ffff;text-shadow:3px 3px 0 #ff007f, 5px 5px 0 #000;">🌴 VOTE VICE CARD 🌴</h1>
+      <h1 style="color:#00ffff;text-shadow:3px 3px 0 #ff007f, 4px 4px 0 #000;">🌴 VOTE VICE CARD 🌴</h1>
       <p class="sub" style="color:#ff77c6;">Popular vote decides the match modifier! Live synchronized voting.</p>
 
       <div id="viceCardsContainer" class="vice-cards-grid"></div>
 
-      <div style="margin-top:10px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
-        <button id="reshuffleBtn" style="background:#00ffff;font-size:13px;padding:8px 14px;">🔀 RESHUFFLE</button>
-        <button id="confirmCardBtn" class="vice-btn big" style="width:230px;">SUBMIT MY VOTE!</button>
+      <div style="margin-top:8px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;">
+        <button id="reshuffleBtn" style="background:#00ffff;font-size:12px;padding:6px 12px;">🔀 RESHUFFLE</button>
+        <button id="confirmCardBtn" class="vice-btn big" style="width:210px;">SUBMIT MY VOTE!</button>
       </div>
     </section>
 
@@ -421,28 +407,29 @@ canvas {
             <button id="skipCutsceneBtn" style="padding:2px 8px;font-size:11px;background:#fff;color:#000;">SKIP [0/2]</button>
           </div>
           <div class="audrey-layout">
-            <div id="audreyAnchorArt" style="width:120px;height:120px;flex-shrink:0;"></div>
+            <div id="audreyAnchorArt" style="width:110px;height:110px;flex-shrink:0;"></div>
             <div class="audrey-speech">
               "This is <b>Audrey</b> reporting LIVE from Beach Action News 6!<br>
               A Category 5 Tsunami is engulfing the coast! <b>The volleyball net has washed out!</b><br>
-              All crabs must run <b>EAST</b> across 14,000 feet of piers to shelter at the<br>
-              <b style="color:#ffe57f;font-size:17px;">🥞 24-HOUR ALL-NIGHT WAFFLE HOUSE! 🥞</b><br>
-              <span style="color:#ff5252;">GET TO HIGH GROUND BEFORE THE WAVE CRUSHES US ALL!"</span>
+              All crabs must run <b>EAST</b> across 20,000 feet of piers to shelter at the<br>
+              <b style="color:#ffe57f;font-size:16px;">🥞 24-HOUR ALL-NIGHT WAFFLE HOUSE! 🥞</b><br>
+              <span style="color:#ff5252;">WATCH YOUR JUMPS AND GET TO SAFETY!"</span>
             </div>
           </div>
           <div class="timer-bar"><div id="newsTimerFill" class="timer-fill"></div></div>
         </div>
 
-        <!-- CINEMATIC MOVIE CREDITS ROLL -->
+        <!-- DRAMATIC MOVIE CREDITS ROLL -->
         <div id="movieCreditsModal" class="hidden">
           <div class="credits-roll" id="creditsRollContent"></div>
-          <div style="position:absolute;bottom:20px;display:flex;gap:16px;">
-            <button class="primary" onclick="restartToLobby()" style="padding:10px 20px;">🦀 RETURN TO LOBBY</button>
-            <button onclick="quitToMenu()" style="padding:10px 20px;">🏠 MAIN MENU</button>
+          <div style="position:absolute;bottom:16px;display:flex;gap:12px;">
+            <button class="primary" onclick="restartToLobby()" style="padding:8px 16px;">🦀 RETURN TO LOBBY</button>
+            <button onclick="quitToMenu()" style="padding:8px 16px;">🏠 MAIN MENU</button>
           </div>
         </div>
       </div>
 
+      <!-- TOUCH CONTROLS -->
       <div class="touchpad-bar" id="mobileControls">
         <div class="touch-cluster">
           <button id="btnLeft">◀<span>RUN</span></button>
@@ -457,20 +444,20 @@ canvas {
 
       <div class="bottom-bar">
         <div>⌨️ <b>A / D</b> = Run &nbsp;|&nbsp; <b>← / →</b> = Claw Swing &nbsp;|&nbsp; <b>Space</b> = Hop</div>
-        <button id="quitMatchBtn" style="padding:3px 10px;font-size:11px;">QUIT MENU</button>
+        <button id="quitMatchBtn" style="padding:2px 8px;font-size:11px;">QUIT MENU</button>
       </div>
     </section>
   </main>
 </div>
 
-<!-- GLOBAL VERSION BADGE FOR VERIFICATION -->
-<div id="globalVersionTag">v0.017 - EPIC WAFFLE ESCAPE</div>
+<!-- GLOBAL VERSION BADGE -->
+<div id="globalVersionTag">v0.018 - ULTRA MULTIPLAYER & WAFFLE OVERHAUL</div>
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 
 <script>
 /* ========================================================
-   CRAB VOLLEYBALL ARCADE ENGINE v0.017
+   CRAB VOLLEYBALL ARCADE ENGINE v0.018
    ======================================================== */
 
 // HAT ARSENAL (NO CODES SPOILED)
@@ -480,7 +467,7 @@ const HAT_DATABASE = [
   { id: "captain", name: "Captain", locked: false, desc: "Default seafaring skipper cap" },
   { id: "tophat", name: "Top Hat", locked: true, unlockReq: "Score 10 Points in career" },
   { id: "fez", name: "Fez", locked: true, unlockReq: "Win 2 match sets" },
-  { id: "lighthouse", name: "Lighthouse Keeper", locked: true, unlockReq: "Survive the Epic 14,000ft Run to Waffle House!" }
+  { id: "lighthouse", name: "Lighthouse Keeper", locked: true, unlockReq: "Survive the 20,000ft Run to Waffle House!" }
 ];
 
 let userProfile = {
@@ -491,7 +478,7 @@ let userProfile = {
 
 function loadCareer() {
   try {
-    const saved = localStorage.getItem("crab_volleyball_profile_v4");
+    const saved = localStorage.getItem("crab_volleyball_profile_v5");
     if (saved) {
       userProfile = Object.assign(userProfile, JSON.parse(saved));
       if (!userProfile.unlockedHats) userProfile.unlockedHats = ["pineapple", "propeller", "captain"];
@@ -522,7 +509,7 @@ function saveCareerSettings() {
   const ep = document.getElementById("explosionSelect");
   if (qp) userProfile.quipPack = qp.value;
   if (ep) userProfile.explosion = ep.value;
-  localStorage.setItem("crab_volleyball_profile_v4", JSON.stringify(userProfile));
+  localStorage.setItem("crab_volleyball_profile_v5", JSON.stringify(userProfile));
 }
 
 function populateHatSelect() {
@@ -548,8 +535,8 @@ function renderArsenalList() {
   HAT_DATABASE.forEach(hat => {
     const isUnlocked = userProfile.unlockedHats.includes(hat.id);
     const div = document.createElement("div");
-    div.style.cssText = `border:2px solid ${isUnlocked ? '#2e7d32' : '#9e9e9e'};background:${isUnlocked ? '#e8f5e9' : '#eeeeee'};border-radius:6px;padding:4px 8px;font-size:11px;font-weight:bold;`;
-    div.innerHTML = `${isUnlocked ? '✅' : '🔒'} <b>${hat.name}</b>: <span style="font-size:10px;color:#555;">${isUnlocked ? 'UNLOCKED' : hat.unlockReq}</span>`;
+    div.style.cssText = `border:2px solid ${isUnlocked ? '#2e7d32' : '#9e9e9e'};background:${isUnlocked ? '#e8f5e9' : '#eeeeee'};border-radius:6px;padding:3px 6px;font-size:10px;font-weight:bold;`;
+    div.innerHTML = `${isUnlocked ? '✅' : '🔒'} <b>${hat.name}</b>: <span style="font-size:9px;color:#555;">${isUnlocked ? 'UNLOCKED' : hat.unlockReq}</span>`;
     container.appendChild(div);
   });
 }
@@ -565,6 +552,16 @@ function filterProfanity(txt) {
   return res;
 }
 
+// CONTROL MODES (BUTTONS vs DRAG/TOUCH)
+let mobileControlMode = "buttons";
+function toggleControlMode() {
+  mobileControlMode = (mobileControlMode === "buttons") ? "drag" : "buttons";
+  const btn = document.getElementById("ctrlToggleBtn");
+  const pad = document.getElementById("mobileControls");
+  if (btn) btn.innerText = (mobileControlMode === "buttons") ? "🕹️ BUTTONS" : "📱 DRAG & FLICK";
+  if (pad) pad.style.display = (mobileControlMode === "buttons") ? "flex" : "none";
+}
+
 // ENGINE VARIABLES
 let activeGameMode = "standard";
 let chosenViceCard = null;
@@ -577,7 +574,7 @@ let cardVotes = [0, 0, 0];
 let myCardVoteIndex = 0;
 
 const ALL_VICE_CARDS = [
-  { title: "TSUNAMI ESCAPE", icon: "🌊", effect: "tsunami", desc: "AUDREY ALARM! 14,000ft Run to the All-Night Waffle House!" },
+  { title: "TSUNAMI ESCAPE", icon: "🌊", effect: "tsunami", desc: "GET TO SAFETY! Run East across 20,000ft of piers to the Waffle House!" },
   { title: "CRAB RAVE", icon: "🦀", effect: "crab_rave", desc: "Party strobe lighting & pumping beach EDM beats!" },
   { title: "TITAN CLAWS", icon: "🦞", effect: "big_claws", desc: "Claws expand by 25% for high-powered blocks!" },
   { title: "TURBO DRIFT", icon: "⚡", effect: "turbo_speed", desc: "Crabs run and spin 35% faster across the sand." },
@@ -600,13 +597,13 @@ let BASE_BALL_GRAV = 550;
 let BALL_GRAV = 550;
 const NET = { x: CW / 2 - 4, y: 550, w: 8, h: FLOOR_Y - 550 };
 
-// SASSY MENU QUOTES
+// SASSY QUOTES
 const SASSY_MENU_QUOTES = [
   "GET CLAMPED! 🦀",
   "PINCH RESPONSIBLY OR GET PINCHED!",
   "100% FRESH BEACH SAND, NO REFUNDS!",
-  "AUDREY TRACKS 100% CHANCE OF WAFFLES!",
-  "SURF'S UP, CLAWS OUT!"
+  "WAFFLE HOUSE ALL-THE-WAY (SMOTHERED & COVERED)!",
+  "WHO GAVE THESE CRABS VOLLEYBALLS?!"
 ];
 
 function pickRandomSassyQuote() {
@@ -701,27 +698,19 @@ dobyImg.src = "./doby.png";
 function makeAudreySVG() {
   return `data:image/svg+xml;utf8,${encodeURIComponent(`
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-    <!-- TV Radar Graphic Background -->
     <rect width="200" height="200" rx="16" fill="#0f172a"/>
     <circle cx="100" cy="100" r="70" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.3"/>
     <circle cx="100" cy="100" r="45" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.4"/>
-    <line x1="100" y1="30" x2="100" y2="170" stroke="#00e5ff" stroke-width="1.5" opacity="0.3"/>
-    <line x1="30" y1="100" x2="170" y2="100" stroke="#00e5ff" stroke-width="1.5" opacity="0.3"/>
-    <!-- Blonde Meteorologist Bob Hair -->
     <path d="M 50 80 C 40 30, 160 30, 150 80 C 165 110, 155 140, 140 145 C 140 120, 135 90, 100 85 C 65 90, 60 120, 60 145 C 45 140, 35 110, 50 80 Z" fill="#ffd54f" stroke="#b45309" stroke-width="3"/>
-    <!-- Audrey Pink Crab Shell -->
     <ellipse cx="100" cy="120" rx="48" ry="24" fill="#f43f5e" stroke="#881337" stroke-width="4"/>
-    <!-- Blue Anchor Blazer -->
     <polygon points="100,105 80,140 120,140" fill="#1e3a8a"/>
     <polygon points="100,115 92,105 108,105" fill="#ffffff"/>
     <polygon points="100,118 96,132 104,132" fill="#ef4444"/>
-    <!-- Cute Eyes & Reporter Glasses -->
     <circle cx="82" cy="95" r="14" fill="#ffffff" stroke="#000" stroke-width="3.5"/>
     <circle cx="118" cy="95" r="14" fill="#ffffff" stroke="#000" stroke-width="3.5"/>
     <line x1="96" y1="95" x2="104" y2="95" stroke="#000" stroke-width="4"/>
     <circle cx="84" cy="95" r="6" fill="#0f172a"/><circle cx="86" cy="92" r="2.5" fill="#fff"/>
     <circle cx="120" cy="95" r="6" fill="#0f172a"/><circle cx="122" cy="92" r="2.5" fill="#fff"/>
-    <!-- Broadcast Headset with Red Mic -->
     <path d="M 62 90 A 42 42 0 0 1 138 90" fill="none" stroke="#334155" stroke-width="4"/>
     <line x1="62" y1="90" x2="78" y2="128" stroke="#334155" stroke-width="3.5"/>
     <circle cx="80" cy="130" r="7" fill="#ef4444" stroke="#000" stroke-width="2"/>
@@ -732,7 +721,7 @@ function makeAudreySVG() {
 function renderAudreyArt() {
   const holder = document.getElementById("audreyAnchorArt");
   if (!holder) return;
-  holder.innerHTML = `<img src="${makeAudreySVG()}" style="width:100%;height:100%;border-radius:12px;border:3px solid #ff007f;">`;
+  holder.innerHTML = `<img src="${makeAudreySVG()}" style="width:100%;height:100%;border-radius:10px;border:2px solid #ff007f;">`;
 }
 
 function makeMeteorologistSVG() {
@@ -823,21 +812,21 @@ function drawFlushHat(ctx, type, animTime = 0) {
   ctx.restore();
 }
 
-// 14,000 FT EPIC HORIZONTAL TSUNAMI RUN
+// 20,000 FT EPIC HORIZONTAL TSUNAMI RUN (5 BIOMES)
 let isTsunamiTriggered = false;
 let tsunamiCutsceneTimer = 0;
 const TSUNAMI_CUTSCENE_TOTAL = 20.0;
 let skipVotes = {};
 let isPlatformerActive = false;
-let tsunamiSurgeX = -600;
 let platformerCountdown = 4.0;
 let horizontalPlatforms = [];
 let checkpoints = [
-  { x: 3500, y: FLOOR_Y - 40, reached: false, name: "BOARDWALK PIER 1" },
-  { x: 7500, y: FLOOR_Y - 40, reached: false, name: "FALLEN PALM DUNES" },
-  { x: 11500, y: FLOOR_Y - 40, reached: false, name: "HIGHWAY BRIDGE" }
+  { x: 4000, y: FLOOR_Y - 40, reached: false, name: "SINKING DOCKS" },
+  { x: 8500, y: FLOOR_Y - 40, reached: false, name: "COASTAL HIGHWAY" },
+  { x: 13000, y: FLOOR_Y - 40, reached: false, name: "STILT BRIDGE" },
+  { x: 17500, y: FLOOR_Y - 40, reached: false, name: "WAFFLE HILL" }
 ];
-const WAFFLE_HOUSE_X = 13800;
+const WAFFLE_HOUSE_X = 19500;
 let cameraOffsetX = 0;
 let playerFinishedMap = {};
 
@@ -908,58 +897,67 @@ function skipCutsceneImmediately() {
 
 function generateHorizontalPlatforms() {
   horizontalPlatforms = [];
-  // Zone 1: Safe Start Beach & Broken Boardwalks (0 - 3,500px)
-  horizontalPlatforms.push({ x: 0, y: FLOOR_Y, w: 1000, h: 40 });
-  let curX = 1050;
-  while (curX < 3500) {
+  // Biome 1: Safe Start Beach & Sandy Boardwalk (0 - 4,000px)
+  horizontalPlatforms.push({ x: 0, y: FLOOR_Y, w: 1200, h: 40 });
+  let curX = 1250;
+  while (curX < 4000) {
     const pw = 160 + Math.random() * 140;
-    const py = FLOOR_Y - (20 + Math.random() * 90);
-    horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22 });
-    curX += pw + (60 + Math.random() * 80);
+    const py = FLOOR_Y - (20 + Math.random() * 80);
+    horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 1 });
+    curX += pw + (55 + Math.random() * 80);
   }
 
-  // Zone 2: Fallen Palm Dunes & Sinking Sand (3,500 - 7,500px)
-  horizontalPlatforms.push({ x: 3450, y: FLOOR_Y, w: 400, h: 40 }); // Checkpoint 1
-  curX = 3900;
-  while (curX < 7500) {
+  // Biome 2: Sinking Docks & Floating Rafts (4,000 - 8,500px)
+  horizontalPlatforms.push({ x: 3950, y: FLOOR_Y, w: 450, h: 40, isCP: true });
+  curX = 4450;
+  while (curX < 8500) {
     const pw = 140 + Math.random() * 120;
-    const py = FLOOR_Y - (40 + Math.random() * 120);
-    horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22 });
-    curX += pw + (70 + Math.random() * 95);
+    const py = FLOOR_Y - (40 + Math.random() * 100);
+    horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 2 });
+    curX += pw + (65 + Math.random() * 90);
   }
 
-  // Zone 3: Ruined Coastal Highway with Stranded Cars (7,500 - 11,500px)
-  horizontalPlatforms.push({ x: 7450, y: FLOOR_Y, w: 400, h: 40 }); // Checkpoint 2
-  curX = 7900;
-  while (curX < 11500) {
+  // Biome 3: Coastal Highway & Abandoned Sports Cars (8,500 - 13,000px)
+  horizontalPlatforms.push({ x: 8450, y: FLOOR_Y, w: 450, h: 40, isCP: true });
+  curX = 8950;
+  while (curX < 13000) {
     const pw = 180 + Math.random() * 140;
-    const py = FLOOR_Y - (60 + Math.random() * 100);
-    horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, isHighway: true });
-    curX += pw + (65 + Math.random() * 85);
+    const py = FLOOR_Y - (50 + Math.random() * 90);
+    horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 3, isHighway: true });
+    curX += pw + (70 + Math.random() * 85);
   }
 
-  // Zone 4: High Stilts & All-Night Waffle House (11,500 - 14,000px)
-  horizontalPlatforms.push({ x: 11450, y: FLOOR_Y, w: 400, h: 40 }); // Checkpoint 3
-  curX = 11900;
+  // Biome 4: Stilt Bridges & Lightning Flashes (13,000 - 17,500px)
+  horizontalPlatforms.push({ x: 12950, y: FLOOR_Y, w: 450, h: 40, isCP: true });
+  curX = 13450;
+  while (curX < 17500) {
+    const pw = 140 + Math.random() * 110;
+    const py = FLOOR_Y - (60 + Math.random() * 90);
+    horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 4 });
+    curX += pw + (75 + Math.random() * 85);
+  }
+
+  // Biome 5: Waffle Hill & Neon Waffle House (17,500 - 20,000px)
+  horizontalPlatforms.push({ x: 17450, y: FLOOR_Y, w: 450, h: 40, isCP: true });
+  curX = 17950;
   while (curX < WAFFLE_HOUSE_X - 100) {
-    const pw = 150 + Math.random() * 110;
-    const py = FLOOR_Y - (30 + Math.random() * 80);
-    horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22 });
-    curX += pw + (60 + Math.random() * 80);
+    const pw = 160 + Math.random() * 120;
+    const py = FLOOR_Y - (30 + Math.random() * 70);
+    horizontalPlatforms.push({ x: curX, y: py, w: pw, h: 22, biome: 5 });
+    curX += pw + (60 + Math.random() * 75);
   }
 
-  // Final Waffle House Foundation
-  horizontalPlatforms.push({ x: WAFFLE_HOUSE_X - 100, y: FLOOR_Y, w: 700, h: 50, isWaffleFloor: true });
+  // Final Waffle House Pier
+  horizontalPlatforms.push({ x: WAFFLE_HOUSE_X - 120, y: FLOOR_Y, w: 800, h: 60, isWaffleFloor: true });
 }
 
 function startHorizontalWaffleEscape() {
   isPlatformerActive = true;
   match.paused = false;
-  tsunamiSurgeX = -600;
   platformerCountdown = 4.0;
   playerFinishedMap = {};
 
-  // Spawn all surviving human crabs SAFELY at the start line (Jeff is not in the void!)
+  // All human players spawn on the wide starting boardwalk
   let spawnX = 150;
   players.forEach((p, i) => {
     if (p.isBot) p.activeInGame = false;
@@ -971,6 +969,12 @@ function startHorizontalWaffleEscape() {
 
   generateHorizontalPlatforms();
   checkpoints.forEach(c => c.reached = false);
+
+  if (match.isOnline && isHost) {
+    peerConnections.forEach(c => {
+      if (c && c.open) c.send({ type: "START_ESCAPE", platforms: horizontalPlatforms });
+    });
+  }
 }
 
 function updatePlatformerMode(dt) {
@@ -980,9 +984,6 @@ function updatePlatformerMode(dt) {
     else if (platformerCountdown <= 1.0) showToast("ESCAPE TO WAFFLE HOUSE!", 0.9);
     else showToast(`${Math.ceil(platformerCountdown - 1)}...`, 0.9);
   }
-
-  // Wave rolls steadily forward
-  tsunamiSurgeX += 150 * dt;
 
   const myP = players[match.myPlayerIndex];
   if (myP) {
@@ -1044,12 +1045,22 @@ function updatePlatformerMode(dt) {
       checkAllPlayersEscaped();
     }
 
-    // Caught by tidal wave or fallen into ocean
-    if (p.x < tsunamiSurgeX + 120 || p.y > FLOOR_Y + 70) {
+    // Swept by the raging ocean below!
+    if (p.y > FLOOR_Y + 70) {
       p.x = p.respawnX || 150; p.y = FLOOR_Y - 50; p.vy = -180;
       sfx.crushDown(); showToast("WASHED BACK TO CHECKPOINT! 🌊", 1.0);
     }
   });
+
+  if (match.isOnline && isHost) broadcastPlatformerSync();
+}
+
+function broadcastPlatformerSync() {
+  const data = {
+    type: "PLAT_SYNC",
+    players: players.map(p => ({ x: p.x, y: p.y, angle: p.angle, active: p.activeInGame }))
+  };
+  peerConnections.forEach(c => { if (c && c.open) c.send(data); });
 }
 
 function checkAllPlayersEscaped() {
@@ -1066,24 +1077,24 @@ function showDramaticMovieCredits() {
   const content = document.getElementById("creditsRollContent");
   if (!modal || !content) return;
 
-  const p1Name = players[0].name;
+  const p1Name = players[0].name || "TOM";
   const p2Name = players[1].name || "JEFF";
 
   content.innerHTML = `
-    <h1 style="color:#00ffff;font-size:42px;margin-bottom:20px;">🎬 CRAB VOLLEYBALL PICTURES PRESENTS 🎬</h1>
-    <h2 style="color:#ff007f;font-size:32px;">"ESCAPE TO WAFFLE HOUSE: TSUNAMI '85"</h2>
+    <h1 style="color:#00ffff;font-size:38px;margin-bottom:16px;">🎬 CRAB VOLLEYBALL PICTURES PRESENTS 🎬</h1>
+    <h2 style="color:#ff007f;font-size:28px;">"ESCAPE TO WAFFLE HOUSE: TSUNAMI '85"</h2>
     <br><br>
-    <p style="font-size:22px;color:#fff;">STARRING</p>
-    <p style="font-size:26px;color:#ffe600;">${p1Name} &nbsp;·&nbsp; as The Wave Strider</p>
-    <p style="font-size:26px;color:#ffe600;">${p2Name} &nbsp;·&nbsp; as The Determined Crustacean</p>
+    <p style="font-size:18px;color:#fff;">STARRING</p>
+    <p style="font-size:24px;color:#ffe600;">${p1Name} &nbsp;·&nbsp; as The Wave Strider</p>
+    <p style="font-size:24px;color:#ffe600;">${p2Name} &nbsp;·&nbsp; as The Determined Crustacean</p>
     <br>
-    <p style="font-size:20px;color:#fff;">SPECIAL APPEARANCE</p>
-    <p style="font-size:24px;color:#00ffff;">AUDREY &nbsp;·&nbsp; Beach Action News 6</p>
+    <p style="font-size:18px;color:#fff;">SPECIAL APPEARANCE</p>
+    <p style="font-size:22px;color:#00ffff;">AUDREY &nbsp;·&nbsp; Beach Action News 6</p>
     <br>
-    <p style="font-size:20px;color:#fff;">CATERING & SANCTUARY</p>
-    <p style="font-size:24px;color:#ffd54f;">24-HOUR ALL-NIGHT WAFFLE HOUSE (Smothered & Covered)</p>
+    <p style="font-size:18px;color:#fff;">CATERING & SANCTUARY</p>
+    <p style="font-size:22px;color:#ffd54f;">24-HOUR ALL-NIGHT WAFFLE HOUSE (Smothered & Covered)</p>
     <br>
-    <p style="font-size:18px;color:#aaa;">NO REAL CRABS WERE BOILED DURING THE FILMING OF THIS ESCAPE.</p>
+    <p style="font-size:16px;color:#aaa;">NO REAL CRABS WERE BOILED DURING THE FILMING OF THIS ESCAPE.</p>
   `;
 
   modal.classList.remove("hidden");
@@ -1463,18 +1474,22 @@ function drawRetroScore(ctx, x, y, s1, s2, c1, c2) {
 
 function renderHorizontalEscape() {
   const grad = ctx.createLinearGradient(0, 0, 0, CH);
-  grad.addColorStop(0, "#2e0854"); grad.addColorStop(0.5, "#4a0072"); grad.addColorStop(1, "#1a0033");
+  grad.addColorStop(0, "#1a0033"); grad.addColorStop(0.5, "#311b92"); grad.addColorStop(1, "#000000");
   ctx.fillStyle = grad; ctx.fillRect(0, 0, CW, CH);
 
   ctx.save();
   ctx.translate(-cameraOffsetX, 0);
 
-  // Background coastal highway behind the platforms
-  drawViceHighwayAndCars(ctx, FLOOR_Y - 180);
+  // Sloshing storm ocean behind the platforms
+  drawAnimatedOceanWaves(ctx, FLOOR_Y - 140, 160);
 
-  // Wooden Piers & Highway Platforms
+  // Render 5 Biome Platforms
   horizontalPlatforms.forEach(p => {
-    ctx.fillStyle = p.isHighway ? "#37474f" : "#d4a76a";
+    if (p.isHighway) ctx.fillStyle = "#37474f";
+    else if (p.biome === 2) ctx.fillStyle = "#4e342e";
+    else if (p.biome === 4) ctx.fillStyle = "#263238";
+    else ctx.fillStyle = "#d4a76a";
+
     ctx.strokeStyle = "#000"; ctx.lineWidth = 3;
     ctx.fillRect(p.x, p.y, p.w, p.h); ctx.strokeRect(p.x, p.y, p.w, p.h);
 
@@ -1492,7 +1507,7 @@ function renderHorizontalEscape() {
     ctx.fillText(cp.reached ? "🚩 CHECKPOINT OK" : `🚩 ${cp.name}`, cp.x - 40, cp.y - 80);
   });
 
-  // THE GLOWING ALL-NIGHT WAFFLE HOUSE
+  // GLOWING ALL-NIGHT WAFFLE HOUSE
   ctx.save();
   ctx.translate(WAFFLE_HOUSE_X, FLOOR_Y - 170);
   ctx.fillStyle = "#ffd54f"; ctx.strokeStyle = "#000"; ctx.lineWidth = 5;
@@ -1502,7 +1517,6 @@ function renderHorizontalEscape() {
   ctx.font = "900 28px Impact"; ctx.fillStyle = "#ffe600";
   ctx.fillText("🥞 ALL-NIGHT WAFFLE HOUSE 🥞", 12, -12);
 
-  // Door
   ctx.fillStyle = "#00e5ff"; ctx.fillRect(130, 50, 80, 120);
   ctx.fillStyle = "#000"; ctx.font = "900 16px Impact"; ctx.fillText("COME IN!", 142, 115);
   ctx.restore();
@@ -1510,20 +1524,10 @@ function renderHorizontalEscape() {
   // Draw Players
   drawPlayersAndBall(ctx, 0);
 
-  // SURGING TSUNAMI WALL
-  ctx.fillStyle = "rgba(0, 180, 216, 0.88)";
-  ctx.beginPath();
-  ctx.moveTo(tsunamiSurgeX - 400, 0); ctx.lineTo(tsunamiSurgeX, 0);
-  for (let y = 0; y <= CH; y += 35) {
-    ctx.lineTo(tsunamiSurgeX + Math.sin(y * 0.05 + oceanTimer * 2) * 30, y);
-  }
-  ctx.lineTo(tsunamiSurgeX - 400, CH);
-  ctx.closePath(); ctx.fill();
-
   ctx.restore();
 }
 
-// MAIN LOOP
+// TOUCH & KEYBOARD CONTROLS
 const keys = {};
 window.addEventListener("keydown", (e) => {
   sfx.init();
@@ -1531,6 +1535,49 @@ window.addEventListener("keydown", (e) => {
   if (e.code === "Space" || (e.code && e.code.includes("Arrow"))) e.preventDefault();
 });
 window.addEventListener("keyup", (e) => { if (e.code) keys[e.code] = false; });
+
+// TOUCH DRAG & FLICK MODE
+let touchStartX = 0;
+let touchStartY = 0;
+canvas.addEventListener("touchstart", (e) => {
+  if (mobileControlMode !== "drag") return;
+  sfx.init();
+  const t = e.touches[0];
+  touchStartX = t.clientX; touchStartY = t.clientY;
+}, { passive: false });
+
+canvas.addEventListener("touchmove", (e) => {
+  if (mobileControlMode !== "drag") return;
+  e.preventDefault();
+  const t = e.touches[0];
+  const dx = t.clientX - touchStartX;
+  const dy = t.clientY - touchStartY;
+
+  keys["KeyA"] = dx < -20;
+  keys["KeyD"] = dx > 20;
+  if (dy < -35) keys["Space"] = true;
+}, { passive: false });
+
+canvas.addEventListener("touchend", () => {
+  if (mobileControlMode !== "drag") return;
+  keys["KeyA"] = false; keys["KeyD"] = false; keys["Space"] = false;
+});
+
+function bindTouch(btnId, code) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+  const p = (e) => { e.preventDefault(); sfx.init(); keys[code] = true; };
+  const r = (e) => { e.preventDefault(); keys[code] = false; };
+  btn.addEventListener("touchstart", p, { passive: false });
+  btn.addEventListener("touchend", r, { passive: false });
+  btn.addEventListener("mousedown", p);
+  btn.addEventListener("mouseup", r);
+}
+bindTouch("btnLeft", "KeyA");
+bindTouch("btnRight", "KeyD");
+bindTouch("btnRotLeft", "ArrowLeft");
+bindTouch("btnRotRight", "ArrowRight");
+bindTouch("btnJump", "Space");
 
 let lastT = performance.now();
 function gameLoop(now) {
@@ -1544,6 +1591,12 @@ function gameLoop(now) {
       jump: keys["Space"] || false
     };
     updatePlayer(players[match.myPlayerIndex], myInput, dt);
+
+    if (match.isOnline && !isHost) {
+      if (peerConnections[0] && peerConnections[0].open) {
+        peerConnections[0].send({ type: "INPUT", input: myInput });
+      }
+    }
 
     for (let i = 0; i < players.length; i++) {
       if (i === match.myPlayerIndex || !players[i].activeInGame) continue;
@@ -1579,7 +1632,7 @@ function refreshLobbyUI() {
 
   players.forEach((p, idx) => {
     const isMe = idx === match.myPlayerIndex;
-    const isPeer = match.isOnline && peersConnected[idx] && !p.isBot;
+    const isPeer = peersConnected[idx] && !p.isBot;
     const isChillBot = p.isBot && fillEmptyWithBots;
 
     if (isMe || isPeer || isChillBot) {
@@ -1699,11 +1752,6 @@ function showSubmodeSelect(context) {
 
 function voteOrSelectSubmode(mode) {
   sfx.init();
-  if (match.isOnline && !isHost) {
-    peerConnections[0].send({ type: "VOTE_SUBMODE", mode: mode });
-    document.getElementById("submodeSubtitle").innerText = `Voted for ${mode.toUpperCase()}!`;
-    return;
-  }
   executeSubmodeSelect(mode);
 }
 
@@ -1791,12 +1839,20 @@ function launchGame() {
   configureActiveCourtPlayers();
   updateCrabSprites();
 
+  hideAllModals();
   document.getElementById("game-section").classList.remove("hidden");
   resetTipOff();
   playModeMusic();
 
   if (match.isOnline && isHost) broadcastStartGame();
   if (chosenViceCard) showToast(`VICE: ${chosenViceCard.title}! 🌴`, 2.5);
+}
+
+function hideAllModals() {
+  ['menuPanel', 'socialLobbyModal', 'submodeModal', 'viceVoteModal', 'lockerModal', 'newsCutsceneModal', 'movieCreditsModal'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("hidden");
+  });
 }
 
 function configureActiveCourtPlayers() {
@@ -1828,9 +1884,8 @@ function configureActiveCourtPlayers() {
 }
 
 function quitToMenu() {
-  document.getElementById("movieCreditsModal").classList.add("hidden");
+  hideAllModals();
   document.getElementById("game-section").classList.add("hidden");
-  document.getElementById("socialLobbyModal").classList.add("hidden");
   document.getElementById("menuPanel").classList.remove("hidden");
   isPlatformerActive = false; isTsunamiTriggered = false;
   stopAllMusic();
@@ -1844,9 +1899,6 @@ function openOnlineLobby() {
 
 function startHostGameSetup() {
   showSubmodeSelect('online');
-  if (isHost) {
-    peerConnections.forEach(c => { if (c && c.open) c.send({ type: "SCREEN_CHANGE", screen: "submode" }); });
-  }
 }
 
 // MULTIPLAYER WEBRTC
@@ -1866,8 +1918,11 @@ function hostRoom() {
   try {
     peer = new Peer(roomId);
     peer.on("open", (id) => {
-      isHost = true; match.myPlayerIndex = 0;
+      isHost = true;
+      match.isOnline = true; // CRITICAL: Enables peer visibility in lobby!
+      match.myPlayerIndex = 0;
       players[0].name = userProfile.name; players[0].team = 1; players[0].isBot = false;
+
       document.getElementById("myCodeText").innerText = id;
       document.getElementById("menuPanel").classList.add("hidden");
       document.getElementById("socialLobbyModal").classList.remove("hidden");
@@ -1908,7 +1963,6 @@ function hostRoom() {
           addChatEntry(data.sender, data.text);
           peerConnections.forEach(c => { if (c && c.open) c.send(data); });
         }
-        if (data.type === "VOTE_SUBMODE") executeSubmodeSelect(data.mode);
         if (data.type === "CAST_VOTE") { cardVotes[data.cardIdx]++; updateCardVoteCounts(); }
         if (data.type === "VOTE_SKIP") { skipVotes[data.slot] = true; updateSkipButtonUI(); checkAllHumansSkipped(); }
         if (data.type === "INPUT") updatePlayer(players[slot], data.input, 0.03);
@@ -1942,7 +1996,6 @@ function joinRoom() {
         document.getElementById("socialLobbyModal").classList.remove("hidden");
         document.getElementById("playerNameInput").value = userProfile.name;
 
-        // Instantly transmit clean real name to Host!
         conn.send({
           type: "UPDATE_CUSTOMS",
           name: userProfile.name,
@@ -1971,13 +2024,23 @@ function joinRoom() {
           refreshLobbyUI();
         }
         if (data.type === "CHAT") addChatEntry(data.sender, data.text);
-        if (data.type === "SCREEN_CHANGE" && data.screen === "submode") showSubmodeSelect('online');
         if (data.type === "SHUFFLE_VICE_CARDS") {
           currentDrawnCards = data.cards; cardVotes = [0, 0, 0];
           openViceCardVoteUI();
         }
+        if (data.type === "UPDATE_VOTES") {
+          cardVotes = data.votes;
+          for (let i = 0; i < 3; i++) {
+            const el = document.getElementById(`voteCount${i}`);
+            if (el) el.innerText = `VOTES: ${cardVotes[i]}`;
+          }
+        }
         if (data.type === "TSUNAMI_TRIGGER") {
           triggerTsunamiWarning();
+        }
+        if (data.type === "START_ESCAPE") {
+          horizontalPlatforms = data.platforms;
+          startHorizontalWaffleEscape();
         }
         if (data.type === "EXECUTE_SKIP") {
           skipCutsceneImmediately();
@@ -1985,8 +2048,7 @@ function joinRoom() {
         if (data.type === "START_GAME") {
           activeGameMode = data.mode; chosenViceCard = data.card;
           configureActiveCourtPlayers(); updateCrabSprites();
-          document.getElementById("socialLobbyModal").classList.add("hidden");
-          document.getElementById("viceVoteModal").classList.add("hidden");
+          hideAllModals();
           document.getElementById("game-section").classList.remove("hidden");
           resetTipOff(); playModeMusic();
         }
@@ -1999,6 +2061,14 @@ function joinRoom() {
           }
           ball.x = data.ball.x; ball.y = data.ball.y;
           match.scores = data.scores; match.sets = data.sets;
+        }
+        if (data.type === "PLAT_SYNC") {
+          data.players.forEach((pSync, idx) => {
+            if (idx !== match.myPlayerIndex) {
+              players[idx].x = pSync.x; players[idx].y = pSync.y;
+              players[idx].angle = pSync.angle; players[idx].activeInGame = pSync.active;
+            }
+          });
         }
       });
     });
@@ -2024,6 +2094,7 @@ function updateCardVoteCounts() {
     const el = document.getElementById(`voteCount${i}`);
     if (el) el.innerText = `VOTES: ${cardVotes[i]}`;
   }
+  peerConnections.forEach(c => { if (c && c.open) c.send({ type: "UPDATE_VOTES", votes: cardVotes }); });
 }
 
 function broadcastStartGame() {
@@ -2048,7 +2119,6 @@ function bindUIEvents() {
   if (get("closeBagBtn")) get("closeBagBtn").onclick = () => { get("lockerModal").classList.add("hidden"); get("menuPanel").classList.remove("hidden"); };
   if (get("hostBtn")) get("hostBtn").onclick = () => hostRoom();
   if (get("joinBtn")) get("joinBtn").onclick = () => joinRoom();
-  if (get("muteAudioBtn")) get("muteAudioBtn").onclick = () => toggleMuteAudio();
   if (get("copyBtn")) get("copyBtn").onclick = () => {
     navigator.clipboard.writeText(get("myCodeText").innerText);
     get("copyBtn").innerText = "COPIED!";
