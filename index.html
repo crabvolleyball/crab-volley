@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>Crab Volleyball Arcade 2026 - CrabVille Universe & CrabChat Gold</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Crab Volleyball Arcade 2026 - Universe & CrabChat Gold</title>
 <style>
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body {
@@ -15,39 +16,39 @@ html, body {
   overflow: hidden;
 }
 body {
-  background: radial-gradient(circle at 50% 30%, #0099cc 0%, #006699 100%);
+  background: radial-gradient(circle at 50% 30%, #0099cc 0%, #005580 100%);
   display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
   min-height: 100dvh;
 }
 #app {
   width: 100%; height: 100%; max-width: 1600px;
   display: flex; flex-direction: column; align-items: center; justify-content: space-between;
-  padding: 2px 4px;
+  padding: env(safe-area-inset-top, 2px) env(safe-area-inset-right, 4px) env(safe-area-inset-bottom, 2px) env(safe-area-inset-left, 4px);
 }
 header {
   width: 100%; display: flex; justify-content: space-between; align-items: center;
-  padding: 4px 12px; color: #fff; text-shadow: 2px 2px 0 #000; flex-shrink: 0;
+  padding: 4px 10px; color: #fff; text-shadow: 2px 2px 0 #000; flex-shrink: 0;
+  z-index: 20;
 }
 .brand {
-  font-size: clamp(18px, 3.2vw, 32px); color: #ffe600;
-  text-shadow: 3px 3px 0 #d83a00, 4px 4px 0 #000; letter-spacing: 1.5px;
+  font-size: clamp(16px, 3.2vw, 28px); color: #ffe600;
+  text-shadow: 3px 3px 0 #d83a00, 4px 4px 0 #000; letter-spacing: 1px;
 }
 .brand span { color: #fff; }
-.header-actions { display: flex; gap: 8px; align-items: center; }
+.header-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
 
-/* CLEAN SHARP HUD */
+/* HUD PILLS & BUTTONS */
 .coin-pill {
   background: #ffe600; color: #000; border: 2.5px solid #000; border-radius: 8px;
-  font-size: 13px; font-family: "Impact", sans-serif; padding: 4px 10px;
-  display: inline-flex; align-items: center; gap: 5px; box-shadow: 2px 2px 0 #000;
+  font-size: 13px; font-family: "Impact", sans-serif; padding: 4px 8px;
+  display: inline-flex; align-items: center; gap: 4px; box-shadow: 2px 2px 0 #000;
   letter-spacing: 0.5px; text-shadow: none;
 }
 .audio-btn, .ctrl-toggle-btn, .twitch-status-badge {
   background: #ffcc00; border: 2.5px solid #000; border-radius: 8px;
-  font-size: 13px; font-family: "Impact", sans-serif; padding: 4px 10px; cursor: pointer; box-shadow: 2px 2px 0 #000;
+  font-size: 11px; font-family: "Impact", sans-serif; padding: 4px 8px; cursor: pointer; box-shadow: 2px 2px 0 #000;
 }
 .twitch-status-badge { background: #9146ff; color: #fff; text-shadow: 1px 1px 0 #000; }
-.twitch-status-badge.verified { background: #00e676; color: #000; text-shadow: none; font-weight: bold; }
 
 main {
   width: 100%; flex: 1; display: flex; flex-direction: column;
@@ -55,20 +56,19 @@ main {
   overflow: hidden;
 }
 
-/* RETRO ARCADE PANELS */
+/* PANELS */
 .panel {
   width: min(980px, 98%); background: #fffbe8; border: 5px solid #142800;
   border-radius: 18px; box-shadow: 8px 8px 0 #000;
   padding: clamp(10px, 2.5vw, 20px); text-align: center; margin: auto;
-  position: relative; max-height: 88vh; overflow-y: auto;
+  position: relative; max-height: 88vh; overflow-y: auto; z-index: 10;
 }
 h1 {
-  margin: 0 0 2px; font-size: clamp(26px, 4.2vw, 42px); color: #e63900;
+  margin: 0 0 2px; font-size: clamp(24px, 4.2vw, 40px); color: #e63900;
   text-shadow: 3px 3px 0 #ffd54f, 4px 4px 0 #000; letter-spacing: 1.5px;
 }
-
 .sassy-ticker {
-  display: inline-block; font-size: clamp(13px, 1.8vw, 16px); color: #ff007f;
+  display: inline-block; font-size: clamp(12px, 1.8vw, 15px); color: #ff007f;
   text-shadow: 2px 2px 0 #00ffff, 3px 3px 0 #000; letter-spacing: 1.5px; margin-bottom: 8px;
   animation: arcadePulse 1.1s ease-in-out infinite alternate;
 }
@@ -76,49 +76,64 @@ h1 {
   0% { transform: scale(1) rotate(-1deg); }
   100% { transform: scale(1.04) rotate(1deg); }
 }
-
 .sub {
   font-size: 13px; color: #2e530b; font-family: sans-serif; font-weight: 900;
   margin-bottom: 12px; letter-spacing: 0.5px;
 }
 
-.btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 620px; margin: auto; }
+.btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 640px; margin: auto; }
 button {
   background: #ffcc00; color: #000; border: 3px solid #000;
   border-radius: 12px; padding: 10px 14px; font-size: 15px; font-family: "Impact", sans-serif;
   letter-spacing: 1px; box-shadow: 3px 3px 0 #000; cursor: pointer;
-  transition: transform 0.05s ease; touch-action: manipulation;
+  transition: transform 0.05s ease, filter 0.05s ease; touch-action: manipulation;
 }
 button:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 #000; }
-button:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #000; }
+button:active, button.active-touch {
+  transform: translate(2px, 2px); box-shadow: 1px 1px 0 #000;
+  filter: brightness(1.2);
+}
 button:disabled { opacity: 0.5; cursor: not-allowed; }
 .primary { background: #ff3b00; color: #fff; text-shadow: 2px 2px 0 #000; }
 .vice-btn { background: #ff007f; color: #00ffff; text-shadow: 2px 2px 0 #7b00ff; }
+.tsunami-btn { background: #0288d1; color: #ffe600; text-shadow: 2px 2px 0 #01579b; }
 .bag-btn { background: #26a69a; color: #fff; text-shadow: 2px 2px 0 #004d40; }
 .twitch-btn { background: #9146ff; color: #fff; text-shadow: 2px 2px 0 #000; }
 .crabchat-btn { background: #00bcd4; color: #fff; text-shadow: 2px 2px 0 #006064; }
 .big { min-height: 48px; font-size: 16px; }
 
-/* CRABCHAT P2P BOARD */
-#crabchatModal {
-  background: #f0f4f8; border-color: #334e68; color: #102a43; max-width: 840px;
+/* 4-PLAYER LOBBY SLOTS */
+.lobby-slots-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0;
 }
+.slot-card {
+  background: #fff; border: 3px solid #000; border-radius: 10px;
+  padding: 8px 12px; text-align: left; box-shadow: 2px 2px 0 #000;
+}
+.slot-card.team1 { border-left: 10px solid #0288d1; }
+.slot-card.team2 { border-left: 10px solid #d50000; }
+.slot-header { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px; }
+.slot-name { font-size: 16px; color: #000; font-family: "Impact", sans-serif; }
+.slot-badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: #e0f2fe; font-weight: bold; }
+
+/* CRABCHAT BOARD */
+#crabchatModal { background: #f0f4f8; border-color: #334e68; color: #102a43; max-width: 860px; }
 .chat-room-bar {
-  display: flex; justify-content: space-between; align-items: center;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;
   background: #d9e2ec; border: 2px solid #627d98; border-radius: 8px;
   padding: 6px 10px; margin-bottom: 8px; font-size: 12px; font-family: sans-serif;
 }
 .chat-screen-top {
   background: #f8fafc; border: 3px solid #486581; border-radius: 10px;
-  height: 220px; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 6px;
+  height: 200px; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 6px;
   font-family: sans-serif; font-size: 12px; text-align: left;
 }
 .chat-post-item {
   background: #fff; border: 2px solid #bcccdc; border-radius: 6px; padding: 4px 8px;
   display: flex; gap: 8px; align-items: center; box-shadow: 1px 1px 0 #829ab1;
 }
-.chat-post-author { color: #0288d1; font-weight: bold; width: 100px; flex-shrink: 0; }
-.chat-post-drawing { max-height: 52px; border: 1px dashed #9fb3c8; background: #fff; }
+.chat-post-author { color: #0288d1; font-weight: bold; width: 110px; flex-shrink: 0; }
+.chat-post-drawing { max-height: 48px; border: 1px dashed #9fb3c8; background: #fff; }
 .chat-screen-bottom {
   background: #ffffff; border: 3px solid #486581; border-radius: 10px;
   margin-top: 8px; padding: 8px; display: flex; flex-direction: column; gap: 6px;
@@ -131,34 +146,51 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   touch-action: none; width: 100%; height: 110px;
 }
 
-/* CRABVILLE MASSIVE 2D WORLD OVERHAUL */
+/* VICE CARD VOTING */
+.vice-cards-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px; margin: 16px 0;
+}
+.vice-card-item {
+  background: #2a0845; border: 3.5px solid #ff007f; border-radius: 14px;
+  padding: 14px; color: #fff; text-align: center; cursor: pointer;
+  box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.vice-card-item:hover, .vice-card-item.selected-card {
+  transform: translateY(-6px) scale(1.03);
+  border-color: #00ffff; box-shadow: 0 0 22px rgba(0, 255, 255, 0.8);
+}
+.vice-card-icon { font-size: 38px; margin-bottom: 6px; }
+.vice-card-title { font-size: 17px; color: #00ffff; text-shadow: 2px 2px 0 #ff007f; margin-bottom: 6px; }
+.vice-card-desc { font-family: sans-serif; font-size: 12px; color: #f1f5f9; line-height: 1.3; }
+
+/* CRABVILLE 2D UNIVERSE */
 #crabvilleModal {
   padding: 6px; max-width: 1340px; width: 99%; background: #0284c7; border-color: #0369a1;
   position: relative;
 }
 .cv-topbar {
   background: #0369a1; color: #fff; padding: 6px 12px; border-radius: 8px;
-  display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 4px;
 }
 .cv-viewport {
   position: relative; width: 100%; border: 4px solid #000; border-radius: 10px; overflow: hidden;
 }
 #crabvilleCanvas {
-  width: 100%; aspect-ratio: 16 / 9; max-height: 68vh; background: #0ea5e9;
+  width: 100%; aspect-ratio: 16 / 9; max-height: 66vh; background: #0ea5e9;
   display: block; cursor: pointer; touch-action: none;
 }
-
-/* IN-GAME RPG DIALOGUE BOX (NO POPUPS) */
 #rpgDialogueBox {
   position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
-  width: min(860px, 94%); background: rgba(15, 23, 42, 0.94); border: 4px solid #38bdf8;
+  width: min(860px, 94%); background: rgba(15, 23, 42, 0.95); border: 4px solid #38bdf8;
   border-radius: 14px; padding: 12px 16px; color: #fff; display: flex; gap: 16px; align-items: center;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 50;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.85); z-index: 50;
 }
 .rpg-avatar {
-  width: 82px; height: 82px; border-radius: 10px; border: 3px solid #ffe600;
+  width: 76px; height: 76px; border-radius: 10px; border: 3px solid #ffe600;
   background: #0284c7; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-  font-size: 40px;
+  font-size: 38px;
 }
 .rpg-content { flex: 1; text-align: left; }
 .rpg-speaker { color: #ffe600; font-size: 15px; margin-bottom: 2px; }
@@ -168,9 +200,6 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   background: #0284c7; color: #fff; border: 2px solid #000; border-radius: 6px;
   font-size: 11px; padding: 4px 10px; cursor: pointer; font-family: sans-serif; font-weight: bold;
 }
-.rpg-btn:hover { background: #0369a1; }
-
-/* EMOTE BAR & SOCIAL CONTROLS */
 .cv-bottom-controls {
   display: flex; justify-content: space-between; align-items: center; margin-top: 6px;
   background: #0369a1; padding: 6px 10px; border-radius: 8px; color: #fff; font-size: 11px;
@@ -180,9 +209,6 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   background: #f8fafc; border: 2px solid #000; border-radius: 6px; padding: 3px 7px;
   font-size: 13px; cursor: pointer;
 }
-.emote-btn:hover { transform: scale(1.1); }
-
-/* FURNITURE TRAY */
 .furniture-tray {
   background: #f8fafc; border: 2px solid #000; border-radius: 8px;
   padding: 6px; margin-top: 6px; display: flex; gap: 6px; overflow-x: auto;
@@ -192,26 +218,17 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   padding: 4px 8px; font-size: 11px; font-family: sans-serif; cursor: pointer; white-space: nowrap;
 }
 
-/* ISLAND TRAVEL MAP */
-#islandMapModal {
+/* MODALS */
+#islandMapModal, #friendsModal, #passportModal {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: min(840px, 94%); background: #fffbe8; border: 5px solid #0369a1;
-  border-radius: 16px; padding: 14px; z-index: 60; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+  width: min(780px, 94%); background: #fffbe8; border: 5px solid #0369a1;
+  border-radius: 16px; padding: 14px; z-index: 70; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+  max-height: 90vh; overflow-y: auto; text-align: center;
 }
-.map-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 12px 0;
-}
+.map-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin: 12px 0; }
 .map-dest-card {
   background: #e0f2fe; border: 2.5px solid #0284c7; border-radius: 10px;
-  padding: 10px 6px; text-align: center; cursor: pointer; transition: transform 0.1s ease;
-}
-.map-dest-card:hover { transform: scale(1.04); background: #bae6fd; }
-
-/* SOCIAL FRIEND LIST MODAL */
-#friendsModal {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: min(480px, 92%); background: #fffbe8; border: 5px solid #0284c7;
-  border-radius: 16px; padding: 14px; z-index: 65; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+  padding: 10px 6px; text-align: center; cursor: pointer;
 }
 .friend-list-box {
   background: #fff; border: 2px solid #000; border-radius: 8px;
@@ -223,14 +240,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   background: #f1f5f9; border-radius: 6px; border: 1px solid #cbd5e1;
 }
 
-/* PASSPORT LOGIN */
-#passportModal {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: min(440px, 92%); background: #fffbe8; border: 5px solid #d97706;
-  border-radius: 16px; padding: 16px; z-index: 70; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-}
-
-/* IN-GAME VIEW & VOLLEYBALL CANVAS */
+/* VOLLEYBALL COURT / GAME SECTION */
 #game-section {
   width: 100%; height: 100%; display: flex; flex-direction: column;
   align-items: center; justify-content: space-between; position: relative;
@@ -238,7 +248,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 .canvas-holder {
   position: relative; width: 100%; flex: 1;
   display: flex; align-items: center; justify-content: center;
-  max-height: calc(100dvh - 120px);
+  max-height: calc(100dvh - 110px);
 }
 canvas#beachCourt {
   width: 100%; height: auto; max-height: 100%; aspect-ratio: 1600 / 850;
@@ -248,29 +258,31 @@ canvas#beachCourt {
 }
 .toast {
   position: absolute; top: 18%; left: 50%; transform: translate(-50%, -50%);
-  font-size: clamp(20px, 4.2vw, 44px); font-family: "Impact", sans-serif;
+  font-size: clamp(20px, 4vw, 42px); font-family: "Impact", sans-serif;
   color: #ffeb3b; text-shadow: 3px 3px 0 #d50000, -2px -2px 0 #000, 2px -2px 0 #000;
   text-align: center; pointer-events: none; z-index: 25; width: 90%;
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 .toast.fade-up { opacity: 0; transform: translate(-50%, -120%); }
 
-/* 20-SECOND AUDREY CUTSCENE */
+#viceActiveBadge {
+  position: absolute; top: 12px; left: 16px;
+  background: #ff007f; color: #00ffff; border: 2.5px solid #000;
+  border-radius: 8px; padding: 4px 10px; font-size: 13px; font-family: "Impact", sans-serif;
+  box-shadow: 2px 2px 0 #000; text-shadow: 1px 1px 0 #000; z-index: 24;
+}
+
+/* 20-SECOND AUDREY NEWS CUTSCENE */
 #newsCutsceneModal {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: min(860px, 94%); background: #1a0026; border: 5px solid #ff007f;
+  width: min(840px, 94%); background: #1a0026; border: 5px solid #ff007f;
   border-radius: 18px; box-shadow: 10px 10px 0 #000; padding: 14px;
-  z-index: 50; text-align: center; color: #fff;
+  z-index: 80; text-align: center; color: #fff;
 }
 .news-topbar {
-  background: #d50000; color: #fff; padding: 4px 10px; font-size: 16px;
+  background: #d50000; color: #fff; padding: 4px 10px; font-size: 15px;
   letter-spacing: 1.5px; border-radius: 6px; margin-bottom: 8px; display: flex;
   justify-content: space-between; align-items: center;
-}
-.audrey-layout { display: flex; gap: 16px; align-items: center; justify-content: center; }
-.audrey-speech {
-  font-family: sans-serif; font-size: 14px; font-weight: 900; color: #e0f2fe;
-  text-align: left; line-height: 1.4;
 }
 .timer-bar {
   width: 100%; height: 8px; background: #333; border-radius: 4px;
@@ -278,7 +290,6 @@ canvas#beachCourt {
 }
 .timer-fill { width: 100%; height: 100%; background: #00ffff; transition: width 0.1s linear; }
 
-/* 2026 MOVIE CREDITS */
 #movieCreditsModal {
   position: absolute; inset: 0; background: #000; z-index: 90;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -286,35 +297,42 @@ canvas#beachCourt {
 }
 .credits-roll {
   animation: rollUp 16s linear infinite; font-family: "Impact", sans-serif;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.5px; line-height: 1.8;
 }
 @keyframes rollUp {
   0% { transform: translateY(60%); }
   100% { transform: translateY(-60%); }
 }
 
-/* TOUCHPAD BAR */
+/* ON-SCREEN VIRTUAL TOUCHPAD (MOBILE) */
 .touchpad-bar {
   width: 100%; max-width: 1600px; display: flex; justify-content: space-between;
   align-items: center; padding: 4px 8px; touch-action: none; flex-shrink: 0;
+  z-index: 30;
 }
 .touch-cluster { display: flex; gap: 8px; align-items: center; }
 .touchpad-bar button {
-  width: 64px; height: 48px; padding: 0; font-size: 11px; font-family: "Impact", sans-serif;
+  width: 68px; height: 50px; padding: 0; font-size: 11px; font-family: "Impact", sans-serif;
   border: 3px solid #000; border-radius: 10px; background: #ffe082;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  opacity: 0.85;
+  opacity: 0.95; touch-action: none; -webkit-user-select: none;
 }
-.touchpad-bar button.jump { width: 84px; background: #e53935; color: #fff; font-size: 13px; }
+.touchpad-bar button.jump { width: 96px; background: #e53935; color: #fff; font-size: 14px; }
 .touchpad-bar button.rotate { background: #ffb74d; }
+
+/* DRAG GESTURE OVERLAY HINT */
+#gestureOverlayHint {
+  position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7); color: #fff; padding: 4px 12px; border-radius: 8px;
+  font-size: 11px; font-family: sans-serif; pointer-events: none; z-index: 25;
+}
 
 .bottom-bar {
   width: 100%; max-width: 1600px; display: flex; justify-content: space-between;
-  align-items: center; padding: 2px 6px; font-size: 11px; color: #fff;
+  align-items: center; padding: 2px 8px; font-size: 11px; color: #fff;
   font-family: sans-serif; font-weight: bold; text-shadow: 1px 1px 0 #000; flex-shrink: 0;
 }
 
-/* CRISP SINGLE-LINE VERSION TAG */
 #globalVersionTag {
   position: fixed; bottom: 4px; right: 6px;
   color: rgba(255, 255, 255, 0.85); font-family: sans-serif;
@@ -332,8 +350,8 @@ canvas#beachCourt {
     <div class="brand">🦀 CRAB <span>VOLLEYBALL</span></div>
     <div class="header-actions">
       <div class="coin-pill" title="CrabCoins">🪙 <span id="headerCoinCount">50</span> CC</div>
-      <button id="twitchBadgeBtn" class="twitch-status-badge" onclick="openTwitchModal()">🟣 STREAMER MODE</button>
-      <button id="ctrlToggleBtn" class="ctrl-toggle-btn" onclick="toggleControlMode()">🕹️ BUTTONS</button>
+      <button id="twitchBadgeBtn" class="twitch-status-badge" onclick="openTwitchModal()">🟣 STREAMER</button>
+      <button id="ctrlToggleBtn" class="ctrl-toggle-btn" onclick="cycleControlMode()">🕹️ CONTROLS: BUTTONS</button>
       <button id="muteAudioBtn" class="audio-btn" onclick="toggleMuteAudio()">🔊</button>
     </div>
   </header>
@@ -343,61 +361,139 @@ canvas#beachCourt {
     <section id="menuPanel" class="panel">
       <h1>CRAB VOLLEYBALL</h1>
       <div id="sassyTicker" class="sassy-ticker">GET CLAMPED!</div>
-      <p class="sub">First to 5 Points · Pinch Responsibly · 100% Guaranteed Fresh Sand</p>
+      <p class="sub">First to 5 Points · Ground Claw Physics · 100% Guaranteed Fresh Sand</p>
 
       <div class="btn-grid">
-        <button class="big primary" id="playSoloBtn">PLAY SOLO / BOTS</button>
-        <button class="big" id="onlineLobbyBtn">4-PLAYER ONLINE MATCH</button>
+        <button class="big primary" onclick="showSubmodeSelect('solo')">PLAY SOLO / BOTS</button>
+        <button class="big" onclick="openOnlineLobby()">4-PLAYER ONLINE MATCH</button>
       </div>
 
       <!-- CRABCHAT & CRABVILLE EXPEDITION -->
       <div style="margin-top:10px;">
-        <button class="crabchat-btn big" id="openCrabChatBtn" style="width:100%;max-width:620px;font-size:17px;border-color:#004d40;">
+        <button class="crabchat-btn big" onclick="openCrabChatModal()" style="width:100%;max-width:640px;font-size:16px;border-color:#004d40;">
           💬 CRABCHAT (P2P DRAWING & CRABVILLE REGION) 🌴
         </button>
       </div>
 
-      <div style="margin-top:10px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-        <button id="openBagBtn" class="bag-btn" style="font-size:14px;padding:8px 16px;">🎒 BEACH BAG</button>
-        <button id="openLeaderboardBtn" class="vice-btn" style="font-size:14px;padding:8px 16px;">🏆 LEADERBOARDS</button>
-        <button id="openTwitchStreamBtn" class="twitch-btn" style="font-size:14px;padding:8px 16px;">🟣 TWITCH STREAM</button>
+      <div style="margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+        <button class="tsunami-btn" onclick="onSubmodeChosen('tsunami')" style="font-size:13px;padding:8px 14px;">🌊 TSUNAMI WAFFLE RUNNER</button>
+        <button class="bag-btn" onclick="openBagModal()" style="font-size:13px;padding:8px 14px;">🎒 BEACH BAG</button>
+        <button class="vice-btn" onclick="openLeaderboard()" style="font-size:13px;padding:8px 14px;">🏆 LEADERBOARDS</button>
+        <button class="twitch-btn" onclick="openTwitchModal()" style="font-size:13px;padding:8px 14px;">🟣 TWITCH STREAM</button>
+      </div>
+    </section>
+
+    <!-- 4-PLAYER ONLINE LOBBY MODAL -->
+    <section id="onlineLobbyModal" class="panel hidden">
+      <h1 style="color:#0284c7;">🦀 4-PLAYER BEACH LOBBY</h1>
+      <p class="sub">Play 2v2 or Tsunami Runner with friends! Unfilled slots auto-fill with AI Bots.</p>
+      
+      <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+        <button class="primary" onclick="hostFourPlayerGame()" style="font-size:13px;padding:6px 14px;">CREATE ROOM (HOST)</button>
+        <div style="display:flex;gap:4px;">
+          <input id="joinCodeInput" placeholder="CODE: CRAB-XXXX" style="width:130px;font-size:12px;padding:4px;border:2px solid #000;border-radius:6px;text-transform:uppercase;font-weight:bold;">
+          <button onclick="joinFourPlayerGame()" style="font-size:13px;padding:6px 12px;background:#10b981;color:#fff;">JOIN</button>
+        </div>
       </div>
 
-      <div id="onlineBox" class="online-box hidden" style="margin-top:12px;">
-        <h3 style="margin:0 0 6px 0;font-size:17px;">Beach Connection</h3>
-        <div class="custom-row">
-          <b>YOUR NAME:</b>
-          <input id="initialNameInput" class="custom-input" style="width:130px;" maxlength="12" placeholder="ENTER YOUR NAME">
-          <button id="hostBtn">CREATE ROOM (HOST)</button>
-          <input id="joinCodeInput" class="custom-input" style="width:130px;" placeholder="CRAB-XXXX">
-          <button id="joinBtn">JOIN ROOM</button>
+      <div style="font-size:13px;font-family:sans-serif;margin:4px 0;">
+        <b>ROOM CODE:</b> <span id="currentLobbyCodeText" style="color:#e63900;font-size:17px;font-family:Impact;">NOT HOSTING</span>
+        <button onclick="copyLobbyCode()" style="padding:2px 8px;font-size:11px;margin-left:6px;">📋 COPY</button>
+      </div>
+
+      <!-- LOBBY MODE SELECTOR (FOR HOST) -->
+      <div style="background:#e0f2fe;border:2px solid #0284c7;border-radius:8px;padding:6px;margin:8px auto;max-width:480px;display:flex;justify-content:space-around;align-items:center;font-size:12px;">
+        <b>MATCH MODE:</b>
+        <select id="lobbyMatchModeSelect" style="font-weight:bold;padding:3px 6px;border:2px solid #000;border-radius:6px;">
+          <option value="standard">☀️ Standard Beach (2v2)</option>
+          <option value="vice">🌴 Vice Mode (Modifier Vote)</option>
+          <option value="tsunami">🌊 Tsunami Waffle Runner</option>
+        </select>
+      </div>
+
+      <!-- 4 SLOTS: 2 BLUE, 2 RED -->
+      <div class="lobby-slots-grid">
+        <div class="slot-card team1">
+          <div class="slot-header"><span>SLOT 1 (BLUE TEAM)</span><span class="slot-badge" id="slotBadge0">HOST</span></div>
+          <div class="slot-name" id="slotName0">YOU</div>
         </div>
-        <p id="netStatus" style="font-size:12px;font-family:sans-serif;font-weight:bold;color:#2e7d32;margin:4px 0;">Ready to pinch.</p>
+        <div class="slot-card team2">
+          <div class="slot-header"><span>SLOT 2 (RED TEAM)</span><span class="slot-badge" id="slotBadge1">BOT / GUEST</span></div>
+          <div class="slot-name" id="slotName1">BOT RED 1</div>
+        </div>
+        <div class="slot-card team1">
+          <div class="slot-header"><span>SLOT 3 (BLUE TEAM)</span><span class="slot-badge" id="slotBadge2">BOT / GUEST</span></div>
+          <div class="slot-name" id="slotName2">BOT BLUE 2</div>
+        </div>
+        <div class="slot-card team2">
+          <div class="slot-header"><span>SLOT 4 (RED TEAM)</span><span class="slot-badge" id="slotBadge3">BOT / GUEST</span></div>
+          <div class="slot-name" id="slotName3">BOT RED 2</div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:center;gap:10px;margin-top:10px;">
+        <button class="primary big" id="startLobbyMatchBtn" onclick="onStartLobbyMatchClicked()" style="width:250px;">START 4-PLAYER MATCH!</button>
+        <button onclick="closeOnlineLobby()" style="padding:6px 16px;">BACK</button>
+      </div>
+    </section>
+
+    <!-- SUB-MODE SELECTION -->
+    <section id="submodeModal" class="panel hidden">
+      <h1 id="submodeTitle">CHOOSE MATCH STYLE</h1>
+      <p class="sub" id="submodeSubtitle">Select your game environment & rules!</p>
+      <div class="btn-grid" style="grid-template-columns:1fr;max-width:440px;">
+        <button class="big primary" onclick="onSubmodeChosen('standard')">☀️ STANDARD BEACH VOLLEYBALL</button>
+        <button class="big vice-btn" onclick="onSubmodeChosen('vice')">🌴 VICE MODE (CARD MODIFIERS)</button>
+        <button class="big tsunami-btn" onclick="onSubmodeChosen('tsunami')">🌊 TSUNAMI MODE: WAFFLE RUNNER</button>
+      </div>
+      <div style="margin-top:12px;">
+        <button onclick="quitToMenu()" style="padding:4px 12px;font-size:12px;">BACK</button>
+      </div>
+    </section>
+
+    <!-- VICE CARD VOTING -->
+    <section id="viceVoteModal" class="panel hidden" style="background:#160228;border-color:#ff007f;color:#fff;">
+      <h1 style="color:#00ffff;text-shadow:3px 3px 0 #ff007f, 5px 5px 0 #000;">🌴 VOTE VICE MODIFIER 🌴</h1>
+      <p class="sub" style="color:#e0f2fe;">Pick a game-changing card to modify physics for this match!</p>
+      
+      <div id="viceCardsContainer" class="vice-cards-grid"></div>
+      
+      <div style="margin-top:10px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;">
+        <button id="reshuffleBtn" onclick="dealViceCards()" style="background:#00ffff;color:#000;font-size:12px;padding:6px 14px;">🔀 RESHUFFLE</button>
+        <button id="confirmCardBtn" class="vice-btn big" onclick="confirmViceModifierVote()" style="width:230px;">CONFIRM MODIFIER!</button>
       </div>
     </section>
 
     <!-- CRABCHAT P2P BOARD -->
     <section id="crabchatModal" class="panel hidden">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
         <h2 style="margin:0;font-size:22px;color:#0284c7;">💬 CRABCHAT P2P DRAWING BOARD</h2>
         <button class="primary" onclick="openCrabvilleDirect()" style="background:#0284c7;font-size:13px;padding:4px 12px;">🌴 ENTER CRABVILLE ➔</button>
       </div>
 
-      <div class="chat-room-bar">
-        <div>
-          <b>ROOM:</b> <span id="crabchatRoomCodeText">PUBLIC LOUNGE</span>
+      <!-- CRAB USERNAME EDIT BAR -->
+      <div style="background:#e0f2fe;border:2px solid #0284c7;border-radius:8px;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-family:sans-serif;">
+          <b>CRAB USERNAME:</b>
+          <input id="crabChatUsernameInput" maxlength="12" style="font-weight:bold;font-size:13px;padding:3px 6px;border:2px solid #000;border-radius:6px;width:140px;text-transform:uppercase;" onchange="updateCitizenName(this.value)">
+          <button onclick="randomizeCitizenName()" style="font-size:11px;padding:3px 8px;">🎲 RANDOM</button>
         </div>
+        <div style="font-size:11px;font-family:sans-serif;color:#0369a1;">Drawings & chats sync live to your Crab Citizen ID</div>
+      </div>
+
+      <div class="chat-room-bar">
+        <div><b>ROOM:</b> <span id="crabchatRoomCodeText">PUBLIC LOUNGE</span></div>
         <div style="display:flex;gap:6px;">
-          <input id="chatJoinCodeInput" placeholder="CODE: CHAT-XXXX" style="width:120px;font-size:11px;padding:2px 4px;text-transform:uppercase;">
-          <button onclick="joinCrabChatRoom()" style="padding:2px 6px;font-size:11px;">JOIN</button>
-          <button onclick="hostCrabChatRoom()" style="padding:2px 6px;font-size:11px;background:#10b981;color:#fff;">HOST P2P</button>
+          <input id="chatJoinCodeInput" placeholder="CHAT-XXXX" style="width:110px;font-size:11px;padding:3px;text-transform:uppercase;border:1px solid #000;border-radius:4px;">
+          <button onclick="joinCrabChatRoom()" style="padding:3px 8px;font-size:11px;">JOIN</button>
+          <button onclick="hostCrabChatRoom()" style="padding:3px 8px;font-size:11px;background:#10b981;color:#fff;">HOST P2P</button>
         </div>
       </div>
       
       <div class="chat-screen-top" id="crabchatFeed">
         <div class="chat-post-item">
           <span class="chat-post-author">[SYSTEM]:</span>
-          <span>Welcome to CrabChat! Draw on the touch pad below or type, then click SEND!</span>
+          <span>Welcome to CrabChat! Set your name above, draw or write below, and hit SEND!</span>
         </div>
       </div>
 
@@ -425,23 +521,21 @@ canvas#beachCourt {
       </div>
     </section>
 
-    <!-- CRABVILLE MASSIVE 2D WORLD & HOUSES -->
+    <!-- CRABVILLE MASSIVE 2D WORLD -->
     <section id="crabvilleModal" class="panel hidden">
       <div class="cv-topbar">
         <span style="font-size:18px;color:#ffe600;" id="crabvilleSceneTitle">🌴 CRABVILLE: TOWN PLAZA</span>
-        <div style="display:flex;gap:8px;align-items:center;">
+        <div style="display:flex;gap:6px;align-items:center;">
           <span class="coin-pill">🪙 <span id="crabvilleCoinCount">50</span> CC</span>
-          <button onclick="openWorldMapModal()" style="font-size:11px;padding:3px 8px;background:#00ffff;color:#000;">🗺️ ISLAND MAP</button>
+          <button onclick="openWorldMapModal()" style="font-size:11px;padding:3px 8px;background:#00ffff;color:#000;">🗺️ MAP</button>
           <button onclick="openFriendsModal()" style="font-size:11px;padding:3px 8px;background:#10b981;color:#fff;">👥 FRIENDS</button>
-          <button onclick="toggleHouseMode()" id="houseToggleBtn" style="font-size:11px;padding:3px 8px;background:#ffe600;color:#000;">🏠 MY HOUSE</button>
+          <button onclick="toggleHouseMode()" id="houseToggleBtn" style="font-size:11px;padding:3px 8px;background:#ffe600;color:#000;">🏠 HOUSE</button>
           <button onclick="closeCrabville()" style="font-size:11px;padding:3px 8px;background:#ef4444;color:#fff;">EXIT</button>
         </div>
       </div>
 
       <div class="cv-viewport">
         <canvas id="crabvilleCanvas" width="1280" height="720"></canvas>
-        
-        <!-- IN-WORLD RPG DIALOGUE BOX (NO BROWSER POPUPS) -->
         <div id="rpgDialogueBox" class="hidden">
           <div class="rpg-avatar" id="rpgSpeakerAvatar">🏄</div>
           <div class="rpg-content">
@@ -452,7 +546,6 @@ canvas#beachCourt {
         </div>
       </div>
 
-      <!-- EMOTE BAR & LIVE CHAT TOOL -->
       <div class="cv-bottom-controls">
         <div class="emote-btn-cluster">
           <button class="emote-btn" onclick="triggerMyEmote('wave')">👋 Wave</button>
@@ -462,60 +555,57 @@ canvas#beachCourt {
           <button class="emote-btn" onclick="triggerMyEmote('heart')">❤️ Love</button>
           <button class="emote-btn" onclick="triggerMyEmote('sleep')">💤 Sleep</button>
         </div>
-        <div style="display:flex;gap:6px;">
-          <input id="cvChatInput" placeholder="Say something in CrabVille..." style="padding:2px 6px;font-size:11px;border-radius:4px;border:1px solid #000;width:180px;">
+        <div style="display:flex;gap:4px;">
+          <input id="cvChatInput" placeholder="Say something in CrabVille..." style="padding:2px 6px;font-size:11px;border-radius:4px;border:1px solid #000;width:160px;">
           <button class="primary" onclick="sendCvLiveChat()" style="padding:2px 8px;font-size:11px;">CHAT</button>
         </div>
-        <button onclick="promptSupremeAdmin()" style="background:transparent;border:none;color:rgba(255,255,255,0.4);font-size:10px;cursor:pointer;">[Admin Console]</button>
+        <button onclick="promptSupremeAdmin()" style="background:transparent;border:none;color:rgba(255,255,255,0.4);font-size:10px;cursor:pointer;">[Admin]</button>
       </div>
 
-      <!-- Furniture Tray for Home Mode -->
       <div id="furnitureBar" class="furniture-tray hidden">
-        <span style="font-size:11px;font-family:sans-serif;color:#334155;display:flex;align-items:center;padding:0 4px;">🎒 <b>FURNITURE INVENTORY (CLICK TO PLACE):</b></span>
+        <span style="font-size:11px;font-family:sans-serif;color:#334155;display:flex;align-items:center;padding:0 4px;">🎒 <b>FURNITURE (CLICK TO PLACE):</b></span>
         <div id="furnitureBackpackItems" style="display:flex;gap:6px;"></div>
       </div>
     </section>
 
-    <!-- ISLAND TRAVEL MAP -->
+    <!-- ISLAND MAP MODAL -->
     <div id="islandMapModal" class="hidden">
       <h2 style="color:#0284c7;margin:0 0 4px;">🗺️ CRABVILLE ISLAND TRAVEL MAP</h2>
-      <p style="font-size:12px;font-family:sans-serif;color:#475569;margin-bottom:8px;">Waddle anywhere on the island!</p>
       <div class="map-grid">
         <div class="map-dest-card" onclick="travelToZone('plaza')">
-          <div style="font-size:28px;">🌴</div>
+          <div style="font-size:26px;">🌴</div>
           <b>TOWN PLAZA</b>
           <div style="font-size:10px;color:#64748b;">Shops & Brodie's Surf Shack</div>
         </div>
         <div class="map-dest-card" onclick="travelToZone('beach')">
-          <div style="font-size:28px;">🏖️</div>
+          <div style="font-size:26px;">🏖️</div>
           <b>THE BEACH & PIER</b>
           <div style="font-size:10px;color:#64748b;">Lighthouse & Fishing Docks</div>
         </div>
         <div class="map-dest-card" onclick="travelToZone('diner')">
-          <div style="font-size:28px;">🥞</div>
+          <div style="font-size:26px;">🥞</div>
           <b>WAFFLE BOULEVARD</b>
           <div style="font-size:10px;color:#64748b;">24/7 Hashbrown Grill</div>
         </div>
         <div class="map-dest-card" onclick="travelToZone('nightclub')">
-          <div style="font-size:28px;">🪩</div>
+          <div style="font-size:26px;">🪩</div>
           <b>RAVE NIGHTCLUB</b>
           <div style="font-size:10px;color:#64748b;">Live EDM Dance Floor</div>
         </div>
         <div class="map-dest-card" onclick="travelToZone('house')">
-          <div style="font-size:28px;">🏠</div>
+          <div style="font-size:26px;">🏠</div>
           <b>MY BEACH HOUSE</b>
           <div style="font-size:10px;color:#64748b;">Your Private Shell Cottage</div>
         </div>
       </div>
-      <button onclick="closeWorldMapModal()" style="font-size:12px;padding:4px 12px;">CLOSE MAP</button>
+      <button onclick="closeWorldMapModal()" style="font-size:12px;padding:4px 12px;">CLOSE</button>
     </div>
 
-    <!-- FRIENDS & PARTY INVITE MODAL -->
+    <!-- FRIENDS MODAL -->
     <div id="friendsModal" class="hidden">
       <h2 style="color:#0284c7;margin:0 0 4px;">👥 CRAB FRIENDS & INVITES</h2>
-      <p style="font-size:11px;font-family:sans-serif;color:#475569;">Hang out and invite friends to your Beach House:</p>
       <div style="display:flex;gap:6px;margin:6px 0;">
-        <input id="addFriendInput" placeholder="Friend Crab Name..." style="flex:1;padding:4px;border:2px solid #000;border-radius:6px;font-size:11px;">
+        <input id="addFriendInput" placeholder="Friend Crab Name..." style="flex:1;padding:4px;border:2px solid #000;border-radius:6px;font-size:11px;text-transform:uppercase;">
         <button onclick="addFriendDirect()" style="padding:4px 10px;font-size:11px;background:#10b981;color:#fff;">+ ADD</button>
       </div>
       <div class="friend-list-box" id="friendsListBox"></div>
@@ -525,19 +615,15 @@ canvas#beachCourt {
       </div>
     </div>
 
-    <!-- PASSPORT LOGIN -->
+    <!-- CITIZEN PASSPORT LOGIN -->
     <div id="passportModal" class="hidden">
-      <h2 style="color:#b45309;margin:0 0 6px;">🛂 CRABVILLE CITIZEN PASSPORT</h2>
-      <p style="font-size:11px;font-family:sans-serif;color:#4b5563;margin-bottom:8px;">Protect your Beach House, furniture, and CrabCoins:</p>
+      <h2 style="color:#b45309;margin:0 0 6px;">🛂 CITIZEN PASSPORT</h2>
       <div style="display:flex;flex-direction:column;gap:6px;text-align:left;font-size:12px;font-family:sans-serif;">
-        <label><b>CRAB CITIZEN NAME:</b>
-          <input id="passportUserInput" style="width:100%;padding:4px;border:2px solid #000;border-radius:6px;font-weight:bold;">
+        <label><b>CRAB NAME:</b>
+          <input id="passportUserInput" style="width:100%;padding:4px;border:2px solid #000;border-radius:6px;font-weight:bold;text-transform:uppercase;">
         </label>
-        <label><b>4-DIGIT PIN CODE:</b>
+        <label><b>4-DIGIT SECURITY PIN:</b>
           <input id="passportPinInput" type="password" maxlength="4" style="width:100%;padding:4px;border:2px solid #000;border-radius:6px;font-weight:bold;">
-        </label>
-        <label style="display:flex;align-items:center;gap:6px;font-size:11px;margin-top:4px;">
-          <input type="checkbox" id="rememberMeCheck" checked> Remember this crab on this device
         </label>
       </div>
       <div style="margin-top:12px;display:flex;gap:8px;justify-content:center;">
@@ -546,129 +632,87 @@ canvas#beachCourt {
       </div>
     </div>
 
-    <!-- TWITCH STREAMER INTEGRATION MODAL -->
+    <!-- TWITCH STREAMER MODAL -->
     <section id="twitchModal" class="panel hidden">
-      <h1 style="color:#9146ff;text-shadow:3px 3px 0 #000;">🟣 TWITCH STREAMER ENGINE 🟣</h1>
-      <p class="sub">Chatters automatically spawn on the beach bleachers in real time and cheer on the match!</p>
-      <div class="customizer-box">
-        <div style="background:#ede9fe;border:2px solid #7c3aed;border-radius:8px;padding:8px;margin-bottom:8px;">
-          <h4 style="margin:0 0 4px 0;color:#5b21b6;font-size:14px;">👑 OFFICIAL BROADCASTER AUTHENTICATION</h4>
-          <p style="font-size:11px;color:#4c1d95;margin:0 0 6px 0;">Authorize through Twitch to unlock the verified Streamer Gold Crown and broadcast controls.</p>
-          <button class="twitch-btn" onclick="startTwitchOAuthFlow()" style="padding:6px 14px;font-size:13px;">🔑 LOGIN & VERIFY CHANNEL (TWITCH OAUTH)</button>
-        </div>
-        <div class="custom-row">
-          <b>OR QUICK CONNECT CHANNEL:</b>
-          <input id="twitchChannelInput" class="custom-input" style="width:170px;" placeholder="CHANNEL NAME">
+      <h1 style="color:#9146ff;">🟣 TWITCH STREAMER MODE</h1>
+      <p class="sub">Chatters automatically spawn on the beach bleachers in real time!</p>
+      <div style="background:#ede9fe;border:2px solid #7c3aed;border-radius:8px;padding:8px;margin-bottom:8px;">
+        <div style="display:flex;gap:6px;justify-content:center;align-items:center;flex-wrap:wrap;">
+          <b>CHANNEL NAME:</b>
+          <input id="twitchChannelInput" style="width:160px;padding:4px;border:2px solid #000;border-radius:6px;font-weight:bold;" placeholder="twitch_channel">
           <button class="twitch-btn" onclick="connectTwitchChatDirect()">CONNECT CHAT</button>
         </div>
       </div>
-      <div style="margin-top:14px;">
-        <button onclick="closeTwitchModal()" style="padding:6px 16px;">CLOSE</button>
-      </div>
+      <button onclick="closeTwitchModal()" style="padding:6px 16px;">CLOSE</button>
     </section>
 
-    <!-- WORLDWIDE LEADERBOARDS -->
+    <!-- LEADERBOARDS -->
     <section id="leaderboardModal" class="panel hidden">
       <h1>🏆 WORLDWIDE LEADERBOARDS 🏆</h1>
-      <p class="sub">Fastest Escapes to Waffle House & Top Beach Competitors</p>
-      <table class="leader-table">
-        <thead>
-          <tr>
-            <th>RANK</th>
-            <th>CRAB RUNNER</th>
-            <th>BEST WAFFLE ESCAPE</th>
-            <th>CAREER POINTS</th>
-          </tr>
-        </thead>
-        <tbody id="leaderboardBody"></tbody>
-      </table>
-      <div style="margin-top:14px;">
-        <button onclick="closeLeaderboard()" style="padding:6px 16px;">BACK TO BEACH</button>
+      <p class="sub">Fastest Escapes to Waffle House & Top Tournament Pinches</p>
+      <div style="max-height:220px;overflow-y:auto;background:#fff;border:2px solid #000;border-radius:8px;padding:6px;margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;padding:4px 8px;border-bottom:1px solid #ccc;font-weight:bold;font-size:12px;">
+          <span>CRAB RUNNER</span><span>ESCAPE TIME</span><span>CAREER POINTS</span>
+        </div>
+        <div id="leaderboardRowsContainer" style="font-size:12px;"></div>
       </div>
+      <button onclick="closeLeaderboard()" style="padding:6px 16px;">BACK</button>
     </section>
 
     <!-- BEACH BAG -->
     <section id="lockerModal" class="panel hidden">
       <h1>🎒 YOUR BEACH BAG 🎒</h1>
-      <p class="sub">Rank: <span id="careerLevel" style="color:#d84315;">1</span> · Claws Pinched: <span id="careerPoints">0</span> · Sets Won: <span id="careerWins">0</span></p>
-      <div class="customizer-box">
-        <div class="custom-row">
-          <b>HAT / ACCESSORY:</b>
-          <select id="arsenalHatSelect" class="custom-input" onchange="updateArsenalCustoms()"></select>
-          <b>CLAW ACCESSORY:</b>
-          <select id="clawAccessorySelect" class="custom-input" onchange="updateArsenalCustoms()">
+      <p class="sub">Rank: <span id="careerLevel" style="color:#d84315;">1</span> · Points: <span id="careerPoints">0</span> · Sets Won: <span id="careerWins">0</span></p>
+      <div style="display:flex;flex-direction:column;gap:8px;max-width:480px;margin:auto;text-align:left;font-family:sans-serif;font-size:12px;">
+        <label><b>BEACH HAT:</b>
+          <select id="arsenalHatSelect" style="width:100%;padding:4px;border:2px solid #000;border-radius:6px;" onchange="updateArsenalCustoms()"></select>
+        </label>
+        <label><b>CLAW ACCESSORY:</b>
+          <select id="clawAccessorySelect" style="width:100%;padding:4px;border:2px solid #000;border-radius:6px;" onchange="updateArsenalCustoms()">
             <option value="none">Bare Claws</option>
             <option value="boxing">Boxing Gloves 🥊</option>
             <option value="gold">Golden Pinchers 🪙</option>
             <option value="glow">Rave Glowsticks 🌟</option>
-            <option value="foam">#1 Foam Finger ☝️</option>
-            <option value="mic">News Reporter Mic 🎙️</option>
-            <option value="wand">Magic Star Wand 🪄</option>
             <option value="spiked">Spiked Gauntlets ⚔️</option>
           </select>
-        </div>
-        <div class="custom-row" style="margin-top:4px;">
-          <b>CRAB COLORWAY:</b>
-          <select id="colorwaySelect" class="custom-input" onchange="updateArsenalCustoms()">
+        </label>
+        <label><b>COLORWAY:</b>
+          <select id="colorwaySelect" style="width:100%;padding:4px;border:2px solid #000;border-radius:6px;" onchange="updateArsenalCustoms()">
             <option value="classic">Coral Crab (Classic)</option>
             <option value="vice_cyan">Vice Cyan Neon</option>
             <option value="magenta">Synthwave Magenta</option>
             <option value="toxic">Toxic Slime Green</option>
             <option value="gold">Royal Midas Gold</option>
-            <option value="obsidian">Obsidian Shadow Black</option>
-            <option value="ghost">Ghost Crab Albino</option>
             <option value="rainbow">🌈 ANIMATED RAINBOW CHROMA</option>
           </select>
-        </div>
+        </label>
       </div>
       <div style="margin-top:12px;">
-        <button id="closeBagBtn" style="padding:6px 16px;">BACK TO BEACH</button>
+        <button onclick="closeBagModal()" style="padding:6px 16px;">BACK TO BEACH</button>
       </div>
     </section>
 
-    <!-- SUB-MODE SELECTION -->
-    <section id="submodeModal" class="panel hidden">
-      <h1 id="submodeTitle">CHOOSE MATCH STYLE</h1>
-      <p class="sub" id="submodeSubtitle">Select your game environment!</p>
-      <div class="btn-grid">
-        <button class="big primary" id="standardModeBtn" onclick="voteSubmode('standard')">☀️ STANDARD BEACH</button>
-        <button class="big vice-btn" id="viceModeBtn" onclick="voteSubmode('vice')">🌴 VICE MODE</button>
-      </div>
-      <div style="margin-top:12px;">
-        <button id="backFromSubmodeBtn" style="padding:4px 12px;font-size:12px;">BACK</button>
-      </div>
-    </section>
-
-    <!-- VICE CARD VOTING -->
-    <section id="viceVoteModal" class="panel hidden" style="background:#160228;border-color:#ff007f;">
-      <h1 style="color:#00ffff;text-shadow:3px 3px 0 #ff007f, 5px 5px 0 #000;">🌴 VOTE VICE CARD 🌴</h1>
-      <div id="viceCardsContainer" class="vice-cards-grid"></div>
-      <div style="margin-top:8px;display:flex;justify-content:center;gap:10px;">
-        <button id="reshuffleBtn" style="background:#00ffff;font-size:12px;padding:6px 12px;">🔀 RESHUFFLE</button>
-        <button id="confirmCardBtn" class="vice-btn big" style="width:210px;">CONFIRM MODIFIER!</button>
-      </div>
-    </section>
-
-    <!-- IN-GAME VOLLEYBALL VIEW -->
+    <!-- IN-GAME COURT & TSUNAMI RUNNER VIEW -->
     <section id="game-section" class="hidden">
       <div class="canvas-holder">
         <canvas id="beachCourt" width="1600" height="850"></canvas>
         <div id="toast" class="toast hidden"></div>
+        <div id="viceActiveBadge" class="hidden">VICE MODIFIER</div>
+        <div id="gestureOverlayHint" class="hidden">👆 Drag Left Side = Run | Drag Right Side = Rotate Claws | Tap = Jump</div>
 
-        <!-- 20-SECOND AUDREY CUTSCENE -->
+        <!-- 20-SECOND AUDREY NEWS CUTSCENE -->
         <div id="newsCutsceneModal" class="hidden">
           <div class="news-topbar">
             <span>🚨 ACTION NEWS 6: METEOROLOGIST AUDREY POPPAGEE 🚨</span>
-            <button id="skipCutsceneBtn" style="padding:2px 8px;font-size:11px;background:#fff;color:#000;">SKIP</button>
+            <button onclick="skipAudreyCutscene()" style="padding:2px 8px;font-size:11px;background:#fff;color:#000;">SKIP</button>
           </div>
-          <div class="audrey-layout">
-            <div id="audreyAnchorArt" style="width:130px;height:100px;flex-shrink:0;"></div>
-            <div class="audrey-speech">
-              "This is <b>Meteorologist Audrey PoppaGee</b> reporting LIVE from Beach Action News 6!<br>
-              A Category 5 Tsunami is engulfing the coast! <b>The net is gone!</b><br>
-              All crabs must run <b>EAST</b> across 20,000 feet of decaying piers to shelter at the<br>
-              <b style="color:#ffe57f;font-size:17px;">🥞 24-HOUR ALL-NIGHT WAFFLE HOUSE! 🥞</b><br>
-              <span style="color:#ff5252;">WATCH OUT FOR COLLAPSING DOCKS & JUMP PRECISELY!"</span>
+          <div style="display:flex;gap:14px;align-items:center;justify-content:center;">
+            <div style="font-size:52px;background:#0284c7;border-radius:12px;padding:8px;border:2px solid #ffe600;">👩‍💼</div>
+            <div style="font-family:sans-serif;font-size:13px;font-weight:900;color:#e0f2fe;text-align:left;line-height:1.4;">
+              "This is <b>Meteorologist Audrey PoppaGee</b> reporting LIVE from Action News 6!<br>
+              A Category 5 Tsunami has swept away the net! Run <b>EAST</b> across the decaying pier to shelter at the<br>
+              <b style="color:#ffe57f;font-size:16px;">🥞 24-HOUR ALL-NIGHT WAFFLE HOUSE! 🥞</b><br>
+              <span style="color:#ff5252;">TIME YOUR JUMPS AND WATCH OUT FOR MISSING DOCK PLANKS!"</span>
             </div>
           </div>
           <div class="timer-bar"><div id="newsTimerFill" class="timer-fill"></div></div>
@@ -676,15 +720,22 @@ canvas#beachCourt {
 
         <!-- MOVIE CREDITS -->
         <div id="movieCreditsModal" class="hidden">
-          <div class="credits-roll" id="creditsRollContent"></div>
+          <div class="credits-roll" id="creditsRollContent">
+            <h2>🦀 CRAB VOLLEYBALL ARCADE 2026 🦀</h2>
+            <p>DIRECTED BY: POPPAGEE & THE CRABVILLE ALL-STARS</p>
+            <p>CHIEF METEOROLOGIST: AUDREY POPPAGEE</p>
+            <p>SURF INSTRUCTOR: BRODIE THE BEACHCOMBER</p>
+            <p>RESIDENT DJ: DJ CRAB-O-TRON</p>
+            <p>HEAD WAFFLE CHEF: HASHBROWN HARRY</p>
+            <p>CONGRATULATIONS ON SURVIVING THE TSUNAMI!</p>
+          </div>
           <div style="position:absolute;bottom:16px;display:flex;gap:12px;">
-            <button class="primary" onclick="restartToLobby()" style="padding:8px 16px;">🦀 RETURN TO BEACH</button>
-            <button onclick="quitToMenu()" style="padding:8px 16px;">🏠 MAIN MENU</button>
+            <button class="primary" onclick="quitToMenu()" style="padding:8px 16px;">🦀 RETURN TO BEACH</button>
           </div>
         </div>
       </div>
 
-      <!-- TOUCH CONTROLS -->
+      <!-- TOUCH CONTROLS BAR (BUTTONS MODE) -->
       <div class="touchpad-bar" id="mobileControls">
         <div class="touch-cluster">
           <button id="btnLeft">◀<span>RUN</span></button>
@@ -698,24 +749,23 @@ canvas#beachCourt {
       </div>
 
       <div class="bottom-bar">
-        <div>⌨️ <b>A / D</b> = Run &nbsp;|&nbsp; <b>← / →</b> = Claw Swing &nbsp;|&nbsp; <b>Space</b> = Hop</div>
-        <button id="quitMatchBtn" style="padding:2px 8px;font-size:11px;">QUIT MENU</button>
+        <div>⌨️ <b>A / D</b> = Run &nbsp;|&nbsp; <b>← / →</b> = Claw Swing &nbsp;|&nbsp; <b>Space</b> = Hop (Hold = High Jump)</div>
+        <button onclick="quitToMenu()" style="padding:2px 8px;font-size:11px;">QUIT MENU</button>
       </div>
     </section>
   </main>
 </div>
 
-<!-- SINGLE-LINE MINIMALIST VERSION BADGE -->
 <div id="globalVersionTag">v2.0 MASTER GOLD</div>
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 
 <script>
 /* ========================================================
-   CRAB VOLLEYBALL ARCADE ENGINE v2.0 MASTER GOLD (2026)
+   CRAB VOLLEYBALL ARCADE ENGINE v2.0 MASTER GOLD
    ======================================================== */
 
-// SOUND SYNTHESIZER
+// ARCADE AUDIO SYNTHESIZER
 class ArcadeAudio {
   constructor() { this.ctx = null; }
   init() {
@@ -741,8 +791,8 @@ class ArcadeAudio {
   jump() { this.beep(260, "sine", 0.16, 620, 0.25); }
   superJump() { this.beep(320, "triangle", 0.28, 880, 0.32); }
   bodyBump() { this.beep(280, "sine", 0.1, 160, 0.26); }
-  crushDown() { this.beep(160, "sawtooth", 0.12, 60, 0.3); }
-  clawSpike() { this.beep(540, "sawtooth", 0.2, 110, 0.48); }
+  clawSpike() { this.beep(620, "sawtooth", 0.24, 120, 0.52); }
+  groundFlip() { this.beep(190, "triangle", 0.14, 380, 0.35); }
   alarm() {
     this.beep(880, "sawtooth", 0.3, 440, 0.4);
     setTimeout(() => this.beep(880, "sawtooth", 0.3, 440, 0.4), 320);
@@ -758,6 +808,7 @@ class ArcadeAudio {
   }
   blip() { this.beep(480, "sine", 0.05, 300, 0.15); }
   ding() { this.beep(980, "sine", 0.3, 1200, 0.2); }
+  splash() { this.beep(140, "sawtooth", 0.25, 40, 0.35); }
 }
 const sfx = new ArcadeAudio();
 
@@ -775,10 +826,7 @@ function playNightclubRaveMusic() {
   if (isAudioMuted) return;
   initAudioObjects();
   if (standardBgm) standardBgm.pause();
-  if (viceRaveBgm) {
-    viceRaveBgm.currentTime = 0;
-    viceRaveBgm.play().catch(() => {});
-  }
+  if (viceRaveBgm) { viceRaveBgm.currentTime = 0; viceRaveBgm.play().catch(() => {}); }
 }
 
 function stopAllMusic() {
@@ -793,48 +841,13 @@ function toggleMuteAudio() {
   if (isAudioMuted) stopAllMusic();
 }
 
-// CRYPTOGRAPHIC SHA-256 HELPER FOR EXCLUSIVE ADMIN AUTHENTICATION
-async function sha256(message) {
-  const msgBuffer = new TextEncoder().encode(message);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-}
-// Precomputed secure hash for developer authentication
-const SUPREME_ADMIN_HASH = "8f1a14a0ec8a5299dd9d1877cb638ffb6a3809623e1986423fa204ecf1a63c6c";
-
-async function promptSupremeAdmin() {
-  const input = prompt("👑 ENTER SUPREME DEVELOPER ADMIN PASSPHRASE:");
-  if (!input) return;
-  const hashed = await sha256(input.trim());
-  if (hashed === SUPREME_ADMIN_HASH || input === "poppagee_supreme_admin_2026") {
-    const act = prompt("👑 SUPREME ADMIN AUTHENTICATED!\n1. Mint CrabCoins\n2. Trigger Live Rave\n3. Unlock All Hats\n4. Infinite Wealth (100,000 CC)\nEnter 1-4:");
-    if (act === "1") {
-      const amt = parseInt(prompt("Amount of CrabCoins to mint live:") || "1000", 10);
-      awardCoins(amt, "ADMIN MINT");
-      sfx.ding();
-    } else if (act === "2") {
-      playNightclubRaveMusic();
-      showToast("👑 ADMIN TRIGGERED GLOBAL RAVE!", 3.0);
-    } else if (act === "3") {
-      HAT_DATABASE.forEach(h => { if (!userProfile.unlockedHats.includes(h.id)) userProfile.unlockedHats.push(h.id); });
-      saveCareerSettings(); populateHatSelect();
-      showToast("All Hats Unlocked!", 2.0);
-    } else if (act === "4") {
-      awardCoins(100000, "SUPREME TREASURY");
-    }
-  } else {
-    alert("⛔ ACCESS DENIED. Cryptographic authentication failed.");
-  }
-}
-
 // PROFILE & ECONOMY
 let userProfile = {
-  name: "CRAB-PLAYER", pinHash: "", level: 1, points: 0, wins: 0, crabCoins: 50,
+  name: "PINCH-CHAMP", pinHash: "", level: 1, points: 0, wins: 0, crabCoins: 50,
   bestWaffleTime: null, colorway: "classic", clawAccessory: "none",
   ownedHomes: ["beach_cottage"], currentHome: "beach_cottage",
   homeItems: [{ id: "palm_mat", x: 640, y: 500 }, { id: "surfboard", x: 440, y: 460 }],
-  unlockedHats: ["pineapple", "propeller", "captain", "straw", "visor", "backward"],
+  unlockedHats: ["pineapple", "propeller", "captain", "straw", "visor", "backward", "crown"],
   friends: ["SandyCheeks", "BarnacleBob"]
 };
 
@@ -842,7 +855,7 @@ function awardCoins(amount, reason = "Game Reward") {
   userProfile.crabCoins += amount;
   saveCareerSettings();
   updateCoinUI();
-  showToast(`+${amount} 🪙 CRABCOINS! (${reason})`, 1.5);
+  showToast(`+${amount} 🪙 CRABCOINS! (${reason})`, 1.3);
 }
 
 function updateCoinUI() {
@@ -852,48 +865,67 @@ function updateCoinUI() {
   if (el2) el2.innerText = userProfile.crabCoins;
 }
 
+function updateCitizenName(newName) {
+  const clean = newName.trim().toUpperCase().slice(0, 12);
+  if (!clean) return;
+  userProfile.name = clean;
+  players[0].name = clean;
+  saveCareerSettings();
+  const input = document.getElementById("crabChatUsernameInput");
+  if (input) input.value = clean;
+  const slot0 = document.getElementById("slotName0");
+  if (slot0) slot0.innerText = clean;
+  showToast(`Name set to ${clean}!`, 1.2);
+}
+
+function randomizeCitizenName() {
+  const prefix = ["SPEEDY", "CLAW", "TURBO", "NEON", "REEF", "PINCH", "SURF", "CHOPPER"];
+  const suffix = ["CRAB", "PINCHER", "SNAPPER", "WADDLER", "CHAMP", "BEACH"];
+  const rnd = `${prefix[Math.floor(Math.random() * prefix.length)]}_${suffix[Math.floor(Math.random() * suffix.length)]}`;
+  updateCitizenName(rnd);
+}
+
 function loadCareer() {
   try {
-    const saved = localStorage.getItem("crab_volleyball_profile_master_gold");
+    const saved = localStorage.getItem("crab_volleyball_master_gold_profile");
     if (saved) userProfile = Object.assign(userProfile, JSON.parse(saved));
   } catch(e) {}
   updateCoinUI();
   populateHatSelect();
   renderFriendsList();
+  renderLeaderboardRows();
+
+  const nameInput = document.getElementById("crabChatUsernameInput");
+  if (nameInput) nameInput.value = userProfile.name;
+  players[0].name = userProfile.name;
 }
 
 function saveCareerSettings() {
-  localStorage.setItem("crab_volleyball_profile_master_gold", JSON.stringify(userProfile));
+  localStorage.setItem("crab_volleyball_master_gold_profile", JSON.stringify(userProfile));
 }
 
 // HATS DATABASE
 const HAT_DATABASE = [
-  { id: "pineapple", name: "Pineapple", locked: false },
-  { id: "propeller", name: "Propeller", locked: false },
-  { id: "captain", name: "Captain", locked: false },
-  { id: "straw", name: "Straw Beach Hat", locked: false },
-  { id: "visor", name: "Sun Visor", locked: false },
-  { id: "backward", name: "Backward Cap", locked: false },
-  { id: "tophat", name: "Top Hat", locked: false },
-  { id: "crown", name: "Royal Crown", locked: false },
-  { id: "viking", name: "Viking Battle Horns", locked: false },
-  { id: "sombrero", name: "Fiesta Sombrero", locked: false }
+  { id: "pineapple", name: "Pineapple Crown" },
+  { id: "propeller", name: "Propeller Cap" },
+  { id: "captain", name: "Captain's Hat" },
+  { id: "straw", name: "Straw Beach Hat" },
+  { id: "visor", name: "Sun Visor" },
+  { id: "backward", name: "Backward Cap" },
+  { id: "crown", name: "Royal Gold Crown" }
 ];
 
 function populateHatSelect() {
-  const selects = [document.getElementById("hatSelect"), document.getElementById("arsenalHatSelect")];
-  selects.forEach(select => {
-    if (!select) return;
-    const curr = select.value || "pineapple";
-    select.innerHTML = "";
-    HAT_DATABASE.forEach(hat => {
-      const opt = document.createElement("option");
-      opt.value = hat.id;
-      opt.innerText = hat.name;
-      select.appendChild(opt);
-    });
-    select.value = curr;
+  const select = document.getElementById("arsenalHatSelect");
+  if (!select) return;
+  const curr = select.value || "pineapple";
+  select.innerHTML = "";
+  HAT_DATABASE.forEach(hat => {
+    const opt = document.createElement("option");
+    opt.value = hat.id; opt.innerText = hat.name;
+    select.appendChild(opt);
   });
+  select.value = curr;
 }
 
 function updateArsenalCustoms() {
@@ -907,8 +939,156 @@ function updateArsenalCustoms() {
   updateCrabSprites();
 }
 
+function openBagModal() {
+  loadCareer(); hideAllModals();
+  document.getElementById("lockerModal").classList.remove("hidden");
+}
+function closeBagModal() {
+  document.getElementById("lockerModal").classList.add("hidden");
+  document.getElementById("menuPanel").classList.remove("hidden");
+}
+
 /* ========================================================
-   CRABCHAT: PEER-TO-PEER DRAWING & CHAT ENGINE
+   CONTROLS MODES: BUTTONS vs DRAG/SWIPE GESTURES
+   ======================================================== */
+let activeControlMode = "buttons"; // "buttons" | "drag"
+const touchState = {
+  left: false, right: false,
+  rotLeft: false, rotRight: false,
+  jump: false
+};
+
+function cycleControlMode() {
+  if (activeControlMode === "buttons") {
+    activeControlMode = "drag";
+  } else {
+    activeControlMode = "buttons";
+  }
+  applyControlModeUI();
+}
+
+function applyControlModeUI() {
+  const btn = document.getElementById("ctrlToggleBtn");
+  const pad = document.getElementById("mobileControls");
+  const hint = document.getElementById("gestureOverlayHint");
+
+  if (activeControlMode === "buttons") {
+    btn.innerText = "🕹️ CONTROLS: BUTTONS";
+    if (pad) pad.classList.remove("hidden");
+    if (hint) hint.classList.add("hidden");
+  } else {
+    btn.innerText = "👆 CONTROLS: DRAG & SWIPE";
+    if (pad) pad.classList.add("hidden");
+    if (hint) hint.classList.remove("hidden");
+  }
+}
+
+// BIND ON-SCREEN BUTTONS WITH ROBUST MULTI-TOUCH
+function bindTouchButton(elemId, keyProp) {
+  const el = document.getElementById(elemId);
+  if (!el) return;
+  
+  const press = (e) => {
+    e.preventDefault(); e.stopPropagation();
+    sfx.init();
+    touchState[keyProp] = true;
+    el.classList.add("active-touch");
+  };
+  const release = (e) => {
+    e.preventDefault(); e.stopPropagation();
+    touchState[keyProp] = false;
+    el.classList.remove("active-touch");
+  };
+
+  el.addEventListener("touchstart", press, { passive: false });
+  el.addEventListener("touchend", release, { passive: false });
+  el.addEventListener("touchcancel", release, { passive: false });
+  el.addEventListener("mousedown", press);
+  el.addEventListener("mouseup", release);
+  el.addEventListener("mouseleave", release);
+}
+
+function setupTouchPadListeners() {
+  bindTouchButton("btnLeft", "left");
+  bindTouchButton("btnRight", "right");
+  bindTouchButton("btnRotLeft", "rotLeft");
+  bindTouchButton("btnRotRight", "rotRight");
+  bindTouchButton("btnJump", "jump");
+}
+
+// DIRECT SCREEN DRAG & ROTATE GESTURE CONTROLS
+let dragTouchId = null;
+let rotateTouchId = null;
+let dragStartX = 0;
+let lastRotateAngle = null;
+
+const courtCanvas = document.getElementById("beachCourt");
+
+courtCanvas.addEventListener("touchstart", (e) => {
+  if (activeControlMode !== "drag") return;
+  e.preventDefault();
+  sfx.init();
+
+  const rect = courtCanvas.getBoundingClientRect();
+  for (let i = 0; i < e.changedTouches.length; i++) {
+    const t = e.changedTouches[i];
+    const x = t.clientX - rect.left;
+    const isLeftHalf = x < rect.width * 0.5;
+
+    if (isLeftHalf && dragTouchId === null) {
+      dragTouchId = t.identifier;
+      dragStartX = t.clientX;
+    } else if (!isLeftHalf && rotateTouchId === null) {
+      rotateTouchId = t.identifier;
+      lastRotateAngle = t.clientY;
+      // Quick tap jump
+      touchState.jump = true;
+      setTimeout(() => { if (rotateTouchId !== null) touchState.jump = false; }, 260);
+    }
+  }
+}, { passive: false });
+
+courtCanvas.addEventListener("touchmove", (e) => {
+  if (activeControlMode !== "drag") return;
+  e.preventDefault();
+
+  for (let i = 0; i < e.changedTouches.length; i++) {
+    const t = e.changedTouches[i];
+    if (t.identifier === dragTouchId) {
+      const deltaX = t.clientX - dragStartX;
+      if (deltaX < -15) { touchState.left = true; touchState.right = false; }
+      else if (deltaX > 15) { touchState.right = true; touchState.left = false; }
+      else { touchState.left = false; touchState.right = false; }
+    } else if (t.identifier === rotateTouchId) {
+      const deltaY = t.clientY - lastRotateAngle;
+      if (deltaY < -10) { touchState.rotLeft = true; touchState.rotRight = false; }
+      else if (deltaY > 10) { touchState.rotRight = true; touchState.rotLeft = false; }
+      else { touchState.rotLeft = false; touchState.rotRight = false; }
+      lastRotateAngle = t.clientY;
+    }
+  }
+}, { passive: false });
+
+const endDragGesture = (e) => {
+  if (activeControlMode !== "drag") return;
+  for (let i = 0; i < e.changedTouches.length; i++) {
+    const t = e.changedTouches[i];
+    if (t.identifier === dragTouchId) {
+      dragTouchId = null;
+      touchState.left = false; touchState.right = false;
+    }
+    if (t.identifier === rotateTouchId) {
+      rotateTouchId = null;
+      touchState.rotLeft = false; touchState.rotRight = false;
+      touchState.jump = false;
+    }
+  }
+};
+courtCanvas.addEventListener("touchend", endDragGesture);
+courtCanvas.addEventListener("touchcancel", endDragGesture);
+
+/* ========================================================
+   CRABCHAT ENGINE & P2P DRAWING BOARD
    ======================================================== */
 let crabchatPeer = null;
 let crabchatConn = null;
@@ -920,6 +1100,8 @@ const ccCtx = ccCanvas ? ccCanvas.getContext("2d") : null;
 function openCrabChatModal() {
   hideAllModals();
   document.getElementById("crabchatModal").classList.remove("hidden");
+  const nameInput = document.getElementById("crabChatUsernameInput");
+  if (nameInput) nameInput.value = userProfile.name;
   clearCrabChatCanvas();
 }
 function closeCrabChatModal() {
@@ -935,7 +1117,7 @@ function clearCrabChatCanvas() {
 }
 
 if (ccCanvas) {
-  const getPos = (e) => {
+  const getCanvasPos = (e) => {
     const rect = ccCanvas.getBoundingClientRect();
     const cx = e.touches ? e.touches[0].clientX : e.clientX;
     const cy = e.touches ? e.touches[0].clientY : e.clientY;
@@ -944,29 +1126,35 @@ if (ccCanvas) {
       y: (cy - rect.top) * (ccCanvas.height / rect.height)
     };
   };
-  const startD = (e) => { crabchatDrawing = true; const p = getPos(e); ccCtx.beginPath(); ccCtx.moveTo(p.x, p.y); };
-  const moveD = (e) => {
+  const startDraw = (e) => {
+    crabchatDrawing = true;
+    const p = getCanvasPos(e);
+    ccCtx.beginPath(); ccCtx.moveTo(p.x, p.y);
+  };
+  const moveDraw = (e) => {
     if (!crabchatDrawing) return;
-    const p = getPos(e);
-    ccCtx.lineWidth = (crabchatInk === "ERASER") ? 14 : 2.5;
+    const p = getCanvasPos(e);
+    ccCtx.lineWidth = (crabchatInk === "ERASER") ? 14 : 3;
     ccCtx.strokeStyle = (crabchatInk === "ERASER") ? "#ffffff" : crabchatInk;
     ccCtx.lineCap = "round";
-    ccCtx.lineTo(p.x, p.y); ccCtx.stroke();
+    ccCtx.lineTo(p.x, p.y);
+    ccCtx.stroke();
   };
-  const endD = () => { crabchatDrawing = false; };
+  const stopDraw = () => { crabchatDrawing = false; };
 
-  ccCanvas.addEventListener("mousedown", startD);
-  ccCanvas.addEventListener("mousemove", moveD);
-  window.addEventListener("mouseup", endD);
-  ccCanvas.addEventListener("touchstart", (e) => { e.preventDefault(); startD(e); }, { passive: false });
-  ccCanvas.addEventListener("touchmove", (e) => { e.preventDefault(); moveD(e); }, { passive: false });
-  ccCanvas.addEventListener("touchend", endD);
+  ccCanvas.addEventListener("mousedown", startDraw);
+  ccCanvas.addEventListener("mousemove", moveDraw);
+  window.addEventListener("mouseup", stopDraw);
+
+  ccCanvas.addEventListener("touchstart", (e) => { e.preventDefault(); startDraw(e); }, { passive: false });
+  ccCanvas.addEventListener("touchmove", (e) => { e.preventDefault(); moveDraw(e); }, { passive: false });
+  ccCanvas.addEventListener("touchend", stopDraw);
 }
 
 function sendCrabChatPost() {
   const inp = document.getElementById("crabchatTextInput");
   const txt = inp.value.trim();
-  const author = userProfile.name || "CRAB-GUEST";
+  const author = userProfile.name || "CRAB-CITIZEN";
   const imgData = ccCanvas.toDataURL("image/png");
 
   renderCrabChatFeedItem(author, txt, imgData);
@@ -975,7 +1163,7 @@ function sendCrabChatPost() {
   clearCrabChatCanvas();
 
   if (crabchatConn && crabchatConn.open) {
-    crabchatConn.send({ type: "CRABCHAT_POST", author: author, text: txt, img: imgData });
+    crabchatConn.send({ type: "CRABCHAT_POST", author, text: txt, img: imgData });
   }
 }
 
@@ -987,7 +1175,7 @@ function renderCrabChatFeedItem(author, text, imgData) {
   post.innerHTML = `
     <span class="chat-post-author">[${author}]:</span>
     ${text ? `<span>${text}</span>` : ""}
-    <img src="${imgData}" class="chat-post-drawing">
+    <img src="${imgData}" class="chat-post-drawing" alt="drawing">
   `;
   feed.appendChild(post);
   feed.scrollTop = feed.scrollHeight;
@@ -1000,7 +1188,7 @@ function hostCrabChatRoom() {
     crabchatPeer = new Peer(code);
     crabchatPeer.on("open", (id) => {
       document.getElementById("crabchatRoomCodeText").innerText = id;
-      showToast(`CrabChat P2P Room: ${id}`, 2.5);
+      showToast(`CrabChat Hosted: ${id}`, 2.0);
     });
     crabchatPeer.on("connection", (c) => {
       crabchatConn = c;
@@ -1010,7 +1198,7 @@ function hostCrabChatRoom() {
           sfx.whistle();
         }
       });
-      showToast("Friend joined your CrabChat Room!", 2.0);
+      showToast("Friend connected to CrabChat!", 1.8);
     });
   } catch(e) {}
 }
@@ -1039,7 +1227,861 @@ function joinCrabChatRoom() {
 }
 
 /* ========================================================
-   CRABVILLE: 2D DETAILED ART & INTERACTION ENGINE
+   4-PLAYER MULTIPLAYER & ONLINE LOBBY
+   ======================================================== */
+let fourPlayerPeer = null;
+let guestConnections = [];
+let hostConnection = null;
+let currentLobbyCode = "";
+let isLobbyHost = false;
+let myLobbySlot = 0;
+
+let lobbySlots = [
+  { id: 0, name: "HOST", isBot: false, isHost: true, team: 1 },
+  { id: 1, name: "BOT RED 1", isBot: true, isHost: false, team: 2 },
+  { id: 2, name: "BOT BLUE 2", isBot: true, isHost: false, team: 1 },
+  { id: 3, name: "BOT RED 2", isBot: true, isHost: false, team: 2 }
+];
+
+function openOnlineLobby() {
+  sfx.init(); hideAllModals();
+  document.getElementById("onlineLobbyModal").classList.remove("hidden");
+  renderLobbySlotsUI();
+}
+function closeOnlineLobby() {
+  document.getElementById("onlineLobbyModal").classList.add("hidden");
+  document.getElementById("menuPanel").classList.remove("hidden");
+}
+
+function renderLobbySlotsUI() {
+  lobbySlots.forEach((slot, i) => {
+    const nameEl = document.getElementById(`slotName${i}`);
+    const badgeEl = document.getElementById(`slotBadge${i}`);
+    if (nameEl) nameEl.innerText = slot.name;
+    if (badgeEl) badgeEl.innerText = slot.isHost ? "HOST" : (slot.isBot ? "BOT" : "PLAYER");
+  });
+}
+
+function hostFourPlayerGame() {
+  sfx.init();
+  const codeNum = Math.floor(1000 + Math.random() * 9000);
+  currentLobbyCode = "CRAB-" + codeNum;
+  try {
+    fourPlayerPeer = new Peer(currentLobbyCode);
+    fourPlayerPeer.on("open", (id) => {
+      isLobbyHost = true;
+      myLobbySlot = 0;
+      lobbySlots[0].name = userProfile.name;
+      lobbySlots[0].isBot = false;
+      document.getElementById("currentLobbyCodeText").innerText = id;
+      renderLobbySlotsUI();
+      showToast(`Hosted Room: ${id}`, 2.2);
+    });
+
+    fourPlayerPeer.on("connection", (conn) => {
+      guestConnections.push(conn);
+      // Assign first available bot slot to this human guest
+      let assignedIndex = lobbySlots.findIndex((s, idx) => idx > 0 && s.isBot);
+      if (assignedIndex === -1) assignedIndex = 1;
+
+      conn.on("open", () => {
+        conn.send({ type: "LOBBY_STATE", slots: lobbySlots, assignedSlot: assignedIndex });
+      });
+
+      conn.on("data", (data) => {
+        if (data.type === "GUEST_JOIN") {
+          lobbySlots[assignedIndex].name = data.name || `CRAB-${assignedIndex + 1}`;
+          lobbySlots[assignedIndex].isBot = false;
+          renderLobbySlotsUI();
+          broadcastLobbyState();
+          showToast(`${lobbySlots[assignedIndex].name} joined slot ${assignedIndex + 1}!`, 1.8);
+          sfx.whistle();
+        } else if (data.type === "CLIENT_INPUT") {
+          if (players[data.slot]) players[data.slot].remoteInput = data.input;
+        }
+      });
+
+      conn.on("close", () => {
+        lobbySlots[assignedIndex].name = `BOT ${assignedIndex + 1}`;
+        lobbySlots[assignedIndex].isBot = true;
+        renderLobbySlotsUI();
+        broadcastLobbyState();
+      });
+    });
+  } catch(e) {}
+}
+
+function broadcastLobbyState() {
+  guestConnections.forEach(c => {
+    if (c.open) c.send({ type: "LOBBY_STATE", slots: lobbySlots });
+  });
+}
+
+function joinFourPlayerGame() {
+  sfx.init();
+  const code = document.getElementById("joinCodeInput").value.trim().toUpperCase();
+  if (!code) { alert("Enter a 4-digit CRAB-XXXX room code!"); return; }
+  currentLobbyCode = code;
+
+  try {
+    fourPlayerPeer = new Peer();
+    fourPlayerPeer.on("open", () => {
+      hostConnection = fourPlayerPeer.connect(code);
+      hostConnection.on("open", () => {
+        isLobbyHost = false;
+        hostConnection.send({ type: "GUEST_JOIN", name: userProfile.name });
+        document.getElementById("currentLobbyCodeText").innerText = code;
+        showToast(`Connected to ${code}!`, 2.0);
+      });
+
+      hostConnection.on("data", (data) => {
+        if (data.type === "LOBBY_STATE") {
+          if (data.assignedSlot !== undefined) myLobbySlot = data.assignedSlot;
+          lobbySlots = data.slots;
+          renderLobbySlotsUI();
+        } else if (data.type === "START_GAME") {
+          activeGameMode = data.mode;
+          chosenViceModifier = data.viceModifier;
+          if (activeGameMode === "tsunami") {
+            startTsunamiRunner();
+          } else {
+            launchGame();
+          }
+        }
+      });
+    });
+  } catch(e) {}
+}
+
+function copyLobbyCode() {
+  if (!currentLobbyCode) return;
+  navigator.clipboard.writeText(currentLobbyCode).then(() => {
+    showToast("Lobby code copied to clipboard!", 1.5);
+  }).catch(() => {});
+}
+
+function onStartLobbyMatchClicked() {
+  const modeSel = document.getElementById("lobbyMatchModeSelect");
+  const selectedMode = modeSel ? modeSel.value : "standard";
+
+  if (selectedMode === "vice") {
+    openViceVotingDeck();
+  } else if (selectedMode === "tsunami") {
+    if (isLobbyHost) {
+      guestConnections.forEach(c => {
+        if (c.open) c.send({ type: "START_GAME", mode: "tsunami", viceModifier: null });
+      });
+    }
+    startTsunamiRunner();
+  } else {
+    if (isLobbyHost) {
+      guestConnections.forEach(c => {
+        if (c.open) c.send({ type: "START_GAME", mode: "standard", viceModifier: null });
+      });
+    }
+    activeGameMode = "standard";
+    launchGame();
+  }
+}
+
+/* ========================================================
+   SUB-MODES & VICE CARD MODIFIERS
+   ======================================================== */
+const VICE_CARDS_DECK = [
+  { id: "moon_grav", title: "LOW TIDE MOON GRAV", icon: "🌕", desc: "Ball floats with 50% gravity and crabs leap into orbit!" },
+  { id: "super_spikes", title: "SUPER SPIKE CLAWS", icon: "⚡", desc: "Rotating claws spike the ball at 2.5x speed with fiery sparks!" },
+  { id: "turbo_skates", title: "TURBO CRAB DRIFT", icon: "🛼", desc: "Crabs run at 1.8x speed with smooth sandy drift!" },
+  { id: "trampoline", title: "SPRINGBOARD SAND", icon: "🏖️", desc: "The beach court bounces crabs double-high on touchdown!" },
+  { id: "double_jump", title: "MID-AIR DOUBLE JUMP", icon: "🕊️", desc: "Allows a second acrobatic jump while airborne!" },
+  { id: "giant_coconut", title: "MEGA COCONUT BALL", icon: "🥥", desc: "Ball grows 1.6x larger and thuds heavily on the sand!" }
+];
+
+let dealtCards = [];
+let chosenViceModifier = null;
+
+function showSubmodeSelect(context) {
+  sfx.init(); hideAllModals();
+  document.getElementById("submodeModal").classList.remove("hidden");
+}
+
+function onSubmodeChosen(mode) {
+  if (mode === "vice") {
+    openViceVotingDeck();
+  } else if (mode === "tsunami") {
+    startTsunamiRunner();
+  } else {
+    activeGameMode = "standard";
+    launchGame();
+  }
+}
+
+function openViceVotingDeck() {
+  hideAllModals();
+  document.getElementById("viceVoteModal").classList.remove("hidden");
+  dealViceCards();
+}
+
+function dealViceCards() {
+  sfx.blip();
+  const shuffled = [...VICE_CARDS_DECK].sort(() => 0.5 - Math.random());
+  dealtCards = shuffled.slice(0, 3);
+  chosenViceModifier = dealtCards[0];
+
+  const cont = document.getElementById("viceCardsContainer");
+  cont.innerHTML = "";
+  dealtCards.forEach((c, i) => {
+    const cardEl = document.createElement("div");
+    cardEl.className = `vice-card-item ${i === 0 ? "selected-card" : ""}`;
+    cardEl.innerHTML = `
+      <div class="vice-card-icon">${c.icon}</div>
+      <div class="vice-card-title">${c.title}</div>
+      <div class="vice-card-desc">${c.desc}</div>
+    `;
+    cardEl.onclick = () => {
+      document.querySelectorAll(".vice-card-item").forEach(el => el.classList.remove("selected-card"));
+      cardEl.classList.add("selected-card");
+      chosenViceModifier = c;
+      sfx.ding();
+    };
+    cont.appendChild(cardEl);
+  });
+}
+
+function confirmViceModifierVote() {
+  activeGameMode = "vice";
+  if (isLobbyHost) {
+    guestConnections.forEach(c => {
+      if (c.open) c.send({ type: "START_GAME", mode: "vice", viceModifier: chosenViceModifier });
+    });
+  }
+  launchGame();
+}
+
+/* ========================================================
+   TSUNAMI MODE: WAFFLE HOUSE ESCAPE PIER RUNNER
+   ======================================================== */
+let isTsunamiRunnerActive = false;
+let tsunamiProgress = 0; // 0 to 20000 ft
+const TSUNAMI_GOAL = 20000;
+let tsunamiSpeed = 420;
+let tsunamiCutsceneTimer = 15;
+let tsunamiCutsceneActive = false;
+let pierGaps = [];
+let tsunamiObstacles = [];
+let tsunamiWaveHeight = 0;
+
+function startTsunamiRunner() {
+  hideAllModals();
+  document.getElementById("game-section").classList.remove("hidden");
+  activeGameMode = "tsunami";
+  tsunamiProgress = 0;
+  isTsunamiRunnerActive = false;
+  tsunamiCutsceneActive = true;
+  tsunamiCutsceneTimer = 15;
+
+  sfx.alarm();
+  document.getElementById("newsCutsceneModal").classList.remove("hidden");
+
+  // Generate random pier hazards for the 20,000 ft escape
+  pierGaps = [];
+  for (let dist = 1200; dist < TSUNAMI_GOAL - 1000; dist += Math.floor(700 + Math.random() * 900)) {
+    pierGaps.push({ startX: dist, width: Math.floor(180 + Math.random() * 140) });
+  }
+
+  // Crabs setup for the run
+  players.forEach((p, idx) => {
+    p.activeInGame = true;
+    p.x = 200 + idx * 70;
+    p.y = FLOOR_Y - p.halfH;
+    p.vx = 0; p.vy = 0; p.angle = 0;
+  });
+}
+
+function skipAudreyCutscene() {
+  tsunamiCutsceneTimer = 0;
+  document.getElementById("newsCutsceneModal").classList.add("hidden");
+  isTsunamiRunnerActive = true;
+  tsunamiCutsceneActive = false;
+  sfx.whistle();
+  showToast("🏃 RUN EAST TO WAFFLE HOUSE!", 2.2);
+}
+
+function updateTsunamiRunner(dt) {
+  if (tsunamiCutsceneActive) {
+    tsunamiCutsceneTimer -= dt;
+    const fill = document.getElementById("newsTimerFill");
+    if (fill) fill.style.width = `${Math.max(0, (tsunamiCutsceneTimer / 15) * 100)}%`;
+    if (tsunamiCutsceneTimer <= 0) {
+      skipAudreyCutscene();
+    }
+    return;
+  }
+
+  if (!isTsunamiRunnerActive) return;
+
+  // Advance runner distance
+  tsunamiProgress += tsunamiSpeed * dt;
+  tsunamiWaveHeight = Math.sin(animTimer * 4) * 35;
+
+  // Player controls
+  const myInput = getPlayerInput();
+  updatePlayerPhysics(players[0], myInput, dt, true);
+
+  // Bot teammates run alongside you
+  for (let i = 1; i < 4; i++) {
+    const bot = players[i];
+    const botInput = { left: false, right: true, rotLeft: false, rotRight: false, jump: false };
+    // Jump over upcoming gaps
+    const relativeX = tsunamiProgress + bot.x;
+    const upcomingGap = pierGaps.find(g => g.startX > relativeX && g.startX - relativeX < 180);
+    if (upcomingGap && bot.isGrounded) botInput.jump = true;
+    updatePlayerPhysics(bot, botInput, dt, true);
+  }
+
+  // Check if player falls into a missing dock gap
+  const currentWorldX = tsunamiProgress + players[0].x;
+  const inGap = pierGaps.some(g => currentWorldX >= g.startX && currentWorldX <= g.startX + g.width);
+  if (inGap && players[0].y >= FLOOR_Y - players[0].halfH - 4) {
+    sfx.splash();
+    showToast("WASHED BY THE TIDE! -1000 FT", 1.2);
+    tsunamiProgress = Math.max(0, tsunamiProgress - 1000);
+    players[0].y = FLOOR_Y - 220;
+    players[0].vy = -380;
+  }
+
+  // Check victory: reached the 24/7 Waffle House!
+  if (tsunamiProgress >= TSUNAMI_GOAL) {
+    isTsunamiRunnerActive = false;
+    awardCoins(100, "Waffle House Shelter Reached!");
+    sfx.cheer();
+    recordWaffleEscapeTime();
+    document.getElementById("movieCreditsModal").classList.remove("hidden");
+  }
+}
+
+function recordWaffleEscapeTime() {
+  const timeStr = `${Math.floor(animTimer)}s`;
+  userProfile.bestWaffleTime = timeStr;
+  saveCareerSettings();
+  renderLeaderboardRows();
+}
+
+/* ========================================================
+   PHYSICS ENGINE: REAL CLAW GROUND FLIPPING & HOPS
+   ======================================================== */
+const CW = 1600;
+const CH = 850;
+const FLOOR_Y = 745;
+let BASE_BALL_GRAV = 560;
+let BALL_GRAV = 560;
+const NET = { x: CW / 2 - 4, y: 550, w: 8, h: FLOOR_Y - 550 };
+
+let activeGameMode = "standard"; // "standard" | "vice" | "tsunami"
+let animTimer = 0;
+
+function createCrab(id, team, x, name = "", isBot = false) {
+  return {
+    id: id, team: team, x: x, y: FLOOR_Y - 26,
+    vx: 0, vy: 0, angle: 0, angVel: 0, hat: "pineapple",
+    name: name, isBot: isBot, activeInGame: false,
+    radius: 54, width: 146, height: 58,
+    halfW: 73, halfH: 26, isGrounded: true,
+    speed: isBot ? 350 : 520,
+    canJump: true, jumpHoldTimer: 0,
+    doubleJumpAvailable: true, remoteInput: null
+  };
+}
+
+let players = [
+  createCrab(1, 1, 260, "YOU", false),
+  createCrab(2, 2, 1340, "BOT RED 1", true),
+  createCrab(3, 1, 560, "BOT BLUE 2", true),
+  createCrab(4, 2, 1040, "BOT RED 2", true)
+];
+
+const ball = {
+  x: CW / 2, y: NET.y - 22,
+  vx: 0, vy: 0, r: 22, rot: 0,
+  active: false, tipOffTimer: 1.0
+};
+
+const match = {
+  scores: [0, 0], sets: [0, 0], currentSet: 1,
+  paused: false, over: false
+};
+
+function getPlayerInput() {
+  return {
+    left: keys["KeyA"] || touchState.left,
+    right: keys["KeyD"] || touchState.right,
+    rotLeft: keys["ArrowLeft"] || touchState.rotLeft,
+    rotRight: keys["ArrowRight"] || touchState.rotRight,
+    jump: keys["Space"] || touchState.jump
+  };
+}
+
+function updatePlayerPhysics(p, input, dt, isRunner = false) {
+  let moveDir = 0;
+  if (input.left) moveDir -= 1;
+  if (input.right) moveDir += 1;
+
+  let speedMultiplier = 1.0;
+  if (activeGameMode === "vice" && chosenViceModifier && chosenViceModifier.id === "turbo_skates") {
+    speedMultiplier = 1.8;
+  }
+  p.vx += (moveDir * p.speed * speedMultiplier - p.vx) * 16 * dt;
+  p.x += p.vx * dt;
+
+  // Boundary clamping (Volleyball vs Tsunami Runner)
+  if (!isRunner) {
+    const minX = (p.team === 1) ? 80 : NET.x + NET.w + p.radius;
+    const maxX = (p.team === 1) ? NET.x - p.radius : CW - 80;
+    if (p.x < minX) { p.x = minX; p.vx = 0; }
+    if (p.x > maxX) { p.x = maxX; p.vx = 0; }
+  } else {
+    p.x = Math.max(120, Math.min(CW - 240, p.x));
+  }
+
+  // Claw rotation with angular velocity
+  let rotSpeed = 11.0;
+  if (input.rotLeft) p.angVel = -rotSpeed;
+  else if (input.rotRight) p.angVel = rotSpeed;
+  else {
+    p.angVel *= 0.54;
+    if (p.isGrounded && Math.abs(p.angle) < 0.6) p.angle += (-p.angle) * 12 * dt;
+  }
+  p.angle += p.angVel * dt;
+
+  // JUMP & LONG JUMP PHYSICS
+  if (input.jump) {
+    if (p.isGrounded && p.canJump) {
+      p.vy = -490;
+      p.isGrounded = false;
+      p.canJump = false;
+      p.jumpHoldTimer = 0.28; // Window to hold jump for extra high-jump arc
+      sfx.jump();
+    } else if (p.jumpHoldTimer > 0) {
+      p.jumpHoldTimer -= dt;
+      p.vy -= 780 * dt; // Sustained upward thrust for long jump!
+    } else if (activeGameMode === "vice" && chosenViceModifier && chosenViceModifier.id === "double_jump" && p.doubleJumpAvailable && p.canJump) {
+      p.vy = -540;
+      p.doubleJumpAvailable = false;
+      p.canJump = false;
+      sfx.superJump();
+    }
+  } else {
+    p.jumpHoldTimer = 0; // Short hop release
+    if (p.isGrounded) {
+      p.canJump = true;
+      p.doubleJumpAvailable = true;
+    }
+  }
+
+  // WEIGHTED SINK DOWN FEEL (Asymmetric gravity: heavy downward descent)
+  const risingGravity = 1450;
+  const sinkingGravity = 2650; // Snappy heavy gravity when falling
+  p.vy += (p.vy < 0 ? risingGravity : sinkingGravity) * dt;
+  p.y += p.vy * dt;
+
+  // REAL GROUND COLLISION & CLAW VAULTING / FLIPPING
+  // Contact points: Left Claw (-56, -10), Right Claw (56, -10), Bottom Shell (0, 24)
+  const contactPoints = [
+    { x: -56, y: -10, isClaw: true, dir: -1 },
+    { x: 56, y: -10, isClaw: true, dir: 1 },
+    { x: 0, y: 24, isClaw: false, dir: 0 }
+  ];
+
+  let lowestPenetration = 0;
+  let hitClaw = null;
+
+  contactPoints.forEach(cp => {
+    const rad = p.angle;
+    const worldY = p.y + cp.x * Math.sin(rad) + cp.y * Math.cos(rad);
+    if (worldY > FLOOR_Y) {
+      const penetration = worldY - FLOOR_Y;
+      if (penetration > lowestPenetration) {
+        lowestPenetration = penetration;
+        if (cp.isClaw) hitClaw = cp;
+      }
+    }
+  });
+
+  if (lowestPenetration > 0) {
+    p.y -= lowestPenetration;
+    p.vy = 0;
+    p.isGrounded = true;
+
+    // IF A CLAW STRIKES SAND WHILE ROTATING: FLIP / VAULT THE CRAB!
+    if (hitClaw && Math.abs(p.angVel) > 4.0) {
+      p.vy = -340; // Vault into air!
+      p.angVel = -p.angVel * 0.75; // Bounce rotation
+      p.vx += hitClaw.dir * 280; // Propulsion
+      p.isGrounded = false;
+      sfx.groundFlip();
+    }
+  }
+}
+
+function resolveCrabCollisions() {
+  for (let i = 0; i < players.length; i++) {
+    for (let j = i + 1; j < players.length; j++) {
+      const p1 = players[i]; const p2 = players[j];
+      if (!p1.activeInGame || !p2.activeInGame) continue;
+      const dx = p2.x - p1.x; const dy = p2.y - p1.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < 78 && dist > 0.001) {
+        const nx = dx / dist; const overlap = 78 - dist;
+        p1.x -= nx * overlap * 0.5; p2.x += nx * overlap * 0.5;
+      }
+    }
+  }
+}
+
+function getAIInput(p, targetBall) {
+  const input = { left: false, right: false, rotLeft: false, rotRight: false, jump: false };
+  const homeX = p.team === 1 ? (p.id === 1 ? 280 : 540) : (p.id === 2 ? 1320 : 1060);
+  const ballInMyCourt = (p.team === 1 && targetBall.x < CW / 2) || (p.team === 2 && targetBall.x >= CW / 2);
+  const targetX = ballInMyCourt ? targetBall.x : homeX;
+  const dx = targetX - p.x;
+
+  if (Math.abs(dx) > 28) {
+    if (dx < 0) input.left = true;
+    else input.right = true;
+  }
+  if (ballInMyCourt && targetBall.y < 500 && Math.abs(dx) < 65 && p.isGrounded) input.jump = true;
+  if (ballInMyCourt && targetBall.y < p.y && Math.abs(dx) < 80) {
+    if (p.team === 1) input.rotRight = true;
+    else input.rotLeft = true;
+  }
+  return input;
+}
+
+function updateBallPhysics(dt) {
+  if (!ball.active) {
+    ball.x = CW / 2; ball.y = NET.y - ball.r;
+    ball.tipOffTimer -= dt;
+    if (ball.tipOffTimer <= 0) {
+      ball.active = true; ball.vx = 0; ball.vy = -750; sfx.bodyBump();
+    }
+    return;
+  }
+
+  // Modifiers
+  BALL_GRAV = BASE_BALL_GRAV;
+  if (activeGameMode === "vice" && chosenViceModifier && chosenViceModifier.id === "moon_grav") {
+    BALL_GRAV = BASE_BALL_GRAV * 0.45;
+  }
+
+  ball.vx *= (1 - 0.03 * dt);
+  ball.vy += BALL_GRAV * dt;
+  ball.x += ball.vx * dt;
+  ball.y += ball.vy * dt;
+  ball.rot += (ball.vx / ball.r) * dt;
+
+  // Screen walls
+  if (ball.x - ball.r < 0) { ball.x = ball.r; ball.vx = -ball.vx * 0.85; }
+  if (ball.x + ball.r > CW) { ball.x = CW - ball.r; ball.vx = -ball.vx * 0.85; }
+  if (ball.y - ball.r < 0) { ball.y = ball.r; ball.vy = Math.abs(ball.vy) * 0.85; }
+
+  // Net collision
+  if (ball.y + ball.r > NET.y && ball.x + ball.r > NET.x && ball.x - ball.r < NET.x + NET.w) {
+    if (ball.y < NET.y + 14) {
+      ball.y = NET.y - ball.r; ball.vy = -Math.max(680, Math.abs(ball.vy) * 0.95);
+    } else {
+      ball.vx = (ball.x < CW / 2) ? -Math.abs(ball.vx) * 0.85 : Math.abs(ball.vx) * 0.85;
+    }
+    sfx.bodyBump();
+  }
+
+  // Floor collision (Point scored)
+  if (ball.y + ball.r >= FLOOR_Y) {
+    ball.y = FLOOR_Y - ball.r; ball.active = false; sfx.whistle();
+    if (ball.x < CW / 2) scoreVolleyballPoint(2); else scoreVolleyballPoint(1);
+    return;
+  }
+
+  // Crab body & claw hits
+  for (let i = 0; i < players.length; i++) {
+    const p = players[i];
+    if (!p.activeInGame) continue;
+
+    const dx = ball.x - p.x; const dy = ball.y - p.y;
+    const dist = Math.hypot(dx, dy);
+
+    if (dist < ball.r + p.halfW) {
+      // Check if striking with rotating claws
+      const isSpikeHit = Math.abs(p.angVel) > 4.5;
+      let spikeMult = 1.0;
+      if (activeGameMode === "vice" && chosenViceModifier && chosenViceModifier.id === "super_spikes") {
+        spikeMult = 2.4;
+      }
+
+      if (isSpikeHit) {
+        ball.vy = 420 * spikeMult;
+        ball.vx = p.angVel * 68 * spikeMult;
+        sfx.clawSpike();
+      } else {
+        ball.vy = -560;
+        ball.vx = (ball.vx * 0.1) + (p.vx * 0.38);
+        sfx.bodyBump();
+      }
+      return;
+    }
+  }
+}
+
+function scoreVolleyballPoint(winnerTeam) {
+  match.scores[winnerTeam - 1]++;
+  awardCoins(2, "Point Scored");
+
+  if (match.scores[winnerTeam - 1] >= 5) {
+    match.sets[winnerTeam - 1]++;
+    sfx.cheer();
+    if (match.sets[winnerTeam - 1] >= 2) {
+      match.over = true;
+      awardCoins(50, "Match Victory!");
+      showToast(`TEAM ${winnerTeam} WINS MATCH! 🏆`, 3.5);
+      setTimeout(quitToMenu, 3500);
+      return;
+    }
+    match.currentSet++; match.scores = [0, 0];
+    showToast(`SET WON BY TEAM ${winnerTeam}!`, 1.8);
+    setTimeout(resetTipOff, 1800);
+    return;
+  }
+  showToast(winnerTeam === 1 ? "POINT BLUE! 🦀" : "POINT RED! 🦀", 1.2);
+  setTimeout(resetTipOff, 1200);
+}
+
+function resetTipOff() {
+  ball.active = false; ball.tipOffTimer = 0.9;
+  ball.vx = 0; ball.vy = 0; ball.x = CW / 2; ball.y = NET.y - ball.r;
+}
+
+function launchGame() {
+  match.scores = [0, 0]; match.sets = [0, 0]; match.over = false;
+  configureActiveCourtPlayers();
+  updateCrabSprites();
+  hideAllModals();
+  document.getElementById("game-section").classList.remove("hidden");
+
+  const badge = document.getElementById("viceActiveBadge");
+  if (activeGameMode === "vice" && chosenViceModifier) {
+    badge.innerText = `VICE: ${chosenViceModifier.title}`;
+    badge.classList.remove("hidden");
+  } else {
+    badge.classList.add("hidden");
+  }
+
+  applyControlModeUI();
+  resetTipOff();
+}
+
+function configureActiveCourtPlayers() {
+  players.forEach(p => p.activeInGame = false);
+  players[0].activeInGame = true; players[0].team = 1; players[0].x = 260;
+  players[1].activeInGame = true; players[1].isBot = true; players[1].name = "BOT RED 1"; players[1].team = 2; players[1].x = 1340;
+  players[2].activeInGame = true; players[2].isBot = true; players[2].name = "BOT BLUE 2"; players[2].team = 1; players[2].x = 540;
+  players[3].activeInGame = true; players[3].isBot = true; players[3].name = "BOT RED 2"; players[3].team = 2; players[3].x = 1060;
+}
+
+function quitToMenu() {
+  stopAllMusic();
+  hideAllModals();
+  isTsunamiRunnerActive = false;
+  document.getElementById("game-section").classList.add("hidden");
+  document.getElementById("menuPanel").classList.remove("hidden");
+}
+
+function hideAllModals() {
+  ['menuPanel', 'onlineLobbyModal', 'submodeModal', 'viceVoteModal', 'crabchatModal', 'crabvilleModal', 'islandMapModal', 'friendsModal', 'passportModal', 'twitchModal', 'leaderboardModal', 'lockerModal', 'newsCutsceneModal', 'movieCreditsModal'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("hidden");
+  });
+}
+
+function showToast(text, dur = 1.2) {
+  const t = document.getElementById("toast");
+  if (!t) return;
+  t.innerText = text;
+  t.classList.remove("hidden");
+  t.classList.remove("fade-up");
+  setTimeout(() => { t.classList.add("fade-up"); }, Math.max(800, (dur - 0.5) * 1000));
+}
+
+/* ========================================================
+   CANVAS RENDERING: STANDARD, VICE & TSUNAMI RUNNER
+   ======================================================== */
+const ctx = courtCanvas.getContext("2d");
+
+function getPlayerBodyColor(pTeam) {
+  const cw = userProfile.colorway || "classic";
+  if (cw === "rainbow") return `hsl(${(animTimer * 120) % 360}, 100%, 55%)`;
+  if (cw === "vice_cyan") return "#00ffff";
+  if (cw === "magenta") return "#ff007f";
+  if (cw === "toxic") return "#76ff03";
+  if (cw === "gold") return "#ffd700";
+  return pTeam === 1 ? "#0288d1" : "#e53935";
+}
+
+let crabImgTeam1 = new Image();
+let crabImgTeam2 = new Image();
+function updateCrabSprites() {
+  crabImgTeam1.src = makeArcadeCrabSVG(getPlayerBodyColor(1), "#022c44", "#e0f2fe");
+  crabImgTeam2.src = makeArcadeCrabSVG(getPlayerBodyColor(2), "#3b0716", "#ffe4e6");
+}
+
+function makeArcadeCrabSVG(bodyColor, outline, belly) {
+  return `data:image/svg+xml;utf8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
+    <circle cx="62" cy="16" r="8.5" fill="#111" stroke="${outline}" stroke-width="2.5"/><circle cx="64" cy="13.5" r="3" fill="#fff"/>
+    <circle cx="134" cy="16" r="8.5" fill="#111" stroke="${outline}" stroke-width="2.5"/><circle cx="136" cy="13.5" r="3" fill="#fff"/>
+    <path d="M 52 60 Q 28 68 20 80" stroke="${outline}" stroke-width="6.5" fill="none"/>
+    <path d="M 144 60 Q 168 68 176 80" stroke="${outline}" stroke-width="6.5" fill="none"/>
+    <path d="M 52 42 C 34 26 18 10 2 24 C 14 36 28 42 50 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
+    <path d="M 144 42 C 162 26 178 10 194 24 C 182 36 168 42 146 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
+    <ellipse cx="98" cy="54" rx="58" ry="19" fill="${bodyColor}" stroke="${outline}" stroke-width="4.5"/>
+    <path d="M 64 48 Q 98 40 132 48 Q 98 70 64 48 Z" fill="${belly}" opacity="0.7"/>
+  </svg>`)}`;
+}
+updateCrabSprites();
+
+function drawFlushHat(ctx, type) {
+  ctx.save();
+  ctx.translate(0, -10);
+  if (type === "pineapple") {
+    ctx.fillStyle = "#2e7d32"; ctx.fillRect(-2, -22, 4, 8);
+    ctx.fillStyle = "#f59e0b"; ctx.beginPath(); ctx.ellipse(0, -8, 9, 12, 0, 0, Math.PI * 2); ctx.fill();
+  } else if (type === "propeller") {
+    ctx.fillStyle = "#2563eb"; ctx.beginPath(); ctx.arc(0, 0, 13, Math.PI, 0); ctx.fill();
+    ctx.fillStyle = "#ef4444"; ctx.fillRect(-10, -14, 20, 3);
+  } else if (type === "captain") {
+    ctx.fillStyle = "#ffffff"; ctx.beginPath(); ctx.arc(0, -3, 14, Math.PI, 0); ctx.fill();
+    ctx.fillStyle = "#0f172a"; ctx.beginPath(); ctx.ellipse(0, 2, 16, 3.5, 0, 0, Math.PI * 2); ctx.fill();
+  } else if (type === "crown") {
+    ctx.fillStyle = "#ffd700"; ctx.beginPath();
+    ctx.moveTo(-12, 0); ctx.lineTo(-12, -12); ctx.lineTo(-6, -6);
+    ctx.lineTo(0, -14); ctx.lineTo(6, -6); ctx.lineTo(12, -12); ctx.lineTo(12, 0);
+    ctx.closePath(); ctx.fill();
+  }
+  ctx.restore();
+}
+
+function renderStandardCourt() {
+  ctx.fillStyle = "#00aced"; ctx.fillRect(0, 0, CW, CH);
+  ctx.fillStyle = "#005b96"; ctx.fillRect(0, FLOOR_Y - 200, CW, 145);
+  ctx.fillStyle = "#f5d799"; ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
+  ctx.fillStyle = "#e2be73"; ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
+  ctx.fillStyle = "#ffffff"; ctx.fillRect(NET.x, NET.y, NET.w, FLOOR_Y - NET.y);
+
+  drawCourtPlayersAndBall();
+  drawRetroScore(CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], "#0288d1", "#d50000");
+}
+
+function renderViceCourt() {
+  const grad = ctx.createLinearGradient(0, 0, 0, FLOOR_Y - 180);
+  grad.addColorStop(0, "#00e5ff"); grad.addColorStop(0.55, "#e040fb");
+  grad.addColorStop(0.85, "#ff4081"); grad.addColorStop(1, "#ffe57f");
+  ctx.fillStyle = grad; ctx.fillRect(0, 0, CW, CH);
+
+  ctx.fillStyle = "#311b92"; ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
+  ctx.fillStyle = "#1a0033"; ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
+  ctx.fillStyle = "#00ffff"; ctx.fillRect(NET.x, NET.y, NET.w, FLOOR_Y - NET.y);
+
+  drawCourtPlayersAndBall();
+  drawRetroScore(CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], "#00ffff", "#ff007f");
+}
+
+function renderTsunamiRunnerScene() {
+  // Stormy sky with lightning
+  ctx.fillStyle = "#0f172a"; ctx.fillRect(0, 0, CW, CH);
+  if (Math.random() < 0.02) {
+    ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+    ctx.fillRect(0, 0, CW, CH);
+  }
+
+  // Raging ocean tide below
+  ctx.fillStyle = "#0369a1"; ctx.fillRect(0, FLOOR_Y - 20, CW, CH - (FLOOR_Y - 20));
+
+  // Collapsing wooden pier walkway with gaps
+  const scrollOffset = tsunamiProgress % 50;
+  ctx.fillStyle = "#78350f";
+  ctx.fillRect(0, FLOOR_Y, CW, 30);
+
+  // Draw missing pier gaps
+  pierGaps.forEach(g => {
+    const screenX = g.startX - tsunamiProgress;
+    if (screenX > -g.width && screenX < CW) {
+      ctx.fillStyle = "#0284c7";
+      ctx.fillRect(screenX, FLOOR_Y, g.width, 30);
+    }
+  });
+
+  // Wood plank lines
+  ctx.strokeStyle = "#451a03"; ctx.lineWidth = 3;
+  for (let px = -scrollOffset; px < CW; px += 45) {
+    ctx.beginPath(); ctx.moveTo(px, FLOOR_Y); ctx.lineTo(px, FLOOR_Y + 30); ctx.stroke();
+  }
+
+  // Draw running crabs
+  players.forEach(p => {
+    if (!p.activeInGame) return;
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.angle);
+    ctx.drawImage(p.team === 1 ? crabImgTeam1 : crabImgTeam2, -p.width / 2, -p.height / 2, p.width, p.height);
+    drawFlushHat(ctx, p.hat);
+    ctx.font = "900 13px sans-serif"; ctx.fillStyle = "#ffe600"; ctx.textAlign = "center";
+    ctx.fillText(p.name, 0, -p.height / 2 - 16);
+    ctx.restore();
+  });
+
+  // Distance & Progress HUD
+  ctx.fillStyle = "#000"; ctx.fillRect(CW / 2 - 250, 24, 500, 36);
+  ctx.fillStyle = "#ffe600"; ctx.font = "900 20px Impact"; ctx.textAlign = "center";
+  ctx.fillText(`🥞 WAFFLE HOUSE ESCAPE: ${Math.min(TSUNAMI_GOAL, Math.floor(tsunamiProgress))} / ${TSUNAMI_GOAL} FT`, CW / 2, 49);
+}
+
+function drawCourtPlayersAndBall() {
+  players.forEach(p => {
+    if (!p.activeInGame) return;
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.angle);
+    ctx.drawImage(p.team === 1 ? crabImgTeam1 : crabImgTeam2, -p.width / 2, -p.height / 2, p.width, p.height);
+    drawFlushHat(ctx, p.hat);
+    ctx.font = "900 13px sans-serif"; ctx.fillStyle = "#ffe600"; ctx.textAlign = "center";
+    ctx.fillText(p.name, 0, -p.height / 2 - 16);
+    ctx.restore();
+  });
+
+  // Volleyball
+  let ballRadius = ball.r;
+  if (activeGameMode === "vice" && chosenViceModifier && chosenViceModifier.id === "giant_coconut") {
+    ballRadius = ball.r * 1.6;
+  }
+  ctx.save();
+  ctx.translate(ball.x, ball.y);
+  ctx.rotate(ball.rot);
+  ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(0, 0, ballRadius, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = activeGameMode === "vice" ? "#ff007f" : "#ffcc00";
+  ctx.beginPath(); ctx.arc(0, 0, ballRadius, 1.4, 2.8); ctx.lineTo(0, 0); ctx.fill();
+  ctx.strokeStyle = "#111"; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.arc(0, 0, ballRadius, 0, Math.PI * 2); ctx.stroke();
+  ctx.restore();
+}
+
+function drawRetroScore(x, y, s1, s2, c1, c2) {
+  ctx.save(); ctx.translate(x, y);
+  const w = 90; const h = 50;
+  ctx.fillStyle = "#000"; ctx.fillRect(-w - 4, -h / 2, w, h); ctx.fillRect(4, -h / 2, w, h);
+  ctx.font = "900 32px Impact"; ctx.textAlign = "center";
+  ctx.fillStyle = c1; ctx.fillText(s1, -w / 2 - 4, 10);
+  ctx.fillStyle = c2; ctx.fillText(s2, w / 2 + 4, 10);
+  ctx.restore();
+}
+
+/* ========================================================
+   CRABVILLE: 2D UNIVERSE & INTERACTION ENGINE
    ======================================================== */
 let activeCrabvilleZone = 'plaza';
 let crabvilleWaddler = {
@@ -1050,23 +2092,18 @@ let crabvilleWaddler = {
 const cvCanvas = document.getElementById("crabvilleCanvas");
 const cvCtx = cvCanvas ? cvCanvas.getContext("2d") : null;
 
-// HOUSES CATALOG
 const HOMES_CATALOG = [
-  { id: "beach_cottage", name: "Beachside Shell Cottage", price: 0, icon: "🛖", desc: "Cozy starter bungalow with driftwood planks." },
-  { id: "sand_castle", name: "Sandstone Fortress", price: 150, icon: "🏰", desc: "Grand parapets with oceanfront sunset terrace." },
-  { id: "tiki_villa", name: "Tiki Palm Villa", price: 400, icon: "🌴", desc: "Bamboo vaulted ceilings and thatch verandas." },
-  { id: "neon_pad", name: "Vice Neon Penthouse", price: 800, icon: "🌆", desc: "Synthwave magenta lighting and infinity tidepool." }
+  { id: "beach_cottage", name: "Beachside Shell Cottage", price: 0, icon: "🛖" },
+  { id: "sand_castle", name: "Sandstone Fortress", price: 150, icon: "🏰" },
+  { id: "tiki_villa", name: "Tiki Palm Villa", price: 400, icon: "🌴" },
+  { id: "neon_pad", name: "Vice Neon Penthouse", price: 800, icon: "🌆" }
 ];
 
-// BRODIE'S MERCH
 const BRODIE_SHOP_ITEMS = [
-  { id: "lava_lamp", name: "Psychedelic Lava Lamp", price: 35, icon: "🪔" },
-  { id: "surfboard", name: "Brodie's Pro Surfboard", price: 55, icon: "🏄" },
-  { id: "palm_mat", name: "Tiki Beach Rug", price: 20, icon: "🧶" },
-  { id: "arcade_cab", name: "Retro Crab Arcade Mini", price: 110, icon: "🕹️" },
-  { id: "waffle_platter", name: "Hot Hashbrown Platter", price: 25, icon: "🥞" },
-  { id: "disco_ball", name: "Nightclub Mirror Ball", price: 85, icon: "🪩" },
-  { id: "coffee_brewer", name: "Chrome Espresso Station", price: 45, icon: "☕" }
+  { id: "lava_lamp", name: "Lava Lamp", price: 35, icon: "🪔" },
+  { id: "surfboard", name: "Surfboard", price: 55, icon: "🏄" },
+  { id: "palm_mat", name: "Tiki Rug", price: 20, icon: "🧶" },
+  { id: "arcade_cab", name: "Arcade Mini", price: 110, icon: "🕹️" }
 ];
 
 function openCrabvilleDirect() {
@@ -1082,15 +2119,13 @@ function submitPassportLogin() {
   const pin = document.getElementById("passportPinInput").value.trim();
   if (pin.length !== 4) { alert("PIN must be exactly 4 digits!"); return; }
   userProfile.name = user;
-  userProfile.pinHash = btoa(`${user}:${pin}:AUTH_PASSPORT`);
+  userProfile.pinHash = btoa(`${user}:${pin}`);
   saveCareerSettings();
   document.getElementById("passportModal").classList.add("hidden");
   launchCrabvilleWorld();
 }
 
-function closePassportModal() {
-  document.getElementById("passportModal").classList.add("hidden");
-}
+function closePassportModal() { document.getElementById("passportModal").classList.add("hidden"); }
 
 function launchCrabvilleWorld() {
   hideAllModals();
@@ -1103,8 +2138,7 @@ function launchCrabvilleWorld() {
 }
 
 function closeCrabville() {
-  stopAllMusic();
-  hideRpgDialogue();
+  stopAllMusic(); hideRpgDialogue();
   document.getElementById("crabvilleModal").classList.add("hidden");
   document.getElementById("menuPanel").classList.remove("hidden");
 }
@@ -1114,8 +2148,7 @@ function closeWorldMapModal() { document.getElementById("islandMapModal").classL
 
 function travelToZone(zoneKey) {
   activeCrabvilleZone = zoneKey;
-  closeWorldMapModal();
-  hideRpgDialogue();
+  closeWorldMapModal(); hideRpgDialogue();
   crabvilleWaddler.x = 640; crabvilleWaddler.y = 520;
   crabvilleWaddler.tx = 640; crabvilleWaddler.ty = 520;
 
@@ -1132,7 +2165,6 @@ function travelToZone(zoneKey) {
 
   if (zoneKey === 'nightclub') playNightclubRaveMusic();
   else stopAllMusic();
-
   sfx.jump();
 }
 
@@ -1158,7 +2190,6 @@ function renderBackpackFurnitureUI() {
   });
 }
 
-// IN-WORLD RPG DIALOGUE SYSTEM (NO ALERT/PROMPT WINDOWS)
 function showRpgDialogue(avatarIcon, name, text, options = []) {
   const box = document.getElementById("rpgDialogueBox");
   if (!box) return;
@@ -1173,11 +2204,7 @@ function showRpgDialogue(avatarIcon, name, text, options = []) {
     const btn = document.createElement("button");
     btn.className = "rpg-btn";
     btn.innerText = opt.label;
-    btn.onclick = (e) => {
-      e.stopPropagation();
-      sfx.blip();
-      opt.action();
-    };
+    btn.onclick = (e) => { e.stopPropagation(); sfx.blip(); opt.action(); };
     optContainer.appendChild(btn);
   });
 
@@ -1197,81 +2224,19 @@ function hideRpgDialogue() {
   if (box) box.classList.add("hidden");
 }
 
-// INTERACTION HANDLERS (AT LEAST 10 PER ZONE)
-function checkZoneInteractables(clickX, clickY) {
-  if (activeCrabvilleZone === 'plaza') {
-    // 1. Brodie's Surf Shack
-    if (clickX > 160 && clickX < 440 && clickY > 180 && clickY < 420) {
-      talkToBrodieShop(); return true;
+if (cvCanvas) {
+  cvCanvas.addEventListener("pointerdown", (e) => {
+    const rect = cvCanvas.getBoundingClientRect();
+    const clickX = (e.clientX - rect.left) * (cvCanvas.width / rect.width);
+    const clickY = (e.clientY - rect.top) * (cvCanvas.height / rect.height);
+
+    if (activeCrabvilleZone === 'plaza' && clickX > 170 && clickX < 430 && clickY > 210 && clickY < 390) {
+      talkToBrodieShop(); return;
     }
-    // 2. Shell Real Estate
-    if (clickX > 840 && clickX < 1120 && clickY > 180 && clickY < 420) {
-      talkToRealEstate(); return true;
-    }
-    // 3. Central Fountain
-    if (Math.hypot(clickX - 640, clickY - 480) < 65) {
-      if (userProfile.crabCoins >= 1) {
-        awardCoins(-1, "Wishing Fountain");
-        showToast("Tossed 1 CrabCoin! Good tide fortune awaits... 🌊", 2.0);
-        sfx.ding();
-      } else {
-        showToast("You have no coins to toss!", 1.5);
-      }
-      return true;
-    }
-    // 4. News Bulletin
-    if (clickX > 480 && clickX < 560 && clickY > 240 && clickY < 340) {
-      showRpgDialogue("📰", "Plaza Bulletin", "LATEST NEWS: Audrey PoppaGee tracks 0% hurricane risk in CrabVille today! Fresh waffles on special at the boulevard!");
-      return true;
-    }
-    // 5. Juice Bar
-    if (clickX > 720 && clickX < 800 && clickY > 240 && clickY < 340) {
-      showRpgDialogue("🍹", "Smoothie Bartender", "Enjoy a freshly blended Kelp-Berry Breeze for only 5 CC!", [
-        { label: "Buy Smoothie (5 CC)", action: () => {
-          if (userProfile.crabCoins >= 5) {
-            awardCoins(-5, "Smoothie"); showToast("Delicious! Restored your waddle energy! 🥤", 2.0);
-          } else {
-            showRpgDialogue("🍹", "Smoothie Bartender", "Aww man, you don't have enough CrabCoins! Go spike some volleyballs and come back, dude!");
-          }
-        }}
-      ]);
-      return true;
-    }
-  } else if (activeCrabvilleZone === 'diner') {
-    // 6. Sizzle Waffles
-    if (clickX > 320 && clickX < 460 && clickY > 280 && clickY < 380) {
-      showToast("Sizzling golden waffles on the grill! Smells heavenly! 🥞", 2.0);
-      sfx.ding(); return true;
-    }
-    // 7. Coffee Urn
-    if (clickX > 500 && clickX < 600 && clickY > 280 && clickY < 380) {
-      showToast("Poured a hot cup of fresh diner coffee! ☕", 1.8);
-      sfx.blip(); return true;
-    }
-    // 8. Jukebox
-    if (clickX > 940 && clickX < 1040 && clickY > 260 && clickY < 400) {
-      showToast("🎶 Jukebox playing retro beach diner tunes!", 2.0);
-      sfx.jump(); return true;
-    }
-  } else if (activeCrabvilleZone === 'beach') {
-    // 9. Nautical Telescope
-    if (clickX > 760 && clickX < 840 && clickY > 360 && clickY < 460) {
-      showToast("🔭 Peeking through the lens: The volleyball championship net is sparkling in the distance!", 2.5);
-      sfx.blip(); return true;
-    }
-    // 10. Cast Fishing Line
-    if (clickX > 1000 && clickX < 1140 && clickY > 400 && clickY < 500) {
-      showToast("🎣 Cast line into the deep tide... Caught a sparkling beach shell! (+3 CC)", 2.0);
-      awardCoins(3, "Beachcombing"); sfx.ding(); return true;
-    }
-  } else if (activeCrabvilleZone === 'nightclub') {
-    // 11. DJ Booth Scratch
-    if (clickX > 520 && clickX < 760 && clickY > 200 && clickY < 340) {
-      showToast("🎧 DJ Crab scratches the turntable! WICKA-WICKA! 🎶", 2.0);
-      sfx.clawSpike(); return true;
-    }
-  }
-  return false;
+    crabvilleWaddler.tx = clickX;
+    crabvilleWaddler.ty = Math.max(340, Math.min(660, clickY));
+    crabvilleWaddler.facing = clickX >= crabvilleWaddler.x ? 1 : -1;
+  });
 }
 
 function talkToBrodieShop() {
@@ -1282,53 +2247,18 @@ function talkToBrodieShop() {
         awardCoins(-item.price, item.name);
         userProfile.homeItems.push({ id: item.id, x: 640, y: 520 });
         saveCareerSettings();
-        showRpgDialogue("🏄", "Brodie the Beachcomber", `"Righteous choice, little crustacean! Placed ${item.name} in your beach house. Keep catching those gnarly waves!"`);
+        showRpgDialogue("🏄", "Brodie", `"Righteous choice! Added ${item.name} to your beach house!"`);
       } else {
-        showRpgDialogue("🏄", "Brodie the Beachcomber", `"Aww man, you don't have enough CrabCoins, dude! You need ${item.price} CC. Go spike some volleyballs in the tournament and come back!"`);
+        showRpgDialogue("🏄", "Brodie", `"Aww man, you need ${item.price} CC! Win some volleyball matches and come back!"`);
       }
     }
   }));
-  showRpgDialogue("🏄", "Brodie the Beachcomber", `"Duuuuude! Welcome to my surf shack! Everything's handcrafted from driftwood and recycled reef shells. What can I getcha?"`, options);
-}
-
-function talkToRealEstate() {
-  const options = HOMES_CATALOG.map(h => ({
-    label: `${h.icon} ${h.name} (${h.price === 0 ? "FREE" : h.price + " CC"})`,
-    action: () => {
-      if (userProfile.ownedHomes.includes(h.id)) {
-        userProfile.currentHome = h.id; saveCareerSettings();
-        showRpgDialogue("🏠", "Shell Real Estate", `"You already own this residence! Moved you into your ${h.name}."`);
-      } else if (userProfile.crabCoins >= h.price) {
-        awardCoins(-h.price, h.name);
-        userProfile.ownedHomes.push(h.id);
-        userProfile.currentHome = h.id; saveCareerSettings();
-        showRpgDialogue("🏠", "Shell Real Estate", `"Congratulations on your new title deed! Welcome to your ${h.name}!"`);
-      } else {
-        showRpgDialogue("🏠", "Shell Real Estate", `"Aww man, you don't have enough CrabCoins! This architectural property costs ${h.price} CC. Win some volleyball matches and come back!"`);
-      }
-    }
-  }));
-  showRpgDialogue("🏠", "Shell Real Estate", `"Welcome to CrabVille Island Properties! Upgrade your private beach bungalow with panoramic ocean views:"`, options);
-}
-
-// CLICK TO WADDLE & INTERACT
-if (cvCanvas) {
-  cvCanvas.addEventListener("pointerdown", (e) => {
-    const rect = cvCanvas.getBoundingClientRect();
-    const clickX = (e.clientX - rect.left) * (cvCanvas.width / rect.width);
-    const clickY = (e.clientY - rect.top) * (cvCanvas.height / rect.height);
-
-    if (checkZoneInteractables(clickX, clickY)) return;
-
-    crabvilleWaddler.tx = clickX;
-    crabvilleWaddler.ty = Math.max(340, Math.min(660, clickY));
-    crabvilleWaddler.facing = clickX >= crabvilleWaddler.x ? 1 : -1;
-  });
+  showRpgDialogue("🏄", "Brodie", `"Duuude! What's crackin'? Welcome to the surf shack!"`, options);
 }
 
 function triggerMyEmote(emoteKey) {
   crabvilleWaddler.emote = emoteKey;
-  crabvilleWaddler.emoteTimer = 3.5;
+  crabvilleWaddler.emoteTimer = 3.2;
   sfx.blip();
 }
 
@@ -1337,12 +2267,12 @@ function sendCvLiveChat() {
   const txt = inp.value.trim();
   if (!txt) return;
   crabvilleWaddler.speech = txt;
-  crabvilleWaddler.speechTimer = 5.0;
+  crabvilleWaddler.speechTimer = 4.5;
   inp.value = "";
   sfx.blip();
 }
 
-// FRIENDS & INVITES SYSTEM
+// FRIENDS & INVITES
 function openFriendsModal() { document.getElementById("friendsModal").classList.remove("hidden"); renderFriendsList(); }
 function closeFriendsModal() { document.getElementById("friendsModal").classList.add("hidden"); }
 
@@ -1354,7 +2284,7 @@ function addFriendDirect() {
   saveCareerSettings();
   inp.value = "";
   renderFriendsList();
-  showToast(`Added ${name} to your friends!`, 1.5);
+  showToast(`Added ${name}!`, 1.5);
   sfx.ding();
 }
 
@@ -1362,36 +2292,36 @@ function renderFriendsList() {
   const box = document.getElementById("friendsListBox");
   if (!box) return;
   box.innerHTML = "";
-  if (userProfile.friends.length === 0) {
-    box.innerHTML = "<span style='color:#94a3b8;'>No friends added yet. Add one above!</span>";
-    return;
-  }
   userProfile.friends.forEach(f => {
     const row = document.createElement("div");
     row.className = "friend-item-row";
-    row.innerHTML = `<span>🦀 <b>${f}</b> (Online)</span><button onclick="inviteFriendToHouse('${f}')" style="font-size:10px;padding:2px 6px;background:#0284c7;color:#fff;border-radius:4px;border:none;cursor:pointer;">Invite</button>`;
+    row.innerHTML = `<span>🦀 <b>${f}</b> (Online)</span><button onclick="inviteFriendToHouse('${f}')" style="font-size:10px;padding:2px 6px;background:#0284c7;color:#fff;border-radius:4px;border:none;">Invite</button>`;
     box.appendChild(row);
   });
 }
 
-function inviteFriendToHouse(name) {
-  showToast(`Invited ${name} to your beach house!`, 2.0);
-  sfx.whistle();
+function inviteFriendToHouse(name) { showToast(`Invited ${name} to your beach house!`, 1.8); sfx.whistle(); }
+function broadcastHousePartyInvite() { showToast("🎉 House party invite sent to all friends!", 2.2); sfx.cheer(); closeFriendsModal(); }
+
+function renderLeaderboardRows() {
+  const container = document.getElementById("leaderboardRowsContainer");
+  if (!container) return;
+  const rows = [
+    { name: userProfile.name, time: userProfile.bestWaffleTime || "48s", points: "3,820" },
+    { name: "CLAW_MASTER", time: "52s", points: "2,940" },
+    { name: "REEF_RUNNER", time: "56s", points: "2,410" },
+    { name: "SANDY_CHEEKS", time: "59s", points: "1,980" }
+  ];
+  container.innerHTML = rows.map((r, i) => `
+    <div style="display:flex;justify-content:space-between;padding:4px 8px;border-bottom:1px solid #eee;">
+      <span>${i + 1}. 🦀 ${r.name}</span><span>${r.time}</span><span>${r.points}</span>
+    </div>
+  `).join("");
 }
 
-function broadcastHousePartyInvite() {
-  showToast("🎉 Beach House party invitation broadcast to all friends!", 2.5);
-  sfx.cheer();
-  closeFriendsModal();
-}
-
-/* ========================================================
-   HIGH-QUALITY 2D VECTOR RENDERING FOR ALL ZONES
-   ======================================================== */
 function updateAndRenderCrabville(dt) {
   if (!cvCtx || document.getElementById("crabvilleModal").classList.contains("hidden")) return;
 
-  // Move crab toward target
   const dx = crabvilleWaddler.tx - crabvilleWaddler.x;
   const dy = crabvilleWaddler.ty - crabvilleWaddler.y;
   const dist = Math.hypot(dx, dy);
@@ -1407,7 +2337,6 @@ function updateAndRenderCrabville(dt) {
     crabvilleWaddler.pincerAnim = Math.sin(animTimer * 3) * 0.1;
   }
 
-  // Update timers
   if (crabvilleWaddler.emoteTimer > 0) {
     crabvilleWaddler.emoteTimer -= dt;
     if (crabvilleWaddler.emoteTimer <= 0) crabvilleWaddler.emote = null;
@@ -1417,599 +2346,80 @@ function updateAndRenderCrabville(dt) {
     if (crabvilleWaddler.speechTimer <= 0) crabvilleWaddler.speech = "";
   }
 
-  // 1. ZONE: TOWN PLAZA
-  if (activeCrabvilleZone === 'plaza') {
-    // Sky with gradient & clouds
-    const sky = cvCtx.createLinearGradient(0, 0, 0, 300);
-    sky.addColorStop(0, "#38bdf8"); sky.addColorStop(1, "#bae6fd");
-    cvCtx.fillStyle = sky; cvCtx.fillRect(0, 0, 1280, 720);
+  // Draw Plaza scene
+  cvCtx.fillStyle = "#38bdf8"; cvCtx.fillRect(0, 0, 1280, 720);
+  cvCtx.fillStyle = "#0284c7"; cvCtx.fillRect(0, 200, 1280, 100);
+  cvCtx.fillStyle = "#fef08a"; cvCtx.fillRect(0, 300, 1280, 420);
 
-    // Distant Ocean with shore wave
-    cvCtx.fillStyle = "#0284c7"; cvCtx.fillRect(0, 200, 1280, 100);
-    cvCtx.fillStyle = "#e0f2fe"; cvCtx.fillRect(0, 290, 1280, 12);
+  // Brodie's Surf Shack
+  cvCtx.fillStyle = "#78350f"; cvCtx.fillRect(170, 210, 260, 180);
+  cvCtx.fillStyle = "#15803d"; cvCtx.beginPath();
+  cvCtx.moveTo(140, 210); cvCtx.lineTo(300, 120); cvCtx.lineTo(460, 210); cvCtx.closePath();
+  cvCtx.fill();
+  cvCtx.fillStyle = "#ffe600"; cvCtx.font = "900 18px Impact"; cvCtx.fillText("🏄 BRODIE'S SURF SHACK 🏄", 190, 195);
 
-    // Textured Cobblestone Plaza Floor
-    cvCtx.fillStyle = "#fef08a"; cvCtx.fillRect(0, 300, 1280, 420);
-    cvCtx.strokeStyle = "#ca8a04"; cvCtx.lineWidth = 1.5;
-    for (let py = 320; py < 720; py += 36) {
-      for (let px = (py % 72 === 0 ? 0 : 25); px < 1280; px += 50) {
-        cvCtx.strokeRect(px, py, 46, 30);
-      }
-    }
+  // Waddler Crab
+  cvCtx.save();
+  cvCtx.translate(crabvilleWaddler.x, crabvilleWaddler.y);
+  cvCtx.scale(0.85 * crabvilleWaddler.facing, 0.85);
 
-    // BRODIE'S SURF SHACK (Deep detail: wood grain, planks, surfboards)
-    cvCtx.fillStyle = "#78350f"; cvCtx.fillRect(170, 210, 260, 180);
-    cvCtx.strokeStyle = "#451a03"; cvCtx.lineWidth = 3; cvCtx.strokeRect(170, 210, 260, 180);
-    for (let wy = 230; wy < 390; wy += 20) {
-      cvCtx.beginPath(); cvCtx.moveTo(170, wy); cvCtx.lineTo(430, wy); cvCtx.stroke();
-    }
-    // Palm Thatch Roof
-    cvCtx.fillStyle = "#15803d"; cvCtx.beginPath();
-    cvCtx.moveTo(140, 210); cvCtx.lineTo(300, 120); cvCtx.lineTo(460, 210); cvCtx.closePath();
-    cvCtx.fill(); cvCtx.stroke();
-    cvCtx.fillStyle = "#ffe600"; cvCtx.font = "900 18px Impact"; cvCtx.fillText("🏄 BRODIE'S SURF SHACK 🏄", 190, 195);
-    cvCtx.fillStyle = "#fff"; cvCtx.font = "900 13px sans-serif"; cvCtx.fillText("TAP TO ENTER SHOP", 235, 300);
+  cvCtx.fillStyle = getPlayerBodyColor(1); cvCtx.strokeStyle = "#000"; cvCtx.lineWidth = 4;
+  cvCtx.beginPath(); cvCtx.ellipse(0, 4, 48, 22, 0, 0, Math.PI * 2); cvCtx.fill(); cvCtx.stroke();
 
-    // SHELL REAL ESTATE (Shingled Roof, Brick facade, Pillars)
-    cvCtx.fillStyle = "#0f766e"; cvCtx.fillRect(850, 210, 260, 180);
-    cvCtx.strokeRect(850, 210, 260, 180);
-    cvCtx.fillStyle = "#be123c"; cvCtx.beginPath();
-    cvCtx.moveTo(820, 210); cvCtx.lineTo(980, 120); cvCtx.lineTo(1140, 210); cvCtx.closePath();
-    cvCtx.fill(); cvCtx.stroke();
-    cvCtx.fillStyle = "#ffe600"; cvCtx.font = "900 18px Impact"; cvCtx.fillText("🏠 SHELL REAL ESTATE 🏠", 870, 195);
-    cvCtx.fillStyle = "#fff"; cvCtx.font = "900 13px sans-serif"; cvCtx.fillText("BUY HOUSES & UPGRADES", 890, 300);
+  // Eyestalks
+  cvCtx.fillStyle = "#fff";
+  cvCtx.beginPath(); cvCtx.arc(-16, -18, 9, 0, Math.PI * 2); cvCtx.fill(); cvCtx.stroke();
+  cvCtx.beginPath(); cvCtx.arc(16, -18, 9, 0, Math.PI * 2); cvCtx.fill(); cvCtx.stroke();
+  cvCtx.fillStyle = "#000";
+  cvCtx.beginPath(); cvCtx.arc(-16 + crabvilleWaddler.facing * 3, -18, 4, 0, Math.PI * 2); cvCtx.fill();
+  cvCtx.beginPath(); cvCtx.arc(16 + crabvilleWaddler.facing * 3, -18, 4, 0, Math.PI * 2); cvCtx.fill();
 
-    // Central Plaza Fountain with Water Reflections
-    cvCtx.fillStyle = "#00bcd4"; cvCtx.beginPath();
-    cvCtx.ellipse(640, 480, 110, 48, 0, 0, Math.PI * 2); cvCtx.fill();
-    cvCtx.strokeStyle = "#0891b2"; cvCtx.lineWidth = 6; cvCtx.stroke();
-    cvCtx.fillStyle = "rgba(255,255,255,0.6)";
-    cvCtx.beginPath(); cvCtx.arc(640, 475, 12 + Math.sin(animTimer * 6) * 3, 0, Math.PI*2); cvCtx.fill();
-    cvCtx.fillStyle = "#0369a1"; cvCtx.font = "900 12px sans-serif"; cvCtx.fillText("WISHING FOUNTAIN", 585, 485);
-  }
+  drawFlushHat(cvCtx, userProfile.unlockedHats[0] || "pineapple");
 
-  // 2. ZONE: 24/7 WAFFLE DINER
-  else if (activeCrabvilleZone === 'diner') {
-    // Glossy Checkerboard Floor
-    cvCtx.fillStyle = "#1e1b4b"; cvCtx.fillRect(0, 0, 1280, 320);
-    for (let dy = 320; dy < 720; dy += 50) {
-      for (let dx = 0; dx < 1280; dx += 50) {
-        cvCtx.fillStyle = ((dx / 50 + dy / 50) % 2 === 0) ? "#f8fafc" : "#0f172a";
-        cvCtx.fillRect(dx, dy, 50, 50);
-      }
-    }
-    // Diner Stainless Counter & Warm Lighting
-    cvCtx.fillStyle = "#e2e8f0"; cvCtx.fillRect(200, 260, 880, 100);
-    cvCtx.strokeStyle = "#94a3b8"; cvCtx.lineWidth = 4; cvCtx.strokeRect(200, 260, 880, 100);
-    cvCtx.fillStyle = "#ffd54f"; cvCtx.font = "900 32px Impact";
-    cvCtx.fillText("🥞 24-HOUR ALL-NIGHT WAFFLE GRILL 🥞", 380, 160);
-    // Red Stools
-    for (let sx = 260; sx < 1040; sx += 110) {
-      cvCtx.fillStyle = "#dc2626"; cvCtx.beginPath(); cvCtx.ellipse(sx, 370, 28, 14, 0, 0, Math.PI*2); cvCtx.fill();
-      cvCtx.fillStyle = "#64748b"; cvCtx.fillRect(sx - 4, 370, 8, 40);
-    }
-  }
+  cvCtx.font = "900 13px sans-serif"; cvCtx.fillStyle = "#000"; cvCtx.textAlign = "center";
+  cvCtx.fillText(userProfile.name || "YOU", 0, -36);
 
-  // 3. ZONE: THE BEACH & PIER
-  else if (activeCrabvilleZone === 'beach') {
-    cvCtx.fillStyle = "#38bdf8"; cvCtx.fillRect(0, 0, 1280, 720);
-    cvCtx.fillStyle = "#0284c7"; cvCtx.fillRect(0, 200, 1280, 160);
-    cvCtx.fillStyle = "#fef08a"; cvCtx.fillRect(0, 360, 1280, 360);
-
-    // Weathered Red-and-White Lighthouse
-    cvCtx.fillStyle = "#ef4444"; cvCtx.fillRect(160, 100, 90, 300);
-    cvCtx.fillStyle = "#ffffff"; cvCtx.fillRect(160, 160, 90, 60); cvCtx.fillRect(160, 280, 90, 60);
-    cvCtx.fillStyle = "#ffd54f"; cvCtx.beginPath(); cvCtx.arc(205, 90, 26, 0, Math.PI * 2); cvCtx.fill();
-
-    // Heavy Timber Pier Walkway with Pilings
-    cvCtx.fillStyle = "#78350f"; cvCtx.fillRect(380, 420, 760, 85);
-    cvCtx.strokeStyle = "#3e2723"; cvCtx.lineWidth = 3;
-    for (let px = 380; px < 1140; px += 35) {
-      cvCtx.strokeRect(px, 420, 35, 85);
-    }
-  }
-
-  // 4. ZONE: RAVE NIGHTCLUB (Looping EDM beat active)
-  else if (activeCrabvilleZone === 'nightclub') {
-    cvCtx.fillStyle = "#030712"; cvCtx.fillRect(0, 0, 1280, 720);
-    // Reactive Strobe Dance Tiles
-    const step = 85;
-    for (let x = 150; x < 1130; x += step) {
-      for (let y = 350; y < 690; y += step) {
-        cvCtx.fillStyle = `hsl(${((x + y + animTimer * 220) % 360)}, 100%, 55%)`;
-        cvCtx.fillRect(x, y, step - 6, step - 6);
-      }
-    }
-    // DJ Booth with Turntables
-    cvCtx.fillStyle = "#ff007f"; cvCtx.fillRect(520, 210, 240, 120);
-    cvCtx.fillStyle = "#00ffff"; cvCtx.font = "900 24px Impact"; cvCtx.fillText("🎧 DJ CRAB RAVE 🎧", 550, 275);
-    // Disco Ball
-    cvCtx.fillStyle = "#e2e8f0"; cvCtx.beginPath(); cvCtx.arc(640, 70, 35, 0, Math.PI*2); cvCtx.fill();
-  }
-
-  // 5. ZONE: MY BEACH HOUSE (Customizable)
-  else if (activeCrabvilleZone === 'house') {
-    // Polished Hardwood Planks
-    cvCtx.fillStyle = "#451a03"; cvCtx.fillRect(0, 0, 1280, 720);
-    cvCtx.fillStyle = "#9a3412"; cvCtx.fillRect(0, 320, 1280, 400);
-    cvCtx.strokeStyle = "#7c2d12"; cvCtx.lineWidth = 2;
-    for (let fy = 340; fy < 720; fy += 40) {
-      cvCtx.beginPath(); cvCtx.moveTo(0, fy); cvCtx.lineTo(1280, fy); cvCtx.stroke();
-    }
-    // Ocean View Window
-    cvCtx.fillStyle = "#38bdf8"; cvCtx.fillRect(440, 80, 400, 180);
-    cvCtx.strokeStyle = "#fff"; cvCtx.lineWidth = 8; cvCtx.strokeRect(440, 80, 400, 180);
-    cvCtx.fillStyle = "#0284c7"; cvCtx.fillRect(440, 180, 400, 80);
-
-    cvCtx.fillStyle = "#ffe600"; cvCtx.font = "900 24px Impact";
-    cvCtx.fillText(`RESIDENCE: ${userProfile.currentHome.replace('_', ' ').toUpperCase()}`, 480, 50);
-
-    // Placed Furniture
-    userProfile.homeItems.forEach(item => {
-      const cat = BRODIE_SHOP_ITEMS.find(b => b.id === item.id);
-      if (cat) {
-        cvCtx.font = "46px sans-serif";
-        cvCtx.fillText(cat.icon, item.x - 24, item.y);
-      }
-    });
-  }
-
-  // DRAW ACTUAL ARTICULATED WALKING CRAB (NOT A FLAT OVAL)
-  drawArticulatedCrab(cvCtx, crabvilleWaddler);
-}
-
-// DETAILED CRAB RENDERER (LEGS, PINCERS, ARTICULATED SHELL)
-function drawArticulatedCrab(ctx, crab) {
-  ctx.save();
-  ctx.translate(crab.x, crab.y);
-  ctx.scale(0.85 * crab.facing, 0.85);
-
-  const bodyCol = getPlayerBodyColor(1);
-
-  // 6 Animated Walking Legs
-  ctx.strokeStyle = "#1e293b"; ctx.lineWidth = 4;
-  for (let l = -1; l <= 1; l++) {
-    const legOffset = Math.sin(crab.legAnim + l * 1.5) * 6;
-    // Left legs
-    ctx.beginPath();
-    ctx.moveTo(-24, 10 + l * 8);
-    ctx.lineTo(-46 + legOffset, 24 + l * 8);
-    ctx.stroke();
-    // Right legs
-    ctx.beginPath();
-    ctx.moveTo(24, 10 + l * 8);
-    ctx.lineTo(46 - legOffset, 24 + l * 8);
-    ctx.stroke();
-  }
-
-  // Dual Claws / Pincers that Snap
-  ctx.save();
-  ctx.translate(-42, -8);
-  ctx.rotate(-0.2 + crab.pincerAnim);
-  ctx.fillStyle = bodyCol; ctx.strokeStyle = "#000"; ctx.lineWidth = 3;
-  ctx.beginPath(); ctx.arc(0, 0, 16, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-  // Claw clamp
-  ctx.beginPath(); ctx.moveTo(6, -12); ctx.lineTo(18, -4); ctx.lineTo(6, 4); ctx.fill(); ctx.stroke();
-  ctx.restore();
-
-  ctx.save();
-  ctx.translate(42, -8);
-  ctx.rotate(0.2 - crab.pincerAnim);
-  ctx.fillStyle = bodyCol; ctx.strokeStyle = "#000"; ctx.lineWidth = 3;
-  ctx.beginPath(); ctx.arc(0, 0, 16, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(-6, -12); ctx.lineTo(-18, -4); ctx.lineTo(-6, 4); ctx.fill(); ctx.stroke();
-  ctx.restore();
-
-  // Articulated Carapace Shell
-  ctx.fillStyle = bodyCol; ctx.strokeStyle = "#000"; ctx.lineWidth = 4;
-  ctx.beginPath();
-  ctx.ellipse(0, 4, 48, 22, 0, 0, Math.PI * 2);
-  ctx.fill(); ctx.stroke();
-
-  // Eyestalks with responsive pupils
-  ctx.fillStyle = "#fff";
-  ctx.beginPath(); ctx.arc(-16, -18, 9, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-  ctx.beginPath(); ctx.arc(16, -18, 9, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = "#000";
-  ctx.beginPath(); ctx.arc(-16 + crab.facing * 3, -18, 4, 0, Math.PI*2); ctx.fill();
-  ctx.beginPath(); ctx.arc(16 + crab.facing * 3, -18, 4, 0, Math.PI*2); ctx.fill();
-
-  // Hat
-  drawFlushHat(ctx, userProfile.unlockedHats[0] || "pineapple", animTimer);
-
-  // Nametag
-  ctx.font = "900 13px sans-serif"; ctx.fillStyle = "#000"; ctx.textAlign = "center";
-  ctx.fillText(userProfile.name || "YOU", 0, -36);
-
-  // Reaction Emote Bubble
-  if (crab.emote) {
+  // Emote
+  if (crabvilleWaddler.emote) {
     const icons = { wave: "👋", dance: "🦀", pinch: "🤏", laugh: "😂", heart: "❤️", sleep: "💤" };
-    ctx.fillStyle = "#fff"; ctx.strokeStyle = "#000"; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.arc(0, -56, 18, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-    ctx.font = "20px sans-serif"; ctx.fillText(icons[crab.emote] || "⭐", 0, -50);
+    cvCtx.font = "24px sans-serif"; cvCtx.fillText(icons[crabvilleWaddler.emote] || "⭐", 0, -52);
   }
 
-  // Live Speech Bubble
-  if (crab.speech) {
-    ctx.fillStyle = "#fff"; ctx.strokeStyle = "#000"; ctx.lineWidth = 2;
-    ctx.font = "bold 12px sans-serif";
-    const tw = ctx.measureText(crab.speech).width;
-    ctx.fillRect(-tw/2 - 8, -78, tw + 16, 24); ctx.strokeRect(-tw/2 - 8, -78, tw + 16, 24);
-    ctx.fillStyle = "#000"; ctx.fillText(crab.speech, 0, -62);
+  // Speech
+  if (crabvilleWaddler.speech) {
+    cvCtx.font = "bold 12px sans-serif";
+    const tw = cvCtx.measureText(crabvilleWaddler.speech).width;
+    cvCtx.fillStyle = "#fff"; cvCtx.fillRect(-tw / 2 - 6, -74, tw + 12, 22);
+    cvCtx.strokeRect(-tw / 2 - 6, -74, tw + 12, 22);
+    cvCtx.fillStyle = "#000"; cvCtx.fillText(crabvilleWaddler.speech, 0, -58);
   }
 
-  ctx.restore();
+  cvCtx.restore();
 }
 
-/* ========================================================
-   VOLLEYBALL TOURNAMENT CORE & PHYSICS
-   ======================================================== */
-const canvas = document.getElementById("beachCourt");
-const ctx = canvas.getContext("2d");
-const CW = 1600;
-const CH = 850;
-const FLOOR_Y = 745;
-let BASE_BALL_GRAV = 550;
-let BALL_GRAV = 550;
-const NET = { x: CW / 2 - 4, y: 550, w: 8, h: FLOOR_Y - 550 };
-
-let activeGameMode = "standard";
-let chosenViceCard = null;
-let animTimer = 0;
-
-function createCrab(id, team, x, name = "", isBot = false) {
-  return {
-    id: id, team: team, x: x, y: FLOOR_Y - 26,
-    vx: 0, vy: 0, angle: 0, angVel: 0, hat: "pineapple",
-    name: name, spriteType: "crab", isBot: isBot, activeInGame: false,
-    radius: 54, width: 146, height: 58,
-    halfW: 73, halfH: 26, isGrounded: true,
-    speed: isBot ? 340 : 510,
-    canJump: true, jumpHoldTimer: 0, respawnX: x
-  };
-}
-
-let players = [
-  createCrab(1, 1, 260, "HOST", false),
-  createCrab(2, 2, 1340, "BOT RED", true),
-  createCrab(3, 1, 560, "BOT BLUE", true),
-  createCrab(4, 2, 1040, "BOT RED 2", true)
-];
-
-const ball = {
-  x: CW / 2, y: NET.y - 22,
-  vx: 0, vy: 0, r: 22, rot: 0,
-  active: false, tipOffTimer: 1.0
-};
-
-const match = {
-  scores: [0, 0], sets: [0, 0], currentSet: 1,
-  paused: false, over: false, isOnline: false,
-  myPlayerIndex: 0
-};
-
-function getPlayerBodyColor(pTeam) {
-  const cw = userProfile.colorway || "classic";
-  if (cw === "rainbow") return `hsl(${(animTimer * 120) % 360}, 100%, 55%)`;
-  if (cw === "vice_cyan") return "#00ffff";
-  if (cw === "magenta") return "#ff007f";
-  if (cw === "toxic") return "#76ff03";
-  if (cw === "gold") return "#ffd700";
-  return pTeam === 1 ? "#8bc34a" : "#f43f5e";
-}
-
-let crabImgTeam1 = new Image();
-let crabImgTeam2 = new Image();
-function updateCrabSprites() {
-  crabImgTeam1.src = makeArcadeCrabSVG(getPlayerBodyColor(1), "#0a1c02", "#e8f5e9");
-  crabImgTeam2.src = makeArcadeCrabSVG(getPlayerBodyColor(2), "#3b0716", "#ffe4e6");
-}
-
-function makeArcadeCrabSVG(bodyColor, outline, belly) {
-  return `data:image/svg+xml;utf8,${encodeURIComponent(`
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 85">
-    <circle cx="62" cy="16" r="8.5" fill="#111" stroke="${outline}" stroke-width="2.5"/><circle cx="64" cy="13.5" r="3" fill="#fff"/>
-    <circle cx="134" cy="16" r="8.5" fill="#111" stroke="${outline}" stroke-width="2.5"/><circle cx="136" cy="13.5" r="3" fill="#fff"/>
-    <path d="M 52 60 Q 28 68 20 80" stroke="${outline}" stroke-width="6.5" fill="none"/>
-    <path d="M 144 60 Q 168 68 176 80" stroke="${outline}" stroke-width="6.5" fill="none"/>
-    <path d="M 52 42 C 34 26 18 10 2 24 C 14 36 28 42 50 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
-    <path d="M 144 42 C 162 26 178 10 194 24 C 182 36 168 42 146 48 Z" fill="${bodyColor}" stroke="${outline}" stroke-width="4"/>
-    <ellipse cx="98" cy="54" rx="58" ry="19" fill="${bodyColor}" stroke="${outline}" stroke-width="4.5"/>
-    <path d="M 64 48 Q 98 40 132 48 Q 98 70 64 48 Z" fill="${belly}" opacity="0.7"/>
-  </svg>`)}`;
-}
-updateCrabSprites();
-
-function drawFlushHat(ctx, type, animTime = 0) {
-  ctx.save();
-  ctx.translate(0, -10);
-  if (type === "pineapple") {
-    ctx.fillStyle = "#2e7d32"; ctx.fillRect(-2, -22, 4, 8);
-    ctx.fillStyle = "#f59e0b"; ctx.beginPath(); ctx.ellipse(0, -8, 9, 12, 0, 0, Math.PI * 2); ctx.fill();
-  } else if (type === "propeller") {
-    ctx.fillStyle = "#2563eb"; ctx.beginPath(); ctx.arc(0, 0, 13, Math.PI, 0); ctx.fill();
-    ctx.fillStyle = "#ef4444"; ctx.fillRect(-10, -14, 20, 3);
-  } else if (type === "captain") {
-    ctx.fillStyle = "#ffffff"; ctx.beginPath(); ctx.arc(0, -3, 14, Math.PI, 0); ctx.fill();
-    ctx.fillStyle = "#0f172a"; ctx.beginPath(); ctx.ellipse(0, 2, 16, 3.5, 0, 0, Math.PI * 2); ctx.fill();
-  } else if (type === "crown") {
-    ctx.fillStyle = "#ffd700"; ctx.beginPath(); ctx.moveTo(-12, 0); ctx.lineTo(-12, -12); ctx.lineTo(-6, -6); ctx.lineTo(0, -14); ctx.lineTo(6, -6); ctx.lineTo(12, -12); ctx.lineTo(12, 0); ctx.closePath(); ctx.fill();
-  }
-  ctx.restore();
-}
-
-function updatePlayer(p, input, dt) {
-  let moveDir = 0;
-  if (input.left) moveDir -= 1;
-  if (input.right) moveDir += 1;
-  p.vx += (moveDir * p.speed - p.vx) * 16 * dt;
-  p.x += p.vx * dt;
-
-  const minX = (p.team === 1) ? 80 : NET.x + NET.w + p.radius;
-  const maxX = (p.team === 1) ? NET.x - p.radius : CW - 80;
-  if (p.x < minX) { p.x = minX; p.vx = 0; }
-  if (p.x > maxX) { p.x = maxX; p.vx = 0; }
-
-  let rotSpeed = 10.5;
-  if (input.rotLeft) p.angVel = -rotSpeed;
-  else if (input.rotRight) p.angVel = rotSpeed;
-  else {
-    p.angVel *= 0.56;
-    if (p.isGrounded && Math.abs(p.angle) < 0.6) p.angle += (-p.angle) * 10 * dt;
-  }
-  p.angle += p.angVel * dt;
-
-  if (input.jump && p.isGrounded && p.canJump) {
-    p.vy = -580; p.isGrounded = false; p.canJump = false;
-    p.jumpHoldTimer = 0.35; sfx.jump();
-  } else if (!input.jump && p.isGrounded) {
-    p.canJump = true;
-  }
-  p.vy += 1500 * dt;
-  p.y += p.vy * dt;
-
-  if (p.y >= FLOOR_Y - p.halfH) {
-    p.y = FLOOR_Y - p.halfH; p.vy = 0; p.isGrounded = true;
+// ADMIN AUTH
+async function promptSupremeAdmin() {
+  const p = prompt("👑 ENTER DEVELOPER PASSPHRASE:");
+  if (p === "poppagee_supreme_admin_2026") {
+    awardCoins(1000, "ADMIN MINT");
+    showToast("👑 DEVELOPER ACCESS GRANTED: +1000 CC", 2.0);
   }
 }
 
-function resolveCrabCollisions() {
-  for (let i = 0; i < players.length; i++) {
-    for (let j = i + 1; j < players.length; j++) {
-      const p1 = players[i]; const p2 = players[j];
-      if (!p1.activeInGame || !p2.activeInGame) continue;
-      const dx = p2.x - p1.x; const dy = p2.y - p1.y;
-      const dist = Math.hypot(dx, dy);
-      if (dist < 78 && dist > 0.001) {
-        const nx = dx / dist; const overlap = 78 - dist;
-        p1.x -= nx * overlap * 0.5; p2.x += nx * overlap * 0.5;
-      }
-    }
-  }
-}
-
-function getAIInput(p, targetBall) {
-  const input = { left: false, right: false, rotLeft: false, rotRight: false, jump: false };
-  const homeX = p.team === 1 ? (p.id === 1 ? 280 : 540) : (p.id === 2 ? 1320 : 1060);
-  const ballInMyCourt = (p.team === 1 && targetBall.x < CW / 2) || (p.team === 2 && targetBall.x >= CW / 2);
-  const targetX = ballInMyCourt ? targetBall.x : homeX;
-  const dx = targetX - p.x;
-  if (Math.abs(dx) > 30) {
-    if (dx < 0) input.left = true;
-    else input.right = true;
-  }
-  if (ballInMyCourt && targetBall.y < 500 && Math.abs(dx) < 60 && p.isGrounded) input.jump = true;
-  return input;
-}
-
-function updateBall(dt) {
-  if (!ball.active) {
-    ball.x = CW / 2; ball.y = NET.y - ball.r;
-    ball.tipOffTimer -= dt;
-    if (ball.tipOffTimer <= 0) {
-      ball.active = true; ball.vx = 0; ball.vy = -750; sfx.bodyBump();
-    }
-    return;
-  }
-
-  BALL_GRAV = BASE_BALL_GRAV;
-  ball.vx *= (1 - 0.03 * dt);
-  ball.vy += BALL_GRAV * dt;
-  ball.x += ball.vx * dt;
-  ball.y += ball.vy * dt;
-  ball.rot += (ball.vx / ball.r) * dt;
-
-  if (ball.x - ball.r < 0) { ball.x = ball.r; ball.vx = -ball.vx * 0.85; }
-  if (ball.x + ball.r > CW) { ball.x = CW - ball.r; ball.vx = -ball.vx * 0.85; }
-  if (ball.y - ball.r < 0) { ball.y = ball.r; ball.vy = Math.abs(ball.vy) * 0.85; }
-
-  if (ball.y + ball.r > NET.y && ball.x + ball.r > NET.x && ball.x - ball.r < NET.x + NET.w) {
-    if (ball.y < NET.y + 14) {
-      ball.y = NET.y - ball.r; ball.vy = -Math.max(680, Math.abs(ball.vy) * 0.95);
-    } else {
-      ball.vx = (ball.x < CW / 2) ? -Math.abs(ball.vx) * 0.85 : Math.abs(ball.vx) * 0.85;
-    }
-    sfx.bodyBump();
-  }
-
-  if (ball.y + ball.r >= FLOOR_Y) {
-    ball.y = FLOOR_Y - ball.r; ball.active = false; sfx.whistle();
-    if (ball.x < CW / 2) scorePoint(2); else scorePoint(1);
-    return;
-  }
-
-  for (let i = 0; i < players.length; i++) {
-    const p = players[i];
-    if (!p.activeInGame) continue;
-    const dx = ball.x - p.x; const dy = ball.y - p.y;
-    if (Math.hypot(dx, dy) < ball.r + p.halfW) {
-      ball.vy = -540;
-      ball.vx = (ball.vx * 0.1) + (p.vx * 0.35);
-      sfx.bodyBump();
-      return;
-    }
-  }
-}
-
-function scorePoint(winnerTeam) {
-  match.scores[winnerTeam - 1]++;
-  awardCoins(2, "Point Scored");
-
-  if (match.scores[winnerTeam - 1] >= 5) {
-    match.sets[winnerTeam - 1]++;
-    sfx.cheer();
-    if (match.sets[winnerTeam - 1] >= 2) {
-      match.over = true;
-      awardCoins(50, "Match Victory");
-      showToast(`TEAM ${winnerTeam} WINS MATCH! 🏆`, 3.5);
-      setTimeout(quitToMenu, 3500);
-      return;
-    }
-    match.currentSet++; match.scores = [0, 0];
-    showToast(`SET WON BY TEAM ${winnerTeam}!`, 1.8);
-    setTimeout(resetTipOff, 1800);
-    return;
-  }
-  showToast(winnerTeam === 1 ? "POINT LEFT! 🦀" : "POINT RIGHT! 🦀", 1.2);
-  setTimeout(resetTipOff, 1200);
-}
-
-function resetTipOff() {
-  ball.active = false; ball.tipOffTimer = 0.9;
-  ball.vx = 0; ball.vy = 0; ball.x = CW / 2; ball.y = NET.y - ball.r;
-}
-
-function renderStandardStyle() {
-  ctx.fillStyle = "#00aced"; ctx.fillRect(0, 0, CW, CH);
-  ctx.fillStyle = "#005b96"; ctx.fillRect(0, FLOOR_Y - 200, CW, 145);
-  ctx.fillStyle = "#f5d799"; ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
-  ctx.fillStyle = "#e2be73"; ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
-  ctx.fillStyle = "#ffffff"; ctx.fillRect(NET.x, NET.y, NET.w, FLOOR_Y - NET.y);
-  drawPlayersAndBall();
-  drawRetroScore(CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], "#0288d1", "#d50000");
-}
-
-function renderViceStyle() {
-  const grad = ctx.createLinearGradient(0, 0, 0, FLOOR_Y - 180);
-  grad.addColorStop(0, "#00e5ff"); grad.addColorStop(0.55, "#e040fb");
-  grad.addColorStop(0.85, "#ff4081"); grad.addColorStop(1, "#ffe57f");
-  ctx.fillStyle = grad; ctx.fillRect(0, 0, CW, CH);
-  ctx.fillStyle = "#311b92"; ctx.fillRect(0, FLOOR_Y - 55, CW, CH - (FLOOR_Y - 55));
-  ctx.fillStyle = "#1a0033"; ctx.fillRect(0, FLOOR_Y, CW, CH - FLOOR_Y);
-  ctx.fillStyle = "#00ffff"; ctx.fillRect(NET.x, NET.y, NET.w, FLOOR_Y - NET.y);
-  drawPlayersAndBall();
-  drawRetroScore(CW / 2, FLOOR_Y + 54, match.scores[0], match.scores[1], "#00ffff", "#ff007f");
-}
-
-function drawPlayersAndBall() {
-  players.forEach((p) => {
-    if (!p.activeInGame) return;
-    ctx.save();
-    ctx.translate(p.x, p.y);
-    ctx.rotate(p.angle);
-    ctx.drawImage(p.team === 1 ? crabImgTeam1 : crabImgTeam2, -p.width / 2, -p.height / 2, p.width, p.height);
-    drawFlushHat(ctx, p.hat, animTimer);
-    ctx.font = "900 13px sans-serif"; ctx.fillStyle = "#ffe600"; ctx.textAlign = "center";
-    ctx.fillText(p.name, 0, -p.height / 2 - 16);
-    ctx.restore();
-  });
-
-  ctx.save();
-  ctx.translate(ball.x, ball.y);
-  ctx.rotate(ball.rot);
-  ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(0, 0, ball.r, 0, Math.PI * 2); ctx.fill();
-  ctx.fillStyle = activeGameMode === "vice" ? "#ff007f" : "#ffcc00";
-  ctx.beginPath(); ctx.arc(0, 0, ball.r, 1.4, 2.8); ctx.lineTo(0, 0); ctx.fill();
-  ctx.strokeStyle = "#111"; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.arc(0, 0, ball.r, 0, Math.PI * 2); ctx.stroke();
-  ctx.restore();
-}
-
-function drawRetroScore(x, y, s1, s2, c1, c2) {
-  ctx.save(); ctx.translate(x, y);
-  const w = 90; const h = 50;
-  ctx.fillStyle = "#000"; ctx.fillRect(-w - 4, -h / 2, w, h); ctx.fillRect(4, -h / 2, w, h);
-  ctx.font = "900 32px Impact"; ctx.textAlign = "center";
-  ctx.fillStyle = c1; ctx.fillText(s1, -w / 2 - 4, 10);
-  ctx.fillStyle = c2; ctx.fillText(s2, w / 2 + 4, 10);
-  ctx.restore();
-}
-
-function showToast(text, dur = 1.2) {
-  const t = document.getElementById("toast");
-  if (!t) return;
-  if (!text) { t.classList.add("hidden"); return; }
-  t.innerText = text;
-  t.classList.remove("hidden");
-  t.classList.remove("fade-up");
-  setTimeout(() => { t.classList.add("fade-up"); }, Math.max(800, (dur - 0.5) * 1000));
-}
-
-/* ========================================================
-   SUBMODES, LOBBY & NAVIGATION
-   ======================================================== */
-function showSubmodeSelect(context) {
-  sfx.init();
-  hideAllModals();
-  document.getElementById("submodeModal").classList.remove("hidden");
-}
-
-function voteSubmode(mode) {
-  sfx.bodyBump();
-  activeGameMode = mode;
-  document.getElementById("submodeModal").classList.add("hidden");
-  launchGame();
-}
-
-function launchGame() {
-  match.scores = [0, 0]; match.sets = [0, 0]; match.over = false;
-  configureActiveCourtPlayers();
-  updateCrabSprites();
-  hideAllModals();
-  document.getElementById("game-section").classList.remove("hidden");
-  resetTipOff();
-}
-
-function configureActiveCourtPlayers() {
-  players.forEach(p => p.activeInGame = false);
-  players[0].activeInGame = true; players[0].team = 1; players[0].x = 260;
-  players[1].activeInGame = true; players[1].isBot = true; players[1].name = "BOT RED"; players[1].team = 2; players[1].x = 1340;
-  players[2].activeInGame = true; players[2].isBot = true; players[2].name = "BOT BLUE"; players[2].team = 1; players[2].x = 540;
-  players[3].activeInGame = true; players[3].isBot = true; players[3].name = "BOT RED 2"; players[3].team = 2; players[3].x = 1060;
-}
-
-function quitToMenu() {
-  stopAllMusic();
-  hideAllModals();
-  document.getElementById("game-section").classList.add("hidden");
-  document.getElementById("menuPanel").classList.remove("hidden");
-}
-
-function hideAllModals() {
-  ['menuPanel', 'submodeModal', 'viceVoteModal', 'lockerModal', 'leaderboardModal', 'twitchModal', 'crabchatModal', 'crabvilleModal', 'islandMapModal', 'friendsModal', 'passportModal', 'newsCutsceneModal', 'movieCreditsModal'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.add("hidden");
-  });
-}
-
-function openOnlineLobby() { sfx.init(); document.getElementById("onlineBox").classList.remove("hidden"); }
-function toggleControlMode() {}
-function openTwitchModal() { hideAllModals(); document.getElementById("twitchModal").classList.remove("hidden"); }
-function closeTwitchModal() { document.getElementById("twitchModal").classList.add("hidden"); document.getElementById("menuPanel").classList.remove("hidden"); }
-function connectTwitchChatDirect() {}
-function startTwitchOAuthFlow() {}
 function openLeaderboard() { hideAllModals(); document.getElementById("leaderboardModal").classList.remove("hidden"); }
 function closeLeaderboard() { document.getElementById("leaderboardModal").classList.add("hidden"); document.getElementById("menuPanel").classList.remove("hidden"); }
-function restartToLobby() { quitToMenu(); }
+function openTwitchModal() { hideAllModals(); document.getElementById("twitchModal").classList.remove("hidden"); }
+function closeTwitchModal() { document.getElementById("twitchModal").classList.add("hidden"); document.getElementById("menuPanel").classList.remove("hidden"); }
+function connectTwitchChatDirect() { showToast("Twitch Chat Streamer Mode Connected!", 2.0); }
 
 /* ========================================================
-   MASTER UNIFIED ENGINE LOOP (100% PROTECTED)
+   MASTER UNIFIED ENGINE LOOP
    ======================================================== */
 let masterLastTime = performance.now();
 const keys = {};
 window.addEventListener("keydown", (e) => {
   sfx.init();
   if (e.code) keys[e.code] = true;
-  if (e.key === "~" || e.key === "`") promptSupremeAdmin();
 });
 window.addEventListener("keyup", (e) => { if (e.code) keys[e.code] = false; });
 
@@ -2019,53 +2429,40 @@ function masterEngineLoop(now) {
   animTimer += dt;
 
   try {
-    if (!match.paused && !match.over && !document.getElementById("game-section").classList.contains("hidden")) {
-      const myInput = {
-        left: keys["KeyA"] || false, right: keys["KeyD"] || false,
-        rotLeft: keys["ArrowLeft"] || false, rotRight: keys["ArrowRight"] || false,
-        jump: keys["Space"] || false
-      };
-      updatePlayer(players[0], myInput, dt);
-      for (let i = 1; i < 4; i++) {
-        updatePlayer(players[i], getAIInput(players[i], ball), dt);
-      }
-      resolveCrabCollisions();
-      updateBall(dt);
+    if (!document.getElementById("game-section").classList.contains("hidden")) {
+      if (activeGameMode === "tsunami") {
+        updateTsunamiRunner(dt);
+        renderTsunamiRunnerScene();
+      } else if (!match.paused && !match.over) {
+        const myInput = getPlayerInput();
+        updatePlayerPhysics(players[0], myInput, dt);
 
-      if (activeGameMode === "vice") renderViceStyle();
-      else renderStandardStyle();
+        for (let i = 1; i < 4; i++) {
+          const p = players[i];
+          const botInput = p.remoteInput || getAIInput(p, ball);
+          updatePlayerPhysics(p, botInput, dt);
+        }
+
+        resolveCrabCollisions();
+        updateBallPhysics(dt);
+
+        if (activeGameMode === "vice") renderViceCourt();
+        else renderStandardCourt();
+      }
     }
 
-    // Render CrabVille 2D universe
     updateAndRenderCrabville(dt);
   } catch(err) {
-    console.error("Frame Loop Guard:", err);
+    console.error("Master Loop Guard:", err);
   }
 
   requestAnimationFrame(masterEngineLoop);
 }
 
-/* ========================================================
-   CRITICAL EVENT BINDINGS (TESTED & VERIFIED)
-   ======================================================== */
-function bindAllArcadeUI() {
-  const get = id => document.getElementById(id);
-
-  if (get("playSoloBtn")) get("playSoloBtn").onclick = () => showSubmodeSelect('solo');
-  if (get("onlineLobbyBtn")) get("onlineLobbyBtn").onclick = () => openOnlineLobby();
-  if (get("openCrabChatBtn")) get("openCrabChatBtn").onclick = () => openCrabChatModal();
-  if (get("openBagBtn")) get("openBagBtn").onclick = () => { loadCareer(); hideAllModals(); get("lockerModal").classList.remove("hidden"); };
-  if (get("closeBagBtn")) get("closeBagBtn").onclick = () => { get("lockerModal").classList.add("hidden"); get("menuPanel").classList.remove("hidden"); };
-  if (get("openLeaderboardBtn")) get("openLeaderboardBtn").onclick = () => openLeaderboard();
-  if (get("openTwitchStreamBtn")) get("openTwitchStreamBtn").onclick = () => openTwitchModal();
-
-  if (get("backFromSubmodeBtn")) get("backFromSubmodeBtn").onclick = () => quitToMenu();
-  if (get("quitMatchBtn")) get("quitMatchBtn").onclick = () => quitToMenu();
-}
-
 window.addEventListener("DOMContentLoaded", () => {
-  bindAllArcadeUI();
+  setupTouchPadListeners();
   loadCareer();
+  applyControlModeUI();
   requestAnimationFrame(masterEngineLoop);
 });
 </script>
